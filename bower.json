@@ -1,10 +1,9 @@
 {
   "name": "next-beacon-dashboard",
   "dependencies": {
-    "next-js-setup": "^7.0.0",
-    "keen-js": "^3.2.4",
     "ab-test-confidence": "^1.2.0",
-    "o-date": "~2.1.0"
+    "o-date": "~2.1.0",
+    "fetch": "~0.10.1"
   },
   "authors": [
     "Rhys Evans <rhys.evans@ft.com>"

@@ -2,11 +2,16 @@
 
 const KeenQuery = require('next-keen-query');
 
-require('next-js-setup')
-	.bootstrap(function (res) {
-		[].slice.call(document.querySelectorAll('[data-keen-query]')).forEach(el => {
-			KeenQuery.execute(el.getAttibute('data-keen-query'))
-				.then(str => el.innerHTML = str);
+[].slice.call(document.querySelectorAll('[data-keen-query]')).forEach(el => {
+	KeenQuery.execute(el.getAttribute('data-keen-query'))
+		.then(res => {
+			if (typeof res === 'string') {
+				el.innerHTML = res;
+			} else if (typeof res === 'function') {
+				res(el);
+			} else {
+				throw 'What the hell kind of printout is this!?'
+			}
 		});
-	})
+});
 

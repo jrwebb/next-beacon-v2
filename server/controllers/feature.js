@@ -7,9 +7,9 @@ module.exports = function (req, res) {
 		layout: 'beacon',
 		queries: KeenQuery.aliases.get(req.params.name).filter(q => q.title),
 		name: req.params.name,
-		keen_project: process.env.KEEN_PROJECT_ID,
-		keen_read_key: process.env.KEEN_READ_KEY,
-		keen_master_key: process.env.KEEN_MASTER_KEY
+		KEEN_PROJECT_ID: process.env.KEEN_PROJECT_ID,
+		KEEN_READ_KEY: process.env.KEEN_READ_KEY,
+		KEEN_MASTER_KEY: process.env.KEEN_MASTER_KEY
 	});
 
 };
