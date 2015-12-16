@@ -60,7 +60,7 @@ app.get('/dashboard/:name', function (req, res) {
 	res.send(`${req.params.name} has no dashboard as yet`)
 })
 
-app.get('/feature/:name', require('./controllers/feature'));
+app.get(/feature\/(.*)/, require('./controllers/feature'));
 
 app.get('/', function(req, res) {
 	res.render('overview', {
