@@ -1,0 +1,10 @@
+/node_modules/
+/.haikro-cache/
+/node-*
+/bower_components/
+/.DS_Store/
+/.sass-cache/
+/public/
+.env
+.idea
+/old-beacon-dashboard/

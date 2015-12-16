@@ -1,0 +1,9 @@
+
+<h1>{{feature}}</h1>
+
+<p class="o-techdocs-leadbody">These stats give a rough overview of how this feature is performing.
+	They are illustrative only and shouldn't be taken as proof of a feature's success or failure</p>
+{{#each queries}}
+	<h2>{{title}}</h2>
+	<div class="beacon__printer" data-keen-query="{{query}}"></div>
+{{/each}}

@@ -1,0 +1,24 @@
+{
+  "name": "next-beacon-dashboard",
+  "dependencies": {
+    "next-js-setup": "^7.0.0",
+    "keen-js": "^3.2.4",
+    "ab-test-confidence": "^1.2.0",
+    "o-date": "~2.1.0"
+  },
+  "authors": [
+    "Rhys Evans <rhys.evans@ft.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
