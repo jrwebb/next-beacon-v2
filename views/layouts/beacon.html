@@ -16,7 +16,7 @@
 						<div class="o-header__primary__left">
 							<a class="o-header__logo o-header__logo--ft" href="/">
 								<abbr title="Financial Times">FT</abbr>
-								<h1 class="o-header__title">Beacon - next.ft.com performance dashboard</h1>
+								<h1 class="o-header__title">Beacon - next.ft.com performance dashboard (unaudited)</h1>
 							</a>
 						</div>
 					</div>
@@ -24,20 +24,26 @@
 						<div class="o-header__secondary__left demo__secondary--placeholder">
 							<nav>
 								<a href="/">Overview</a> |
-								<a href="/data/explorer">Data explorer</a>
+								<a href="/data/explorer">Data explorer</a> |
+
+									<form class="feature-search" role="search">
+										<label>Search features (type in lower case only)</label>
+										<input class="feature-search__input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+										<div class="feature-search__features">
+										{{#each nav.flags}}
+											<a data-feature="{{lc}}" href="/feature/{{name}}">{{name}}</a>
+										{{/each}}
+										</div>
+									</form>
+
 							</nav>
 						</div>
 					</div>
 				</div>
 			</div>
 		</header>
-		<div class="warning">Be advised this is an experimental series of dashboards for next.ft.com, not an audited set of statistics.</div>
 		<div class="o-techdocs-layout">
 			<div class="o-techdocs-content">
-				<h5 class="o-typography-heading2">
-					<i class="o-ft-icons-icon o-ft-icons-icon--tick"></i> Unless specified, charts count <b>subscribed users only.</b> By default, anonymous users are <b>not</b> included.<br/>
-					<i class="o-ft-icons-icon o-ft-icons-icon--tick"></i> Unless specified, charts <b>include FT Staff.</b>
-				</h5>
 				{{{body}}}
 			</div>
 		</div>

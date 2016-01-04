@@ -1,4 +1,4 @@
-TEST_HOST := "ft-beacon-branch-${CIRCLE_BUILD_NUM}"
+TEST_HOST := "ft-beacon-v2-branch-${CIRCLE_BUILD_NUM}"
 
 .PHONY: test
 
@@ -30,7 +30,7 @@ tidy:
 
 provision:
 	nbt provision ${TEST_HOST}
-	nbt configure ft-next-stream-page ${TEST_HOST} --overrides "NODE_ENV=branch"
+	nbt configure ft-next-beacon-v2 ${TEST_HOST} --overrides "NODE_ENV=branch"
 	nbt deploy-hashed-assets
 	nbt deploy ${TEST_HOST} --skip-enable-preboot --skip-logging
 

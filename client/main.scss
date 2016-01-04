@@ -1,0 +1,21 @@
+html,
+body {
+	margin: 0;
+}
+.feature-search {
+	position: relative;
+	display: inline-block;
+}
+
+.feature-search__features {
+	position: absolute;
+	right: 0;
+	background: white;
+}
+.feature-search__features a {
+	display: none;
+	&,
+	&:hover {
+		color: blue;
+	}
+}

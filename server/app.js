@@ -56,20 +56,15 @@ app.get('/data/reports/:name', function(req, res) {
 	});
 });
 
+app.use(require('./middleware/nav'));
+
 app.get('/dashboard/:name', function (req, res) {
 	res.send(`${req.params.name} has no dashboard as yet`)
-})
+});
 
 app.get(/feature\/(.*)/, require('./controllers/feature'));
 
-app.get('/', function(req, res) {
-	res.render('overview', {
-		layout: 'beacon',
-		keen_project: KEEN_PROJECT_ID,
-		keen_read_key: KEEN_READ_KEY,
-		keen_master_key: KEEN_MASTER_KEY
-	});
-});
+app.get('/', require('./controllers/overview'));
 
 KeenQuery.aliases.poll()
 		.then(() => app.listen(process.env.PORT));

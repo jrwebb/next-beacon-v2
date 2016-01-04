@@ -15,3 +15,4 @@ const KeenQuery = require('next-keen-query');
 		});
 });
 
+require('./components/feature-search').init();

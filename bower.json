@@ -3,7 +3,8 @@
   "dependencies": {
     "ab-test-confidence": "^1.2.0",
     "o-date": "~2.1.0",
-    "fetch": "~0.10.1"
+    "fetch": "~0.10.1",
+    "dom-delegate": "ftdomdelegate#~2.0.3"
   },
   "authors": [
     "Rhys Evans <rhys.evans@ft.com>"
