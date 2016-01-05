@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('next-keen-query');
+const KeenQuery = require('n-keen-query');
 
 const http = require('http');
 const https = require('https');

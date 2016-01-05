@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('next-keen-query');
+const KeenQuery = require('n-keen-query');
 
 [].slice.call(document.querySelectorAll('[data-keen-query]')).forEach(el => {
 	KeenQuery.execute(el.getAttribute('data-keen-query'))

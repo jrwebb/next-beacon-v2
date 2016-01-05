@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('next-keen-query');
+const KeenQuery = require('n-keen-query');
 
 module.exports = function (req, res) {
 	const featureName = req.params[0].replace(/\/$/, '')
