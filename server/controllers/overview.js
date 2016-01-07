@@ -6,7 +6,8 @@ module.exports = function(req, res) {
 	res.render('overview', {
 		layout: 'beacon',
 		queries: {
-			uniques: KeenQuery.aliases.get('uniques')[0].query + "->print(html)"
+			// todo: abstract the getting of aliases more
+			dailyUniques: KeenQuery.aliases.get('dailyUniques')[0].query + "->print(line)"
 		}
 	});
 }

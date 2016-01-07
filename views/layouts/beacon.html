@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>Beacon - next.ft.com performance dashboard</title>
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
-		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-typography@^2.0.3,o-techdocs@^4.2.1,o-table@^3.0.0,o-grid@^3.0.0" />
+		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^4.2.1,o-typography@^2.0.3,o-table@^3.0.0,o-grid@^3.0.0" />
 		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}"/>
 	</head>
 	<body class="o-techdocs">
@@ -43,7 +43,7 @@
 			</div>
 		</header>
 		<div class="o-techdocs-layout">
-			<div class="o-techdocs-content">
+			<div class="o-techdocs-content" data-o-grid-colspan="full-width">
 				{{{body}}}
 			</div>
 		</div>
@@ -59,6 +59,7 @@
 			window.KEEN_READ_KEY = '{{KEEN_READ_KEY}}';
 		</script>
 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 		<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js"></script>
 		<script src="//build.origami.ft.com/v2/bundles/js?modules=o-typography@^2.0.3,o-techdocs@^4.2.1,o-table@^3.0.0,o-grid@^3.0.0"></script>
 		<script src="{{#hashedAsset}}main.js{{/hashedAsset}}"></script>

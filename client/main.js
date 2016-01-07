@@ -2,6 +2,8 @@
 
 const KeenQuery = require('n-keen-query');
 
+KeenQuery.definePrinter('line', require('./printers/line'));
+
 [].slice.call(document.querySelectorAll('[data-keen-query]')).forEach(el => {
 	KeenQuery.execute(el.getAttribute('data-keen-query'))
 		.then(res => {
