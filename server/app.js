@@ -7,6 +7,8 @@ const https = require('https');
 
 const auth = require('./middleware/auth');
 const window = require('./middleware/window');
+const aliases = require('./middleware/aliases');
+
 const cookieParser	= require('cookie-parser');
 const app = module.exports = require('ft-next-express')({
 	layoutsDir: __dirname + '/../views/layouts',
@@ -38,6 +40,7 @@ app.get('/hashed-assets/:path*', function(req, res) {
 app.use(cookieParser());
 app.use(auth);
 app.use(window);
+app.use(aliases);
 
 app.get('/data/export/:limit', require('./controllers/data/export'));
 

@@ -4,9 +4,8 @@
 
 module.exports = function (keenAPIresponse) {
 
-console.log(keenAPIresponse);
+	let tabulatedData = this.tabulate(keenAPIresponse, 'ISO'); //'human'
 
-	let tabulatedData = this.tabulate(keenAPIresponse);
 	let chartData = {
 		labels: [],
 		datasets: [
@@ -22,7 +21,7 @@ console.log(keenAPIresponse);
 			}
 		]
 	};
-	tabulatedData[0].rows.forEach(function (row) {
+	tabulatedData.rows.forEach(function (row) {
 		chartData.labels.push(row[0]);
 		chartData.datasets[0].data.push(row[1]);
 	});
@@ -38,12 +37,11 @@ console.log(keenAPIresponse);
 		console.log(el.parentNode, chartData);
 
 		const ctx = el.getContext("2d"); // For handling retina
-		ctx.canvas.width  = el.parentNode.offsetWidth;
+		ctx.canvas.width = el.parentNode.offsetWidth;
 		ctx.canvas.height = window.innerHeight - el.parentElement.offsetTop - 200;
 
-		let myLineChart = new Chart(ctx).Line(chartData, options);
-		var legend = myLineChart.generateLegend();
+		let myLineChart = new Chart(ctx).Line(chartData, options); //eslint-disable-line
 
-		el.insertAdjacentHTML('afterEnd',legend)
+		el.insertAdjacentHTML('afterEnd', myLineChart.generateLegend())
 	}
 }
