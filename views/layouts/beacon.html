@@ -20,24 +20,20 @@
 							</a>
 						</div>
 					</div>
-					<div class="o-header__secondary">
-						<div class="o-header__secondary__left demo__secondary--placeholder">
-							<nav>
-								<a href="/">Overview</a> |
-								<a href="/data/explorer">Data explorer</a> |
-
-									<form class="feature-search" role="search">
-										<label>Search features (type in lower case only)</label>
-										<input class="feature-search__input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-										<div class="feature-search__features">
-										{{#each nav.flags}}
-											<a data-feature="{{lc}}" href="/feature/{{name}}">{{name}}</a>
-										{{/each}}
-										</div>
-									</form>
-
-							</nav>
-						</div>
+					<div class="o-header__secondary" data-o-grid-colspan="full-width">
+						<nav class="primary-navigation">
+							<a href="/">Overview</a> |
+							<a href="/data/explorer">Data explorer</a>
+						</nav>
+						<form class="feature-search" role="search">
+							<label>Search features (type in lower case only)</label>
+							<input class="feature-search__input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+							<div class="feature-search__features">
+							{{#each nav.flags}}
+								<a data-feature="{{lc}}" href="/feature/{{name}}">{{name}}</a>
+							{{/each}}
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

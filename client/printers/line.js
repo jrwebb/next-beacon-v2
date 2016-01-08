@@ -27,14 +27,15 @@ module.exports = function (keenAPIresponse) {
 	});
 
 	return function (el){
+
+		console.log('line',el,keenAPIresponse);
+
 		const options = {
 			responsive: true,
 			maintainAspectRatio: true,
 			pointDotRadius : 2,
 			legendTemplate : "<ul style=\"list-style-type: none;\" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\">&nbsp;</span>&nbsp;<%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 		};
-
-		console.log(el.parentNode, chartData);
 
 		const ctx = el.getContext("2d"); // For handling retina
 		ctx.canvas.width = el.parentNode.offsetWidth;

@@ -2,6 +2,7 @@
 
 const KeenQuery = require('n-keen-query');
 KeenQuery.definePrinter('line', require('./printers/line'));
+KeenQuery.definePrinter('metric', require('./printers/metric'));
 
 [].slice.call(document.querySelectorAll('[data-keen-query]')).forEach(el => {
 
