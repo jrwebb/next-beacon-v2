@@ -2,9 +2,9 @@
 
 'use strict';
 
-module.exports = function (keenAPIresponse) {
+module.exports = function (aliasData) {
 
-	let tabulatedData = this.tabulate(keenAPIresponse, 'ISO'); //'human'
+	let tabulatedData = this.tabulate(aliasData, 'ISO'); //'human'
 
 	let chartData = {
 		labels: [],
@@ -28,7 +28,7 @@ module.exports = function (keenAPIresponse) {
 
 	return function (el){
 
-		console.log('line',el,keenAPIresponse);
+		console.log('line',el,aliasData);
 
 		const options = {
 			responsive: true,
@@ -37,7 +37,10 @@ module.exports = function (keenAPIresponse) {
 			legendTemplate : "<ul style=\"list-style-type: none;\" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\">&nbsp;</span>&nbsp;<%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 		};
 
-		const ctx = el.getContext("2d"); // For handling retina
+		let c = document.createElement('canvas');
+		el.appendChild(c);
+
+		const ctx = c.getContext("2d"); // For handling retina
 		ctx.canvas.width = el.parentNode.offsetWidth;
 		ctx.canvas.height = window.innerHeight - el.parentElement.offsetTop - 200;
 
