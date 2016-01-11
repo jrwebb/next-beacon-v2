@@ -1,5 +1,7 @@
 'use strict';
 
+require('./chartjs');
+
 const KeenQuery = require('n-keen-query');
 KeenQuery.definePrinter('line', require('./printers/line'));
 KeenQuery.definePrinter('html', require('./printers/html'));

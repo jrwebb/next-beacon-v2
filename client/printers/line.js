@@ -2,40 +2,34 @@
 
 'use strict';
 
+const colors = require('../colors');
+
 module.exports = function (aliasData) {
-
-	let tabulatedData = this.tabulate(aliasData, 'ISO'); //'human'
-
+	let color01 = colors.getColor();
 	let chartData = {
 		labels: [],
 		datasets: [
 			{
 				label: "Total counts of identified users",
-				fillColor: "rgba(151,187,205,0.2)",
-				strokeColor: "rgba(151,187,205,1)",
-				pointColor: "rgba(151,187,205,1)",
+				fillColor: `rgba(${color01},0.1)`,
+				strokeColor: `rgba(${color01},1)`,
+				pointColor: `rgba(${color01},1)`,
 				pointStrokeColor: "#fff",
 				pointHighlightFill: "#fff",
-				pointHighlightStroke: "rgba(151,187,205,1)",
+				pointHighlightStroke: `rgba(${color01},1)`,
 				data: []
 			}
 		]
 	};
+
+	let tabulatedData = this.tabulate(aliasData, 'ISO'); //'human'
 	tabulatedData.rows.forEach(function (row) {
 		chartData.labels.push(row[0]);
 		chartData.datasets[0].data.push(row[1]);
 	});
 
 	return function (el){
-
 		console.log('line',el,aliasData);
-
-		const options = {
-			responsive: true,
-			maintainAspectRatio: true,
-			pointDotRadius : 2,
-			legendTemplate : "<ul style=\"list-style-type: none;\" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\">&nbsp;</span>&nbsp;<%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-		};
 
 		let c = document.createElement('canvas');
 		el.appendChild(c);
@@ -44,8 +38,8 @@ module.exports = function (aliasData) {
 		ctx.canvas.width = el.parentNode.offsetWidth;
 		ctx.canvas.height = window.innerHeight - el.parentElement.offsetTop - 200;
 
-		let myLineChart = new Chart(ctx).Line(chartData, options); //eslint-disable-line
+		let myLineChart = new Chart(ctx).Line(chartData, Chart.defaults.global); //eslint-disable-line
 
-		el.insertAdjacentHTML('afterEnd', myLineChart.generateLegend())
+		el.insertAdjacentHTML('afterEnd', myLineChart.generateLegend());
 	}
 }
