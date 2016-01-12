@@ -5,8 +5,7 @@
 const colors = require('../colors');
 
 module.exports = function (data) {
-
-	let tabulatedData = this.tabulate(data, 'ISO'); //'human'
+	let tabulatedData = this.tabulate(data, 'ddd DD MMM YYYY'); // Using moment.js
 
 	return function (el, alias) {
 		console.log('line',el,alias);
