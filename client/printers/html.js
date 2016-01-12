@@ -9,9 +9,9 @@ module.exports = function (data) {
 		console.log('html',el,alias);
 
 		let html = `<div class="o-big-number o-big-number--standard">`;
-		html    += `	<div class="o-big-number__title" title="${alias.label}">${data.result}</div>`;
-		html    += `	<div class="o-big-number__content">${alias.label}</div>`;
-		html    += `</div>`;
+		html += `	<div class="o-big-number__title" title="${alias.label}">${data.result}</div>`;
+		html += `	<div class="o-big-number__content">${alias.label}</div>`;
+		html += `</div>`;
 
 		el.innerHTML = html;
 	}

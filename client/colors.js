@@ -1,5 +1,3 @@
-/* global Chart */
-
 'use strict';
 
 // http://next.ft.com/__styleguide/design-primitives#palette

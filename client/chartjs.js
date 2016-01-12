@@ -3,7 +3,7 @@
 'use strict';
 
 const loadChartJS = () => {
-	const scriptPromise = new Promise((resolve, reject) => {
+	const scriptPromise = new Promise((resolve) => {
 		const script = document.createElement('script');
 		script.async = script.defer = true;
 		script.src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js";
