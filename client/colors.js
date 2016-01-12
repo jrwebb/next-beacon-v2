@@ -4,6 +4,8 @@
 
 // http://next.ft.com/__styleguide/design-primitives#palette
 const colors = {
+	'chartjs-1' : '151,187,205',
+	'chartjs-2' : '220,220,220',
 	'warm-3': '206,198,185', //#cec6b9
 	'warm-6': '139,87,42', //#8b572a
 	'cold-1': '80,80,80', //#505050

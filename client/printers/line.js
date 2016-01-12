@@ -4,32 +4,34 @@
 
 const colors = require('../colors');
 
-module.exports = function (aliasData) {
-	let color01 = colors.getColor();
-	let chartData = {
-		labels: [],
-		datasets: [
-			{
-				label: "Total counts of identified users",
-				fillColor: `rgba(${color01},0.1)`,
-				strokeColor: `rgba(${color01},1)`,
-				pointColor: `rgba(${color01},1)`,
-				pointStrokeColor: "#fff",
-				pointHighlightFill: "#fff",
-				pointHighlightStroke: `rgba(${color01},1)`,
-				data: []
-			}
-		]
-	};
+module.exports = function (data) {
 
-	let tabulatedData = this.tabulate(aliasData, 'ISO'); //'human'
-	tabulatedData.rows.forEach(function (row) {
-		chartData.labels.push(row[0]);
-		chartData.datasets[0].data.push(row[1]);
-	});
+	let tabulatedData = this.tabulate(data, 'ISO'); //'human'
 
-	return function (el){
-		console.log('line',el,aliasData);
+	return function (el, alias) {
+		console.log('line',el,alias);
+
+		let color01 = colors.getColor('chartjs-1');
+		let chartData = {
+			labels: [],
+			datasets: [
+				{
+					label: alias.label,
+					fillColor: `rgba(${color01},0.1)`,
+					strokeColor: `rgba(${color01},1)`,
+					pointColor: `rgba(${color01},1)`,
+					pointStrokeColor: "#fff",
+					pointHighlightFill: "#fff",
+					pointHighlightStroke: `rgba(${color01},1)`,
+					data: []
+				}
+			]
+		};
+
+		tabulatedData.rows.forEach(function (row) {
+			chartData.labels.push(row[0]);
+			chartData.datasets[0].data.push(row[1]);
+		});
 
 		let c = document.createElement('canvas');
 		el.appendChild(c);

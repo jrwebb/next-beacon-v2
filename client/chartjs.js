@@ -21,6 +21,5 @@ loadChartJS().then(() => {
 	Chart.defaults.global.maintainAspectRatio = true;
 	Chart.defaults.global.pointDotRadius = 2;
 	Chart.defaults.global.pointDotStrokeWidth = 1;
-	Chart.defaults.global.datasetFill = false;
 	Chart.defaults.global.legendTemplate = "<ul style=\"list-style-type: none;\" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\">&nbsp;</span>&nbsp;<%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>";
 });

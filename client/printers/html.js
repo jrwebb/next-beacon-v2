@@ -1,13 +1,18 @@
 'use strict';
 
-module.exports = function (aliasData) {
-	return function (el) {
-		console.log('html',el,aliasData);
+// TODO Update this code to generate appropriate charts depending on the data;
+// e.g. if the data is a single number, it's a metric (o-big-number),
+// but if it's multi-column data, then render a HTML table.
 
-		let metric = `<div class="o-big-number o-big-number--standard">`;
-		metric    += `	<div class="o-big-number__title" title="${aliasData.label}">${aliasData.result}</div>`;
-		metric    += `	<div class="o-big-number__content">${aliasData.label}</div>`;
-		metric    += `</div>`;
-		el.innerHTML = metric;
+module.exports = function (data) {
+	return function (el, alias) {
+		console.log('html',el,alias);
+
+		let html = `<div class="o-big-number o-big-number--standard">`;
+		html    += `	<div class="o-big-number__title" title="${alias.label}">${data.result}</div>`;
+		html    += `	<div class="o-big-number__content">${alias.label}</div>`;
+		html    += `</div>`;
+
+		el.innerHTML = html;
 	}
 }
