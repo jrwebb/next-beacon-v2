@@ -47,7 +47,7 @@ module.exports = function (data) {
 		if (window.googleChartsLoaded) {
 			drawChart();
 		} else {
-			window.addEventListener('googleChartsLoaded', (e) => {
+			window.addEventListener('googleChartsLoaded', () => {
 				// console.log('drawing google chart');
 				drawChart();
 			}, false);
