@@ -12,12 +12,14 @@ KeenQuery.definePrinter('html', require('./printers/html'));
 		const alias = window.aliases[aliasAttribute];
 		const printer = alias.printer || 'html';
 
-		KeenQuery
-			// Build the Keen API query
-			.buildFromAlias(alias)
+		// Build the Keen API query
+		const builtQuery = KeenQuery.buildFromAlias(alias);
 
-			// Fetch the data from Keen API and call the printer function
-			.print(printer)
+		// Generate the keen explorer Url for the chart
+		alias.explorerURL = '/data/explorer?' + KeenQuery.generateExplorerUrl(builtQuery);
+
+		// Fetch the data from Keen API and call the printer function
+		builtQuery.print(printer)
 
 			// Handle the response from the printer function
 			.then(res => {

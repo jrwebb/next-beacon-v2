@@ -2,6 +2,8 @@
 
 'use strict';
 
+const chartui = require('../components/chartui');
+
 module.exports = function (data) {
 	return function (el, alias) {
 		console.log('line',el,alias,data);
@@ -35,13 +37,18 @@ module.exports = function (data) {
 
 			let chart = new google.visualization.LineChart(el);
 			chart.draw(dataTable, options);
+
+			if (alias.explorerURL) {
+				chartui.renderExplorerLink(el, alias);
+			}
+			chartui.renderChartLink(el, alias);
 		}
 
 		if (window.googleChartsLoaded) {
 			drawChart();
 		} else {
 			window.addEventListener('googleChartsLoaded', (e) => {
-				console.log('drawing google chart');
+				// console.log('drawing google chart');
 				drawChart();
 			}, false);
 		}

@@ -68,6 +68,10 @@ app.get('/dashboard/:name', function (req, res) {
 });
 
 app.get(/feature\/(.*)/, require('./controllers/feature'));
+app.get(/chart\/(.*)/, require('./controllers/chart'));
+
+// TODO make a dashboard controller
+app.get(/dashboard\/(.*)/, require('./controllers/overview'));
 
 app.get('/', require('./controllers/overview'));
 
