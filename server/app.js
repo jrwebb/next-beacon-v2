@@ -6,6 +6,9 @@ const http = require('http');
 const https = require('https');
 
 const auth = require('./middleware/auth');
+const window = require('./middleware/window');
+const aliases = require('./middleware/aliases');
+
 const cookieParser	= require('cookie-parser');
 const app = module.exports = require('ft-next-express')({
 	layoutsDir: __dirname + '/../views/layouts',
@@ -36,6 +39,8 @@ app.get('/hashed-assets/:path*', function(req, res) {
 
 app.use(cookieParser());
 app.use(auth);
+app.use(window);
+app.use(aliases);
 
 app.get('/data/export/:limit', require('./controllers/data/export'));
 
@@ -63,8 +68,12 @@ app.get('/dashboard/:name', function (req, res) {
 });
 
 app.get(/feature\/(.*)/, require('./controllers/feature'));
+app.get(/chart\/(.*)/, require('./controllers/chart'));
+
+// TODO make a dashboard controller
+app.get(/dashboard\/(.*)/, require('./controllers/overview'));
 
 app.get('/', require('./controllers/overview'));
 
 KeenQuery.aliases.poll()
-		.then(() => app.listen(process.env.PORT));
+	.then(() => app.listen(process.env.PORT));
