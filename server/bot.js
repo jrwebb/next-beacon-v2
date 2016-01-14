@@ -35,7 +35,7 @@ controller.hears(['(.*)'],["direct_message","direct_mention","mention"], (bot, m
 	if(!queries || queries.length === 0) {
 		bot.reply(message, 'sorry, dont understand you');
 	}
-	Promise.all(queries.filter(query => !!query.query).map(query => KeenQuery.build(query.query).print()))
+	Promise.all(queries.filter(query => !!query.query).map(query => KeenQuery.build(query.query.split('->print')[0]).print()))
 	.then(res => {
 		res.forEach(results => {
 			bot.reply(message, {
