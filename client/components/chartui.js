@@ -1,22 +1,23 @@
 'use strict';
 
 // Utilities for user interface (ui) elements
-const updateChartUI = (el, html) => {
-	const ui = el.getElementsByClassName('chart-ui');
-	if (ui.length < 1) {
-		el.innerHTML += `<div class="chart-ui">${html}</div>`;
-	}
-	else {
-		ui[0].innerHTML += html;
-	}
-}
 
+const renderChartUI = (el, alias) => {
+	let linksHTML = getChartLinkHTML(alias.name);
+	if (alias.explorerURL) {
+		linksHTML += getExplorerLinkHTML(alias.explorerURL);
+	}
+	let childEl = document.createElement('div');
+	childEl.className = 'chart-ui';
+	childEl.innerHTML = linksHTML;
+	el.parentElement.appendChild(childEl);
+}
+const getChartLinkHTML = (name) => {
+	return `<div class="chart-link"><a target="_blank" href="/chart/${name}">Chart</a></div>`;
+}
+const getExplorerLinkHTML = (explorerURL) => {
+	return `<div class="explorer-link"><a target="_blank" href="${explorerURL}">Explore</a></div>`;
+}
 module.exports = {
-	renderExplorerLink: (el, alias) => {
-		updateChartUI(el, `<div class="explorer-link"><a target="_blank" href="${alias.explorerURL}">Explore</a></div>`);
-	},
-	renderChartLink: (el, alias) => {
-		updateChartUI(el, `<div class="chart-link"><a href="/chart/${alias.name}">Chart</a></div>`);
-	}
+	renderChartUI:renderChartUI
 }
-

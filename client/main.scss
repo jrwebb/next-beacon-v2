@@ -19,10 +19,29 @@ body {
 		}
 	}
 }
+.chart-container {
+	position: relative;
+}
+.chart-ui {
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: right;
+	font-size: 10px;
+	visibility: hidden;
+}
+.chart-container:hover .chart-ui {
+	visibility: visible;
+}
+
 .feature-search {
 	position: relative;
 	display: inline-block;
 	float: right;
+	padding: 0 5px;
+	font-size: 14px;
+	line-height: 25px;
+	max-height: 25px;
 }
 .feature-search__features {
 	position: absolute;
