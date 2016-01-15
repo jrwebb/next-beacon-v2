@@ -3,9 +3,6 @@
 // Render a standalone chart
 
 module.exports = function(req, res) {
-
-	console.log(req.query);
-
 	res.render('chart', {
 		layout: 'beacon',
 		alias: res.locals.aliases[req.params[0]]

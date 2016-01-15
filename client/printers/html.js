@@ -16,10 +16,6 @@ module.exports = function (data) {
 		html += `</div>`;
 		el.innerHTML = html;
 
-		if (alias.explorerURL) {
-			chartui.renderExplorerLink(el, alias);
-		}
-		chartui.renderChartLink(el, alias);
-
+		chartui.renderChartUI(el, alias);
 	}
 }

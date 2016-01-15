@@ -6,7 +6,7 @@ const chartui = require('../components/chartui');
 
 module.exports = function (data) {
 	return function (el, alias) {
-		console.log('line',el,alias,data);
+		// console.log('line',el,alias,data);
 
 		const drawChart = () => {
 			let dataTable = new google.visualization.DataTable();
@@ -16,6 +16,7 @@ module.exports = function (data) {
 				dataTable.addRow([new Date(row.timeframe.start), row.value]);
 			});
 
+			// TODO: Abstract global options at some point
 			let options = {
 				title: alias.question,
 				height: 450,
@@ -37,11 +38,7 @@ module.exports = function (data) {
 
 			let chart = new google.visualization.LineChart(el);
 			chart.draw(dataTable, options);
-
-			if (alias.explorerURL) {
-				chartui.renderExplorerLink(el, alias);
-			}
-			chartui.renderChartLink(el, alias);
+			chartui.renderChartUI(el, alias);
 		}
 
 		if (window.googleChartsLoaded) {

@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>Beacon - next.ft.com performance dashboard</title>
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
-		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^4.2.1,o-typography@^2.0.3,o-table@^3.0.0,o-grid@^3.0.0,o-big-number@^1.1.2" />
+		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-typography@^3.0.0,o-table@^3.0.0,o-big-number@^1.1.2,o-grid@^4.0.0,o-ft-icons@^3.0.1" />
 		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}"/>
 	</head>
 	<body class="o-techdocs">
@@ -20,29 +20,23 @@
 							</a>
 						</div>
 					</div>
-					<div class="o-header__secondary" data-o-grid-colspan="full-width">
-						<nav class="primary-navigation">
-							<a href="/">Overview</a> |
-							<a href="/data/explorer">Data explorer</a>
-						</nav>
-						<form class="feature-search" role="search">
-							<label>Search features (type in lower case only)</label>
-							<input class="feature-search__input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-							<div class="feature-search__features">
-							{{#each nav.flags}}
-								<a data-feature="{{lc}}" href="/feature/{{name}}">{{name}}</a>
-							{{/each}}
-							</div>
-						</form>
+					<div class="o-header__secondary">
+						{{> primary-navigation}}
 					</div>
 				</div>
 			</div>
 		</header>
-		<div class="o-techdocs-layout">
-			<div class="o-techdocs-content" data-o-grid-colspan="full-width">
-				{{{body}}}
+
+		<div class="o-techdocs-container">
+			<div class="o-techdocs-layout">
+				<div class="o-techdocs-main-is-broken" data-o-grid-colspan="12">
+					<div class="o-techdocs-content">
+						{{{body}}}
+					</div>
+				</div>
 			</div>
 		</div>
+
 		<footer class="o-techdocs-footer">
 			<div>
 				Raw data: <a href="https://keen.io/project/{{KEEN_PROJECT_ID}}/explorer">Keen IO</a> |
@@ -50,14 +44,14 @@
 				Developers' guide: <a href="https://financial-times.github.io/next/docs/developer-guide/measuring-next/">Measuring Next</a><br />
 			</div>
 		</footer>
+
 		<script>
 			window.KEEN_PROJECT_ID = '{{KEEN_PROJECT_ID}}';
 			window.KEEN_READ_KEY = '{{KEEN_READ_KEY}}';
 			window.aliases = {{{json aliases}}}
 		</script>
-
 		<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js"></script>
-		<script src="//build.origami.ft.com/v2/bundles/js?modules=o-typography@^2.0.3,o-techdocs@^4.2.1,o-table@^3.0.0,o-grid@^3.0.0"></script>
+		<script src="//build.origami.ft.com/v2/bundles/js?modules=o-typography@^3.0.0,o-techdocs@^5.0.0,o-table@^3.0.0,o-grid@^4.0.0"></script>
 		<script src="{{#hashedAsset}}main.js{{/hashedAsset}}"></script>
 	</body>
 </html>
