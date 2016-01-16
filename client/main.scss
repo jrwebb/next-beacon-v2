@@ -1,12 +1,48 @@
+/* Hide any enhanced experience content when in core mode, and vice versa. */
+.core .o--if-js,
+.enhanced .o--if-no-js { display: none !important; }
+
 html,
 body {
+	font-family: BentonSans, sans-serif;
+	font-weight: 100;
 	margin: 0;
 }
+.o-techdocs {
+	.o-header {
+		margin-bottom: 1em;
+		.o-header__secondary {
+			padding: 2px 0px;
+			nav {
+				float: left;
+			}
+		}
+	}
+}
+.chart-container {
+	position: relative;
+}
+.chart-ui {
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: right;
+	font-size: 10px;
+	visibility: hidden;
+}
+.chart-container:hover .chart-ui {
+	visibility: visible;
+}
+
 .feature-search {
 	position: relative;
 	display: inline-block;
+	float: right;
+	padding: 0 5px;
+	font-size: 14px;
+	line-height: 25px;
+	max-height: 25px;
 }
-
 .feature-search__features {
 	position: absolute;
 	right: 0;
