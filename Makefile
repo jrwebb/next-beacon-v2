@@ -16,6 +16,9 @@ test: verify
 run:
 	nbt run --local
 
+run-bot: 
+	nbt run --procfile
+
 build:
 	nbt build --dev
 
