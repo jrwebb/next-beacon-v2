@@ -1,6 +1,6 @@
 'use strict';
 
-require('./googlechart');
+// require('./googlechart');
 
 const KeenQuery = require('n-keen-query');
 KeenQuery.definePrinter('line', require('./printers/line'));
