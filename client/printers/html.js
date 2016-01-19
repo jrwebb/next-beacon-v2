@@ -6,12 +6,10 @@
 
 const chartui = require('../components/chartui');
 
-module.exports = function (data) {
-	return function (el, alias) {
-		// console.log('html',el,alias);
-
+module.exports = function () {
+	return (el, alias) => {
 		let html = `<div class="o-big-number o-big-number--standard">`;
-		html += `	<div class="o-big-number__title" title="${alias.question}">${data.result}</div>`;
+		html += `	<div class="o-big-number__title" title="${alias.question}">${this.getTable().data}</div>`;
 		html += `	<div class="o-big-number__content">${alias.label}</div>`;
 		html += `</div>`;
 		el.innerHTML = html;

@@ -33,6 +33,9 @@ var authApi = function(req, res, next) {
 // but that's a 2-Factor Auth, and API calls can't easily work with 2FA.
 // So /api calls are authorised differently from the other endpoints.
 var auth = function(req, res, next) {
+	if (process.env.NODE_ENV !== 'production') {
+		return next();
+	}
 	if (/^\/api/.test(req._parsedUrl.pathname)) {
 		authApi(req, res, next);
 	} else {
