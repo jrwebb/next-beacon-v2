@@ -1,5 +1,3 @@
-/* global Chart */
-
 'use strict';
 
 // http://styleguide.ft.com/#colour-palette
@@ -17,7 +15,6 @@ const colors = [
 	// {name:'Pink tint 4', hex : '#a7a59b'},
 	// {name:'Pink tint 5', hex : '#74736c'}
 ]
-let usedColors = [];
 
 module.exports = {
 	getColors : () => colors.map(x => x.hex)
