@@ -4,13 +4,18 @@
 		padding-top: 90px;
 	}
 
-	.kq-repl__input {
-		width: 100%;
+	.kq-repl input[type="text"],
+	.kq-repl textarea {
 		padding: 0 10px;
 		font-size:24px;
 		min-height: 30px;
 		line-height: 1.8;
 		box-sizing: border-box;
+		width: 100%;
+	}
+
+	.kq-repl__input {
+		width: 100%;
 	}
 
 	.kq-repl__output + h2 {
@@ -24,6 +29,10 @@
 	.kq-repl__reference > li {
 		padding: 5px 0;
 		cursor: pointer;
+	}
+
+	.kq-repl__reference > li.hidden {
+		display: none;
 	}
 	.kq-repl__form {
 		background: white;
@@ -43,9 +52,9 @@
 	<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
 </form>
 <div class="kq-repl__output"></div>
-<h2>Event name reference (click one to start new query)</h2>
+<h2>Event collections (click one to start new query)</h2>
 <ul class="kq-repl__reference kq-repl__reference--collections o-grid-row">
-{{#each collections}}<li data-o-grid-colspan="2">{{this}}</li>{{/each}}
+{{#each collections}}<li data-o-grid-colspan="3">{{this}}</li>{{/each}}
 </ul>
 <div class="o-grid-row">
 	<div data-o-grid-colspan="6">
@@ -77,8 +86,9 @@
 </div>
 </div>
 
-<h2>Property names reference (click to insert in last set of parentheses)</h2>
+<h2>Property names (click to insert in last set of parentheses)</h2>
+<input type="text" class="kq-repl__properties-filter" placeholder="Type to filter">
 <ul class="kq-repl__reference kq-repl__reference--properties o-grid-row">
-{{#each properties}}<li data-o-grid-colspan="6">{{this}}</li>{{/each}}
+{{#each properties}}<li data-o-grid-colspan="6" data-property="{{lowerCase}}">{{name}}</li>{{/each}}
 </ul>
 </div>
