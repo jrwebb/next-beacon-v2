@@ -7,11 +7,19 @@
 const chartui = require('../components/chartui');
 
 const bigNumber = (query, alias) => {
-	return `<div class="o-big-number o-big-number--standard">
-	<div class="o-big-number__content o-big-number__content--question">${alias.question}</div>
-	<div class="o-big-number__title" title="${alias.question}">${query.getTable().data}</div>
-	<div class="o-big-number__content">${alias.label}</div>
-</div>`;
+
+	let html = `<div class="o-big-number o-big-number--standard">`
+	if (alias.question) {
+		html += `<div class="o-big-number__content o-big-number__content--question">${alias.question}</div>`;
+	}
+
+	html += `<div class="o-big-number__title" title="${alias.question}">${query.getTable().data}</div>`;
+
+	if (alias.label) {
+		html += `<div class="o-big-number__content">${alias.label}</div>`;
+	}
+
+	return html + `</div>`;
 }
 
 const table = (query, alias) => {
@@ -40,13 +48,12 @@ const table = (query, alias) => {
 
 module.exports = function () {
 	return (el, alias) => {
+		console.log(el, bigNumber(this, alias))
 		el.innerHTML = this.getTable().dimension ? table(this, alias) : bigNumber(this, alias);
 
 		chartui.renderChartUI(el, alias);
 	}
 }
-
-
 
 
 // 'use strict';
