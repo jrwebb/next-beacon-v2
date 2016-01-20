@@ -15,6 +15,8 @@ const app = module.exports = require('ft-next-express')({
 	withBackendAuthentication: false
 });
 
+
+
 // Indicates the app is behind a front-facing proxy, and to use the X-Forwarded-* headers to determine the connection and the IP address of the client. NOTE: X-Forwarded-* headers are easily spoofed and the detected IP addresses are unreliable.
 // See: http://expressjs.com/api.html
 app.enable('trust proxy');
@@ -50,6 +52,17 @@ app.get('/data/explorer', function(req, res) {
 		keen_project: process.env.KEEN_PROJECT_ID,
 		keen_read_key: process.env.KEEN_READ_KEY,
 		keen_master_key: process.env.KEEN_MASTER_KEY
+	});
+});
+
+const keenCollections = require('./jobs/keen-collections');
+const keenProperties = require('./jobs/keen-properties');
+
+app.get('/data/kq-repl', function(req, res) {
+	res.render('kq-repl', {
+		layout: 'beacon',
+		collections: keenCollections.getData(),
+		properties: keenProperties.getData()
 	});
 });
 

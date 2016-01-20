@@ -1,0 +1,84 @@
+<style>
+
+	.kq-repl {
+		padding-top: 90px;
+	}
+
+	.kq-repl__input {
+		width: 100%;
+		padding: 0 10px;
+		font-size:24px;
+		min-height: 30px;
+		line-height: 1.8;
+		box-sizing: border-box;
+	}
+
+	.kq-repl__output + h2 {
+		margin-top: 5px;
+	}
+
+	.kq-repl__reference {
+		list-style: none;
+	}
+
+	.kq-repl__reference > li {
+		padding: 5px 0;
+		cursor: pointer;
+	}
+	.kq-repl__form {
+		background: white;
+		z-index: 1;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		padding: 90px 10px 10px;
+		border-bottom: 1px solid #ccc;
+	}
+
+</style>
+<div class="kq-repl o-grid-container">
+<form class="kq-repl__form">
+	<textarea class="kq-repl__input" placeholder="Enter a keen query" rows="1"></textarea>
+	<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
+</form>
+<div class="kq-repl__output"></div>
+<h2>Event name reference (click one to start new query)</h2>
+<ul class="kq-repl__reference kq-repl__reference--collections o-grid-row">
+{{#each collections}}<li data-o-grid-colspan="2">{{this}}</li>{{/each}}
+</ul>
+<div class="o-grid-row">
+	<div data-o-grid-colspan="6">
+	<h2>Extractions (click to choose)</h2>
+
+	<ul class="kq-repl__reference kq-repl__reference--methods o-grid-row">
+		<li data-o-grid-colspan="4">count</li>
+		<li data-o-grid-colspan="4">min</li>
+		<li data-o-grid-colspan="4">max</li>
+		<li data-o-grid-colspan="4">sum</li>
+		<li data-o-grid-colspan="4">avg</li>
+		<li data-o-grid-colspan="4">med</li>
+		<li data-o-grid-colspan="4">pct</li>
+		<li data-o-grid-colspan="4">select</li>
+	</ul>
+</div>
+<div data-o-grid-colspan="6">
+	<h2>Functions (click to append)</h2>
+
+	<ul class="kq-repl__reference kq-repl__reference--methods o-grid-row">
+		<li data-o-grid-colspan="4">filter</li>
+		<li data-o-grid-colspan="4">group</li>
+		<li data-o-grid-colspan="4">reduce</li>
+		<li data-o-grid-colspan="4">relTime</li>
+		<li data-o-grid-colspan="4">absTime</li>
+		<li data-o-grid-colspan="4">interval</li>
+		<li data-o-grid-colspan="4">round</li>
+	</ul>
+</div>
+</div>
+
+<h2>Property names reference (click to insert in last set of parentheses)</h2>
+<ul class="kq-repl__reference kq-repl__reference--properties o-grid-row">
+{{#each properties}}<li data-o-grid-colspan="6">{{this}}</li>{{/each}}
+</ul>
+</div>
