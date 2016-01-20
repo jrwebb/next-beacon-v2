@@ -16,7 +16,7 @@ const bigNumber = (query, alias) => {
 
 const table = (query, alias) => {
 	const data = query.getTable().humanize('human');
-	let html = `<h2>${alias.question} - ${alias.label}</h2><table><thead><tr>`;
+	let html = `<h2>${alias.question} - ${alias.label}</h2><table class="o-table"><thead><tr>`;
 	data.headings.forEach(h => {
 		html +=	`<th>${h}</th>`;
 	})
@@ -27,7 +27,8 @@ const table = (query, alias) => {
 			if (i === 0) {
 				html +=	`<th>${c}</th>`;
 			} else {
-				html +=	`<td>${c}</td>`;
+				// TODO don't use numeric if extraction is select
+				html +=	`<td data-o-table-data-type="numeric">${c}</td>`;
 			}
 		})
 		html += '</tr>'
