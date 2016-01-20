@@ -4,16 +4,18 @@
 
 const chartui = require('../components/chartui');
 
-module.exports = function (data) {
-	return function (el, alias) {
-		// console.log('line',el,alias,data);
-
+module.exports = function () {
+	const data = this.getTable().humanize('shortest');
+	return (el, alias) => {
 		const drawChart = () => {
 			let dataTable = new google.visualization.DataTable();
-			dataTable.addColumn('date', 'Date');
-			dataTable.addColumn('number', alias.label);
-			data.result.forEach(function (row) {
-				dataTable.addRow([new Date(row.timeframe.start), row.value]);
+			dataTable.addColumn('string', data.headings[0]);
+			data.headings.slice(1).forEach(a => {
+				dataTable.addColumn('number', a);
+			})
+
+			data.rows.forEach(row => {
+				dataTable.addRow(row);
 			});
 
 			// TODO: Abstract global options at some point
