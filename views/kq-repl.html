@@ -1,7 +1,16 @@
 <style>
 
+	ul {
+		padding: 0;
+	}
 	.kq-repl {
 		padding-top: 90px;
+	}
+
+	.kq-repl .error {
+		font-size: 24px;
+		line-height: 1.2;
+		color: red;
 	}
 
 	.kq-repl input[type="text"],
@@ -26,9 +35,12 @@
 		list-style: none;
 	}
 
-	.kq-repl__reference > li {
-		padding: 5px 0;
-		cursor: pointer;
+	.kq-repl__reference ul{
+		display: inline;
+	}
+
+	.kq-repl__reference > [data-o-grid-colspan] {
+		padding-bottom: 10px;
 	}
 
 	.kq-repl__reference > li.hidden {
@@ -50,45 +62,68 @@
 <form class="kq-repl__form">
 	<textarea class="kq-repl__input" placeholder="Enter a keen query" rows="1"></textarea>
 	<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
+	<div class="kq-repl__output"></div>
 </form>
-<div class="kq-repl__output"></div>
+
 <h2>Event collections (click one to start new query)</h2>
-<ul class="kq-repl__reference kq-repl__reference--collections o-grid-row">
-{{#each collections}}<li data-o-grid-colspan="3">{{this}}</li>{{/each}}
+<ul class="o-grid-row kq-repl__reference kq-repl__reference--collections">
+	{{#each collections}}
+	<li data-o-grid-colspan="3">
+		{{@key}}</h3>
+		<ul>
+			{{#each this}}
+				<li class="o-buttons o-buttons--small" data-str="{{@../key}}:{{this}}">{{this}}</li>
+			{{/each}}
+		</ul>
+	</li>
+	{{/each}}
 </ul>
 <div class="o-grid-row">
 	<div data-o-grid-colspan="6">
-	<h2>Extractions (click to choose)</h2>
+		<h2>Extractions (click to choose)</h2>
 
-	<ul class="kq-repl__reference kq-repl__reference--methods o-grid-row">
-		<li data-o-grid-colspan="4">count</li>
-		<li data-o-grid-colspan="4">min</li>
-		<li data-o-grid-colspan="4">max</li>
-		<li data-o-grid-colspan="4">sum</li>
-		<li data-o-grid-colspan="4">avg</li>
-		<li data-o-grid-colspan="4">med</li>
-		<li data-o-grid-colspan="4">pct</li>
-		<li data-o-grid-colspan="4">select</li>
-	</ul>
-</div>
-<div data-o-grid-colspan="6">
-	<h2>Functions (click to append)</h2>
+		<ul class="kq-repl__reference kq-repl__reference--extractions">
+			<li class="o-buttons o-buttons--small" data-str="count()">count</li>
+			<li class="o-buttons o-buttons--small" data-str="count({prop})">count unique</li>
+			<li class="o-buttons o-buttons--small" data-str="min({prop})">min</li>
+			<li class="o-buttons o-buttons--small" data-str="max({prop})">max</li>
+			<li class="o-buttons o-buttons--small" data-str="sum({prop})">sum</li>
+			<li class="o-buttons o-buttons--small" data-str="avg({prop})">avg</li>
+			<li class="o-buttons o-buttons--small" data-str="med({prop})">med</li>
+			<li class="o-buttons o-buttons--small" data-str="pct({prop})">pct</li>
+			<li class="o-buttons o-buttons--small" data-str="select({prop})">select unique</li>
+		</ul>
 
-	<ul class="kq-repl__reference kq-repl__reference--methods o-grid-row">
-		<li data-o-grid-colspan="4">filter</li>
-		<li data-o-grid-colspan="4">group</li>
-		<li data-o-grid-colspan="4">reduce</li>
-		<li data-o-grid-colspan="4">relTime</li>
-		<li data-o-grid-colspan="4">absTime</li>
-		<li data-o-grid-colspan="4">interval</li>
-		<li data-o-grid-colspan="4">round</li>
-	</ul>
-</div>
+		<h2>Filters (click to append)</h2>
+
+		<ul class="kq-repl__reference kq-repl__reference--methods">
+			<li class="o-buttons o-buttons--small" data-str="filter({prop})">has property</li>
+			<li class="o-buttons o-buttons--small" data-str="filter(!{prop})"> doesn't have property</li>
+			<li class="o-buttons o-buttons--small" data-str="filter({prop}={value})">property equals value</li>
+			<li class="o-buttons o-buttons--small" data-str="filter({prop}!={value})">property doesn't equal</li>
+			<li class="o-buttons o-buttons--small" data-str="filter({prop}>{value})">property greater than value</li>
+			<li class="o-buttons o-buttons--small" data-str="filter({prop}<{value})">property less than value</li>
+			<li class="o-buttons o-buttons--small" data-str="filter({prop}~{value})">property contains value</li>
+			<li class="o-buttons o-buttons--small" data-str="filter({prop}?{value})">property contained in values</li>
+		</ul>
+
+		<h2>More (click to append)</h2>
+
+		<ul class="kq-repl__reference kq-repl__reference--methods">
+			<li class="o-buttons o-buttons--small" data-str="group({props})">group by property</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime()">relative time</li>
+			<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">absolute time</li>
+			<li class="o-buttons o-buttons--small" data-str="interval()">interval</lasti>
+			<li class="o-buttons o-buttons--small" data-str="round({number})">round</li>
+			<li class="o-buttons o-buttons--small" data-str="reduce({method},{prop})">reduce</li>
+		</ul>
+	</div>
+	<div data-o-grid-colspan="6">
+		<h2>Property names (click to insert in last set of parentheses)</h2>
+		<input type="text" class="kq-repl__properties-filter" placeholder="Type to filter">
+		<ul class="kq-repl__reference kq-repl__reference--properties">
+		{{#each properties}}<li class="o-buttons o-buttons--small" data-str="{{lowerCase}}">{{name}}</li>{{/each}}
+		</ul>
+	</div>
 </div>
 
-<h2>Property names (click to insert in last set of parentheses)</h2>
-<input type="text" class="kq-repl__properties-filter" placeholder="Type to filter">
-<ul class="kq-repl__reference kq-repl__reference--properties o-grid-row">
-{{#each properties}}<li data-o-grid-colspan="6" data-property="{{lowerCase}}">{{name}}</li>{{/each}}
-</ul>
-</div>

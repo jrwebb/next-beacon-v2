@@ -22,7 +22,7 @@ class PropertySearch {
 			.map(el => {
 				return {
 					el,
-					property: el.getAttribute('data-property')
+					property: el.getAttribute('data-str')
 				}
 			});
 	}
@@ -54,23 +54,41 @@ class PropertySearch {
 		})
 	}
 }
+const Delegate = require('dom-delegate');
 
 module.exports = {
 	init: () => {
-
+		const del = new Delegate(document.querySelector('.kq-repl'));
 		new PropertySearch().init();
 
 		const input = document.querySelector('.kq-repl__input');
 		const output = document.querySelector('.kq-repl__output');
 
+		function validate (str) {
+			return new Promise((res, rej) => {
+				str = str || input.value.trim();
+				try {
+					KeenQuery.build(str);
+					res(str);
+				} catch (e) {
+					rej(e);
+				}
+			});
+		}
+
 		function run() {
 			const query = input.value.trim();
-			KeenQuery.build(query)
-				.print('html')
-				.then(func => {
-					func(output, {})
-				}, e => output.textContent = e.message || e);
-			window.scrollTo(0, 0);
+			try {
+				const keenQuery = KeenQuery.build(query);
+
+				keenQuery
+					.print('html')
+					.then(func => {
+						func(output, {})
+					}, e => output.textContent = e.message || e);
+				} catch (e) {
+					output.innerHTML = `<span class="error">${e.message || e}</span>`;
+				}
 		}
 
 		input.addEventListener('keydown', ev => {
@@ -89,28 +107,39 @@ module.exports = {
 			ev.preventDefault();
 			run();
 		})
-		document.querySelector('.kq-repl__reference--collections').addEventListener('click', ev => {
-			if (ev.target.nodeName === 'LI') {
-				input.value = ev.target.textContent;
+
+		del.on('click', '.kq-repl__reference--collections .o-buttons', ev => {
+			input.value = ev.target.getAttribute('data-str');
+			input.focus();
+		});
+
+		del.on('click', '.kq-repl__reference--extractions li', ev => {
+			validate(input.value + '->' + ev.target.getAttribute('data-str'))
+				.then(str => {
+					input.value += str;
+					input.focus();
+				}, e => {
+					output.innerHTML = `<span class="error">${e.message || e}</span>`;
+					input.focus();
+				})
+		});
+
+		del.on('click', '.kq-repl__reference--methods li', ev => {
+			validate()
+				.then(() => {
+					input.value += '->' + ev.target.getAttribute('data-str');
+					input.focus();
+				}, e => {
+					output.innerHTML = `<span class="error">${e.message || e}</span>`;
+					input.focus();
+				})
+
+		});
+
+		del.on('click', '.kq-repl__reference--properties', ev => {
+			if (/\)$/.test(input.value)) {
+				input.value = input.value.replace(/\{props?\}/, `{${ev.target.textContent}}`).replace(/\([^\)]*\)$/, `(${ev.target.textContent})`);
 				input.focus();
-			}
-		});
-
-		[].slice.call(document.querySelectorAll('.kq-repl__reference--methods')).forEach(el => {
-			el.addEventListener('click', ev => {
-				if (ev.target.nodeName === 'LI') {
-					input.value += '->' + ev.target.textContent + '()';
-					input.focus();
-				}
-			})
-		});
-
-		document.querySelector('.kq-repl__reference--properties').addEventListener('click', ev => {
-			if (ev.target.nodeName === 'LI') {
-				if (/\)$/.test(input.value)) {
-					input.value = input.value.replace(/\([^\)]*\)$/, `(${ev.target.textContent})`);
-					input.focus();
-				}
 			}
 		})
 
