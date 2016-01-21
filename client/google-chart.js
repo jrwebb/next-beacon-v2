@@ -45,7 +45,6 @@ const drawChart = (data, el, alias) => {
 	const chart = new google.visualization[ucfirst(alias.printer) + 'Chart'](el);
 
 	let options = defaultOptions;
-	options.title = alias.label;
 
 	// Google line and column charts expect times to be date objects
 	data.headings.forEach((h, i) => {
@@ -56,6 +55,10 @@ const drawChart = (data, el, alias) => {
 			});
 		}
 	});
+
+	// Todo: fix this horrible labelling hack
+	data.headings = data.headings.map(h => h === 'timeframe' ? h : alias.label);
+
 	var mergedData = [data.headings].concat(data.rows);
 	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
 
