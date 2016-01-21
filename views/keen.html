@@ -18,9 +18,9 @@
 		$(document).ready(function(){
 
 			client = new Keen({
-				projectId: "{{ keen_project }}",
-				readKey: "{{ keen_read_key }}",
-				masterKey: "{{ keen_master_key }}"
+				projectId: "{{ projectId }}",
+				readKey: "{{ readKey }}",
+				masterKey: "{{ masterKey }}"
 			});
 
 			var app = new Keen.Explorer.App({

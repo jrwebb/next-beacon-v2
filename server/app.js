@@ -49,9 +49,9 @@ app.get('/data/export/:limit', require('./controllers/data/export'));
 app.get('/data/explorer', function(req, res) {
 	res.render('keen', {
 		layout: null,
-		keen_project: process.env.KEEN_PROJECT_ID,
-		keen_read_key: process.env.KEEN_READ_KEY,
-		keen_master_key: process.env.KEEN_MASTER_KEY
+		projectId: process.env.KEEN_PROJECT_ID,
+		readKey: process.env.KEEN_READ_KEY,
+		masterKey: process.env.KEEN_MASTER
 	});
 });
 
