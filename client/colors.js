@@ -2,9 +2,9 @@
 
 // http://styleguide.ft.com/#colour-palette
 const colors = [
+	{name:'Light Blue', hex : '#c5d4e8'},
 	{name:'Light Green', hex : '#a1dbb2'},
 	{name:'Light Purple', hex : '#ebcaec'},
-	{name:'Light Blue', hex : '#c5d4e8'},
 	{name:'Pink tint 1', hex : '#f6e9d8'},
 	{name:'Pink tint 2', hex : '#e9decf'},
 	{name:'Pink tint 3', hex : '#cec6b9'},
