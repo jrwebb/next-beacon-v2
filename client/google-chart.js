@@ -21,10 +21,13 @@ const defaultOptions = {
 		top: '5%',
 		left: '5%',
 		width: '95%',
-		height: '85%'
+		height: '75%'
 	},
 	vAxis: {
 		viewWindow: { min: 0 }
+	},
+	hAxis: {
+		gridlines: { count: 10 }
 	},
 	legend: { position: 'bottom' },
 	colors: colors.getColors()
