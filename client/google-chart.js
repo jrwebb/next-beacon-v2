@@ -71,6 +71,8 @@ const drawChart = (data, el, alias) => {
 	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
 
 	chart.draw(dataTable, options);
+
+	// Todo: Figure out why UI isn't displayed when multiple charts are on one page.
 	chartui.renderChartUI(el, alias);
 }
 
