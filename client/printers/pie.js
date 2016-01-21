@@ -11,9 +11,7 @@ module.exports = function () {
 		const drawChart = () => {
 			let dataTable = new google.visualization.DataTable();
 			dataTable.addColumn('string', data.headings[0]);
-			data.headings.slice(1).forEach(a => {
-				dataTable.addColumn('number', a);
-			})
+			dataTable.addColumn('number', data.headings[1]);
 
 			data.rows.forEach(row => {
 				dataTable.addRow(row);
@@ -21,12 +19,9 @@ module.exports = function () {
 
 			// TODO: Abstract global options at some point
 			let options = {
-				title: alias.question,
+				title: alias.label,
+				is3D: true,
 				height: 450,
-				trendlines: { 0: {
-					color: 'green'
-				}},
-				curveType:'function',
 				chartArea: {
 					top: '5%',
 					left: '5%',
@@ -34,13 +29,13 @@ module.exports = function () {
 					height: '85%'
 				},
 				legend: { position: 'bottom' },
-				vAxis: {
-					viewWindow: { min: 0 }
+				pieSliceTextStyle: {
+					color: 'black'
 				},
 				colors: colors.getColors()
 			};
 
-			let chart = new google.visualization.LineChart(el);
+			let chart = new google.visualization.PieChart(el);
 			chart.draw(dataTable, options);
 			chartui.renderChartUI(el, alias);
 		}

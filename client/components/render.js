@@ -8,6 +8,8 @@ module.exports = {
 			const aliasAttribute = el.getAttribute('data-keen-alias');
 			if (window.aliases && window.aliases[aliasAttribute]) {
 				const alias = window.aliases[aliasAttribute];
+
+				// Todo: Check that the printer has been defined in KeenQuery
 				const printer = alias.printer || 'html';
 
 				// Build the Keen API query
@@ -24,7 +26,7 @@ module.exports = {
 						if (typeof res === 'function') {
 							res(el, alias);
 						} else {
-							throw 'There is a problem with the query response.'
+							throw 'There is a problem with the keen-query response.'
 						}
 					});
 			}
