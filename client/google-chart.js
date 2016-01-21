@@ -13,12 +13,12 @@ const defaultOptions = {
 		color: 'black'
 	},
 	trendlines: { 0: {
-		color: 'green'
+		color: '#a1dbb2' // Todo: Get this color from colors.js ('Light green')
 	}},
 	curveType:'function',
 	height: 450,
 	chartArea: {
-		top: '5%',
+		top: '10%',
 		left: '5%',
 		width: '95%',
 		height: '75%'
@@ -28,9 +28,15 @@ const defaultOptions = {
 	},
 	hAxis: {
 		gridlines: {
-			count: 10,
+			count: 8,
 			color: '#F7F7F7'
 		},
+	},
+	titleTextStyle: {
+		color: '#222',
+		fontName: 'HelveticaNeue-Light',
+		fontSize: 26,
+		bold: false
 	},
 	legend: { position: 'bottom' },
 	colors: colors.getColors()
@@ -45,8 +51,10 @@ const drawChart = (data, el, alias) => {
 	const chart = new google.visualization[ucfirst(alias.printer) + 'Chart'](el);
 
 	let options = defaultOptions;
+	options.title = alias.question;
 
 	// Google line and column charts expect times to be date objects
+	// (Also: See hAxis.ticks for a possible alternative)
 	data.headings.forEach((h, i) => {
 		if (h === 'timeframe' && ['line','column'].find(e => e === alias.printer.toLowerCase()) !== undefined) {
 			data.rows = data.rows.map(r => {
