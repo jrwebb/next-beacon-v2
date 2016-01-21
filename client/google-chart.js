@@ -27,7 +27,10 @@ const defaultOptions = {
 		viewWindow: { min: 0 }
 	},
 	hAxis: {
-		gridlines: { count: 10 }
+		gridlines: {
+			count: 10,
+			color: '#F7F7F7'
+		},
 	},
 	legend: { position: 'bottom' },
 	colors: colors.getColors()

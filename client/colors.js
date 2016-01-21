@@ -1,6 +1,7 @@
 'use strict';
 
 // http://styleguide.ft.com/#colour-palette
+// https://github.com/Financial-Times/o-colors/blob/master/src/scss/_palette.scss
 const colors = [
 	{name:'Light Blue', hex : '#c5d4e8'},
 	{name:'Light Green', hex : '#a1dbb2'},
@@ -14,6 +15,7 @@ const colors = [
 	// {name:'Red', hex : '#cc0033'},
 	// {name:'Purple', hex : '#92288f'},
 	// {name:'Blue', hex : '#0e6dcc'},
+	// {name:'Grey tint 1', hex : '#b0b0b0'},
 ]
 
 module.exports = {
