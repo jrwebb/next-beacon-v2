@@ -36,21 +36,23 @@ const drawChart = (data, el, alias) => {
 	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer.toLowerCase()) === undefined) {
 		throw 'Error drawing google chart.';
 	}
-
-	let dataTable = new google.visualization.DataTable();
-	dataTable.addColumn('string', alias.label);
-	data.headings.slice(1).forEach(a => {
-		dataTable.addColumn('number', a);
-	})
-
-	data.rows.forEach(row => {
-		dataTable.addRow(row);
-	});
+	const chart = new google.visualization[ucfirst(alias.printer) + 'Chart'](el);
 
 	let options = defaultOptions;
 	options.title = alias.label;
 
-	let chart = new google.visualization[ucfirst(alias.printer) + 'Chart'](el);
+	// Google line and column charts expect times to be date objects
+	data.headings.forEach((h, i) => {
+		if (h === 'timeframe' && ['line','column'].find(e => e === alias.printer.toLowerCase()) !== undefined) {
+			data.rows = data.rows.map(r => {
+				r[i] = new Date(r[i]);
+				return r;
+			});
+		}
+	});
+	var mergedData = [data.headings].concat(data.rows);
+	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
+
 	chart.draw(dataTable, options);
 	chartui.renderChartUI(el, alias);
 }

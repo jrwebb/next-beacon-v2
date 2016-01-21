@@ -5,7 +5,7 @@
 import googleChart from '../google-chart';
 
 module.exports = function () {
-	const data = this.getTable().humanize('human');
+	const data = this.getTable().humanize('shortISO');
 	return (el, alias) => {
 		const drawChart = () => {
 			googleChart.drawChart(data, el, alias);
