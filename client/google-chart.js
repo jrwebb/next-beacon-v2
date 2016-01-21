@@ -1,3 +1,5 @@
+/* global google */
+
 'use strict';
 
 import chartui from './components/chartui';
