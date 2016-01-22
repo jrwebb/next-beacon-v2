@@ -76,15 +76,9 @@ app.get('/data/reports/:name', function(req, res) {
 
 app.use(require('./middleware/nav'));
 
-app.get('/dashboard/:name', function (req, res) {
-	res.send(`${req.params.name} has no dashboard as yet`)
-});
-
 app.get(/feature\/(.*)/, require('./controllers/feature'));
 app.get(/chart\/(.*)/, require('./controllers/chart'));
-
-// TODO make a dashboard controller
-app.get(/dashboard\/(.*)/, require('./controllers/overview'));
+app.get(/dashboard\/(.*)/, require('./controllers/dashboard'));
 
 app.get('/', require('./controllers/overview'));
 

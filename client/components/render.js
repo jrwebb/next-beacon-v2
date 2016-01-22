@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('n-keen-query');
+import KeenQuery from 'n-keen-query';
 
 module.exports = {
 	init: () => {
@@ -9,7 +9,7 @@ module.exports = {
 			if (window.aliases && window.aliases[aliasAttribute]) {
 				const alias = window.aliases[aliasAttribute];
 
-				// Todo: Check that the printer has been defined in KeenQuery
+				// Todo: Check that the printer has been defined in KeenQuery and/or BeaconV2
 				const printer = alias.printer || 'html';
 
 				// Build the Keen API query
