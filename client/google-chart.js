@@ -5,6 +5,8 @@
 import chartui from './components/chartui';
 import colors from './colors';
 
+const coreChartTypes = ['line','pie','bar','column'];
+
 const ucfirst = (string) => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 
 const defaultOptions = {
@@ -42,8 +44,8 @@ const defaultOptions = {
 	colors: colors.getColors()
 };
 
+// Todo: Add support for tables with less than/more than two dimensions
 const drawChart = (data, el, alias) => {
-	const coreChartTypes = ['line','pie','bar','column'];
 
 	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer.toLowerCase()) === undefined) {
 		throw 'Error drawing google chart.';
@@ -55,7 +57,8 @@ const drawChart = (data, el, alias) => {
 
 	// Google line and column charts expect times to be date objects
 	// (Also: See hAxis.ticks for a possible alternative)
-	data.headings.forEach((h, i) => {
+	let headings = data.headings || [null,null];
+	headings.forEach((h, i) => {
 		if (h === 'timeframe' && ['line','column'].find(e => e === alias.printer.toLowerCase()) !== undefined) {
 			data.rows = data.rows.map(r => {
 				r[i] = new Date(r[i]);
@@ -65,9 +68,9 @@ const drawChart = (data, el, alias) => {
 	});
 
 	// Todo: fix this horrible labelling hack
-	data.headings = data.headings.map(h => h === 'timeframe' ? h : alias.label);
+	headings = headings.map(h => h === 'timeframe' ? h : alias.label);
 
-	var mergedData = [data.headings].concat(data.rows);
+	var mergedData = [headings].concat(data.rows);
 	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
 
 	chart.draw(dataTable, options);
