@@ -1,6 +1,8 @@
 
 const KeenQuery = require('n-keen-query');
 
-KeenQuery.definePrinter('line', require('./line'));
 KeenQuery.definePrinter('html', require('./html'));
-KeenQuery.definePrinter('pie', require('./pie'));
+KeenQuery.definePrinter('line', require('./core'));
+KeenQuery.definePrinter('bar', require('./core'));
+KeenQuery.definePrinter('column', require('./core'));
+KeenQuery.definePrinter('pie', require('./core'));
