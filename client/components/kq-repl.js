@@ -113,6 +113,10 @@ module.exports = {
 			input.focus();
 		});
 
+		del.on('click', '.kq-repl__clear-output', ev => {
+			output.innerHTML = '';
+		})
+
 		del.on('click', '.kq-repl__reference--extractions li', ev => {
 			validate(input.value + '->' + ev.target.getAttribute('data-str'))
 				.then(str => {

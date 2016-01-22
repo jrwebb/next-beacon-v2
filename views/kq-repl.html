@@ -23,6 +23,10 @@
 		width: 100%;
 	}
 
+	.kq-repl__clear-output {
+		float: right;
+	}
+
 	.kq-repl__input {
 		width: 100%;
 	}
@@ -61,8 +65,12 @@
 <div class="kq-repl o-grid-container">
 <form class="kq-repl__form">
 	<textarea class="kq-repl__input" placeholder="Enter a keen query" rows="1"></textarea>
-	<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
+	<div class="kq-repl__toolbar">
+		<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
+		<button class="o-buttons o-buttons--small kq-repl__clear-output">clear output</button>
+	</div>
 	<div class="kq-repl__output"></div>
+
 </form>
 
 <h2>Event collections (click one to start new query)</h2>
