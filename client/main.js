@@ -1,3 +1,5 @@
+/* global google */
+
 'use strict';
 
 require('./printers');
@@ -8,3 +10,8 @@ if (document.querySelector('.kq-repl')) {
 } else {
 	require('./components/render').init();
 }
+
+(() => {
+	// Error: google.charts.load() cannot be called more than once.
+	google.charts.load('current', {packages: ['corechart','table']});
+})();

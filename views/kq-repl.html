@@ -23,10 +23,6 @@
 		width: 100%;
 	}
 
-	.kq-repl__clear-output {
-		float: right;
-	}
-
 	.kq-repl__input {
 		width: 100%;
 	}
@@ -72,11 +68,23 @@
 	<div class="kq-repl__output"></div>
 
 </form>
+<div class="o-grid-row">
+	<div data-o-grid-colspan="6">
+<h2>Common queries openings (click to choose)</h2>
 
-<h2>Event collections (click one to start new query)</h2>
+		<ul class="kq-repl__reference kq-repl__reference--collections">
+			<li class="o-buttons o-buttons--small" data-str="page:view->count(user.uuid)">count users</li>
+			<li class="o-buttons o-buttons--small" data-str="page:view->count()">count page views</li>
+		</ul>
+		<p>Scroll down to set more query options</p>
+	</div>
+
+
+	<div data-o-grid-colspan="6">
+<h2><i>or</i> Event collections (click one to start new custom query)</h2>
 <ul class="o-grid-row kq-repl__reference kq-repl__reference--collections">
 	{{#each collections}}
-	<li data-o-grid-colspan="3">
+	<li data-o-grid-colspan="6">
 		{{@key}}</h3>
 		<ul>
 			{{#each this}}
@@ -86,9 +94,7 @@
 	</li>
 	{{/each}}
 </ul>
-<div class="o-grid-row">
-	<div data-o-grid-colspan="6">
-		<h2>Extractions (click to choose)</h2>
+<h2>Extractions (click to choose)</h2>
 
 		<ul class="kq-repl__reference kq-repl__reference--extractions">
 			<li class="o-buttons o-buttons--small" data-str="count()">count</li>
@@ -101,6 +107,11 @@
 			<li class="o-buttons o-buttons--small" data-str="pct({prop})">pct</li>
 			<li class="o-buttons o-buttons--small" data-str="select({prop})">select unique</li>
 		</ul>
+</div>
+<div class="o-grid-row">
+	<div data-o-grid-colspan="6">
+
+
 
 		<h2>Filters (click to append)</h2>
 
@@ -119,8 +130,9 @@
 
 		<ul class="kq-repl__reference kq-repl__reference--methods">
 			<li class="o-buttons o-buttons--small" data-str="group({props})">group by property</li>
-			<li class="o-buttons o-buttons--small" data-str="relTime()">relative time</li>
-			<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">absolute time</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">last 14 days including today</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">last 14 days exluding today</li>
+			<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">custom time</li>
 			<li class="o-buttons o-buttons--small" data-str="interval()">interval</lasti>
 			<li class="o-buttons o-buttons--small" data-str="round({number})">round</li>
 			<li class="o-buttons o-buttons--small" data-str="reduce({method},{prop})">reduce</li>

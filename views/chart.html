@@ -1,10 +1,11 @@
-<h1 title="{{alias.label}}">{{alias.question}}</h1>
-
 <div data-o-grid-colspan="full-width">
 	<div class="chart-container">
 		<div data-keen-alias="{{alias.name}}"></div>
 	</div>
 </div>
 
-
+{{#unless alias}}
+	<h2>No queries set up yet.</h2>
+	<p>Visit <a href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M/edit#gid=0">THE SPREADSHEET OF DESTINY</a> to set some up.
+{{/unless}}
 
