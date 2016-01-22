@@ -116,7 +116,7 @@ module.exports = {
 		del.on('click', '.kq-repl__reference--extractions li', ev => {
 			validate(input.value + '->' + ev.target.getAttribute('data-str'))
 				.then(str => {
-					input.value += str;
+					input.value = str;
 					input.focus();
 				}, e => {
 					output.innerHTML = `<span class="error">${e.message || e}</span>`;
