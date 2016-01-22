@@ -61,14 +61,30 @@
 <div class="kq-repl o-grid-container">
 <form class="kq-repl__form">
 	<textarea class="kq-repl__input" placeholder="Enter a keen query" rows="1"></textarea>
-	<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
+	<div class="kq-repl__toolbar">
+		<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
+		<button class="o-buttons o-buttons--small kq-repl__clear-output">clear output</button>
+	</div>
 	<div class="kq-repl__output"></div>
-</form>
 
-<h2>Event collections (click one to start new query)</h2>
+</form>
+<div class="o-grid-row">
+	<div data-o-grid-colspan="6">
+<h2>Common queries openings (click to choose)</h2>
+
+		<ul class="kq-repl__reference kq-repl__reference--collections">
+			<li class="o-buttons o-buttons--small" data-str="page:view->count(user.uuid)">count users</li>
+			<li class="o-buttons o-buttons--small" data-str="page:view->count()">count page views</li>
+		</ul>
+		<p>Scroll down to set more query options</p>
+	</div>
+
+
+	<div data-o-grid-colspan="6">
+<h2><i>or</i> Event collections (click one to start new custom query)</h2>
 <ul class="o-grid-row kq-repl__reference kq-repl__reference--collections">
 	{{#each collections}}
-	<li data-o-grid-colspan="3">
+	<li data-o-grid-colspan="6">
 		{{@key}}</h3>
 		<ul>
 			{{#each this}}
@@ -78,9 +94,7 @@
 	</li>
 	{{/each}}
 </ul>
-<div class="o-grid-row">
-	<div data-o-grid-colspan="6">
-		<h2>Extractions (click to choose)</h2>
+<h2>Extractions (click to choose)</h2>
 
 		<ul class="kq-repl__reference kq-repl__reference--extractions">
 			<li class="o-buttons o-buttons--small" data-str="count()">count</li>
@@ -93,6 +107,11 @@
 			<li class="o-buttons o-buttons--small" data-str="pct({prop})">pct</li>
 			<li class="o-buttons o-buttons--small" data-str="select({prop})">select unique</li>
 		</ul>
+</div>
+<div class="o-grid-row">
+	<div data-o-grid-colspan="6">
+
+
 
 		<h2>Filters (click to append)</h2>
 
