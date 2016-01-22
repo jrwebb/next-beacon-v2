@@ -5,11 +5,11 @@
 import chartui from './components/chartui';
 import colors from './colors';
 
-const coreChartTypes = ['line','pie','bar','column'];
-
-const ucfirst = (string) => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 
 const defaultOptions = {
+	width: '100%',
+	height: '100%',
 	is3D: true,
 	pieSliceTextStyle: {
 		color: 'black'
@@ -47,10 +47,10 @@ const defaultOptions = {
 // Todo: Add support for tables with less than/more than two dimensions
 const drawChart = (data, el, alias) => {
 
-	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer.toLowerCase()) === undefined) {
+	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer) === undefined) {
 		throw 'Error drawing google chart.';
 	}
-	const chart = new google.visualization[ucfirst(alias.printer) + 'Chart'](el);
+	const chart = new google.visualization[alias.printer](el);
 
 	let options = defaultOptions;
 	options.title = alias.question;
@@ -59,7 +59,7 @@ const drawChart = (data, el, alias) => {
 	// (Also: See hAxis.ticks for a possible alternative)
 	let headings = data.headings || [null,null];
 	headings.forEach((h, i) => {
-		if (h === 'timeframe' && ['line','column'].find(e => e === alias.printer.toLowerCase()) !== undefined) {
+		if (h === 'timeframe' && ['LineChart','ColumnChart'].find(e => e === alias.printer) !== undefined) {
 			data.rows = data.rows.map(r => {
 				r[i] = new Date(r[i]);
 				return r;
@@ -80,5 +80,6 @@ const drawChart = (data, el, alias) => {
 }
 
 module.exports = {
-	drawChart : drawChart
+	drawChart : drawChart,
+	getCoreChartTypes : () => coreChartTypes
 }

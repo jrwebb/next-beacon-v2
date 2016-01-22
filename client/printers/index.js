@@ -1,8 +1,9 @@
 
-const KeenQuery = require('n-keen-query');
+import {getCoreChartTypes} from '../google-chart'
+import KeenQuery from 'n-keen-query'
 
-KeenQuery.definePrinter('html', require('./html'));
-KeenQuery.definePrinter('line', require('./core'));
-KeenQuery.definePrinter('bar', require('./core'));
-KeenQuery.definePrinter('column', require('./core'));
-KeenQuery.definePrinter('pie', require('./core'));
+KeenQuery.definePrinter('html', require('./html'))
+
+// All core google charts use the same printer.
+const coreChartTypes = getCoreChartTypes()
+coreChartTypes.forEach(e => KeenQuery.definePrinter(e, require('./core')))
