@@ -27,7 +27,7 @@ module.exports = {
 							res(el, alias);
 
 							// Remove the loading spinner
-							el.parentElement.classList.remove('core-chart-loading');
+							el.parentElement.classList.remove('chart-loading');
 						} else {
 							throw 'There is a problem with the keen-query response.'
 						}
