@@ -12,26 +12,34 @@ module.exports = {
 				// Todo: Check that the printer has been defined in KeenQuery and/or BeaconV2
 				const printer = alias.printer || 'html';
 
-				// Build the Keen API query
-				const builtQuery = KeenQuery.buildFromAlias(alias);
 
-				// Generate the keen explorer Url for the chart
-				alias.explorerURL = '/data/explorer?' + KeenQuery.generateExplorerUrl(builtQuery);
+				try {
+					// Build the Keen API query
+					const builtQuery = KeenQuery.buildFromAlias(alias);
+					// Generate the keen explorer Url for the chart
+					alias.explorerURL = builtQuery.generateKeenUrl('/data/explorer?');
 
-				// Fetch the data from Keen API and call the printer function
-				builtQuery.print(printer)
+					// Fetch the data from Keen API and call the printer function
+					builtQuery.print(printer)
 
-					// Handle the response from the printer function
-					.then(res => {
-						if (typeof res === 'function') {
-							res(el, alias);
+						// Handle the response from the printer function
+						.then(res => {
+							if (typeof res === 'function') {
+								res(el, alias);
 
-							// Remove the loading spinner
-							el.parentElement.classList.remove('chart-loading');
-						} else {
-							throw 'There is a problem with the keen-query response.'
-						}
-					});
+								// Remove the loading spinner
+								el.parentElement.classList.remove('chart-loading');
+							} else {
+								throw 'There is a problem with the keen-query response.'
+							}
+						});
+				} catch (err) {
+					console.log(alias)
+					el.parentElement.classList.remove('chart-loading');
+					el.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span>
+<p>${alias.name}, ${alias.label}, ${alias.question}: ${alias.query}</p>`;
+				}
+
 			}
 		});
 	}
