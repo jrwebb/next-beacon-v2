@@ -48,27 +48,7 @@ const table = (query, alias) => {
 
 module.exports = function () {
 	return (el, alias) => {
-		console.log(el, bigNumber(this, alias))
 		el.innerHTML = this.getTable().dimension ? table(this, alias) : bigNumber(this, alias);
-
 		chartui.renderChartUI(el, alias);
 	}
 }
-
-
-// 'use strict';
-
-// function html (data) {
-
-// }
-
-// module.exports = function () {
-// 	const data = this.tabulate(curr, prev);
-// 	const tableTitle = (this.name ? this.name + ':<br>' : '') + this.toString() + ': ' + this.timespan;
-// 	if (data.length === 1) {
-// 		data[0].name = tableTitle;
-// 		return html(data[0]);
-// 	} else {
-// 		return [`<h2>${tableTitle}</h2>`].concat(data.map(html)).join('\n\n');
-// 	}
-// }

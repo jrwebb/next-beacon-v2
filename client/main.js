@@ -11,7 +11,5 @@ if (document.querySelector('.kq-repl')) {
 	require('./components/render').init();
 }
 
-(() => {
-	// Error: google.charts.load() cannot be called more than once.
-	google.charts.load('current', {packages: ['corechart','table']});
-})();
+// Note: google.charts.load() cannot be called more than once.
+(() => google.charts.load('current', {packages: ['corechart','table']}))();

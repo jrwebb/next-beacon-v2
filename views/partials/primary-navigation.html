@@ -1,28 +1,26 @@
-<nav class="o-hierarchical-nav o-header__nav--secondary-theme" data-o-component="o-hierarchical-nav" data-o-grid-colspan="8">
-	<ul data-o-hierarchical-nav-level="1">
-		<li><a href="/">Overview</a></li>
-		<li><a href="/data/explorer">Data explorer</a></li>
-		<li><a href="/data/kq-repl">keen-query</a></li>
-		<li class="o-hierarchical-nav__parent"><a>Dashboards <i></i></a>
-			<ul data-o-hierarchical-nav-level="2">
-				<li><a href="/dashboard/">Next data</a></li>
-				<li><a href="/dashboard/frontpage/">Front page</a></li>
-				<li><a href="/dashboard/anonymous/">Anonymous</a></li>
-				<li><a href="/">[Workstream]</a></li>
-				<li><a href="/">[Workstream]</a></li>
-				<li class="o-hierarchical-nav__parent"><a>[Workstream] <i></i></a>
-					<ul data-o-hierarchical-nav-level="3">
-						<li><a href="/">[Dashboard one]</a></li>
-						<li><a href="/">[Dashboard two]</a></li>
-						<li><a href="/">[Dashboard three]</a></li>
-					</ul>
-				</li>
-				<li><a href="/dashboard/example/">Example charts</a></li>
-				<li><a href="/dashboard/test/">Test charts</a></li>
-			</ul>
-		</li>
-	</ul>
-</nav>
-<nav class="o-hierarchical-nav o-header__nav--secondary-theme" data-o-component="o-hierarchical-nav" data-o-grid-colspan="4">
-	{{> search}}
+<nav class="o-hierarchical-nav o-header__nav--secondary-theme" data-o-component="o-hierarchical-nav">
+	<div data-o-grid-colspan="8">
+		<ul data-o-hierarchical-nav-level="1">
+			<li><a href="/dashboard/frontpage/">Front page</a></li>
+			<li><a href="/dashboard/anonymous/">Anonymous</a></li>
+			<li><a href="/dashboard/googlesearch/">Google search</a></li>
+			<li><a href="/dashboard/myft/"><i>my</i>FT</a></li>
+			<li class="o-hierarchical-nav__parent"><a>Next data <i></i></a>
+				<ul data-o-hierarchical-nav-level="2">
+					<li><a href="/dashboard/example/">Example charts</a></li>
+					<li><a href="/dashboard/test/">Test charts</a></li>
+					<li><a target="_blank" class="external tool" href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M/">THE SPREADSHEET OF DESTINY</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div data-o-grid-colspan="2">
+		<ul data-o-hierarchical-nav-level="1">
+			<li><a class="internal tool" href="/data/kq-repl">Keen-query</a></li>
+			<li><a target="_blank" class="external tool" href="/data/explorer">Data explorer</a></li>
+		</ul>
+	</div>
+	<div data-o-grid-colspan="2">
+		{{> search}}
+	</div>
 </nav>

@@ -27,8 +27,10 @@ body {
 .o-techdocs-container {
 	margin-top: 100px;
 }
+.beacon__printer,
 .chart-container {
 	position: relative;
+	margin-bottom: 1em;
 }
 .chart-loading {
 	min-height: 100px;
@@ -51,9 +53,6 @@ body {
 .core-chart {
 	min-height: 450px;
 	min-width: 120px;
-}
-.beacon__printer {
-	margin-bottom: 1em;
 }
 .o-forms-suffix--small {
 	font-size: 14px;

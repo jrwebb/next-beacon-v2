@@ -80,6 +80,9 @@ app.get(/feature\/(.*)/, require('./controllers/feature'));
 app.get(/chart\/(.*)/, require('./controllers/chart'));
 app.get(/dashboard\/(.*)/, require('./controllers/dashboard'));
 
+// [Development] Testing multiple-print()s with the same base query (but different timeframes)
+app.get(/multi-print\/(.*)/, require('./controllers/multi-print'));
+
 app.get('/', require('./controllers/overview'));
 
 KeenQuery.aliases.poll()
