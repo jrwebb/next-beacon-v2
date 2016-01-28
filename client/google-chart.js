@@ -46,8 +46,7 @@ const defaultOptions = {
 
 // Todo: Add support for tables with less than/more than two dimensions
 const drawChart = (data, el, alias) => {
-
-	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer) === undefined) {
+	if (!(alias || el || data) || coreChartTypes.indexOf(alias.printer) === -1) {
 		throw 'Error drawing google chart.';
 	}
 	const chart = new google.visualization[alias.printer](el);
@@ -57,18 +56,22 @@ const drawChart = (data, el, alias) => {
 
 	// Google line and column charts expect times to be date objects
 	// (Also: See hAxis.ticks for a possible alternative)
-	let headings = data.headings || [null,null];
-	headings.forEach((h, i) => {
-		if (h === 'timeframe' && ['LineChart','ColumnChart'].find(e => e === alias.printer) !== undefined) {
-			data.rows = data.rows.map(r => {
-				r[i] = new Date(r[i]);
-				return r;
-			});
-		}
-	});
+	let headings;
+	if (data.headings) {
+		headings = data.headings;
+		headings.forEach((h, i) => {
+			if (h === 'timeframe' && ['LineChart','ColumnChart'].indexOf(alias.printer) > -1) {
+				data.rows = data.rows.map(r => {
+					r[i] = new Date(r[i]);
+					return r;
+				});
+			}
+		});
 
-	// Todo: fix this horrible labelling hack
-	headings = headings.map(h => h === 'timeframe' ? h : alias.label);
+		headings[0] = alias.label;
+	} else {
+		headings = ['', alias.label]
+	}
 
 	var mergedData = [headings].concat(data.rows);
 	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
