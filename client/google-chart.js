@@ -45,8 +45,32 @@ const defaultOptions = {
 };
 
 // Todo: Add support for tables with less than/more than two dimensions
-const drawChart = (data, el, alias) => {
-	if (!(alias || el || data) || coreChartTypes.indexOf(alias.printer) === -1) {
+const getDataTable = (alias, kq) => {
+	let kqTable = kq.getTable();
+
+	let headings = [kqTable.axes[0].property || '', alias.label];
+	let rows = Object.keys(kqTable.data)
+		.map((k, i) => {
+
+			// Google line and column charts expect times to be date objects
+			// (Also: See hAxis.ticks for a possible alternative)
+			let axisPoint;
+			if (kqTable.axes[0].type === "timeframe" && ['LineChart','ColumnChart'].find(e => e === alias.printer) !== undefined) {
+				axisPoint = new Date(kqTable.axes[0].values[i].start);
+			}
+			else {
+				axisPoint = kqTable.axes[0].values[i];
+			}
+			return [axisPoint, parseInt(kqTable.data[i])]
+		});
+
+	let mergedData = [headings].concat(rows);
+	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
+	return dataTable;
+}
+
+const drawChart = (alias, el, data) => {
+	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer) === undefined) {
 		throw 'Error drawing google chart.';
 	}
 	const chart = new google.visualization[alias.printer](el);
@@ -54,34 +78,12 @@ const drawChart = (data, el, alias) => {
 	let options = defaultOptions;
 	options.title = alias.question;
 
-	// Google line and column charts expect times to be date objects
-	// (Also: See hAxis.ticks for a possible alternative)
-	let headings;
-	if (data.headings) {
-		headings = data.headings;
-		headings.forEach((h, i) => {
-			if (h === 'timeframe' && ['LineChart','ColumnChart'].indexOf(alias.printer) > -1) {
-				data.rows = data.rows.map(r => {
-					r[i] = new Date(r[i]);
-					return r;
-				});
-			}
-		});
-
-		headings[0] = alias.label;
-	} else {
-		headings = ['', alias.label]
-	}
-
-	var mergedData = [headings].concat(data.rows);
-	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
-
-	chart.draw(dataTable, options);
-
+	chart.draw(data, options);
 	chartui.renderChartUI(el, alias);
 }
 
 module.exports = {
 	drawChart : drawChart,
+	getDataTable : getDataTable,
 	getCoreChartTypes : () => coreChartTypes
 }
