@@ -12,6 +12,6 @@ module.exports = function () {
 			const dataTable = googleChart.getDataTable(alias, this);
 			googleChart.drawChart(alias, el, dataTable);
 		}
-		google.charts.setOnLoadCallback(googleOnLoadCallback.bind({ this, alias, el }));
+		google.charts.setOnLoadCallback(googleOnLoadCallback.bind(this, alias, el));
 	}
 }
