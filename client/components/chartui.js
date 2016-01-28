@@ -10,7 +10,7 @@ const renderChartUI = (el, alias) => {
 	let childEl = document.createElement('div');
 	childEl.className = 'chart-ui';
 	childEl.innerHTML = linksHTML;
-	el.parentElement.appendChild(childEl);
+	el.appendChild(childEl);
 }
 const getChartLinkHTML = (name) => {
 	return `<div class="chart-link"><a target="_blank" href="/chart/${name}">Chart</a></div>`;
