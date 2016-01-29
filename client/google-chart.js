@@ -74,8 +74,8 @@ const getDataTable = (alias, kq) => {
 		}));
 	}
 
-	// Ugly hack for google pie charts.
-	if (alias.printer === 'PieChart') {
+	// Ugly hack for google pie/bar charts.
+	if (['PieChart', 'BarChart'].find(e => e === alias.printer) !== undefined) {
 		rows = rows.map(r => {
 			if (r[0] === 0) r[0] = '';
 			return r;
