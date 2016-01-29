@@ -7,7 +7,6 @@ body {
 	font-family: BentonSans, sans-serif;
 	font-weight: 100;
 	margin: 0;
-
 }
 .o-techdocs {
 	.o-header {
@@ -23,14 +22,19 @@ body {
 			}
 		}
 	}
-}
-.o-techdocs-container {
-	margin-top: 100px;
+	.o-techdocs-container {
+		margin-top: 100px;
+	}
 }
 .beacon__printer,
 .chart-container {
 	position: relative;
-	margin-bottom: 1em;
+	margin-bottom: 2em;
+	h2 {
+		border: 0px;
+		padding: 0px;
+		margin: 0px 0px 5px 0px;
+	}
 }
 .chart-loading {
 	min-height: 100px;

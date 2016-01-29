@@ -4,17 +4,22 @@ import KeenQuery from 'n-keen-query';
 
 // Shake the alias and builtQuery up then bake it into the Dom element
 const shakeAndBake = (alias, builtQuery, el) => {
-
-	// Todo: Check that the printer has been defined in KeenQuery and/or BeaconV2
-	const printer = alias.printer || 'html';
-
 	try {
-
-		// Generate the keen explorer Url for the chart
 		alias.explorerURL = '/data/explorer?' + KeenQuery.generateExplorerUrl(builtQuery);
 
+		if (!alias.printer) {
+
+			// Default to google table for multi-dimention data
+			if (builtQuery.dimensions && builtQuery.dimensions.length > 0) {
+				alias.printer = 'Table';
+			}
+			else {
+				alias.printer = 'html';
+			}
+		}
+
 		// Fetch the data from Keen API and call the printer function
-		builtQuery.print(printer)
+		builtQuery.print(alias.printer)
 
 			// Handle the response from the printer function
 			.then(res => {
