@@ -47,16 +47,18 @@ const defaultOptions = {
 // Todo: Add support for tables with less than/more than two dimensions
 const getDataTable = (alias, kq) => {
 	let kqTable = kq.getTable();
-
 	let headings = [kqTable.axes[0].property || '', alias.label];
 	let rows = Object.keys(kqTable.data)
 		.map((k, i) => {
-
-			// Google line and column charts expect times to be date objects
-			// (Also: See hAxis.ticks for a possible alternative)
 			let axisPoint;
-			if (kqTable.axes[0].type === "timeframe" && ['LineChart','ColumnChart'].find(e => e === alias.printer) !== undefined) {
-				axisPoint = new Date(kqTable.axes[0].values[i].start);
+			if (kqTable.axes[0].type === "timeframe") {
+				axisPoint = kqTable.axes[0].values[i].start;
+
+				// Table, line and column charts expect times to be date objects
+				// (Also: See hAxis.ticks for a possible alternative)
+				if (['LineChart', 'ColumnChart', 'Table'].find(e => e === alias.printer) !== undefined) {
+					axisPoint = new Date(axisPoint);
+				}
 			}
 			else {
 				axisPoint = kqTable.axes[0].values[i];
