@@ -8,15 +8,16 @@ const chartui = require('../components/chartui');
 
 const bigNumber = (query, alias) => {
 
-	let html = `<div class="o-big-number o-big-number--standard">`
+	let html = `<div class="o-big-number o-big-number--standard" title="${alias.question}">`
+
 	if (alias.question) {
-		html += `<div class="o-big-number__content o-big-number__content--question">${alias.question}</div>`;
+		html += `<div class="o-big-number__content o-big-number__content--question chart-question">${alias.question}</div>`;
 	}
 
-	html += `<div class="o-big-number__title" title="${alias.question}">${query.getTable().data}</div>`;
+	html += `<div class="o-big-number__title chart-data">${query.getTable().data}</div>`;
 
 	if (alias.label) {
-		html += `<div class="o-big-number__content">${alias.label}</div>`;
+		html += `<div class="o-big-number__content chart-label">${alias.label}</div>`;
 	}
 
 	return html + `</div>`;
