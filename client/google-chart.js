@@ -53,7 +53,7 @@ const getDataTable = (alias, kq) => {
 	let rows = kqTable.rows;
 
 	const interval = alias.interval || 'day';
-	headings = headings.map((h, i) => {
+	headings = headings.map(h => {
 		h = h || '';
 		if (typeof(h) === 'object' && h.start) {
 			h = utils.formatTime(h, interval, 'shortISO')
