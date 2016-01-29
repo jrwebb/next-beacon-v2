@@ -76,7 +76,6 @@ app.get('/data/reports/:name', function(req, res) {
 
 app.use(require('./middleware/nav'));
 
-app.get(/feature\/(.*)/, require('./controllers/feature'));
 app.get(/chart\/(.*)/, require('./controllers/chart'));
 app.get(/dashboard\/(.*)/, require('./controllers/dashboard'));
 
