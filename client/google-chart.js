@@ -48,7 +48,7 @@ const defaultOptions = {
 
 // Todo: Consider moving some of this logic to n-keen-query or keen-query.
 const getDataTable = (alias, kq) => {
-	let kqTable = kq.getTable().humanize('shortISO'); // ISO would be better but is not yet available
+	let kqTable = kq.getTable().humanize('shortISO'); // 'ISO' or 'dateObject' would be better but is not yet available
 	let headings = kqTable.headings;
 	let rows = kqTable.rows;
 
@@ -61,7 +61,7 @@ const getDataTable = (alias, kq) => {
 		return h;
 	});
 
-	// Google line and column charts expect times to be date objects
+	// Google line, column and table charts expect times to be date objects.
 	if (['LineChart', 'ColumnChart', 'Table'].find(e => e === alias.printer) !== undefined) {
 
 		// Convert any valid shortISO time string into a date object.
@@ -72,6 +72,14 @@ const getDataTable = (alias, kq) => {
 			}
 			return c;
 		}));
+	}
+
+	// Ugly hack for google pie charts.
+	if (alias.printer === 'PieChart') {
+		rows = rows.map(r => {
+			if (r[0] === 0) r[0] = '';
+			return r;
+		});
 	}
 
 	let mergedData = [headings].concat(rows);
