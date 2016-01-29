@@ -9,7 +9,9 @@ const shakeAndBake = (alias, builtQuery, el) => {
 	const printer = alias.printer || 'html';
 
 	try {
-		alias.explorerURL = builtQuery.generateKeenUrl('/data/explorer?');
+
+		// Generate the keen explorer Url for the chart
+		alias.explorerURL = '/data/explorer?' + KeenQuery.generateExplorerUrl(builtQuery);
 
 		// Fetch the data from Keen API and call the printer function
 		builtQuery.print(printer)
