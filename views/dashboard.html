@@ -2,11 +2,7 @@
 
 	{{#each dashboardAliases}}
 
-	<div data-o-grid-colspan="full-width">
-		<div class="chart-container chart-loading">
-			<div data-keen-alias="{{name}}"></div>
-		</div>
-	</div>
+		{{>chart}}
 
 	{{else}}
 
