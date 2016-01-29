@@ -66,8 +66,12 @@ const getDataTable = (alias, kq) => {
 
 		// Convert any valid shortISO time string into a date object.
 		// Todo: Maybe do something like `kq.getTable().humanize('dateObject')`
+		const formats = [
+			'MMM DD, YYYY',
+			'YYYY-MM-DD'
+		]
 		rows = rows.map(r => r.map(c => {
-			if (moment(c, "MMM DD, YYYY", true).isValid()) {
+			if (moment(c, formats, true).isValid()) {
 				c = new Date(c);
 			}
 			return c;
