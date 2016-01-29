@@ -4,7 +4,8 @@
 // e.g. if the data is a single number, it's a metric (o-big-number),
 // but if it's multi-column data, then render a HTML table.
 
-const chartui = require('../components/chartui');
+import chartui from '../components/chartui';
+import humanize from 'humanize-plus';
 
 const bigNumber = (query, alias) => {
 
@@ -14,7 +15,8 @@ const bigNumber = (query, alias) => {
 		html += `<div class="o-big-number__content o-big-number__content--question chart-question">${alias.question}</div>`;
 	}
 
-	html += `<div class="o-big-number__title chart-data">${query.getTable().data}</div>`;
+	const niceNumber = humanize.compactInteger(query.getTable().data, 1);
+	html += `<div class="o-big-number__title chart-data">${niceNumber}</div>`;
 
 	if (alias.label) {
 		html += `<div class="o-big-number__content chart-label">${alias.label}</div>`;
