@@ -1,7 +1,7 @@
 'use strict';
 
 import KeenQuery from 'n-keen-query';
-
+import querystring from 'querystring';
 // Shake the alias and builtQuery up then bake it into the Dom element
 const shakeAndBake = (alias, builtQuery, el) => {
 
@@ -34,11 +34,24 @@ const shakeAndBake = (alias, builtQuery, el) => {
 
 module.exports = {
 	init: () => {
+		const q = querystring.parse(location.search.substr(1));
+		let timeframer = kq => kq;
+
+		if (q.timeframe) {
+			if (q.timeframe.charAt(0) === '{') {
+				const timeframe = JSON.parse(q.timeframe);
+				timeframer = kq => kq.absTime(timefrmae.start, timeframe.end);
+			} else {
+				timeframer = kq => kq.relTime(q.timeframe);
+			}
+		}
+
 		[].slice.call(document.querySelectorAll('[data-keen-alias]')).forEach(el => {
 			const aliasAttribute = el.getAttribute('data-keen-alias');
+
 			if (window.aliases && window.aliases[aliasAttribute]) {
 				const alias = window.aliases[aliasAttribute];
-				const builtQuery = KeenQuery.buildFromAlias(alias);
+				const builtQuery = timeframer(KeenQuery.buildFromAlias(alias));
 
 				shakeAndBake(alias, builtQuery, el.parentElement);
 
@@ -46,8 +59,8 @@ module.exports = {
 				if (/^\/multi-print\//.test(location.pathname)) {
 
 					// 02
-					const builtQuery02 = KeenQuery.buildFromAlias(alias);
-					builtQuery02.relTime('this_90_days');
+					const builtQuery02 = builtQuery
+						.relTime('this_90_days');
 
 					let el02 = el.parentElement.cloneNode(true);
 					el.parentElement.parentElement.appendChild(el02);
@@ -55,9 +68,9 @@ module.exports = {
 					shakeAndBake(alias, builtQuery02, el02);
 
 					// 03
-					const builtQuery03 = KeenQuery.buildFromAlias(alias);
-					builtQuery03.relTime('this_14_days');
-					builtQuery03.interval('d');
+					const builtQuery03 = builtQuery
+						.relTime('this_14_days')
+						.interval('d');
 
 					let el03 = el.parentElement.cloneNode(true);
 					el.parentElement.parentElement.appendChild(el03);
@@ -65,9 +78,9 @@ module.exports = {
 					shakeAndBake(alias, builtQuery03, el03);
 
 					// 04
-					const builtQuery04 = KeenQuery.buildFromAlias(alias);
-					builtQuery04.relTime('this_7_days');
-					builtQuery04.interval('d');
+					const builtQuery04 = builtQuery
+						.relTime('this_7_days')
+						.interval('d');
 
 					let el04 = el.parentElement.cloneNode(true);
 					el.parentElement.parentElement.appendChild(el04);
