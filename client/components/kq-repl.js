@@ -18,7 +18,7 @@ class PropertySearch {
 
 	constructor () {
 		this.searchEl = document.querySelector('.kq-repl__properties-filter');
-		this.items = [].slice.call(document.querySelectorAll('.kq-repl__reference--properties li'))
+		this.items = [].slice.call(document.querySelectorAll('.kq-repl__reference--properties .o-buttons'))
 			.map(el => {
 				return {
 					el,
@@ -76,6 +76,13 @@ module.exports = {
 			});
 		}
 
+		function outputError (e) {
+			let txt = e.message || e;
+			if (/^Queries must begin/.test(txt)) {
+				txt += '. Have you completed <b>Step 1</b> yet?';
+			}
+			output.innerHTML = `<span class="error">${txt}</span>`;
+		}
 		function run() {
 			const query = input.value.trim();
 			try {
@@ -87,7 +94,7 @@ module.exports = {
 						func(output, {})
 					}, e => output.textContent = e.message || e);
 				} catch (e) {
-					output.innerHTML = `<span class="error">${e.message || e}</span>`;
+					outputError(e);
 				}
 		}
 
@@ -118,24 +125,24 @@ module.exports = {
 			output.innerHTML = '';
 		})
 
-		del.on('click', '.kq-repl__reference--extractions li', ev => {
+		del.on('click', '.kq-repl__reference--extractions .o-buttons', ev => {
 			validate(input.value + '->' + ev.target.getAttribute('data-str'))
 				.then(str => {
 					input.value = str;
 					input.focus();
 				}, e => {
-					output.innerHTML = `<span class="error">${e.message || e}</span>`;
+					outputError(e);
 					input.focus();
 				})
 		});
 
-		del.on('click', '.kq-repl__reference--methods li', ev => {
+		del.on('click', '.kq-repl__reference--methods .o-buttons', ev => {
 			validate()
 				.then(() => {
 					input.value += '->' + ev.target.getAttribute('data-str');
 					input.focus();
 				}, e => {
-					output.innerHTML = `<span class="error">${e.message || e}</span>`;
+					outputError(e);
 					input.focus();
 				})
 

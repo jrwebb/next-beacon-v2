@@ -1,0 +1,220 @@
+<style>
+
+	.kq-repl {
+		padding-top: 90px;
+	}
+
+	.kq-repl .error {
+		font-size: 24px;
+		line-height: 1.2;
+		color: red;
+	}
+
+	.kq-repl input[type="text"],
+	.kq-repl textarea {
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	.kq-repl__box {
+		border: 1px solid gray;
+		padding: 0 10px 10px;
+		margin-top: 10px;
+	}
+
+	.kq-repl__interjection {
+		float: left;
+		font-size: 20px;
+		background: white;
+		margin-top: -10px;
+		padding: 5px;
+	}
+	.kq-repl__input {
+		padding: 0 10px;
+		font-size:24px;
+		min-height: 30px;
+		line-height: 1.8;
+		background-color: aliceblue;
+	}
+
+	.kq-repl__properties-filter {
+		padding: 0 5px;
+		font-size: 18px;
+		min-height: 24px;
+		line-height: 1.8;
+	}
+
+	.kq-repl__output + h2 {
+		margin-top: 5px;
+	}
+
+	.kq-repl__reference {
+		list-style: none;
+		padding: 0;
+	}
+
+	.kq-repl__reference .o-buttons {
+		margin-right: 5px;
+	}
+
+	.kq-repl__reference--collections ul{
+		display: inline;
+	}
+
+	.kq-repl__reference--stacked ul {
+		display: block;
+	}
+
+	.kq-repl__reference--stacked li {
+		padding-bottom: 5px;
+	}
+
+	.kq-repl__reference > [data-o-grid-colspan] {
+		padding-bottom: 10px;
+	}
+
+	.kq-repl__reference > li.hidden {
+		display: none;
+	}
+
+	.kq-repl__form {
+		background: white;
+		z-index: 1;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		padding: 90px 10px 10px;
+		border-bottom: 1px solid #ccc;
+	}
+
+	small code {
+		font-size: 0.9em;
+	}
+
+</style>
+<div class="kq-repl o-grid-container">
+<form class="kq-repl__form">
+	<textarea class="kq-repl__input" placeholder="Enter a keen query or use the tools below to build one" rows="1"></textarea>
+	<div class="kq-repl__toolbar">
+		<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
+		<button class="o-buttons o-buttons--small kq-repl__clear-output">Clear output</button>
+	</div>
+	<div class="kq-repl__output"></div>
+</form>
+<div class="kq-repl__box">
+	<h2>Step 1: Begin a query</h2>
+	<em class="kq-repl__interjection">either</em>
+	<div class="kq-repl__box">
+		<h3>Choose from one of the following common Starter queries</h3>
+		<p>(you can customize later)</p>
+		<ul class="kq-repl__reference kq-repl__reference--collections">
+			<li class="o-buttons o-buttons--small" data-str="page:view->count(user.uuid)">Count unique users</li>
+			<li class="o-buttons o-buttons--small" data-str="page:view->count()">Count all page views</li>
+			<li class="o-buttons o-buttons--small" data-str="cta:click->count()">Count all clicks on links, buttons etc.</li>
+		</ul>
+	</div>
+
+	<em class="kq-repl__interjection">or</em>
+	<div class="kq-repl__box">
+		<h3>Choose a type of <b>event</b> to look at...</h3>
+		<ul class="o-grid-row kq-repl__reference kq-repl__reference--collections">
+			{{#each collections}}
+			<li data-o-grid-colspan="6">
+				{{@key}}</h3>
+				<ul>
+					{{#each this}}
+						<li class="o-buttons o-buttons--small" data-str="{{@../key}}:{{this}}">{{this}}</li>
+					{{/each}}
+				</ul>
+			</li>
+			{{/each}}
+		</ul>
+		<h3>...and pick an analysis method (or <b>extraction</b> in keen parlance)</h3>
+		<div class="kq-repl__reference--extractions">
+			<p><span class="o-buttons o-buttons--small" data-str="count()">Count</span> or <span class="o-buttons o-buttons--small" data-str="count({prop})">Count unique</span> are what you'll normally want, but also available are:
+			<ul class="kq-repl__reference">
+				<li class="o-buttons o-buttons--small" data-str="min({prop})">Minimum value</li>
+				<li class="o-buttons o-buttons--small" data-str="max({prop})">Maximum value</li>
+				<li class="o-buttons o-buttons--small" data-str="sum({prop})">Sum of values</li>
+				<li class="o-buttons o-buttons--small" data-str="avg({prop})">Average value</li>
+				<li class="o-buttons o-buttons--small" data-str="med({prop})">Median value</li>
+				<li class="o-buttons o-buttons--small" data-str="pct({prop},{percentile})">Percentile value</li>
+				<li class="o-buttons o-buttons--small" data-str="select({prop})">List all unique values</li>
+			</ul>
+			<p>(see below to pick properties to sum, average etc.. over)</p>
+		</div>
+	</div>
+</div>
+<div class="kq-repl__box">
+
+	<div class="o-grid-row">
+
+
+		<div data-o-grid-colspan="6" class="kq-repl__reference--methods">
+			<h2>Step 2: Refine the query</h2>
+			<p>Use the options below, and the <b>metadata picker</b> on the right, to refine what data is collected in your query. If you feel confident you can also edit the light blue text box above directly</p>
+
+			<h3>Set the time range</h3>
+			<p>There are two things to set:</p>
+			<ul>
+				<li>The <b>timeframe</b> - when to collect data from and until</li>
+				<li>The <b>interval</b> (optional) - how to split up this time range e.g. daily, hourly</li>
+			</ul>
+			<ul class="kq-repl__reference">
+				<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">last 14 days including today</li>
+				<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">last 14 days exluding today</li>
+				<li class="o-buttons o-buttons--small" data-str="relTime(this_10_weeks)">last 10 weeks including this week</li>
+				<li class="o-buttons o-buttons--small" data-str="relTime(this_6_months)">last 6 months including this month</li>
+				<li class="o-buttons o-buttons--small" data-str="relTime(this_1_days)">Today so far</li>
+				<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">custom time range</li>
+			</ul>
+			<ul class="kq-repl__reference">
+				<li class="o-buttons o-buttons--small" data-str="interval(m)">Set the interval to minutely</li>
+				<li class="o-buttons o-buttons--small" data-str="interval(h)">Set the interval to hourly</li>
+				<li class="o-buttons o-buttons--small" data-str="interval(d)">Set the interval to daily</li>
+				<li class="o-buttons o-buttons--small" data-str="interval(w)">Set the interval to weekly</li>
+			</ul>
+
+			<h3>Include/exclude data based on whether a condition is met (filters)</h3>
+			<ul class="kq-repl__reference kq-repl__reference--stacked">
+				<li><button class="o-buttons o-buttons--small" data-str="filter({prop})">Property must exist </button><small> e.g. <code>filter(user.uuid)</code> to get subscribers</small></li>
+				<li><button class="o-buttons o-buttons--small" data-str="filter(!{prop})"> Property must not exist</button><small> e.g. <code>filter(!user.uuid)</code> to get anonymous users</small></li>
+				<li><button class="o-buttons o-buttons--small" data-str="filter({prop}={value})">Property must be equal to a value</button><small> e.g. <code>filter(geo.continent=AS)</code> to include only Asian visitors</small></li>
+				<li><button class="o-buttons o-buttons--small" data-str="filter({prop}!={value})">Property must not be equal to a value</button><small> e.g. <code>filter(geo.continent!=AS)</code> to exclude Asian visitors</small></li>
+				<li><button class="o-buttons o-buttons--small" data-str="filter({prop}>{value})">Property must be greater than some number</button><small> e.g. <code>filter(content.age&gt;234568)</code> to get old content</small></li>
+				<li><button class="o-buttons o-buttons--small" data-str="filter({prop}<{value})">Property must be less than some number</button><small> e.g. <code>filter(content.age&lt;234568)</code> to get recent content</small></li>
+				<li><button class="o-buttons o-buttons--small" data-str="filter({prop}~{value})">Property must contain some text</button><small> e.g. <code>filter(meta.domPath~header)</code> to get clicks in the header</small></li>
+				<li><button class="o-buttons o-buttons--small" data-str="filter({prop}?{value})">Property must be one of a list of words</button><small> e.g. <code>filter(page.type?stream,frontpage)</code> to get data for stream and frontpage only</small></li>
+			</ul>
+
+			<h3>Grouping data</h3>
+			<p>You might want to split the data in order to e.g. compare usage on desktop and mobile. To do this it's a matter of passing in one or more properties you want to split the data by. A few common use cases are provided below:</p>
+			<ul class="kq-repl__reference kq-repl__reference--methods">
+				<li class="o-buttons o-buttons--small" data-str="group(device.primaryHardwareType)">Group by device type</li>
+				<li class="o-buttons o-buttons--small" data-str="group(page.location.type)">Group by page type</li>
+				<li class="o-buttons o-buttons--small" data-str="group(device.layout)">Group by screen size</li>
+				<li class="o-buttons o-buttons--small" data-str="group(device.browserName)">Group by browser</li>
+			</ul>
+			<p><strong>Warning: If also defining an interval (see <b>Set the time range</b> above) then the data produced may become unwieldy if you also group by more than one property</strong></p>
+
+			<h3>Manipulating data</h3>
+			<p>Keen offers a limited set of data analysis methods (see Step 1 above). keen-query has started to build on top of this, so far providing:</p>
+			<ul class="kq-repl__reference kq-repl__reference--methods">
+				<li class="o-buttons o-buttons--small" data-str="interval(d)->reduce(avg,timeframe)">Take a daily average</li>
+				<li class="o-buttons o-buttons--small" data-str="interval(w)->reduce(avg,timeframe)">Take a weekly average</li>
+				<li>Round to some number of decimal/nearest multiple of 10<br><button class="o-buttons o-buttons--small" data-str="round(2)">123.45</button><button class="o-buttons o-buttons--small" data-str="round(1)">123.4</button><button class="o-buttons o-buttons--small" data-str="round()">123</button><button class="o-buttons o-buttons--small" data-str="round(-1)">120</button><button class="o-buttons o-buttons--small" data-str="round(-2)">100</button></li>
+
+				<li>Many more available, but best to speak to a developer/the data team to have them explained</li>
+			</ul>
+		</div>
+		<div data-o-grid-colspan="6">
+			<h3>Metadata picker</h3>
+			<p>Each event stored in keen has lots of <b>metadata</b> attached, which can be referenced in order to <b>filter</b> or <b>group</b> the data. (click to insert in last set of parentheses)</p>
+			<input type="text" class="kq-repl__properties-filter" placeholder="Search for a metadata property">
+			<ul class="kq-repl__reference kq-repl__reference--properties">
+			{{#each properties}}<li class="o-buttons o-buttons--small" data-str="{{lowerCase}}">{{name}}</li>{{/each}}
+			</ul>
+		</div>
+	</div>
+</div>
