@@ -58,8 +58,8 @@ app.get('/data/explorer', function(req, res) {
 const keenCollections = require('./jobs/keen-collections');
 const keenProperties = require('./jobs/keen-properties');
 
-app.get('/data/kq-repl', function(req, res) {
-	res.render('kq-repl', {
+app.get('/data/query-wizard', function(req, res) {
+	res.render('query-wizard', {
 		layout: 'beacon',
 		collections: keenCollections.getData(),
 		properties: keenProperties.getData()
