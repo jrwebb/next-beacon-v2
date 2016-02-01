@@ -13,10 +13,10 @@ const renderChartUI = (el, alias) => {
 	el.appendChild(childEl);
 }
 const getChartLinkHTML = (name) => {
-	return `<div class="chart-link"><a target="_blank" href="/chart/${name}">Chart</a></div>`;
+	return `<div class="chart-link"><a href="/chart/${name}">Chart</a></div>`;
 }
 const getExplorerLinkHTML = (explorerURL) => {
-	return `<div class="explorer-link"><a target="_blank" href="${explorerURL}">Explore</a></div>`;
+	return `<div class="explorer-link"><a href="${explorerURL}">Explore</a></div>`;
 }
 module.exports = {
 	renderChartUI:renderChartUI

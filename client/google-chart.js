@@ -4,6 +4,8 @@
 
 import chartui from './components/chartui';
 import colors from './colors';
+import utils from 'keen-query/lib/utils';
+import moment from 'moment';
 
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 
@@ -44,25 +46,37 @@ const defaultOptions = {
 	colors: colors.getColors()
 };
 
-// Todo: Add support for tables with less than/more than two dimensions
+// Todo: Consider moving some of this logic to n-keen-query or keen-query.
 const getDataTable = (alias, kq) => {
-	let kqTable = kq.getTable();
+	let kqTable = kq.getTable().humanize('shortISO'); // 'ISO' or 'dateObject' would be better but is not yet available
+	let headings = kqTable.headings;
+	let rows = kqTable.rows;
 
-	let headings = [kqTable.axes[0].property || '', alias.label];
-	let rows = Object.keys(kqTable.data)
-		.map((k, i) => {
+	const interval = alias.interval || 'day';
+	headings = headings.map(h => {
+		h = h || '';
+		if (typeof(h) === 'object' && h.start) {
+			h = utils.formatTime(h, interval, 'shortISO')
+		}
+		return h;
+	});
 
-			// Google line and column charts expect times to be date objects
-			// (Also: See hAxis.ticks for a possible alternative)
-			let axisPoint;
-			if (kqTable.axes[0].type === "timeframe" && ['LineChart','ColumnChart'].find(e => e === alias.printer) !== undefined) {
-				axisPoint = new Date(kqTable.axes[0].values[i].start);
+	// Google line, column and table charts expect times to be date objects.
+	if (['LineChart', 'ColumnChart', 'Table'].indexOf(alias.printer) > -1) {
+
+		// Convert any valid shortISO time string into a date object.
+		// Todo: Maybe do something like `kq.getTable().humanize('dateObject')`
+		const formats = [
+			'MMM DD, YYYY',
+			'YYYY-MM-DD'
+		]
+		rows = rows.map(r => r.map(c => {
+			if (moment(c, formats, true).isValid()) {
+				c = new Date(c);
 			}
-			else {
-				axisPoint = kqTable.axes[0].values[i];
-			}
-			return [axisPoint, parseInt(kqTable.data[i])]
-		});
+			return c;
+		}));
+	}
 
 	let mergedData = [headings].concat(rows);
 	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
@@ -73,12 +87,20 @@ const drawChart = (alias, el, data) => {
 	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer) === undefined) {
 		throw 'Error drawing google chart.';
 	}
+
 	const chart = new google.visualization[alias.printer](el);
 
 	let options = defaultOptions;
 	options.title = alias.question;
 
 	chart.draw(data, options);
+
+	if (alias.printer === 'Table') {
+		let childEl = document.createElement('h2');
+		childEl.innerHTML = alias.question;
+		el.insertBefore(childEl, el.firstChild);
+	}
+
 	chartui.renderChartUI(el, alias);
 }
 

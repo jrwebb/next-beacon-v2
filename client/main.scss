@@ -7,7 +7,6 @@ body {
 	font-family: BentonSans, sans-serif;
 	font-weight: 100;
 	margin: 0;
-
 }
 .o-techdocs {
 	.o-header {
@@ -23,14 +22,19 @@ body {
 			}
 		}
 	}
-}
-.o-techdocs-container {
-	margin-top: 100px;
+	.o-techdocs-container {
+		margin-top: 100px;
+	}
 }
 .beacon__printer,
 .chart-container {
 	position: relative;
-	margin-bottom: 1em;
+	margin-bottom: 2em;
+	h2 {
+		border: 0px;
+		padding: 0px;
+		margin: 0px 0px 5px;
+	}
 }
 .chart-loading {
 	min-height: 100px;
@@ -64,6 +68,10 @@ body {
 	text-align: right;
 	font-size: 10px;
 	visibility: hidden;
+	.o-ft-icons-icon {
+		text-decoration: none;
+		margin-right: 0.25em;
+	}
 }
 .chart-container:hover .chart-ui {
 	visibility: visible;
@@ -71,6 +79,11 @@ body {
 .core-chart {
 	min-height: 450px;
 	min-width: 120px;
+}
+.charts {
+	.chart-question {
+		display: none;
+	}
 }
 .o-forms-suffix--small {
 	font-size: 14px;
@@ -83,7 +96,6 @@ body {
 		padding: 5px 5px 8px;
 	}
 }
-
 .error {
 	color: red;
 	font-size: 22px;
@@ -91,7 +103,7 @@ body {
 		font-weight: bold;
 	}
 }
-
 .feature-search {
 	margin-top: 1px;
+	margin-bottom: 0;
 }
