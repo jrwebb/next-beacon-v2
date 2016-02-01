@@ -68,6 +68,10 @@ body {
 	text-align: right;
 	font-size: 10px;
 	visibility: hidden;
+	.o-ft-icons-icon {
+		text-decoration: none;
+		margin-right: 0.25em;
+	}
 }
 .chart-container:hover .chart-ui {
 	visibility: visible;
