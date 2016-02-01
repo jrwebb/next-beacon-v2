@@ -58,8 +58,8 @@ app.get('/data/explorer', function(req, res) {
 const keenCollections = require('./jobs/keen-collections');
 const keenProperties = require('./jobs/keen-properties');
 
-app.get('/data/kq-repl', function(req, res) {
-	res.render('kq-repl', {
+app.get('/data/query-wizard', function(req, res) {
+	res.render('query-wizard', {
 		layout: 'beacon',
 		collections: keenCollections.getData(),
 		properties: keenProperties.getData()
@@ -76,7 +76,6 @@ app.get('/data/reports/:name', function(req, res) {
 
 app.use(require('./middleware/nav'));
 
-app.get(/feature\/(.*)/, require('./controllers/feature'));
 app.get(/chart\/(.*)/, require('./controllers/chart'));
 app.get(/dashboard\/(.*)/, require('./controllers/dashboard'));
 

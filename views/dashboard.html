@@ -1,5 +1,9 @@
-<div class="dashboard-container">
+<h1>{{name}}</h1>
 
+{{>timeframe-switcher}}
+
+<p class="o-techdocs-leadbody">These stats give a rough overview of how <b>{{name}}</b> is performing. They are illustrative only and shouldn't be taken as proof of success or failure</p>
+<div class="charts">
 	{{#each dashboardAliases}}
 
 		{{>chart}}
@@ -7,8 +11,7 @@
 	{{else}}
 
 	<h2>No queries set up yet.</h2>
-	<p>Visit <a href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M">THE SPREADSHEET OF DESTINY</a> to set some up.
+	<p>Visit <a href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M/edit#gid=0">THE SPREADSHEET OF DESTINY</a> to set some up.
 
 	{{/each}}
-
 </div>

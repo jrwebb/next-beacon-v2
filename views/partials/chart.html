@@ -1,5 +1,6 @@
 <div data-o-grid-colspan="full-width">
-	<div class="chart-container chart-loading">
-		<div data-keen-alias="{{name}}{{alias.name}}"></div>
+	<div class="chart-container " data-keen-alias="{{name}}{{alias.name}}">
+		{{>timeframe-switcher}}
+		<div class="chart__printer chart-loading"></div>
 	</div>
 </div>

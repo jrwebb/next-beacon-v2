@@ -5,7 +5,8 @@
     "o-date": "~2.1.0",
     "fetch": "~0.10.1",
     "dom-delegate": "ftdomdelegate#~2.0.3",
-    "n-keen-query": "financial-times/n-keen-query#^1.0.0"
+    "n-keen-query": "financial-times/n-keen-query#^1.0.0",
+    "querystring": "~3.46.1"
   },
   "authors": [
     "Rhys Evans <rhys.evans@ft.com>"
