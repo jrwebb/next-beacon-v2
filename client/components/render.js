@@ -46,34 +46,67 @@ const shakeAndBake = (alias, builtQuery, el) => {
 }
 
 function getTimeframerFunction (timeframe) {
-	let timeframer = kq => kq;
 
-	if (timeframe) {
+	if (typeof timeframe === 'string') {
 		if (timeframe.charAt(0) === '{') {
-			const timeframe = JSON.parse(timeframe);
-			timeframer = kq => kq.absTime(timeframe.start, timeframe.end);
+			timeframe = JSON.parse(timeframe)
 		} else {
-			timeframer = kq => kq.relTime(timeframe);
+			return kq => kq.relTime(timeframe);
 		}
 	}
-	return timeframer
+	if (timeframe) {
+		return kq => kq.absTime(timeframe.start, timeframe.end);
+	}
+	return kq => kq;
+}
+
+function getQuery () {
+	const q = querystring.parse(location.search.substr(1));
+	if (q['timeframe[start]'] && q['timeframe[end]']) {
+		q.timeframe = {
+			start: q['timeframe[start]'],
+			end: q['timeframe[end]']
+		};
+	}
+	return q;
+}
+
+function reprint (container, timeframe) {
+	const aliasName = container.dataset.keenAlias;
+	const kq = kqObjects[aliasName];
+	const printerEl = container.querySelector('.chart__printer')
+	printerEl.classList.add('chart-loading');
+	shakeAndBake(window.aliases[aliasName], getTimeframerFunction(timeframe)(kq), printerEl);
 }
 
 module.exports = {
 	init: () => {
 		const del = new Delegate(document.querySelector('.charts'));
-		const q = querystring.parse(location.search.substr(1));
+		const q = getQuery();
+
 		let timeframer = getTimeframerFunction(q.timeframe);
 
 		del.on('click', '.timeframe-switcher a', function (ev) {
 			ev.preventDefault();
 			const timeframe = ev.target.dataset.timeframe;
 			const container = getChartContainer(ev.target);
-			const aliasName = container.dataset.keenAlias;
-			const kq = kqObjects[aliasName];
-			const printerEl = container.querySelector('.chart__printer')
-			printerEl.classList.add('chart-loading');
-			shakeAndBake(window.aliases[aliasName], getTimeframerFunction(timeframe)(kq), printerEl);
+			reprint(container, timeframe);
+		});
+
+		del.on('submit', '.timeframe-switcher__custom', function (ev) {
+			ev.preventDefault();
+			ev.target.querySelector('.timeframe-switcher__start').value
+			const timeframe = {
+				start: ev.target.querySelector('.timeframe-switcher__start').value,
+				end: ev.target.querySelector('.timeframe-switcher__end').value
+			}
+			const container = getChartContainer(ev.target);
+			reprint(container, timeframe);
+			// const aliasName = container.dataset.keenAlias;
+			// const kq = kqObjects[aliasName];
+			// const printerEl = container.querySelector('.chart__printer')
+			// printerEl.classList.add('chart-loading');
+			// shakeAndBake(window.aliases[aliasName], getTimeframerFunction(timeframe)(kq), printerEl);
 		});
 
 		[].slice.call(document.querySelectorAll('.chart-container')).forEach(el => {
