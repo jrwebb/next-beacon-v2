@@ -10,10 +10,32 @@
   <script src="https://d26b395fwzu5fz.cloudfront.net/3.2.7/keen.min.js" type="text/javascript"></script>
   <!-- Include keen-explorer.js from CDN. -->
   <script src="https://d26b395fwzu5fz.cloudfront.net/apps/keen-explorer-2.0.0.min.js"></script>
+
+	<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-grid@^4.0.0,o-ft-icons@^3.0.1,o-buttons@^3.0.3,o-forms@^2.0.0" />
+	<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}"/>
+	<script src="//build.origami.ft.com/v2/bundles/js?modules=o-typography@^3.0.0,o-table@^3.0.0,o-hierarchical-nav@^3.1.0&minify=none" async></script>
 </head>
-  <body>
-  	<a style="background: white; padding: 5px; position: fixed; bottom: 0;right: 0;display: block;z-index: 200;" href="/">Back to beacon &gt;</a>
-    <div id="explorer"></div>
+<body class="o-techdocs"style="padding-top:100px;">
+	<header data-o-component="o-header" class="o-header">
+		<div class="o-header__container">
+			<div class="o-header__inner">
+				<div class="o-header__primary">
+					<div class="o-header__primary__left">
+						<a class="o-header__logo o-header__logo--ft" href="/">
+							<abbr title="Financial Times">FT</abbr>
+							<h1 class="o-header__title">Beacon - next.ft.com performance dashboard (unaudited)</h1>
+						</a>
+					</div>
+				</div>
+				<div class="o-header__secondary">
+					{{> primary-navigation}}
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div id="explorer"></div>
+
 	<script type="text/javascript">
 		$(document).ready(function(){
 
@@ -31,6 +53,24 @@
 
 			app.render(); // Render the app's UI into the targetId provided in the config.
 		});
+
+		// Note: Duplicate of client/components/feature-search.js
+		(() => {
+			const el = document.querySelector('.feature-search');
+			el.addEventListener('submit', (e) => {
+				if (e.preventDefault) e.preventDefault();
+				window.location = `/dashboard/${document.querySelector('.featureFlagText').value}`;
+				return false;
+			});
+		})();
 	</script>
-  </body>
+
+
+
+
+
+
+
+
+</body>
 </html>

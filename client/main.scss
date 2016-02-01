@@ -80,7 +80,7 @@ body {
 	min-height: 450px;
 	min-width: 120px;
 }
-.dashboard-container {
+.charts {
 	.chart-question {
 		display: none;
 	}
@@ -105,4 +105,5 @@ body {
 }
 .feature-search {
 	margin-top: 1px;
+	margin-bottom: 0;
 }

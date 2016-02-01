@@ -16,7 +16,7 @@ const getChartLinkHTML = (name) => {
 	return `<div class="chart-link"><a href="/chart/${name}">Chart</a></div>`;
 }
 const getExplorerLinkHTML = (explorerURL) => {
-	return `<div class="explorer-link"><a target="_blank" href="${explorerURL}"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Explore</a></div>`;
+	return `<div class="explorer-link"><a href="${explorerURL}">Explore</a></div>`;
 }
 module.exports = {
 	renderChartUI:renderChartUI

@@ -1,0 +1,13 @@
+<form class="feature-search">
+	<div class="o-forms-affix-wrapper">
+		<input type="text" placeholder="Feature flag" list="featureFlags" class="featureFlagText o-forms-text o-forms-text--small">
+		<div class="o-forms-suffix  o-forms-suffix--small">
+			<button type="submit" class="o-buttons">Go</button>
+		</div>
+		<datalist id="featureFlags" >
+			{{#each nav.flags}}
+			<option>{{name}}</option>
+			{{/each}}
+		</datalist>
+	</div>
+</form>

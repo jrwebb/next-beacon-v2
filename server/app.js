@@ -43,6 +43,7 @@ app.use(cookieParser());
 app.use(auth);
 app.use(window);
 app.use(aliases);
+app.use(require('./middleware/nav'));
 
 app.get('/data/export/:limit', require('./controllers/data/export'));
 
@@ -73,8 +74,6 @@ app.get('/data/reports/:name', function(req, res) {
 		proxyRes.pipe(res);
 	});
 });
-
-app.use(require('./middleware/nav'));
 
 app.get(/chart\/(.*)/, require('./controllers/chart'));
 app.get(/dashboard\/(.*)/, require('./controllers/dashboard'));
