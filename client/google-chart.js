@@ -78,10 +78,10 @@ const getDataTable = (alias, kq) => {
 		}));
 	}
 
-	// Ugly hack for google pie/bar charts.
-	if (['PieChart', 'BarChart'].find(e => e === alias.printer) !== undefined) {
+	// Ugly hack for google pie/bar/table charts.
+	if (['PieChart', 'BarChart', 'Table'].find(e => e === alias.printer) !== undefined) {
 		rows = rows.map(r => {
-			if (r[0] === 0) r[0] = '';
+			if (r[0] === 0) r[0] = '0';
 			return r;
 		});
 	}
