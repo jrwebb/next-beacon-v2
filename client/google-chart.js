@@ -4,6 +4,8 @@
 
 import chartui from './components/chartui';
 import colors from './colors';
+import utils from 'keen-query/lib/utils';
+import moment from 'moment';
 
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 
@@ -41,24 +43,61 @@ const defaultOptions = {
 	colors: colors.getColors()
 };
 
-// Todo: Add support for tables with less than/more than two dimensions
+// Todo: Consider moving some of this logic to n-keen-query or keen-query.
 const getDataTable = (alias, kq) => {
-	let kqTable = kq.getTable().humanize(['LineChart','ColumnChart'].indexOf(alias.printer) > -1 ? null : 'human');
+// <<<<<<< HEAD
+	let kqTable = kq.getTable().humanize(['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1 ? null : 'human');
 
 	kqTable.rows.forEach(row => {
-		if (kqTable.headings[0] === "timeframe" && ['LineChart','ColumnChart'].indexOf(alias.printer) > -1) {
+		if (kqTable.headings[0] === "timeframe" && ['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1) {
 			row[0] = new Date(row[0].start);
 		}
 	});
 
 	let mergedData = [kqTable.headings].concat(kqTable.rows);
 	return new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
+// =======
+// 	let kqTable = kq.getTable().humanize('shortISO'); // 'ISO' or 'dateObject' would be better but is not yet available
+// 	let headings = kqTable.headings;
+// 	let rows = kqTable.rows;
+
+// 	const interval = alias.interval || 'day';
+// 	headings = headings.map(h => {
+// 		h = h || '';
+// 		if (typeof(h) === 'object' && h.start) {
+// 			h = utils.formatTime(h, interval, 'shortISO')
+// 		}
+// 		return h;
+// 	});
+
+// 	// Google line, column and table charts expect times to be date objects.
+// 	if (['LineChart', 'ColumnChart', 'Table'].indexOf(alias.printer) > -1) {
+
+// 		// Convert any valid shortISO time string into a date object.
+// 		// Todo: Maybe do something like `kq.getTable().humanize('dateObject')`
+// 		const formats = [
+// 			'MMM DD, YYYY',
+// 			'YYYY-MM-DD'
+// 		]
+// 		rows = rows.map(r => r.map(c => {
+// 			if (moment(c, formats, true).isValid()) {
+// 				c = new Date(c);
+// 			}
+// 			return c;
+// 		}));
+// 	}
+
+// 	let mergedData = [headings].concat(rows);
+// 	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
+// 	return dataTable;
+// >>>>>>> c5c0a92e1b3f3b3b774edf9e125de05e1c92f6cf
 }
 
 const drawChart = (alias, el, data) => {
 	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer) === undefined) {
 		throw 'Error drawing google chart.';
 	}
+
 	const chart = new google.visualization[alias.printer](el);
 
 	let options = Object.assign({}, defaultOptions);
@@ -72,6 +111,13 @@ const drawChart = (alias, el, data) => {
 	}
 
 	chart.draw(data, options);
+
+	if (alias.printer === 'Table') {
+		let childEl = document.createElement('h2');
+		childEl.innerHTML = alias.question;
+		el.insertBefore(childEl, el.firstChild);
+	}
+
 	chartui.renderChartUI(el, alias);
 }
 
