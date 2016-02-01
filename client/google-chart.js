@@ -14,9 +14,6 @@ const defaultOptions = {
 	pieSliceTextStyle: {
 		color: 'black'
 	},
-	trendlines: { 0: {
-		color: '#a1dbb2' // Todo: Get this color from colors.js ('Light green')
-	}},
 	curveType:'function',
 	height: 450,
 	chartArea: {
@@ -46,27 +43,16 @@ const defaultOptions = {
 
 // Todo: Add support for tables with less than/more than two dimensions
 const getDataTable = (alias, kq) => {
-	let kqTable = kq.getTable();
+	let kqTable = kq.getTable().humanize(['LineChart','ColumnChart'].indexOf(alias.printer) > -1 ? null : 'human');
 
-	let headings = [kqTable.axes[0].property || '', alias.label];
-	let rows = Object.keys(kqTable.data)
-		.map((k, i) => {
+	kqTable.rows.forEach(row => {
+		if (kqTable.headings[0] === "timeframe" && ['LineChart','ColumnChart'].indexOf(alias.printer) > -1) {
+			row[0] = new Date(row[0].start);
+		}
+	});
 
-			// Google line and column charts expect times to be date objects
-			// (Also: See hAxis.ticks for a possible alternative)
-			let axisPoint;
-			if (kqTable.axes[0].type === "timeframe" && ['LineChart','ColumnChart'].find(e => e === alias.printer) !== undefined) {
-				axisPoint = new Date(kqTable.axes[0].values[i].start);
-			}
-			else {
-				axisPoint = kqTable.axes[0].values[i];
-			}
-			return [axisPoint, parseInt(kqTable.data[i])]
-		});
-
-	let mergedData = [headings].concat(rows);
-	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
-	return dataTable;
+	let mergedData = [kqTable.headings].concat(kqTable.rows);
+	return new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
 }
 
 const drawChart = (alias, el, data) => {
@@ -75,8 +61,15 @@ const drawChart = (alias, el, data) => {
 	}
 	const chart = new google.visualization[alias.printer](el);
 
-	let options = defaultOptions;
+	let options = Object.assign({}, defaultOptions);
 	options.title = alias.question;
+
+	// if only one data set we cna try to plot a trend line
+	if (data.dimensions === 1) {
+		options.trendlines = { 0: {
+			color: '#a1dbb2' // Todo: Get this color from colors.js ('Light green')
+		}};
+	}
 
 	chart.draw(data, options);
 	chartui.renderChartUI(el, alias);
