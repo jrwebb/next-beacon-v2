@@ -17,6 +17,7 @@ module.exports = function(req, res) {
 		dashboardAliases: dashboardAliases,
 		name: req.params[0].replace(/[a-z][A-Z][a-z]/g, function($1) {
 			return $1.charAt(0) + ' ' + $1.substr(1).toLowerCase();
-		}).replace(/\/$/, '')
+		}).replace(/\/$/, ''),
+		timeframe: req.query.timeframe || {}
 	});
 }
