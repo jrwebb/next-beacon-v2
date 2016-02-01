@@ -147,34 +147,33 @@
 	</div>
 </div>
 <div class="kq-repl__box">
+	<h2>Step 2: Choose a time range for the data</h2>
+	<p>There are two things to set:</p>
+	<h3>The <b>timeframe</b> - when to collect data from and until</h3>
+	<ul class="kq-repl__reference">
+		<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">last 14 days including today</li>
+		<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">last 14 days exluding today</li>
+		<li class="o-buttons o-buttons--small" data-str="relTime(this_10_weeks)">last 10 weeks including this week</li>
+		<li class="o-buttons o-buttons--small" data-str="relTime(this_6_months)">last 6 months including this month</li>
+		<li class="o-buttons o-buttons--small" data-str="relTime(this_1_days)">Today so far</li>
+		<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">custom time range</li>
+	</ul>
+	<h3>The <b>interval</b> (optional) - how to split up this time range e.g. daily, hourly</h3>
+	<ul class="kq-repl__reference">
+		<li class="o-buttons o-buttons--small" data-str="interval(m)">Set the interval to minutely</li>
+		<li class="o-buttons o-buttons--small" data-str="interval(h)">Set the interval to hourly</li>
+		<li class="o-buttons o-buttons--small" data-str="interval(d)">Set the interval to daily</li>
+		<li class="o-buttons o-buttons--small" data-str="interval(w)">Set the interval to weekly</li>
+	</ul>
+</div>
+<div class="kq-repl__box">
 
 	<div class="o-grid-row">
 
 
 		<div data-o-grid-colspan="6" class="kq-repl__reference--methods">
-			<h2>Step 2: Refine the query</h2>
+			<h2>Step 3: Refine the query</h2>
 			<p>Use the options below, and the <b>metadata picker</b> on the right, to refine what data is collected in your query. If you feel confident you can also edit the light blue text box above directly</p>
-
-			<h3>Set the time range</h3>
-			<p>There are two things to set:</p>
-			<ul>
-				<li>The <b>timeframe</b> - when to collect data from and until</li>
-				<li>The <b>interval</b> (optional) - how to split up this time range e.g. daily, hourly</li>
-			</ul>
-			<ul class="kq-repl__reference">
-				<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">last 14 days including today</li>
-				<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">last 14 days exluding today</li>
-				<li class="o-buttons o-buttons--small" data-str="relTime(this_10_weeks)">last 10 weeks including this week</li>
-				<li class="o-buttons o-buttons--small" data-str="relTime(this_6_months)">last 6 months including this month</li>
-				<li class="o-buttons o-buttons--small" data-str="relTime(this_1_days)">Today so far</li>
-				<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">custom time range</li>
-			</ul>
-			<ul class="kq-repl__reference">
-				<li class="o-buttons o-buttons--small" data-str="interval(m)">Set the interval to minutely</li>
-				<li class="o-buttons o-buttons--small" data-str="interval(h)">Set the interval to hourly</li>
-				<li class="o-buttons o-buttons--small" data-str="interval(d)">Set the interval to daily</li>
-				<li class="o-buttons o-buttons--small" data-str="interval(w)">Set the interval to weekly</li>
-			</ul>
 
 			<h3>Include/exclude data based on whether a condition is met (filters)</h3>
 			<ul class="kq-repl__reference kq-repl__reference--stacked">
@@ -192,13 +191,13 @@
 			<h3>Grouping data</h3>
 			<p>You might want to split the data in order to e.g. compare usage on desktop and mobile. To do this it's a matter of passing in one or more properties you want to split the data by. A few common use cases are provided below:</p>
 			<ul class="kq-repl__reference kq-repl__reference--methods">
-				<li class="o-buttons o-buttons--small" data-str="group(device.primaryHardwareType)">Group by device type</li>
-				<li class="o-buttons o-buttons--small" data-str="group(page.location.type)">Group by page type</li>
-				<li class="o-buttons o-buttons--small" data-str="group(device.layout)">Group by screen size</li>
-				<li class="o-buttons o-buttons--small" data-str="group(device.browserName)">Group by browser</li>
+				<li class="o-buttons o-buttons--small" data-str="filter(device.primaryHardwareType)->group(device.primaryHardwareType)">Group by device type</li>
+				<li class="o-buttons o-buttons--small" data-str="filter(page.location.type)->group(page.location.type)">Group by page type</li>
+				<li class="o-buttons o-buttons--small" data-str="filter(device.layout)->group(device.layout)">Group by screen size</li>
+				<li class="o-buttons o-buttons--small" data-str="filter(device.browserName)->group(device.browserName)">Group by browser</li>
 				<li class="o-buttons o-buttons--small" data-str="group({use the metadata picker})">Group by something else</li>
 			</ul>
-			<p><strong>Warning: If also defining an interval (see <b>Set the time range</b> above) then the data produced may become unwieldy if you also group by more than one property</strong></p>
+			<p><strong>Warning: If also defining an interval (see <b>Step 2</b>) then the data produced may become unwieldy if you also group by more than one property</strong></p>
 
 			<h3>Manipulating data</h3>
 			<p>Keen offers a limited set of data analysis methods (see Step 1 above). keen-query has started to build on top of this, so far providing:</p>
