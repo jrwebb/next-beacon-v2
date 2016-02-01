@@ -62,7 +62,7 @@ const getDataTable = (alias, kq) => {
 	});
 
 	// Google line, column and table charts expect times to be date objects.
-	if (['LineChart', 'ColumnChart', 'Table'].find(e => e === alias.printer) !== undefined) {
+	if (['LineChart', 'ColumnChart', 'Table'].indexOf(alias.printer) > -1) {
 
 		// Convert any valid shortISO time string into a date object.
 		// Todo: Maybe do something like `kq.getTable().humanize('dateObject')`
@@ -76,14 +76,6 @@ const getDataTable = (alias, kq) => {
 			}
 			return c;
 		}));
-	}
-
-	// Ugly hack for google pie/bar/table charts.
-	if (['PieChart', 'BarChart', 'Table'].find(e => e === alias.printer) !== undefined) {
-		rows = rows.map(r => {
-			if (r[0] === 0) r[0] = '0';
-			return r;
-		});
 	}
 
 	let mergedData = [headings].concat(rows);
