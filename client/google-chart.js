@@ -45,14 +45,7 @@ const defaultOptions = {
 
 const getDataTable = (alias, kq) => {
 	const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1;
-	const kqTable = kq.getTable().humanize(expectsDateObjects ? null : 'human');
-
-	kqTable.rows.forEach(row => {
-		if (kqTable.headings[0] === "timeframe" && expectsDateObjects) {
-			row[0] = new Date(row[0].start);
-		}
-	});
-
+	const kqTable = kq.getTable().humanize(expectsDateObjects ? 'dateObject' : 'human');
 	const mergedData = [kqTable.headings].concat(kqTable.rows);
 	return new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
 }
