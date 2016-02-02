@@ -4,8 +4,6 @@
 
 import chartui from './components/chartui';
 import colors from './colors';
-import utils from 'keen-query/lib/utils';
-import moment from 'moment';
 
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 
