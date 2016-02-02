@@ -43,54 +43,18 @@ const defaultOptions = {
 	colors: colors.getColors()
 };
 
-// Todo: Consider moving some of this logic to n-keen-query or keen-query.
 const getDataTable = (alias, kq) => {
-// <<<<<<< HEAD
-	let kqTable = kq.getTable().humanize(['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1 ? null : 'human');
+	const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1;
+	const kqTable = kq.getTable().humanize(expectsDateObjects ? null : 'human');
 
 	kqTable.rows.forEach(row => {
-		if (kqTable.headings[0] === "timeframe" && ['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1) {
+		if (kqTable.headings[0] === "timeframe" && expectsDateObjects) {
 			row[0] = new Date(row[0].start);
 		}
 	});
 
-	let mergedData = [kqTable.headings].concat(kqTable.rows);
+	const mergedData = [kqTable.headings].concat(kqTable.rows);
 	return new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
-// =======
-// 	let kqTable = kq.getTable().humanize('shortISO'); // 'ISO' or 'dateObject' would be better but is not yet available
-// 	let headings = kqTable.headings;
-// 	let rows = kqTable.rows;
-
-// 	const interval = alias.interval || 'day';
-// 	headings = headings.map(h => {
-// 		h = h || '';
-// 		if (typeof(h) === 'object' && h.start) {
-// 			h = utils.formatTime(h, interval, 'shortISO')
-// 		}
-// 		return h;
-// 	});
-
-// 	// Google line, column and table charts expect times to be date objects.
-// 	if (['LineChart', 'ColumnChart', 'Table'].indexOf(alias.printer) > -1) {
-
-// 		// Convert any valid shortISO time string into a date object.
-// 		// Todo: Maybe do something like `kq.getTable().humanize('dateObject')`
-// 		const formats = [
-// 			'MMM DD, YYYY',
-// 			'YYYY-MM-DD'
-// 		]
-// 		rows = rows.map(r => r.map(c => {
-// 			if (moment(c, formats, true).isValid()) {
-// 				c = new Date(c);
-// 			}
-// 			return c;
-// 		}));
-// 	}
-
-// 	let mergedData = [headings].concat(rows);
-// 	let dataTable = new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
-// 	return dataTable;
-// >>>>>>> c5c0a92e1b3f3b3b774edf9e125de05e1c92f6cf
 }
 
 const drawChart = (alias, el, data) => {
@@ -103,7 +67,7 @@ const drawChart = (alias, el, data) => {
 	let options = Object.assign({}, defaultOptions);
 	options.title = alias.question;
 
-	// if only one data set we cna try to plot a trend line
+	// if only one data set we can try to plot a trend line
 	if (data.dimensions === 1) {
 		options.trendlines = { 0: {
 			color: '#a1dbb2' // Todo: Get this color from colors.js ('Light green')
