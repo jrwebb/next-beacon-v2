@@ -21,7 +21,7 @@ const shakeAndBake = (alias, builtQuery, el) => {
 
 		if (!alias.printer) {
 
-			// Default to google table for multi-dimention data
+			// Default to google table for multi-dimension data
 			if (builtQuery.dimensions && builtQuery.dimensions.length > 0) {
 				alias.printer = 'Table';
 			}

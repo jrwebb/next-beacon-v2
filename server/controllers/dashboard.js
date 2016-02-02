@@ -19,6 +19,7 @@ module.exports = function(req, res) {
 			return $1.charAt(0) + ' ' + $1.substr(1).toLowerCase();
 		}).replace(/\/$/, ''),
 		timeframe: req.query.timeframe || {},
-		interval: req.query.interval
+		interval: req.query.interval,
+		isStandaloneChart: /\/chart/.test(req.path)
 	});
 }
