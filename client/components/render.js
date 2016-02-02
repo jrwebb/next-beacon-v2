@@ -52,20 +52,36 @@ const shakeAndBake = (alias, builtQuery, el) => {
 	}
 }
 
-function getTimeframerFunction (timeframe) {
+function adjustTimeframe (timeframe, func) {
 
 	if (typeof timeframe === 'string') {
 		if (timeframe.charAt(0) === '{') {
 			timeframe = JSON.parse(timeframe)
 		} else {
-			return kq => kq.relTime(timeframe);
+			return kq => func(kq).relTime(timeframe);
 		}
 	}
-	if (timeframe) {
-		return kq => kq.absTime(timeframe.start, timeframe.end);
+	if (timeframe && timeframe.start && timeframe.end) {
+		return kq => func(kq).absTime(timeframe.start, timeframe.end);
 	}
-	return kq => kq;
+	return kq => func(kq);
 }
+
+function adjustInterval(interval, func) {
+	if (interval) {
+		return kq => func(kq).interval(interval);
+	} else {
+		return kq => func(kq);
+	}
+}
+
+function getKqCustomiser (opts) {
+	let customiser = kq => kq;
+	customiser = adjustTimeframe(opts.timeframe, customiser);
+	customiser = adjustInterval(opts.interval, customiser);
+	return customiser;
+}
+
 
 function getQuery () {
 	const q = querystring.parse(location.search.substr(1));
@@ -78,12 +94,12 @@ function getQuery () {
 	return q;
 }
 
-function reprint (container, timeframe) {
+function reprint (container, opts) {
 	const aliasName = container.dataset.keenAlias;
 	const kq = kqObjects[aliasName];
 	const printerEl = container.querySelector('.chart__printer')
 	printerEl.classList.add('chart-loading');
-	shakeAndBake(window.aliases[aliasName], getTimeframerFunction(timeframe)(kq), printerEl);
+	shakeAndBake(window.aliases[aliasName], getKqCustomiser(opts)(kq), printerEl);
 }
 
 module.exports = {
@@ -91,29 +107,27 @@ module.exports = {
 		const del = new Delegate(document.querySelector('.charts'));
 		const q = getQuery();
 
-		let timeframer = getTimeframerFunction(q.timeframe);
+		let customiser = getKqCustomiser(q);
 
 		del.on('click', '.timeframe-switcher a', function (ev) {
 			ev.preventDefault();
-			const timeframe = ev.target.dataset.timeframe;
 			const container = getChartContainer(ev.target);
-			reprint(container, timeframe);
+			reprint(container, {
+				timeframe: ev.target.dataset.timeframe,
+				interval: container.querySelector('.timeframe-switcher__interval').value
+			});
 		});
 
 		del.on('submit', '.timeframe-switcher__custom', function (ev) {
 			ev.preventDefault();
-			ev.target.querySelector('.timeframe-switcher__start').value
-			const timeframe = {
-				start: ev.target.querySelector('.timeframe-switcher__start').value,
-				end: ev.target.querySelector('.timeframe-switcher__end').value
-			}
 			const container = getChartContainer(ev.target);
-			reprint(container, timeframe);
-			// const aliasName = container.dataset.keenAlias;
-			// const kq = kqObjects[aliasName];
-			// const printerEl = container.querySelector('.chart__printer')
-			// printerEl.classList.add('chart-loading');
-			// shakeAndBake(window.aliases[aliasName], getTimeframerFunction(timeframe)(kq), printerEl);
+			reprint(container, {
+				timeframe: {
+					start: container.querySelector('.timeframe-switcher__start').value,
+					end: container.querySelector('.timeframe-switcher__end').value
+				},
+				interval: container.querySelector('.timeframe-switcher__interval').value
+			});
 		});
 
 		[].slice.call(document.querySelectorAll('.chart-container')).forEach(el => {
@@ -121,7 +135,7 @@ module.exports = {
 
 			if (window.aliases && window.aliases[aliasAttribute]) {
 				const alias = window.aliases[aliasAttribute];
-				const builtQuery = timeframer(KeenQuery.buildFromAlias(alias));
+				const builtQuery = customiser(KeenQuery.buildFromAlias(alias));
 				kqObjects[aliasAttribute] = builtQuery;
 				const printerEl = el.querySelector('.chart__printer')
 				shakeAndBake(alias, builtQuery, printerEl);

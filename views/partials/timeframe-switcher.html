@@ -5,8 +5,19 @@
 	<a href="?timeframe=this_60_days" data-timeframe="this_60_days">60 days</a> |
 	<a href="?timeframe=this_90_days" data-timeframe="this_90_days">90 days</a> |
 	<form action="" method="get" style="display: inline" class="timeframe-switcher__custom">
-		Custom time:
+		<label>Set interval:</label>
+		<select name="interval" class="timeframe-switcher__interval">
+			<option> -- choose interval -- </option>
+			<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
+			<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>hour</option>
+			<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>day</option>
+			<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
+			<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
+		</select> |
+		Custom date:
 		<label>start</label> <input class="timeframe-switcher__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
-		<label>end</label> <input class="timeframe-switcher__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}"> <button class="timeframe__submit">submit</button>
+		<label>end</label> <input class="timeframe-switcher__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}"> |
+
+		<button class="timeframe__submit">submit</button>
 	</form>
 </nav>

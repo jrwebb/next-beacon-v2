@@ -18,6 +18,7 @@ module.exports = function(req, res) {
 		name: req.params[0].replace(/[a-z][A-Z][a-z]/g, function($1) {
 			return $1.charAt(0) + ' ' + $1.substr(1).toLowerCase();
 		}).replace(/\/$/, ''),
-		timeframe: req.query.timeframe || {}
+		timeframe: req.query.timeframe || {},
+		interval: req.query.interval
 	});
 }
