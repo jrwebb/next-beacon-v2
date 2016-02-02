@@ -75,7 +75,7 @@ app.get('/data/reports/:name', function(req, res) {
 	});
 });
 
-app.get(/chart\/(.*)/, require('./controllers/chart'));
+app.get(/chart\/(.*)/, require('./controllers/dashboard'));
 app.get(/dashboard\/(.*)/, require('./controllers/dashboard'));
 
 // [Development] Testing multiple-print()s with the same base query (but different timeframes)
