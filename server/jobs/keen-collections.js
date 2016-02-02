@@ -9,8 +9,11 @@ module.exports = new Poller({
 	parseData: data => {
 		const map = data.events.reduce((obj, e) => {
 			const parts = e.name.split(':');
-			obj[parts[0]] = obj[parts[0]] || {};
-			obj[parts[0]][parts[1]] = parts[1];
+			const category = parts[0];
+			const action = parts[1];
+			const bucket = ['email', 'site'].indexOf(category) > -1 ? category : action;
+			obj[bucket] = obj[bucket] || [];
+			obj[bucket].push({category, action})
 			return obj;
 		}, {});
 		return map;
