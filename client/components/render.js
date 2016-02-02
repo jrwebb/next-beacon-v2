@@ -94,7 +94,7 @@ function getKqCustomiser (opts) {
 
 function getQuery () {
 	const q = querystring.parse(location.search.substr(1));
-	if (q['timeframe[start]'] && q['timeframe[end]']) {
+	if (!q.timeframe && q['timeframe[start]'] && q['timeframe[end]']) {
 		q.timeframe = {
 			start: q['timeframe[start]'],
 			end: q['timeframe[end]']
@@ -111,6 +111,36 @@ function reprint (container, opts) {
 	shakeAndBake(window.aliases[aliasName], getKqCustomiser(opts)(kq), printerEl);
 }
 
+function getTimeframe(container, type) {
+	const relTimeEl = container.querySelector('[name="timeframe"]:checked')
+	const relTime = relTimeEl && relTimeEl.value;
+	const startEl = container.querySelector('.timeframe-switcher__start');
+	const endEl = container.querySelector('.timeframe-switcher__end');
+	const absTime = {
+		start: startEl.value,
+		end: endEl.value
+	};
+
+	// fully set absolute time
+	if (absTime.start && absTime.end && type !== 'rel') {
+		relTimeEl && relTimeEl.removeAttribute('checked');
+		return absTime;
+	// midway through setting absolute time
+	} else if (type === 'abs') {
+		return null;
+	// otherwise fallback to relative time range
+	} else {
+		endEl.value = '';
+		startEl.value = '';
+		if (!relTime) {
+			container.querySelector('.timeframe-switcher__timeframe[value="this_14_days"]').setAttribute('checked', '');
+			return 'this_14_days';
+		}
+		return relTime;
+	}
+
+}
+
 module.exports = {
 	init: () => {
 		const del = new Delegate(document.querySelector('.charts'));
@@ -118,33 +148,25 @@ module.exports = {
 
 		let customiser = getKqCustomiser(q);
 
-		del.on('click', '.timeframe-switcher a', function (ev) {
-			ev.preventDefault();
-			const container = getChartContainer(ev.target);
-			reprint(container, {
-				timeframe: ev.target.dataset.timeframe,
-				interval: container.querySelector('.timeframe-switcher__interval').value
-			});
-		});
-
 		del.on('change', '.timeframe-switcher__interval', function (ev) {
 			ev.preventDefault();
 			const container = getChartContainer(ev.target);
-			const q = getQuery();
 			reprint(container, {
-				timeframe: q.timeframe,
+				timeframe: getTimeframe(container),
 				interval: container.querySelector('.timeframe-switcher__interval').value
 			});
 		});
 
-		del.on('submit', '.timeframe-switcher__custom', function (ev) {
+		del.on('change', '.timeframe-switcher__start, .timeframe-switcher__end, .timeframe-switcher [name="timeframe"]', function (ev) {
 			ev.preventDefault();
+			const type = ev.target.name === 'timeframe' ? 'rel' : 'abs';
 			const container = getChartContainer(ev.target);
+			const timeframe = getTimeframe(container, type);
+			if (!timeframe) {
+				return;
+			}
 			reprint(container, {
-				timeframe: {
-					start: container.querySelector('.timeframe-switcher__start').value,
-					end: container.querySelector('.timeframe-switcher__end').value
-				},
+				timeframe: getTimeframe(container, type),
 				interval: container.querySelector('.timeframe-switcher__interval').value
 			});
 		});
