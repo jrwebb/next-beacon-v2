@@ -52,36 +52,45 @@ const shakeAndBake = (alias, builtQuery, el) => {
 	}
 }
 
-function adjustTimeframe (timeframe, func) {
+function composeKqModifiers(funcs) {
+	const composed = kq => {
+		let func;
+		while (func = funcs.shift()) {
+			kq = func(kq);
+		}
+		return kq;
+	}
+	return composed;
+}
+function adjustTimeframe (timeframe) {
 
 	if (typeof timeframe === 'string') {
 		if (timeframe.charAt(0) === '{') {
 			timeframe = JSON.parse(timeframe)
 		} else {
-			return kq => func(kq).relTime(timeframe);
+			return kq => kq.relTime(timeframe);
 		}
 	}
 	if (timeframe && timeframe.start && timeframe.end) {
-		return kq => func(kq).absTime(timeframe.start, timeframe.end);
+		return kq => kq.absTime(timeframe.start, timeframe.end);
 	}
-	return kq => func(kq);
+	return kq => kq;
 }
 
-function adjustInterval(interval, func) {
+function adjustInterval(interval) {
 	if (interval) {
-		return kq => func(kq).interval(interval);
+		return kq => kq.interval(interval);
 	} else {
-		return kq => func(kq);
+		return kq => kq;
 	}
 }
 
 function getKqCustomiser (opts) {
-	let customiser = kq => kq;
-	customiser = adjustTimeframe(opts.timeframe, customiser);
-	customiser = adjustInterval(opts.interval, customiser);
-	return customiser;
+	return composeKqModifiers([
+		adjustTimeframe(opts.timeframe),
+		adjustInterval(opts.interval)
+	]);
 }
-
 
 function getQuery () {
 	const q = querystring.parse(location.search.substr(1));
@@ -114,6 +123,16 @@ module.exports = {
 			const container = getChartContainer(ev.target);
 			reprint(container, {
 				timeframe: ev.target.dataset.timeframe,
+				interval: container.querySelector('.timeframe-switcher__interval').value
+			});
+		});
+
+		del.on('change', '.timeframe-switcher__interval', function (ev) {
+			ev.preventDefault();
+			const container = getChartContainer(ev.target);
+			const q = getQuery();
+			reprint(container, {
+				timeframe: q.timeframe,
 				interval: container.querySelector('.timeframe-switcher__interval').value
 			});
 		});
