@@ -17,8 +17,8 @@ const debounce = function(fn,delay){
 class PropertySearch {
 
 	constructor () {
-		this.searchEl = document.querySelector('.kq-repl__properties-filter');
-		this.items = [].slice.call(document.querySelectorAll('.kq-repl__reference--properties .o-buttons'))
+		this.searchEl = document.querySelector('.query-wizard__properties-filter');
+		this.items = [].slice.call(document.querySelectorAll('.query-wizard__reference--properties .o-buttons'))
 			.map(el => {
 				return {
 					el,
@@ -58,11 +58,11 @@ const Delegate = require('dom-delegate');
 
 module.exports = {
 	init: () => {
-		const del = new Delegate(document.querySelector('.kq-repl'));
+		const del = new Delegate(document.querySelector('.query-wizard'));
 		new PropertySearch().init();
 
-		const input = document.querySelector('.kq-repl__input');
-		const output = document.querySelector('.kq-repl__output');
+		const input = document.querySelector('.query-wizard__input');
+		const output = document.querySelector('.query-wizard__output');
 
 		function validate (str) {
 			return new Promise((res, rej) => {
@@ -110,22 +110,22 @@ module.exports = {
 				return false;
 			}
 		})
-		document.querySelector('.kq-repl__form').addEventListener('submit', ev => {
+		document.querySelector('.query-wizard__form').addEventListener('submit', ev => {
 			ev.preventDefault();
 			run();
 		})
 
-		del.on('click', '.kq-repl__reference--collections .o-buttons', ev => {
+		del.on('click', '.query-wizard__reference--starters .o-buttons, .query-wizard__reference--collections .o-buttons', ev => {
 			input.value = ev.target.getAttribute('data-str');
 			input.focus();
 		});
 
-		del.on('click', '.kq-repl__clear-output', ev => {
+		del.on('click', '.query-wizard__clear-output', ev => {
 			ev.preventDefault();
 			output.innerHTML = '';
 		})
 
-		del.on('click', '.kq-repl__reference--extractions .o-buttons', ev => {
+		del.on('click', '.query-wizard__reference--extractions .o-buttons', ev => {
 			validate(input.value + '->' + ev.target.getAttribute('data-str'))
 				.then(str => {
 					input.value = str;
@@ -136,7 +136,7 @@ module.exports = {
 				})
 		});
 
-		del.on('click', '.kq-repl__reference--methods .o-buttons', ev => {
+		del.on('click', '.query-wizard__reference--methods .o-buttons', ev => {
 			validate()
 				.then(() => {
 					input.value += '->' + ev.target.getAttribute('data-str');
@@ -148,7 +148,7 @@ module.exports = {
 
 		});
 
-		del.on('click', '.kq-repl__reference--properties', ev => {
+		del.on('click', '.query-wizard__reference--properties', ev => {
 			if (/\)$/.test(input.value)) {
 				input.value = input.value.replace(/\{use the metadata picker\}/, `{${ev.target.textContent}}`).replace(/\([^\)]*\)$/, `(${ev.target.textContent})`);
 				input.focus();

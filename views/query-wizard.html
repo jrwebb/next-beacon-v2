@@ -1,35 +1,37 @@
 <style>
 
-	.kq-repl {
+	.query-wizard {
 		padding-top: 90px;
 	}
 
-	.kq-repl .error {
+	.query-wizard .error {
 		font-size: 24px;
 		line-height: 1.2;
 		color: red;
 	}
 
-	.kq-repl input[type="text"],
-	.kq-repl textarea {
+	.query-wizard input[type="text"],
+	.query-wizard textarea {
 		box-sizing: border-box;
 		width: 100%;
 	}
 
-	.kq-repl__box {
+	.query-wizard__box {
 		border: 1px solid gray;
 		padding: 0 10px 10px;
 		margin-top: 10px;
+		position: relative;
 	}
 
-	.kq-repl__interjection {
-		float: left;
-		font-size: 20px;
-		background: white;
-		margin-top: -10px;
-		padding: 5px;
+	.query-wizard__interjection {
+    position: absolute;
+    font-size: 20px;
+    background: white;
+    padding: 2px;
+    top: -5px;
+    left: -5px;
 	}
-	.kq-repl__input {
+	.query-wizard__input {
 		padding: 0 10px;
 		font-size:24px;
 		min-height: 30px;
@@ -37,47 +39,50 @@
 		background-color: aliceblue;
 	}
 
-	.kq-repl__properties-filter {
+	.query-wizard__properties-filter {
 		padding: 0 5px;
 		font-size: 18px;
 		min-height: 24px;
 		line-height: 1.8;
 	}
 
-	.kq-repl__output + h2 {
+	.query-wizard__output + h2 {
 		margin-top: 5px;
 	}
 
-	.kq-repl__reference {
+	.query-wizard__reference {
 		list-style: none;
 		padding: 0;
 	}
 
-	.kq-repl__reference .o-buttons {
+	.query-wizard__reference .o-buttons {
 		margin-right: 5px;
 	}
 
-	.kq-repl__reference--collections ul{
-		display: inline;
+	.query-wizard__reference--collections li {
+		display: inline-block;
+		margin: 5px;
+		padding: 5px;
+		background: aliceblue;
 	}
 
-	.kq-repl__reference--stacked ul {
+	.query-wizard__reference--stacked ul {
 		display: block;
 	}
 
-	.kq-repl__reference--stacked li {
+	.query-wizard__reference--stacked li {
 		padding-bottom: 5px;
 	}
 
-	.kq-repl__reference > [data-o-grid-colspan] {
+	.query-wizard__reference > [data-o-grid-colspan] {
 		padding-bottom: 10px;
 	}
 
-	.kq-repl__reference > li.hidden {
+	.query-wizard__reference > li.hidden {
 		display: none;
 	}
 
-	.kq-repl__form {
+	.query-wizard__form {
 		background: white;
 		z-index: 1;
 		position: fixed;
@@ -93,64 +98,71 @@
 	}
 
 </style>
-<div class="kq-repl o-grid-container">
-<form class="kq-repl__form">
-	<textarea class="kq-repl__input" placeholder="Enter a keen query or use the tools below to build one" rows="1"></textarea>
-	<div class="kq-repl__toolbar">
-		<button type="submit" class="o-buttons o-buttons--standout kq-repl__submit">Click to run</button>  (or press 'Enter')
-		<button class="o-buttons o-buttons--small kq-repl__clear-output">Clear output</button>
+<div class="query-wizard o-grid-container">
+<form class="query-wizard__form">
+	<textarea class="query-wizard__input" placeholder="Enter a keen query or use the tools below to build one" rows="1"></textarea>
+	<div class="query-wizard__toolbar">
+		<button type="submit" class="o-buttons o-buttons--standout query-wizard__submit">Click to run</button>  (or press 'Enter')
+		<button class="o-buttons o-buttons--small query-wizard__clear-output">Clear output</button>
 	</div>
-	<div class="kq-repl__output"></div>
+	<div class="query-wizard__output"></div>
 </form>
-<div class="kq-repl__box">
+<div class="query-wizard__box">
 	<h2>Step 1: Begin a query</h2>
-	<em class="kq-repl__interjection">either</em>
-	<div class="kq-repl__box">
-		<h3>Choose from one of the following common Starter queries</h3>
-		<p>(you can customize later)</p>
-		<ul class="kq-repl__reference kq-repl__reference--collections">
-			<li class="o-buttons o-buttons--small" data-str="page:view->count(user.uuid)">Count unique users</li>
-			<li class="o-buttons o-buttons--small" data-str="page:view->count()">Count all page views</li>
-			<li class="o-buttons o-buttons--small" data-str="cta:click->count()">Count all clicks on links, buttons etc.</li>
-		</ul>
-	</div>
-
-	<em class="kq-repl__interjection">or</em>
-	<div class="kq-repl__box">
-		<h3>Choose a type of <b>event</b> to look at...</h3>
-		<ul class="o-grid-row kq-repl__reference kq-repl__reference--collections">
-			{{#each collections}}
-			<li data-o-grid-colspan="6">
-				{{@key}}</h3>
-				<ul>
-					{{#each this}}
-						<li class="o-buttons o-buttons--small" data-str="{{@../key}}:{{this}}">{{this}}</li>
-					{{/each}}
+	<div class="o-grid-row">
+		<div data-o-grid-colspan="3">
+			<div class="query-wizard__box">
+				<em class="query-wizard__interjection">either</em>
+				<h3>Choose from one of the following common Starter queries</h3>
+				<p>(you can customize later)</p>
+				<ul class="query-wizard__reference query-wizard__reference--starters">
+					<li class="o-buttons o-buttons--small" data-str="page:view->count(user.uuid)">Count unique users</li>
+					<li class="o-buttons o-buttons--small" data-str="page:view->count()">Count all page views</li>
+					<li class="o-buttons o-buttons--small" data-str="cta:click->count()">Count all clicks on links, buttons etc.</li>
 				</ul>
-			</li>
-			{{/each}}
-		</ul>
-		<h3>...and pick an analysis method (or <b>extraction</b> in keen parlance)</h3>
-		<div class="kq-repl__reference--extractions">
-			<p><span class="o-buttons o-buttons--small" data-str="count()">Count</span> or <span class="o-buttons o-buttons--small" data-str="count({use the metadata picker})">Count unique</span> are what you'll normally want, but also available are:
-			<ul class="kq-repl__reference">
-				<li class="o-buttons o-buttons--small" data-str="min({use the metadata picker})">Minimum value</li>
-				<li class="o-buttons o-buttons--small" data-str="max({use the metadata picker})">Maximum value</li>
-				<li class="o-buttons o-buttons--small" data-str="sum({use the metadata picker})">Sum of values</li>
-				<li class="o-buttons o-buttons--small" data-str="avg({use the metadata picker})">Average value</li>
-				<li class="o-buttons o-buttons--small" data-str="med({use the metadata picker})">Median value</li>
-				<li class="o-buttons o-buttons--small" data-str="pct({use the metadata picker},{percentile})">Percentile value</li>
-				<li class="o-buttons o-buttons--small" data-str="select({use the metadata picker})">List all unique values</li>
-			</ul>
-			<p>(see below to pick properties to sum, average etc.. over)</p>
+			</div>
+		</div>
+		<div data-o-grid-colspan="9">
+			<div class="query-wizard__box">
+				<em class="query-wizard__interjection">or</em>
+				<div class="o-grid-row">
+					<div data-o-grid-colspan="8">
+						<h3>Choose a type of <b>event</b> to look at...</h3>
+						<ul class="query-wizard__reference query-wizard__reference--collections">
+							{{#each collections}}
+							<li>
+									{{#each this}}
+										<button class="o-buttons o-buttons--small" data-str="{{category}}:{{action}}">{{category}}: {{action}}</button>
+									{{/each}}
+							</li>
+							{{/each}}
+						</ul>
+				</div>
+				<div data-o-grid-colspan="4">
+							<h3>...and pick an analysis method (or <b>extraction</b> in keen parlance)</h3>
+							<div class="query-wizard__reference--extractions">
+								<p><span class="o-buttons o-buttons--small" data-str="count()">Count</span> or <span class="o-buttons o-buttons--small" data-str="count({use the metadata picker})">Count unique</span> are what you'll normally want, but also available are:
+								<ul class="query-wizard__reference">
+									<li class="o-buttons o-buttons--small" data-str="min({use the metadata picker})">Minimum value</li>
+									<li class="o-buttons o-buttons--small" data-str="max({use the metadata picker})">Maximum value</li>
+									<li class="o-buttons o-buttons--small" data-str="sum({use the metadata picker})">Sum of values</li>
+									<li class="o-buttons o-buttons--small" data-str="avg({use the metadata picker})">Average value</li>
+									<li class="o-buttons o-buttons--small" data-str="med({use the metadata picker})">Median value</li>
+									<li class="o-buttons o-buttons--small" data-str="pct({use the metadata picker},{percentile})">Percentile value</li>
+									<li class="o-buttons o-buttons--small" data-str="select({use the metadata picker})">List all unique values</li>
+								</ul>
+							</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-<div class="kq-repl__box kq-repl__reference--methods">
+<div class="query-wizard__box query-wizard__reference--methods">
 	<h2>Step 2: Choose a time range for the data</h2>
 	<p>There are two things to set:</p>
 	<h3>The <b>timeframe</b> - when to collect data from and until</h3>
-	<ul class="kq-repl__reference">
+	<ul class="query-wizard__reference">
 		<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">last 14 days including today</li>
 		<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">last 14 days exluding today</li>
 		<li class="o-buttons o-buttons--small" data-str="relTime(this_10_weeks)">last 10 weeks including this week</li>
@@ -159,24 +171,24 @@
 		<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">custom time range</li>
 	</ul>
 	<h3>The <b>interval</b> (optional) - how to split up this time range e.g. daily, hourly</h3>
-	<ul class="kq-repl__reference">
+	<ul class="query-wizard__reference">
 		<li class="o-buttons o-buttons--small" data-str="interval(m)">Set the interval to minutely</li>
 		<li class="o-buttons o-buttons--small" data-str="interval(h)">Set the interval to hourly</li>
 		<li class="o-buttons o-buttons--small" data-str="interval(d)">Set the interval to daily</li>
 		<li class="o-buttons o-buttons--small" data-str="interval(w)">Set the interval to weekly</li>
 	</ul>
 </div>
-<div class="kq-repl__box">
+<div class="query-wizard__box">
 
 	<div class="o-grid-row">
 
 
-		<div data-o-grid-colspan="6" class="kq-repl__reference--methods">
+		<div data-o-grid-colspan="6" class="query-wizard__reference--methods">
 			<h2>Step 3: Refine the query</h2>
 			<p>Use the options below, and the <b>metadata picker</b> on the right, to refine what data is collected in your query. If you feel confident you can also edit the light blue text box above directly</p>
 
 			<h3>Include/exclude data based on whether a condition is met (filters)</h3>
-			<ul class="kq-repl__reference kq-repl__reference--stacked">
+			<ul class="query-wizard__reference query-wizard__reference--stacked">
 				<li class="o-buttons o-buttons--small" data-str="raw()">Include staff (by default tracking data for staff is excluded)</li>
 				<li><button class="o-buttons o-buttons--small" data-str="filter({use the metadata picker})">Property must exist </button><small> e.g. <code>filter(user.uuid)</code> to get subscribers</small></li>
 				<li><button class="o-buttons o-buttons--small" data-str="filter(!{use the metadata picker})"> Property must not exist</button><small> e.g. <code>filter(!user.uuid)</code> to get anonymous users</small></li>
@@ -190,8 +202,8 @@
 
 			<h3>Grouping data</h3>
 			<p>You might want to split the data in order to e.g. compare usage on desktop and mobile. To do this it's a matter of passing in one or more properties you want to split the data by. A few common use cases are provided below:</p>
-			<p class="kq-repl__reference--methods">In case you get lots of <b>null</b> values you can <button class="o-buttons o-buttons--small" data-str="tidy()">exclude null data</button></p>
-			<ul class="kq-repl__reference kq-repl__reference--methods">
+			<p class="query-wizard__reference--methods">In case you get lots of <b>null</b> values you can <button class="o-buttons o-buttons--small" data-str="tidy()">exclude null data</button></p>
+			<ul class="query-wizard__reference query-wizard__reference--methods">
 				<li class="o-buttons o-buttons--small" data-str="group(device.primaryHardwareType)">Group by device type</li>
 				<li class="o-buttons o-buttons--small" data-str="group(page.location.type)">Group by page type</li>
 				<li class="o-buttons o-buttons--small" data-str="group(device.layout)">Group by screen size</li>
@@ -202,7 +214,7 @@
 
 			<h3>Manipulating data</h3>
 			<p>Keen offers a limited set of data analysis methods (see Step 1 above). keen-query has started to build on top of this, so far providing:</p>
-			<ul class="kq-repl__reference kq-repl__reference--methods">
+			<ul class="query-wizard__reference query-wizard__reference--methods">
 				<li class="o-buttons o-buttons--small" data-str="interval(d)->reduce(avg,timeframe)">Take a daily average</li>
 				<li class="o-buttons o-buttons--small" data-str="interval(w)->reduce(avg,timeframe)">Take a weekly average</li>
 				<li>Round to some number of decimal/nearest multiple of 10<br><button class="o-buttons o-buttons--small" data-str="round(2)">123.45</button><button class="o-buttons o-buttons--small" data-str="round(1)">123.4</button><button class="o-buttons o-buttons--small" data-str="round()">123</button><button class="o-buttons o-buttons--small" data-str="round(-1)">120</button><button class="o-buttons o-buttons--small" data-str="round(-2)">100</button></li>
@@ -213,8 +225,8 @@
 		<div data-o-grid-colspan="6">
 			<h3>Metadata picker</h3>
 			<p>Each event stored in keen has lots of <b>metadata</b> attached, which can be referenced in order to <b>filter</b> or <b>group</b> the data. (click to insert in last set of parentheses)</p>
-			<input type="text" class="kq-repl__properties-filter" placeholder="Search for a metadata property">
-			<ul class="kq-repl__reference kq-repl__reference--properties">
+			<input type="text" class="query-wizard__properties-filter" placeholder="Search for a metadata property">
+			<ul class="query-wizard__reference query-wizard__reference--properties">
 			{{#each properties}}<li class="o-buttons o-buttons--small" data-str="{{lowerCase}}">{{name}}</li>{{/each}}
 			</ul>
 		</div>
