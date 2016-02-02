@@ -190,11 +190,12 @@
 
 			<h3>Grouping data</h3>
 			<p>You might want to split the data in order to e.g. compare usage on desktop and mobile. To do this it's a matter of passing in one or more properties you want to split the data by. A few common use cases are provided below:</p>
+			<p class="kq-repl__reference--methods">In case you get lots of <b>null</b> values you can <button class="o-buttons o-buttons--small" data-str="tidy()">exclude null data</button></p>
 			<ul class="kq-repl__reference kq-repl__reference--methods">
-				<li class="o-buttons o-buttons--small" data-str="filter(device.primaryHardwareType)->group(device.primaryHardwareType)">Group by device type</li>
-				<li class="o-buttons o-buttons--small" data-str="filter(page.location.type)->group(page.location.type)">Group by page type</li>
-				<li class="o-buttons o-buttons--small" data-str="filter(device.layout)->group(device.layout)">Group by screen size</li>
-				<li class="o-buttons o-buttons--small" data-str="filter(device.browserName)->group(device.browserName)">Group by browser</li>
+				<li class="o-buttons o-buttons--small" data-str="group(device.primaryHardwareType)">Group by device type</li>
+				<li class="o-buttons o-buttons--small" data-str="group(page.location.type)">Group by page type</li>
+				<li class="o-buttons o-buttons--small" data-str="group(device.layout)">Group by screen size</li>
+				<li class="o-buttons o-buttons--small" data-str="group(device.browserName)">Group by browser</li>
 				<li class="o-buttons o-buttons--small" data-str="group({use the metadata picker})">Group by something else</li>
 			</ul>
 			<p><strong>Warning: If also defining an interval (see <b>Step 2</b>) then the data produced may become unwieldy if you also group by more than one property</strong></p>
