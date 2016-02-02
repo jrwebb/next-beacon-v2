@@ -41,9 +41,10 @@ const defaultOptions = {
 	colors: colors.getColors()
 };
 
-const getDataTable = (alias, kq) => {
+function getDataTable (alias, kq) {
 	const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1;
 	const kqTable = kq.getTable().humanize(expectsDateObjects ? 'dateObject' : 'human');
+	console.log(kqTable)
 	const mergedData = [kqTable.headings].concat(kqTable.rows);
 	return new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
 }

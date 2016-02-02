@@ -1,12 +1,32 @@
 <nav class="timeframe-switcher">
+	<form action="" method="get" style="display: inline" class="timeframe-switcher__form">
 	Timeframe:
-	<a href="?timeframe=this_14_days" data-timeframe="this_14_days">14 days</a> |
-	<a href="?timeframe=this_30_days" data-timeframe="this_30_days">30 days</a> |
-	<a href="?timeframe=this_60_days" data-timeframe="this_60_days">60 days</a> |
-	<a href="?timeframe=this_90_days" data-timeframe="this_90_days">90 days</a> |
-	<form action="" method="get" style="display: inline" class="timeframe-switcher__custom">
-		Custom time:
+	{{#if isGlobal}}
+		<a href="?timeframe=this_14_days" data-timeframe="this_14_days">14 days</a> |
+		<a href="?timeframe=this_30_days" data-timeframe="this_30_days">30 days</a> |
+		<a href="?timeframe=this_60_days" data-timeframe="this_60_days">60 days</a> |
+		<a href="?timeframe=this_90_days" data-timeframe="this_90_days">90 days</a> |
+	{{else}}
+		<label for="this_14_days_{{index}}">14 days</label><input id="this_14_days_{{index}}" name="timeframe" type="radio" value="this_14_days" {{#ifEquals @root.timeframe 'this_14_days'}}checked{{/ifEquals}}> |
+		<label for="this_30_days_{{index}}">30 days</label><input id="this_30_days_{{index}}" name="timeframe" type="radio" value="this_30_days" {{#ifEquals @root.timeframe 'this_30_days'}}checked{{/ifEquals}}> |
+		<label for="this_60_days_{{index}}">60 days</label><input id="this_60_days_{{index}}" name="timeframe" type="radio" value="this_60_days" {{#ifEquals @root.timeframe 'this_60_days'}}checked{{/ifEquals}}> |
+		<label for="this_90_days_{{index}}">90 days</label><input id="this_90_days_{{index}}" name="timeframe" type="radio" value="this_90_days" {{#ifEquals @root.timeframe 'this_90_days'}}checked{{/ifEquals}}> |
+	{{/if}}
+
+		<label>Set interval:</label>
+		<select name="interval" class="timeframe-switcher__interval">
+			<option> -- choose interval -- </option>
+			<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
+			<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>hour</option>
+			<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>day</option>
+			<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
+			<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
+		</select> |
+		Custom date:
 		<label>start</label> <input class="timeframe-switcher__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
-		<label>end</label> <input class="timeframe-switcher__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}"> <button class="timeframe__submit">submit</button>
+		<label>end</label> <input class="timeframe-switcher__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}"> |
+{{#if isGlobal}}
+		<button class="timeframe__submit">submit</button>
+{{/if}}
 	</form>
 </nav>
