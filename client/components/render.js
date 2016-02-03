@@ -18,17 +18,7 @@ function getChartContainer (el) {
 const shakeAndBake = (alias, builtQuery, el) => {
 	try {
 		alias.explorerURL = '/data/explorer?' + KeenQuery.generateExplorerUrl(builtQuery);
-
-		if (!alias.printer) {
-
-			// Default to google table for multi-dimension data
-			if (builtQuery.dimensions && builtQuery.dimensions.length > 0) {
-				alias.printer = 'Table';
-			}
-			else {
-				alias.printer = 'html';
-			}
-		}
+		alias.printer = alias.printer || 'LineChart';
 
 		// Fetch the data from Keen API and call the printer function
 		builtQuery.print(alias.printer)

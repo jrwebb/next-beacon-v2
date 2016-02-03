@@ -43,13 +43,13 @@ const defaultOptions = {
 
 function getDataTable (alias, kq) {
 	const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1;
-	const kqTable = kq.getTable().humanize(expectsDateObjects ? 'dateObject' : 'human');
-	console.log(kqTable)
-	const mergedData = [kqTable.headings].concat(kqTable.rows);
+	const kqData = kq.getTable().humanize(expectsDateObjects ? 'dateObject' : 'human');
+	const mergedData = [kqData.headings].concat(kqData.rows);
 	return new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
 }
 
 const drawChart = (alias, el, data) => {
+
 	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer) === undefined) {
 		throw 'Error drawing google chart.';
 	}
