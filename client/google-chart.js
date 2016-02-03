@@ -2,7 +2,6 @@
 
 'use strict';
 
-import chartui from './components/chartui';
 import colors from './colors';
 
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
@@ -41,20 +40,21 @@ const defaultOptions = {
 	colors: colors.getColors()
 };
 
-function getDataTable (alias, kq) {
-	const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(alias.printer) > -1;
+function getDataTable (alias, kq, printer) {
+	printer = printer || alias.printer;
+	const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(printer) > -1;
 	const kqData = kq.getTable().humanize(expectsDateObjects ? 'dateObject' : 'human');
 	const mergedData = [kqData.headings].concat(kqData.rows);
 	return new google.visualization.arrayToDataTable(mergedData); // eslint-disable-line new-cap
 }
 
-const drawChart = (alias, el, data) => {
-
-	if (!(alias || el || data) || coreChartTypes.find(e => e === alias.printer) === undefined) {
+const drawChart = (alias, el, data, printer) => {
+	printer = printer || alias.printer;
+	if (!(alias || el || data) || coreChartTypes.find(e => e === printer) === undefined) {
 		throw 'Error drawing google chart.';
 	}
 
-	const chart = new google.visualization[alias.printer](el);
+	const chart = new google.visualization[printer](el);
 
 	let options = Object.assign({}, defaultOptions);
 	options.title = alias.question;
@@ -68,13 +68,11 @@ const drawChart = (alias, el, data) => {
 
 	chart.draw(data, options);
 
-	if (alias.printer === 'Table') {
+	if (printer === 'Table') {
 		let childEl = document.createElement('h2');
 		childEl.innerHTML = alias.question;
 		el.insertBefore(childEl, el.firstChild);
 	}
-
-	chartui.renderChartUI(el, alias);
 }
 
 module.exports = {

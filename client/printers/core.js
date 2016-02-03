@@ -12,11 +12,11 @@ function hasDimension (kq) {
 // Todo: Figure out why converting this to es6 breaks it. (`this` becomes `undefined`, but why?)
 // This breaks it: `module.exports = () => {`
 module.exports = function () {
-	return (el, alias) => {
+	return (el, alias, printer) => {
 		if (hasDimension(this)) {
 			const googleOnLoadCallback = () => {
-				const dataTable = googleChart.getDataTable(alias, this);
-				googleChart.drawChart(alias, el, dataTable);
+				const dataTable = googleChart.getDataTable(alias, this, printer);
+				googleChart.drawChart(alias, el, dataTable, printer);
 			}
 			google.charts.setOnLoadCallback(googleOnLoadCallback.bind(this, alias, el));
 		} else {

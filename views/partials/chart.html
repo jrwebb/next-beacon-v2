@@ -1,7 +1,11 @@
 <div data-o-grid-colspan="full-width">
-	<a href="/chart/{{name}}{{alias.name}}">Chart</a>
+
 	<div class="chart-container " data-keen-alias="{{name}}{{alias.name}}">
-		{{>timeframe-switcher index=@index}}
+		<div class="chart-container__ui">
+			<a href="/chart/{{name}}{{alias.name}}">View chart</a>
+			{{>timeframe-switcher index=@index}}
+			<button class="o-buttons o-buttons--small o-buttons--standout chart-container__view-switcher">view data</button>
+		</div>
 		<div class="chart__printer chart-loading {{class}}{{alias.class}}"></div>
 	</div>
 </div>

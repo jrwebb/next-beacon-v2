@@ -4,7 +4,6 @@
 // e.g. if the data is a single number, it's a metric (o-big-number),
 // but if it's multi-column data, then render a HTML table.
 
-import chartui from '../components/chartui';
 import humanize from 'humanize-plus';
 
 const bigNumber = (query, alias) => {
@@ -52,6 +51,5 @@ const table = (query, alias) => {
 module.exports = function () {
 	return (el, alias) => {
 		el.innerHTML = this.getTable().dimension ? table(this, alias) : bigNumber(this, alias);
-		chartui.renderChartUI(el, alias);
 	}
 }

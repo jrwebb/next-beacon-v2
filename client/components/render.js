@@ -3,6 +3,7 @@
 import KeenQuery from 'n-keen-query';
 import querystring from 'querystring';
 import Delegate from 'dom-delegate';
+import chartui from './chartui';
 
 const kqObjects = {};
 
@@ -15,20 +16,20 @@ function getChartContainer (el) {
 }
 
 // Shake the alias and builtQuery up then bake it into the Dom element
-const shakeAndBake = (alias, builtQuery, el) => {
+const shakeAndBake = (alias, builtQuery, el, printer) => {
 	try {
-		alias.explorerURL = '/data/explorer?' + KeenQuery.generateExplorerUrl(builtQuery);
-		alias.printer = alias.printer || 'LineChart';
+		alias.printer = 'LineChart' // temporarily ignore printer from spreadsheet ... Experiment!!
+		//alias.printer || 'LineChart';
 
 		// Fetch the data from Keen API and call the printer function
-		builtQuery.print(alias.printer)
+		builtQuery.print(printer || 'LineChart')//alias.printer)
 
 			// Handle the response from the printer function
 			.then(res => {
 				el.classList.remove('chart-loading');
 				el.classList.add('chart-loaded');
 				if (typeof res === 'function') {
-					res(el, alias);
+					res(el, alias, printer || 'LineChart');
 				} else {
 					el.classList.add('chart-error');
 					throw 'There is a problem with the keen-query response.'
@@ -68,6 +69,11 @@ function adjustTimeframe (timeframe) {
 }
 
 function adjustInterval(interval) {
+	// handle the case where it sets the select value to innerHTML of the option when option value not defined
+	// ANNNNNOYING!!!!
+	if (interval && interval.charAt(0) === '-') {
+		interval = null;
+	}
 	if (interval) {
 		return kq => kq.interval(interval);
 	} else {
@@ -98,7 +104,7 @@ function reprint (container, opts) {
 	const kq = kqObjects[aliasName];
 	const printerEl = container.querySelector('.chart__printer')
 	printerEl.classList.add('chart-loading');
-	shakeAndBake(window.aliases[aliasName], getKqCustomiser(opts)(kq), printerEl);
+	shakeAndBake(window.aliases[aliasName], getKqCustomiser(opts)(kq), printerEl, opts.asData ? 'Table' : null);
 }
 
 function getTimeframe(container, type) {
@@ -161,6 +167,26 @@ module.exports = {
 			});
 		});
 
+		del.on('click', '.chart-container__view-switcher', function (ev) {
+			ev.preventDefault();
+			let asData;
+			const container = getChartContainer(ev.target);
+			if (ev.target.hasAttribute('aria-pressed')) {
+				asData = false;
+				ev.target.removeAttribute('aria-pressed');
+			} else {
+				asData = true
+				ev.target.setAttribute('aria-pressed', '');
+			}
+			reprint(container, {
+				timeframe: getTimeframe(container),
+				interval: container.querySelector('.timeframe-switcher__interval').value,
+				asData
+			});
+		});
+
+
+
 		[].slice.call(document.querySelectorAll('.chart-container')).forEach(el => {
 			const aliasAttribute = el.getAttribute('data-keen-alias');
 
@@ -168,6 +194,7 @@ module.exports = {
 				const alias = window.aliases[aliasAttribute];
 				const builtQuery = customiser(KeenQuery.buildFromAlias(alias));
 				kqObjects[aliasAttribute] = builtQuery;
+				chartui.renderChartUI(el, builtQuery, alias);
 				const printerEl = el.querySelector('.chart__printer')
 				shakeAndBake(alias, builtQuery, printerEl);
 
