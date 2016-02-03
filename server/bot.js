@@ -5,25 +5,47 @@ const Botkit = require('botkit');
 const controller = Botkit.slackbot();
 const processBotCommand = require('./lib/process-bot-command');
 
-
 const bot = controller.spawn({
   token: process.env.SLACK_KEENBOT_TOKEN
 });
 
+KeenQuery.definePrinter('keenBot', function () {
+	let table = this.getTable();
+
+	// make sure the greatest dimension is shown vertically
+	// TODO: base it on total text length rather than number of columns/rows
+	if (table.dimension === 2) {
+		const greatestDimension = table.size.reduce((max, s, i) => {
+			if (s > this.getTable().size[max]) {
+				return i;
+			}
+			return max;
+		}, 0);
+		table = table.switchDimensions(greatestDimension, 0, 'swap');
+	}
+
+	const data = table.humanize('shortest');
+
+	return [{
+		title: data.headings[0],
+		value: data.headings.slice(1).join(' | '),
+		short: false
+	}].concat(data.rows.map(r => {
+  	return {
+  		title: r[0],
+  		value: r.slice(1).join(' | '),
+  		short: false
+  	};
+	}))
+})
+
 const generateResponse = (results) => {
 	return {
-		attachments: [
-		{
+		attachments: [{
       fallback: "Complete",
       title: results.question,
       color: "#7CD197",
-      fields: results.headings.map((heading, index) => {
-      	return {
-      		title: heading,
-      		value: results.rows[index].join(' | '),
-      		short: false
-      	};
-    	})
+      fields: results
   	}]
 	}
 };
@@ -35,7 +57,8 @@ bot.startRTM(function(err) {
   }
 });
 
-const convertToQuery = (message) => message.replace(/\&gt;/g, '>');
+const convertToQuery = (message) => message.replace(/\&gt;/g, '>')
+	.replace(/->print\(.*\)$/, '') + '->print(\'keenBot\')';
 
 controller.hears(['run (.*)'],["direct_message","direct_mention","mention"], (bot, message) => {
 	const query = convertToQuery(message.match[1]);
@@ -45,17 +68,17 @@ controller.hears(['run (.*)'],["direct_message","direct_mention","mention"], (bo
 	});
 });
 
-
-
 const askQuestion = (query, bot, message) => {
 	if(!query.query) {
 		bot.reply(message, 'There appears to be no query attached to that question...check the spreadsheet');
 		return Promise.resolve();
 	}
-	return KeenQuery.buildFromAlias(query).print().then((res) => {
-		res.question = query.question || query.label || query.name;
-		return res;
-	});
+	return KeenQuery.buildFromAlias(query)
+		.print('keenBot')
+		.then((res) => {
+			res.question = query.question || query.label || query.name;
+			return res;
+		});
 }
 
 
