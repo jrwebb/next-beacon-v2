@@ -11,7 +11,9 @@ module.exports = new Poller({
 			const parts = e.name.split(':');
 			const category = parts[0];
 			const action = parts[1];
-			const bucket = ['email', 'site'].indexOf(category) > -1 ? category : action;
+			// attempt to group things sensibly
+			const bucket = ['view'].indexOf(action) > -1 ? action :
+				['email', 'site', 'page', 'overlay', 'push'].indexOf(category) > -1 ? category : action;
 			obj[bucket] = obj[bucket] || [];
 			obj[bucket].push({category, action})
 			return obj;

@@ -69,6 +69,9 @@ module.exports = {
 				str = str || input.value.trim();
 				try {
 					KeenQuery.build(str);
+					if (output.querySelector('.error')) {
+						output.innerHTML = '';
+					}
 					res(str);
 				} catch (e) {
 					rej(e);
@@ -117,6 +120,7 @@ module.exports = {
 
 		del.on('click', '.query-wizard__reference--starters .o-buttons, .query-wizard__reference--collections .o-buttons', ev => {
 			input.value = ev.target.getAttribute('data-str');
+			output.innerHTML = '';
 			input.focus();
 		});
 
