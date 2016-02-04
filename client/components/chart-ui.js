@@ -1,5 +1,5 @@
 import Delegate from 'dom-delegate';
-import {storeKq, retrieveKq} from '../data/kq-cache';
+import {retrieveKq} from '../data/kq-cache';
 import {fromForm as getConfigurator} from '../components/configurator';
 
 function getChartContainer (el) {
@@ -8,16 +8,6 @@ function getChartContainer (el) {
 	}
 	return el;
 }
-
-// function reprintold (container, opts) {
-// 	const aliasName = container.dataset.keenAlias;
-// 	const kq = kqObjects[aliasName];
-// 	const printerEl = container.querySelector('.chart__printer')
-// 	printerEl.classList.add('chart-loading');
-// 	shakeAndBake(window.aliases[aliasName], getKqConfigurer(opts)(kq), printerEl, opts.asData ? 'Table' : null);
-// }
-
-
 
 export function printChart (printerEl, kq, meta) {
 	try {
@@ -45,7 +35,7 @@ export function printChart (printerEl, kq, meta) {
 function reprint (ev) {
 	ev.preventDefault();
 	const container = getChartContainer(ev.target);
-	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target);
+	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target.name);
 	const alias = container.dataset.keenAlias;
 	const kq = configure(retrieveKq(alias));
 	printChart(container.querySelector('.chart__printer'), kq, window.aliases[alias]);
@@ -55,11 +45,9 @@ function reprint (ev) {
 export function init (container) {
 	const del = new Delegate(container);
 
-	del.on('change', '.chart__configurator__interval', reprint);
-
+	del.on('change', '.chart__configurator [name="interval"]', reprint);
 	del.on('change', '.chart__configurator [name^="timeframe"]', reprint);
-
-	del.on('change', '.chart__view-switcher', reprint);
+	del.on('change', '.chart__configurator [name="printer"]', reprint);
 
 	[].forEach.call(container.querySelectorAll('.chart'), chartEl => {
 		const uiEl = chartEl.querySelector('.chart__ui');

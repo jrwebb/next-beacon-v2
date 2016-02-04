@@ -3,7 +3,7 @@
 import KeenQuery from 'n-keen-query';
 import {init as chartUi, printChart} from '../components/chart-ui';
 import {fromQueryString as getConfigurator} from '../components/configurator';
-import {storeKq, retrieveKq} from '../data/kq-cache';
+import {storeKq} from '../data/kq-cache';
 
 
 export function init () {

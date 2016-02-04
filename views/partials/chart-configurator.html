@@ -25,8 +25,8 @@
 		Custom date:
 		<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
 		<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}"> |
-		<label>view chart</label><input type="radio" name="printer" value="">
-		<label>view data</label><input type="radio" name="printer" value="Table">
+		<label>view chart</label><input type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}>
+		<label>view data</label><input type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}>
 {{#if isGlobal}}
 		<button class="timeframe__submit">submit</button>
 {{/if}}

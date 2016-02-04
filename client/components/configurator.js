@@ -36,10 +36,19 @@ function adjustInterval(interval) {
 	}
 }
 
+function adjustPrinter(printer) {
+	if (printer) {
+		return kq => kq.setPrinter(printer);
+	} else {
+		return kq => kq;
+	}
+}
+
 function getKqConfigurer (opts) {
 	return composeKqModifiers([
 		adjustTimeframe(opts.timeframe),
-		adjustInterval(opts.interval)
+		adjustInterval(opts.interval),
+		adjustPrinter(opts.printer)
 	]);
 }
 
