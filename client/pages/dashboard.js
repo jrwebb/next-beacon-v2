@@ -15,17 +15,15 @@ export function init () {
 		const printerEl = el.querySelector('.chart__printer')
 		let conf;
 		if (conf = window.aliases[alias]) {
-			const builtQuery = configure(KeenQuery.buildFromAlias(conf));
+			const builtQuery = KeenQuery.buildFromAlias(conf);
 			storeKq(builtQuery);
 			// temporarily force all line charts on first render;
 			conf.printer = null;
 			try {
 				const printer = conf.printer || 'LineChart';
 
-				// Fetch the data from Keen API and call the printer function
-				builtQuery.print(printer)
-
-					// Handle the response from the printer function
+				configure(builtQuery)
+					.print(printer)
 					.then(renderer => {
 						printerEl.classList.remove('chart-loading');
 						printerEl.classList.add('chart-loaded');
