@@ -3,7 +3,7 @@
 import KeenQuery from 'n-keen-query';
 import querystring from 'querystring';
 import Delegate from 'dom-delegate';
-import chartui from './chartui';
+import chartUi from '../components/chart-ui';
 
 const kqObjects = {};
 
@@ -194,7 +194,7 @@ module.exports = {
 				const alias = window.aliases[aliasAttribute];
 				const builtQuery = customiser(KeenQuery.buildFromAlias(alias));
 				kqObjects[aliasAttribute] = builtQuery;
-				chartui.renderChartUI(el, builtQuery, alias);
+				chartUi.renderChartUI(el, builtQuery, alias);
 				const printerEl = el.querySelector('.chart__printer')
 				shakeAndBake(alias, builtQuery, printerEl);
 

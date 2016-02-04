@@ -6,10 +6,11 @@ require('./printers');
 require('./components/feature-search');
 
 if (document.querySelector('.query-wizard')) {
-	require('./components/query-wizard').init();
+	require('./pages/query-wizard').init();
 } else {
-	require('./components/render').init();
+	require('./pages/dashboard').init();
 }
 
-// Note: google.charts.load() cannot be called more than once.
-(() => google.charts.load('current', {packages: ['corechart','table']}))();
+google.charts.load('current', {
+	packages: ['corechart', 'table']
+});
