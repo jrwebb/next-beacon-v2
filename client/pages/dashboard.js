@@ -1,238 +1,90 @@
 'use strict';
 
 import KeenQuery from 'n-keen-query';
-import querystring from 'querystring';
-import Delegate from 'dom-delegate';
-import chartUi from '../components/chart-ui';
-
-const kqObjects = {};
+import {init as chartUi} from '../components/chart-ui';
+import {fromQueryString as getConfigurator} from '../components/configurator';
+import {storeKq, retrieveKq} from '../data/kq-cache';
 
 
-function getChartContainer (el) {
-	while (!el.classList.contains('chart-container')) {
-		el = el.parentNode;
-	}
-	return el;
-}
+export function init () {
 
-// Shake the alias and builtQuery up then bake it into the Dom element
-const shakeAndBake = (alias, builtQuery, el, printer) => {
-	try {
-		alias.printer = 'LineChart' // temporarily ignore printer from spreadsheet ... Experiment!!
-		//alias.printer || 'LineChart';
+	const configure = getConfigurator();
 
-		// Fetch the data from Keen API and call the printer function
-		builtQuery.print(printer || 'LineChart')//alias.printer)
+	[].slice.call(document.querySelectorAll('.chart')).forEach(el => {
+		const alias = el.getAttribute('data-keen-alias');
+		const printerEl = el.querySelector('.chart__printer')
+		let conf;
+		if (conf = window.aliases[alias]) {
+			const builtQuery = configure(KeenQuery.buildFromAlias(conf));
+			storeKq(builtQuery);
+			// temporarily force all line charts on first render;
+			conf.printer = null;
+			try {
+				const printer = conf.printer || 'LineChart';
 
-			// Handle the response from the printer function
-			.then(res => {
-				el.classList.remove('chart-loading');
-				el.classList.add('chart-loaded');
-				if (typeof res === 'function') {
-					res(el, alias, printer || 'LineChart');
-				} else {
-					el.classList.add('chart-error');
-					throw 'There is a problem with the keen-query response.'
-				}
-			});
-	} catch (err) {
-		console.log('err', alias);
-		el.classList.remove('chart-loading');
-		el.classList.add('chart-error');
-		el.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${alias.name}, ${alias.label}, ${alias.question}: ${alias.query}</p>`;
-	}
-}
+				// Fetch the data from Keen API and call the printer function
+				builtQuery.print(printer)
 
-function composeKqModifiers(funcs) {
-	const composed = kq => {
-		let func;
-		while (func = funcs.shift()) {
-			kq = func(kq);
-		}
-		return kq;
-	}
-	return composed;
-}
-function adjustTimeframe (timeframe) {
+					// Handle the response from the printer function
+					.then(renderer => {
+						printerEl.classList.remove('chart-loading');
+						printerEl.classList.add('chart-loaded');
+						if (typeof renderer === 'function') {
+							renderer(printerEl, conf);
+						} else {
+							printerEl.classList.add('chart-error');
+							throw 'There is a problem with the keen-query response.'
+						}
+					});
+			} catch (err) {
+				console.log('err', conf);
+				printerEl.classList.remove('chart-loading');
+				printerEl.classList.add('chart-error');
+				printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${conf.name}, ${conf.label}, ${conf.question}: ${conf.query}</p>`;
+			}
 
-	if (typeof timeframe === 'string') {
-		if (timeframe.charAt(0) === '{') {
-			timeframe = JSON.parse(timeframe)
+
+
 		} else {
-			return kq => kq.relTime(timeframe);
+			printerEl.classList.add('chart-error');
+			printerEl.innerHTML = `<p class="error">Invalid chart name: ${alias}</p>`;
 		}
-	}
-	if (timeframe && timeframe.start && timeframe.end) {
-		return kq => kq.absTime(timeframe.start, timeframe.end);
-	}
-	return kq => kq;
-}
+			// // HACK DURING DEVELOPMENT: Multiple prints of a single KeenQuery
+			// if (/^\/multi-print\//.test(location.pathname)) {
 
-function adjustInterval(interval) {
-	// handle the case where it sets the select value to innerHTML of the option when option value not defined
-	// ANNNNNOYING!!!!
-	if (interval && interval.charAt(0) === '-') {
-		interval = null;
-	}
-	if (interval) {
-		return kq => kq.interval(interval);
-	} else {
-		return kq => kq;
-	}
-}
+			// 	// 02
+			// 	const builtQuery02 = builtQuery
+			// 		.relTime('this_90_days');
 
-function getKqCustomiser (opts) {
-	return composeKqModifiers([
-		adjustTimeframe(opts.timeframe),
-		adjustInterval(opts.interval)
-	]);
-}
+			// 	let el02 = el.parentElement.cloneNode(true);
+			// 	el.parentElement.parentElement.appendChild(el02);
 
-function getQuery () {
-	const q = querystring.parse(location.search.substr(1));
-	if (!q.timeframe && q['timeframe[start]'] && q['timeframe[end]']) {
-		q.timeframe = {
-			start: q['timeframe[start]'],
-			end: q['timeframe[end]']
-		};
-	}
-	return q;
-}
+			// 	printChart(alias, builtQuery02, el02);
 
-function reprint (container, opts) {
-	const aliasName = container.dataset.keenAlias;
-	const kq = kqObjects[aliasName];
-	const printerEl = container.querySelector('.chart__printer')
-	printerEl.classList.add('chart-loading');
-	shakeAndBake(window.aliases[aliasName], getKqCustomiser(opts)(kq), printerEl, opts.asData ? 'Table' : null);
-}
+			// 	// 03
+			// 	const builtQuery03 = builtQuery
+			// 		.relTime('this_14_days')
+			// 		.interval('d');
 
-function getTimeframe(container, type) {
-	const relTimeEl = container.querySelector('[name="timeframe"]:checked')
-	const relTime = relTimeEl && relTimeEl.value;
-	const startEl = container.querySelector('.timeframe-switcher__start');
-	const endEl = container.querySelector('.timeframe-switcher__end');
-	const absTime = {
-		start: startEl.value,
-		end: endEl.value
-	};
+			// 	let el03 = el.parentElement.cloneNode(true);
+			// 	el.parentElement.parentElement.appendChild(el03);
 
-	// fully set absolute time
-	if (absTime.start && absTime.end && type !== 'rel') {
-		relTimeEl && relTimeEl.removeAttribute('checked');
-		return absTime;
-	// midway through setting absolute time
-	} else if (type === 'abs') {
-		return null;
-	// otherwise fallback to relative time range
-	} else {
-		endEl.value = '';
-		startEl.value = '';
-		if (!relTime) {
-			container.querySelector('.timeframe-switcher__timeframe[value="this_14_days"]').setAttribute('checked', '');
-			return 'this_14_days';
-		}
-		return relTime;
-	}
+			// 	printChart(alias, builtQuery03, el03);
 
-}
+			// 	// 04
+			// 	const builtQuery04 = builtQuery
+			// 		.relTime('this_7_days')
+			// 		.interval('d');
 
-module.exports = {
-	init: () => {
-		const del = new Delegate(document.querySelector('.charts'));
-		const q = getQuery();
+			// 	let el04 = el.parentElement.cloneNode(true);
+			// 	el.parentElement.parentElement.appendChild(el04);
 
-		let customiser = getKqCustomiser(q);
+			// 	let alias04 = Object.assign({}, alias);
+			// 	alias04.printer = 'LineChart';
+			// 	printChart(alias04, builtQuery04, el04);
+			// }
+	});
 
-		del.on('change', '.timeframe-switcher__interval', function (ev) {
-			ev.preventDefault();
-			const container = getChartContainer(ev.target);
-			reprint(container, {
-				timeframe: getTimeframe(container),
-				interval: container.querySelector('.timeframe-switcher__interval').value
-			});
-		});
+	chartUi();
 
-		del.on('change', '.timeframe-switcher__start, .timeframe-switcher__end, .timeframe-switcher [name="timeframe"]', function (ev) {
-			ev.preventDefault();
-			const type = ev.target.name === 'timeframe' ? 'rel' : 'abs';
-			const container = getChartContainer(ev.target);
-			const timeframe = getTimeframe(container, type);
-			if (!timeframe) {
-				return;
-			}
-			reprint(container, {
-				timeframe: getTimeframe(container, type),
-				interval: container.querySelector('.timeframe-switcher__interval').value
-			});
-		});
-
-		del.on('click', '.chart-container__view-switcher', function (ev) {
-			ev.preventDefault();
-			let asData;
-			const container = getChartContainer(ev.target);
-			if (ev.target.hasAttribute('aria-pressed')) {
-				asData = false;
-				ev.target.removeAttribute('aria-pressed');
-			} else {
-				asData = true
-				ev.target.setAttribute('aria-pressed', '');
-			}
-			reprint(container, {
-				timeframe: getTimeframe(container),
-				interval: container.querySelector('.timeframe-switcher__interval').value,
-				asData
-			});
-		});
-
-
-
-		[].slice.call(document.querySelectorAll('.chart-container')).forEach(el => {
-			const aliasAttribute = el.getAttribute('data-keen-alias');
-
-			if (window.aliases && window.aliases[aliasAttribute]) {
-				const alias = window.aliases[aliasAttribute];
-				const builtQuery = customiser(KeenQuery.buildFromAlias(alias));
-				kqObjects[aliasAttribute] = builtQuery;
-				chartUi.renderChartUI(el, builtQuery, alias);
-				const printerEl = el.querySelector('.chart__printer')
-				shakeAndBake(alias, builtQuery, printerEl);
-
-				// HACK DURING DEVELOPMENT: Multiple prints of a single KeenQuery
-				if (/^\/multi-print\//.test(location.pathname)) {
-
-					// 02
-					const builtQuery02 = builtQuery
-						.relTime('this_90_days');
-
-					let el02 = el.parentElement.cloneNode(true);
-					el.parentElement.parentElement.appendChild(el02);
-
-					shakeAndBake(alias, builtQuery02, el02);
-
-					// 03
-					const builtQuery03 = builtQuery
-						.relTime('this_14_days')
-						.interval('d');
-
-					let el03 = el.parentElement.cloneNode(true);
-					el.parentElement.parentElement.appendChild(el03);
-
-					shakeAndBake(alias, builtQuery03, el03);
-
-					// 04
-					const builtQuery04 = builtQuery
-						.relTime('this_7_days')
-						.interval('d');
-
-					let el04 = el.parentElement.cloneNode(true);
-					el.parentElement.parentElement.appendChild(el04);
-
-					let alias04 = Object.assign({}, alias);
-					alias04.printer = 'LineChart';
-					shakeAndBake(alias04, builtQuery04, el04);
-				}
-			}
-		});
-	}
 }
