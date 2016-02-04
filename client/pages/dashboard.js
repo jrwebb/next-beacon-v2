@@ -1,7 +1,7 @@
 'use strict';
 
 import KeenQuery from 'n-keen-query';
-import {init as chartUi} from '../components/chart-ui';
+import {init as chartUi, printChart} from '../components/chart-ui';
 import {fromQueryString as getConfigurator} from '../components/configurator';
 import {storeKq, retrieveKq} from '../data/kq-cache';
 
@@ -11,42 +11,25 @@ export function init () {
 	const configure = getConfigurator();
 
 	[].slice.call(document.querySelectorAll('.chart')).forEach(el => {
-		const alias = el.getAttribute('data-keen-alias');
+		const alias = el.dataset.keenAlias;
 		const printerEl = el.querySelector('.chart__printer')
 		let conf;
 		if (conf = window.aliases[alias]) {
-			const builtQuery = KeenQuery.buildFromAlias(conf);
-			storeKq(builtQuery);
-			// temporarily force all line charts on first render;
-			conf.printer = null;
-			try {
-				const printer = conf.printer || 'LineChart';
+			let builtQuery = KeenQuery.buildFromAlias(conf);
 
-				configure(builtQuery)
-					.print(printer)
-					.then(renderer => {
-						printerEl.classList.remove('chart-loading');
-						printerEl.classList.add('chart-loaded');
-						if (typeof renderer === 'function') {
-							renderer(printerEl, conf);
-						} else {
-							printerEl.classList.add('chart-error');
-							throw 'There is a problem with the keen-query response.'
-						}
-					});
-			} catch (err) {
-				console.log('err', conf);
-				printerEl.classList.remove('chart-loading');
-				printerEl.classList.add('chart-error');
-				printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${conf.name}, ${conf.label}, ${conf.question}: ${conf.query}</p>`;
-			}
+			// todo: put this in buildFromAlias
+			builtQuery = builtQuery.setPrinter(conf.printer || 'LineChart');
 
-
-
+			storeKq(alias, builtQuery);
+			printChart(printerEl, configure(builtQuery), conf)
 		} else {
 			printerEl.classList.add('chart-error');
 			printerEl.innerHTML = `<p class="error">Invalid chart name: ${alias}</p>`;
 		}
+	});
+
+	chartUi(document.querySelector('.charts'));
+
 			// // HACK DURING DEVELOPMENT: Multiple prints of a single KeenQuery
 			// if (/^\/multi-print\//.test(location.pathname)) {
 
@@ -81,8 +64,4 @@ export function init () {
 			// 	alias04.printer = 'LineChart';
 			// 	printChart(alias04, builtQuery04, el04);
 			// }
-	});
-
-	chartUi();
-
 }

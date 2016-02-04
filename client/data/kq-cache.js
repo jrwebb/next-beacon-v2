@@ -1,7 +1,7 @@
 
 const cache = {};
 
-export function rerieveKq (name) {
+export function retrieveKq (name) {
 	return cache[name]
 }
 

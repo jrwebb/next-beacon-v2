@@ -1,5 +1,5 @@
-<nav class="timeframe-switcher">
-	<form action="" method="get" style="display: inline" class="timeframe-switcher__form">
+<nav class="chart__configurator">
+	<form action="" method="get" style="display: inline" class="chart__configurator__form">
 	Timeframe:
 	{{#if isGlobal}}
 		<a href="?timeframe=this_14_days" data-timeframe="this_14_days">14 days</a> |
@@ -14,8 +14,8 @@
 	{{/if}}
 
 		<label>Set interval:</label>
-		<select name="interval" class="timeframe-switcher__interval">
-			<option> -- choose interval -- </option>
+		<select name="interval" class="chart__configurator__interval">
+			<option value=""> -- choose interval -- </option>
 			<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
 			<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>hour</option>
 			<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>day</option>
@@ -23,8 +23,10 @@
 			<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
 		</select> |
 		Custom date:
-		<label>start</label> <input class="timeframe-switcher__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
-		<label>end</label> <input class="timeframe-switcher__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}"> |
+		<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
+		<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}"> |
+		<label>view chart</label><input type="radio" name="printer" value="">
+		<label>view data</label><input type="radio" name="printer" value="Table">
 {{#if isGlobal}}
 		<button class="timeframe__submit">submit</button>
 {{/if}}

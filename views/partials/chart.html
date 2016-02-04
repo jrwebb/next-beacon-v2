@@ -3,8 +3,7 @@
 	<div class="chart " data-keen-alias="{{name}}{{alias.name}}">
 		<div class="chart__ui">
 			<a href="/chart/{{name}}{{alias.name}}">View chart</a>
-			{{>timeframe-switcher index=@index}}
-			<button class="o-buttons o-buttons--small o-buttons--standout chart__view-switcher">view data</button>
+			{{>chart-configurator index=@index}}
 		</div>
 		<div class="chart__printer chart-loading {{class}}{{alias.class}}"></div>
 	</div>

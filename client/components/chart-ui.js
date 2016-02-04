@@ -1,5 +1,6 @@
-'use strict';
-
+import Delegate from 'dom-delegate';
+import {storeKq, retrieveKq} from '../data/kq-cache';
+import {fromForm as getConfigurator} from '../components/configurator';
 
 function getChartContainer (el) {
 	while (!el.classList.contains('chart')) {
@@ -8,83 +9,65 @@ function getChartContainer (el) {
 	return el;
 }
 
+// function reprintold (container, opts) {
+// 	const aliasName = container.dataset.keenAlias;
+// 	const kq = kqObjects[aliasName];
+// 	const printerEl = container.querySelector('.chart__printer')
+// 	printerEl.classList.add('chart-loading');
+// 	shakeAndBake(window.aliases[aliasName], getKqConfigurer(opts)(kq), printerEl, opts.asData ? 'Table' : null);
+// }
 
 
-// Utilities for user interface (ui) elements
-export function init () {
 
+export function printChart (printerEl, kq, meta) {
+	try {
+
+		kq
+			.print()
+			.then(renderer => {
+				printerEl.classList.remove('chart-loading');
+				printerEl.classList.add('chart-loaded');
+				if (typeof renderer === 'function') {
+					renderer(printerEl, meta);
+				} else {
+					printerEl.classList.add('chart-error');
+					throw 'There is a problem with the keen-query response.'
+				}
+			});
+	} catch (err) {
+		console.log('err', meta);
+		printerEl.classList.remove('chart-loading');
+		printerEl.classList.add('chart-error');
+		printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${meta.name}, ${meta.label}, ${meta.question}: ${meta.query}</p>`;
+	}
 }
 
+function reprint (ev) {
+	ev.preventDefault();
+	const container = getChartContainer(ev.target);
+	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target);
+	const alias = container.dataset.keenAlias;
+	const kq = configure(retrieveKq(alias));
+	printChart(container.querySelector('.chart__printer'), kq, window.aliases[alias]);
+}
 
-// export function renderChartUI (el, kq, alias) {
-// 	const uiEl = el.querySelector('.chart__ui');
-// 	if (!uiEl) return;
+// Utilities for user interface (ui) elements
+export function init (container) {
+	const del = new Delegate(container);
 
-// 	uiEl.insertAdjacentHTML('beforeend', `<a href="${kq.generateKeenUrl('/data/explorer?', 'keen-explorer')}">View in keen explorer</a>`);
-// }
+	del.on('change', '.chart__configurator__interval', reprint);
 
+	del.on('change', '.chart__configurator [name^="timeframe"]', reprint);
 
-// const del = new Delegate(document.querySelector('.charts'));
+	del.on('change', '.chart__view-switcher', reprint);
 
+	[].forEach.call(container.querySelectorAll('.chart'), chartEl => {
+		const uiEl = chartEl.querySelector('.chart__ui');
+		if (!uiEl) return;
 
-// import KeenQuery from 'n-keen-query';
-// import querystring from 'querystring';
-// import Delegate from 'dom-delegate';
+		uiEl.insertAdjacentHTML('beforeend', `<a href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'keen-explorer')}">
+			View in keen explorer
+		</a>`);
+	});
+}
 
-// const kqObjects = {};
-
-
-// function getChartContainer (el) {
-// 	while (!el.classList.contains('chart')) {
-// 		el = el.parentNode;
-// 	}
-// 	return el;
-// }
-
-// module.exports = {
-// 	init: () => {
-// 		const del = new Delegate(document.querySelector('.charts'));
-// 		const q = getStateFromQuery();
-
-// 		let customiser = getKqConfigurer(q);
-
-// 		del.on('change', '.timeframe-switcher__interval', function (ev) {
-// 			ev.preventDefault();
-// 			const container = getChartContainer(ev.target);
-// 			reprint(container, {
-// 				timeframe: getTimeframe(container),
-// 				interval: container.querySelector('.timeframe-switcher__interval').value
-// 			});
-// 		});
-
-// 		del.on('change', '.timeframe-switcher__start, .timeframe-switcher__end, .timeframe-switcher [name="timeframe"]', function (ev) {
-// 			ev.preventDefault();
-// 			const type = ev.target.name === 'timeframe' ? 'rel' : 'abs';
-// 			const container = getChartContainer(ev.target);
-// 			const timeframe = getTimeframe(container, type);
-// 			if (!timeframe) {
-// 				return;
-// 			}
-// 			reprint(container, {
-// 				timeframe: getTimeframe(container, type),
-// 				interval: container.querySelector('.timeframe-switcher__interval').value
-// 			});
-// 		});
-
-// 		del.on('click', '.chart__view-switcher', function (ev) {
-// 			ev.preventDefault();
-// 			let asData;
-// 			const container = getChartContainer(ev.target);
-// 			if (ev.target.hasAttribute('aria-pressed')) {
-// 				asData = false;
-// 				ev.target.removeAttribute('aria-pressed');
-// 			} else {
-// 				asData = true
-// 				ev.target.setAttribute('aria-pressed', '');
-// 			}
-// 			reprint(container, {
-// 				timeframe: getTimeframe(container),
-// 				interval: container.querySelector('.timeframe-switcher__interval').value,
-// 				asData
-// 			});
-// 		});
