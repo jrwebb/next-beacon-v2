@@ -10,7 +10,7 @@ export function init () {
 
 	const configure = getConfigurator();
 
-	[].slice.call(document.querySelectorAll('.chart')).forEach(el => {
+	[].forEach.call(document.querySelectorAll('.chart'), el => {
 		const alias = el.dataset.keenAlias;
 		const printerEl = el.querySelector('.chart__printer')
 		let conf;
