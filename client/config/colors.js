@@ -1,0 +1,45 @@
+'use strict';
+
+// http://styleguide.ft.com/#colour-palette
+// https://github.com/Financial-Times/o-colors/blob/master/src/scss/_palette.scss
+export const colorsMap = {
+	'Light Blue': '#c5d4e8',
+	'Light Green': '#a1dbb2',
+	'Light Purple': '#ebcaec',
+	'Pink tint 1': '#f6e9d8',
+	'Pink tint 2': '#e9decf',
+	'Pink tint 3': '#cec6b9',
+	'Pink tint 4': '#a7a59b',
+	'Pink tint 5': '#74736c',
+	'blue-tint1': '#598caf',
+	'blue-tint2': '#75a5c2',
+	'blue-tint3': '#8ab5cd',
+	'blue-tint4': '#a9cadc',
+	'blue-tint5': '#bcd7e5',
+	'warm-1': '#ffe9d7',
+	'warm-2': '#f6e9d8',
+	'warm-3': '#cec6b9',
+	'warm-4': '#1d1d1d',
+	'warm-5': '#fdf8f2',
+	'warm-6': '#8b572a',
+	'orange-tint1': '#eda45e',
+	'brown-tint1': '#94826b',
+	'yellow-tint1': '#eed485',
+	'green-tint1': '#a6a471',
+	'bluegreen-tint1': '#819e9a',
+	'silver-tint1': '#c1b8b4',
+	'purple-tint1': '#936971',
+	'purple-tint2': '#737e7e',
+	'red-tint1': '#b1493f',
+	'red-tint2': '#c36256',
+	'red-tint3': '#d17c70',
+	'red-tint4': '#df9c92',
+	'red-tint5': '#ebbcb3',
+	'Green': '#09a25c',
+	'Red': '#cc0033',
+	'Purple': '#92288f',
+	'Blue': '#0e6dcc',
+	'Grey tint 1': '#b0b0b0',
+}
+
+export const colors = Object.keys(colorsMap).map(name => colorsMap[name]);

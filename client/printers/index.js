@@ -1,9 +1,8 @@
+import KeenQuery from 'n-keen-query';
+import {supportedChartTypes} from '../config/google-chart';
+import {googleChartPrinterFactory} from './google-charts';
+import {printer as bigNumber} from './big-number';
 
-import {getCoreChartTypes} from '../google-chart'
-import KeenQuery from 'n-keen-query'
+supportedChartTypes.forEach(chartType => KeenQuery.definePrinter(chartType, googleChartPrinterFactory(chartType)))
 
-KeenQuery.definePrinter('html', require('./html'))
-
-// All core google charts use the same printer.
-const coreChartTypes = getCoreChartTypes()
-coreChartTypes.forEach(e => KeenQuery.definePrinter(e, require('./core')))
+KeenQuery.definePrinter('big-number', bigNumber);

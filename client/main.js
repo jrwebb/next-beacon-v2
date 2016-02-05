@@ -5,11 +5,14 @@
 require('./printers');
 require('./components/feature-search');
 
+import {init as dashboard} from './pages/dashboard';
+
 if (document.querySelector('.query-wizard')) {
-	require('./components/query-wizard').init();
+	require('./pages/query-wizard').init();
 } else {
-	require('./components/render').init();
+	dashboard();
 }
 
-// Note: google.charts.load() cannot be called more than once.
-(() => google.charts.load('current', {packages: ['corechart','table']}))();
+google.charts.load('current', {
+	packages: ['corechart', 'table']
+});

@@ -27,7 +27,7 @@ body {
 	}
 }
 .beacon__printer,
-.chart-container {
+.chart {
 	position: relative;
 	margin-bottom: 2em;
 	h2 {
@@ -73,7 +73,7 @@ body {
 		margin-right: 0.25em;
 	}
 }
-.chart-container:hover .chart-ui {
+.chart:hover .chart-ui {
 	visibility: visible;
 }
 .core-chart {

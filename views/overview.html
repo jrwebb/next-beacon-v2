@@ -1,15 +1,15 @@
 <div class="charts overview">
 	<div data-o-grid-colspan="2">
-		<div class="chart-container" data-keen-alias="members/today">
+		<div class="chart" data-keen-alias="members/today">
 			<div class="chart__printer chart-loading"></div>
 		</div>
-		<div class="chart-container" data-keen-alias="members/yesterday">
+		<div class="chart" data-keen-alias="members/yesterday">
 			<div class="chart__printer chart-loading"></div>
 		</div>
 	</div>
 	<div data-o-grid-colspan="10">
-		<div class="chart-container" data-keen-alias="members/daily">
-			{{>timeframe-switcher}}
+		<div class="chart" data-keen-alias="members/daily">
+			{{>chart-configurator}}
 			<div class="chart__printer chart-loading core-chart"></div>
 		</div>
 	</div>

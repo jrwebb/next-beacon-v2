@@ -20,6 +20,7 @@ module.exports = function(req, res) {
 		}).replace(/\/$/, ''),
 		timeframe: req.query.timeframe || 'this_14_days',
 		interval: req.query.interval,
+		printer: req.query.printer === 'Table' ? 'Table' : undefined,
 		isStandaloneChart: /\/chart/.test(req.path)
 	});
 }
