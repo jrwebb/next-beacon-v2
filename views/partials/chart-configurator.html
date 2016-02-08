@@ -36,7 +36,7 @@
 			<label>screen size</label><input type="radio" name="group" value="device.oGridLayout">
 			<label>device type</label><input type="radio" name="group" value="device.primaryHardwareType">
 			<label>page type</label><input type="radio" name="group" value="page.location.type">
-			<!-- <label>Group by subscription type</label><input type="checkbox" name="group[subs]"> -->
+			<label>subscriber</label><input type="radio" name="group" value="user.hasUuid">
 	</fieldset>
 	<fieldset class="chart-configurator__filters">
 			Filter:
@@ -63,7 +63,11 @@
 				<option value="stream">stream</option>
 				<option value="curated">curated</option>
 			</select>
-			<!-- <label>Group by subscription type</label><input type="checkbox" name="group[subs]"> -->
+			<select class="chart-configurator__filter" name="user.hasUuid">
+				<option value=""> -- subs -- </option>
+				<option value="true">subscriber</option>
+				<option value="false">anon</option>
+			</select>
 	</fieldset>
 {{/unless}}
 {{#if isGlobal}}
