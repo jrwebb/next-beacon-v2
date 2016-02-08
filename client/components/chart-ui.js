@@ -45,9 +45,7 @@ function reprint (ev) {
 export function init (container) {
 	const del = new Delegate(container);
 
-	del.on('change', '.chart__configurator [name="interval"]', reprint);
-	del.on('change', '.chart__configurator [name^="timeframe"]', reprint);
-	del.on('change', '.chart__configurator [name="printer"]', reprint);
+	del.on('change', '.chart__configurator input', reprint);
 
 	[].forEach.call(container.querySelectorAll('.chart'), chartEl => {
 		const uiEl = chartEl.querySelector('.chart__ui');

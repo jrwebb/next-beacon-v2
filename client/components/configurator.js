@@ -13,7 +13,7 @@ function composeKqModifiers(funcs) {
 	return composed;
 }
 
-function adjustTimeframe (timeframe) {
+function timeframeModifier (timeframe) {
 
 	if (typeof timeframe === 'string') {
 		if (timeframe.charAt(0) === '{') {
@@ -28,17 +28,9 @@ function adjustTimeframe (timeframe) {
 	return kq => kq;
 }
 
-function adjustInterval(interval) {
-	if (interval) {
-		return kq => kq.interval(interval);
-	} else {
-		return kq => kq;
-	}
-}
-
-function adjustPrinter(printer) {
-	if (printer) {
-		return kq => kq.setPrinter(printer);
+function simpleKqModifier(method, value) {
+	if (value) {
+		return kq => kq[method](value);
 	} else {
 		return kq => kq;
 	}
@@ -46,9 +38,10 @@ function adjustPrinter(printer) {
 
 function getKqConfigurer (opts) {
 	return composeKqModifiers([
-		adjustTimeframe(opts.timeframe),
-		adjustInterval(opts.interval),
-		adjustPrinter(opts.printer)
+		timeframeModifier(opts.timeframe),
+		simpleKqModifier('interval', opts.interval),
+		simpleKqModifier('group', opts.group),
+		simpleKqModifier('setPrinter', opts.printer)
 	]);
 }
 
