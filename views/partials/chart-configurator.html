@@ -21,18 +21,50 @@
 			<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>day</option>
 			<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
 			<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
-		</select> |
+		</select>
+		<fieldset>
 		Custom date:
 		<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
-		<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}"> |
-
+		<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}">
+	</fieldset>
+	<fieldset>
 		<label>view chart</label><input type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}>
 		<label>view data</label><input type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}>
-{{#unless isGlobal}} | Group by:
-		<label>screen size</label><input type="radio" name="group" value="device.oGridLayout">
-		<label>device type</label><input type="radio" name="group" value="device.primaryHardwareType">
-		<label>page type</label><input type="radio" name="group" value="page.location.type">
-		<!-- <label>Group by subscription type</label><input type="checkbox" name="group[subs]"> -->
+	</fieldset>
+{{#unless isGlobal}}
+	<fieldset class="chart-configurator__group">Group by:
+			<label>screen size</label><input type="radio" name="group" value="device.oGridLayout">
+			<label>device type</label><input type="radio" name="group" value="device.primaryHardwareType">
+			<label>page type</label><input type="radio" name="group" value="page.location.type">
+			<!-- <label>Group by subscription type</label><input type="checkbox" name="group[subs]"> -->
+	</fieldset>
+	<fieldset class="chart-configurator__filters">
+			Filter:
+			<select class="chart-configurator__filter" name="device.oGridLayout">
+				<option value=""> -- screen size -- </option>
+				<option value="default">default</option>
+				<option value="S">S</option>
+				<option value="M">M</option>
+				<option value="L">L</option>
+				<option value="XL">XL</option>
+			</select>
+			<select class="chart-configurator__filter" name="device.primaryHardwareType">
+				<option value=""> -- device type -- </option>
+				<option value="Desktop">Desktop</option>
+				<option value="Mobile Phone">Phone</option>
+				<option value="Tablet">Tablet</option>
+			</select>
+			<select class="chart-configurator__filter" name="page.location.type">
+				<option value=""> -- page -- </option>
+				<option value="article">article</option>
+				<option value="frontpage">frontpage</option>
+				<option value="my">my</option>
+				<option value="search">search</option>
+				<option value="stream">stream</option>
+				<option value="curated">curated</option>
+			</select>
+			<!-- <label>Group by subscription type</label><input type="checkbox" name="group[subs]"> -->
+	</fieldset>
 {{/unless}}
 {{#if isGlobal}}
 		<button class="timeframe__submit">submit</button>

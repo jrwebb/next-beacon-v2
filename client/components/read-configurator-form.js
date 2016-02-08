@@ -26,7 +26,16 @@ function getTimeframe(form, updatedField) {
 		}
 		return relTime;
 	}
+}
 
+function getFilters (form) {
+	return [].map.call(form.querySelectorAll('.chart-configurator__filter'), el => {
+		return {
+			prop: el.name,
+			value: el.querySelector('option:checked') && el.querySelector('option:checked').value
+		}
+	})
+		.filter(o => o.value);
 }
 
 export function getFormState (form, updatedField) {
@@ -34,6 +43,7 @@ export function getFormState (form, updatedField) {
 		timeframe: getTimeframe(form, updatedField),
 		interval: form.querySelector('[name="interval"]').value,
 		printer: form.querySelector('[name="printer"]:checked').value,
-		group: form.querySelector('[name="group"]:checked') && form.querySelector('[name="group"]:checked').value
+		group: form.querySelector('[name="group"]:checked') && form.querySelector('[name="group"]:checked').value,
+		filters: getFilters(form)
 	}
 }

@@ -42,7 +42,9 @@ function getKqConfigurer (opts) {
 		simpleKqModifier('interval', opts.interval),
 		simpleKqModifier('group', opts.group),
 		simpleKqModifier('setPrinter', opts.printer)
-	]);
+	].concat(opts.filters.map(filterConf => {
+		return simpleKqModifier('filter', `${filterConf.prop}=${filterConf.value}`);
+	})));
 }
 
 function getStateFromQuery () {
@@ -53,6 +55,7 @@ function getStateFromQuery () {
 			end: q['timeframe[end]']
 		};
 	}
+	q.filters = [];
 	return q;
 }
 

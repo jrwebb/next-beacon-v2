@@ -6,6 +6,7 @@
     "fetch": "~0.10.1",
     "dom-delegate": "ftdomdelegate#~2.0.3",
     "n-keen-query": "financial-times/n-keen-query#^1.0.0",
+    "keen-query": "^2.10.0",
     "querystring": "~3.46.1"
   },
   "authors": [
