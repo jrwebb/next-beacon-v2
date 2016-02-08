@@ -30,6 +30,9 @@
 	<fieldset>
 		<label>view chart</label><input type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}>
 		<label>view data</label><input type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}>
+{{#unless isGlobal}}
+		<button class="chart-configurator__copy-data">Copy data</button> <small>(for pasting into your favourite spreadsheet)</small>
+{{/unless}}
 	</fieldset>
 {{#unless isGlobal}}
 	<fieldset class="chart-configurator__group">Group by:

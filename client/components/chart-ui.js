@@ -1,5 +1,5 @@
 import Delegate from 'dom-delegate';
-import {retrieveKq} from '../data/kq-cache';
+import {retrieveKq, storeKq} from '../data/kq-cache';
 import {fromForm as getConfigurator} from '../components/configurator';
 
 function getChartContainer (el) {
@@ -9,11 +9,9 @@ function getChartContainer (el) {
 	return el;
 }
 
-export function printChart (printerEl, kq, meta) {
+export function renderChart (printerEl, kq, meta) {
 	try {
-
-		kq
-			.print()
+		kq.print()
 			.then(renderer => {
 				printerEl.classList.remove('chart-loading');
 				printerEl.classList.add('chart-loaded');
@@ -24,6 +22,7 @@ export function printChart (printerEl, kq, meta) {
 					throw 'There is a problem with the keen-query response.'
 				}
 			});
+		storeKq(`${meta.name}:printed`, kq);
 	} catch (err) {
 		console.log('err', meta);
 		printerEl.classList.remove('chart-loading');
@@ -38,7 +37,28 @@ function reprint (ev) {
 	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target.name);
 	const alias = container.dataset.keenAlias;
 	const kq = configure(retrieveKq(alias));
-	printChart(container.querySelector('.chart__printer'), kq, window.aliases[alias]);
+	renderChart(container.querySelector('.chart__printer'), kq, window.aliases[alias]);
+}
+
+function copyData (ev) {
+	ev.preventDefault();
+	const container = getChartContainer(ev.target);
+	const alias = container.dataset.keenAlias;
+	const kq = retrieveKq(`${alias}:printed`);
+
+	const copyTextarea = document.createElement('textarea');
+
+	copyTextarea.textContent = kq.toTSV();
+	container.appendChild(copyTextarea);
+	copyTextarea.select();
+
+	try {
+		document.execCommand('copy');
+		container.removeChild(copyTextarea);
+	} catch (err) {
+		container.removeChild(copyTextarea);
+		alert('Oops, unable to copy');
+	}
 }
 
 // Utilities for user interface (ui) elements
@@ -46,6 +66,7 @@ export function init (container) {
 	const del = new Delegate(container);
 
 	del.on('change', '.chart__configurator [name]', reprint);
+	del.on('click', '.chart-configurator__copy-data', copyData);
 
 	[].forEach.call(container.querySelectorAll('.chart'), chartEl => {
 		const uiEl = chartEl.querySelector('.chart__ui');

@@ -1,7 +1,7 @@
 'use strict';
 
 import KeenQuery from 'n-keen-query';
-import {init as chartUi, printChart} from '../components/chart-ui';
+import {init as chartUi, renderChart} from '../components/chart-ui';
 import {fromQueryString as getConfigurator} from '../components/configurator';
 import {storeKq} from '../data/kq-cache';
 
@@ -21,7 +21,8 @@ export function init () {
 			builtQuery = builtQuery.setPrinter(conf.printer || 'LineChart').tidy();
 
 			storeKq(alias, builtQuery);
-			printChart(printerEl, configure(builtQuery), conf)
+			renderChart(printerEl, configure(builtQuery), conf);
+
 		} else {
 			printerEl.classList.add('chart-error');
 			printerEl.innerHTML = `<p class="error">Invalid chart name: ${alias}</p>`;
@@ -40,7 +41,7 @@ export function init () {
 			// 	let el02 = el.parentElement.cloneNode(true);
 			// 	el.parentElement.parentElement.appendChild(el02);
 
-			// 	printChart(alias, builtQuery02, el02);
+			// 	renderChart(alias, builtQuery02, el02);
 
 			// 	// 03
 			// 	const builtQuery03 = builtQuery
@@ -50,7 +51,7 @@ export function init () {
 			// 	let el03 = el.parentElement.cloneNode(true);
 			// 	el.parentElement.parentElement.appendChild(el03);
 
-			// 	printChart(alias, builtQuery03, el03);
+			// 	renderChart(alias, builtQuery03, el03);
 
 			// 	// 04
 			// 	const builtQuery04 = builtQuery
@@ -62,6 +63,6 @@ export function init () {
 
 			// 	let alias04 = Object.assign({}, alias);
 			// 	alias04.printer = 'LineChart';
-			// 	printChart(alias04, builtQuery04, el04);
+			// 	renderChart(alias04, builtQuery04, el04);
 			// }
 }
