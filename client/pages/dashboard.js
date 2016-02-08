@@ -18,7 +18,7 @@ export function init () {
 			let builtQuery = KeenQuery.buildFromAlias(conf);
 
 			// todo: put this in buildFromAlias
-			builtQuery = builtQuery.setPrinter(conf.printer || 'LineChart');
+			builtQuery = builtQuery.setPrinter(conf.printer || 'LineChart').tidy();
 
 			storeKq(alias, builtQuery);
 			printChart(printerEl, configure(builtQuery), conf)

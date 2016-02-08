@@ -45,11 +45,17 @@ function reprint (ev) {
 export function init (container) {
 	const del = new Delegate(container);
 
-	del.on('change', '.chart__configurator input', reprint);
+	del.on('change', '.chart__configurator [name]', reprint);
 
 	[].forEach.call(container.querySelectorAll('.chart'), chartEl => {
 		const uiEl = chartEl.querySelector('.chart__ui');
 		if (!uiEl) return;
+
+		const alias = chartEl.dataset.keenAlias;
+		const kq = retrieveKq(alias);
+		if (kq.dimension > 1) {
+			chartEl.classList.add('chart--pre-grouped')
+		}
 
 		uiEl.insertAdjacentHTML('beforeend', `<a href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'keen-explorer')}">
 			View in keen explorer
