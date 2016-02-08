@@ -41,7 +41,6 @@ body {
 	min-width: 100px;
 	position: relative;
 }
-
 .chart-loading:after {
 	content: '';
 	display: block;
@@ -55,39 +54,15 @@ body {
 	background-position: 50% 50%;
 	z-index: 10;
 }
-
-
 .chart-loaded.chart-loading {
 	opacity: 0.5;
 }
-
 .chart--pre-grouped .chart-configurator__group {
 	display: none;
-}
-
-.chart-ui {
-	position: absolute;
-	top: 0;
-	right: 0;
-	text-align: right;
-	font-size: 10px;
-	visibility: hidden;
-	.o-ft-icons-icon {
-		text-decoration: none;
-		margin-right: 0.25em;
-	}
-}
-.chart:hover .chart-ui {
-	visibility: visible;
 }
 .core-chart {
 	min-height: 450px;
 	min-width: 120px;
-}
-.charts {
-	.chart-question {
-		display: none;
-	}
 }
 .o-forms-suffix--small {
 	font-size: 14px;
