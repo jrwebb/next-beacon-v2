@@ -11,7 +11,6 @@ module.exports = function(req, res) {
 			}
 			return alias;
 		});
-
 	res.render('dashboard', {
 		layout: 'beacon',
 		dashboardAliases: dashboardAliases,
@@ -21,6 +20,6 @@ module.exports = function(req, res) {
 		timeframe: req.query.timeframe || 'this_14_days',
 		interval: req.query.interval,
 		printer: req.query.printer === 'Table' ? 'Table' : undefined,
-		isStandaloneChart: /\/chart/.test(req.path)
+		isStandaloneChart: /^\/chart/.test(req.path)
 	});
 }

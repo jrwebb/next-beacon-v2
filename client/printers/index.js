@@ -11,7 +11,7 @@ KeenQuery.definePrinter('big-number', bigNumber);
 // Can't use definePrinter here as the printer API is promisey
 // which conflicts with browseres' strict conditions for when
 // the document.execCommand('copy') API is allowed.
-KeenQuery.prototype.toTSV = function () {
+KeenQuery.prototype.toTSV = KeenQuery.Aggregator.prototype.toTSV = function () {
 	const table = this.getTable().humanize('human');
 	return [table.headings].concat(table.rows)
 		.map(row => row.join('\t'))
