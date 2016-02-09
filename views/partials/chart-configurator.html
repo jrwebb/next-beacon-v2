@@ -39,7 +39,8 @@
 			<label>screen size</label><input type="radio" name="group" value="device.oGridLayout">
 			<label>device type</label><input type="radio" name="group" value="device.primaryHardwareType">
 			<label>page type</label><input type="radio" name="group" value="page.location.type">
-			<label>subscriber</label><input type="radio" name="group" value="user.subscription">
+			<label>subs</label><input type="radio" name="group" value="user.subscription">
+			<label>rfv</label><input type="radio" name="group" value="rfv.cohort">
 	</fieldset>
 	<fieldset class="chart-configurator__filters">
 			Filter:
@@ -70,6 +71,16 @@
 				<option value=""> -- subs -- </option>
 				<option value="subscriber">subscriber</option>
 				<option value="anon">anon</option>
+			</select>
+			<select class="chart-configurator__filter" name="rfv.cohort">
+				<option value=""> -- rfv -- </option>
+				<option value="super-fan">super fan</option>
+				<option value="fan">fan</option>
+				<option value="engaged-frequent-free">engaged frequent free</option>
+				<option value="borderline-engaged">borderline engaged</option>
+				<option value="half-engaged">half engaged</option>
+				<option value="occasional-skimmer">occasional skimmer</option>
+				<option value="disengaged-long-tail">disengaged long tail</option>
 			</select>
 	</fieldset>
 {{/unless}}
