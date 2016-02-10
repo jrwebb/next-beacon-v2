@@ -5,7 +5,6 @@ import {init as chartUi, renderChart} from '../components/chart-ui';
 import {fromQueryString as getConfigurator} from '../components/configurator';
 import {storeKq} from '../data/kq-cache';
 
-
 export function init () {
 
 	const configure = getConfigurator();

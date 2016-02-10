@@ -2,9 +2,28 @@
 
 	<div class="chart" data-keen-alias="{{name}}{{alias.name}}">
 		<div class="chart__ui">
-			<a href="/chart/{{name}}{{alias.name}}">View chart</a>
-			{{>chart-configurator index=@index}}
+			<nav class="chart__ui__links">
+				{{#unless isGlobal}}
+						<button class="chart__ui__copy-data o-buttons">Copy data to clipboard</button>
+				{{/unless}}
+				<a href="/chart/{{name}}{{alias.name}}">View chart</a>
+			</nav>
+			<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper"
+				data-o-expander-shrink-to="hidden"
+				data-o-expander-expanded-toggle-text="edit"
+				data-o-expander-collapsed-toggle-text="edit"
+				>
+				<button class="o-expander__toggle o--if-js"></button>
+				<div class="o-expander__content">
+					{{>chart-configurator index=@index}}
+				</div>
+
+			</div>
 		</div>
-		<div class="chart__printer chart-loading {{class}}{{alias.class}}"></div>
+		<div class="chart__printer {{class}}{{alias.class}}"></div>
 	</div>
 </div>
+
+
+
+

@@ -1,6 +1,7 @@
 import Delegate from 'dom-delegate';
 import {retrieveKq, storeKq} from '../data/kq-cache';
 import {fromForm as getConfigurator} from '../components/configurator';
+import oExpander from 'o-expander';
 
 function getChartContainer (el) {
 	while (!el.classList.contains('chart')) {
@@ -10,25 +11,32 @@ function getChartContainer (el) {
 }
 
 export function renderChart (printerEl, kq, meta) {
+
+	let renderAttempt;
+	printerEl.classList.add('chart--loading');
 	try {
-		kq.print()
+		renderAttempt = kq.print()
 			.then(renderer => {
-				printerEl.classList.remove('chart-loading');
-				printerEl.classList.add('chart-loaded');
+				printerEl.classList.remove('chart--loading');
+				printerEl.classList.add('chart--loaded');
 				if (typeof renderer === 'function') {
 					renderer(printerEl, meta);
 				} else {
 					printerEl.classList.add('chart-error');
-					throw 'There is a problem with the keen-query response.'
+					throw 'Keen query did not return printable output.'
 				}
 			});
 		storeKq(`${meta.name}:printed`, kq);
 	} catch (err) {
-		console.log('err', meta);
-		printerEl.classList.remove('chart-loading');
+		renderAttempt = Promise.reject(err)
+	}
+
+	renderAttempt.catch(err => {
+		console.log('Error', err, meta);
+		printerEl.classList.remove('chart--loading');
 		printerEl.classList.add('chart-error');
 		printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${meta.name}, ${meta.label}, ${meta.question}: ${meta.query}</p>`;
-	}
+	});
 }
 
 function reprint (ev) {
@@ -64,9 +72,9 @@ function copyData (ev) {
 // Utilities for user interface (ui) elements
 export function init (container) {
 	const del = new Delegate(container);
-
+	oExpander.init(container);
 	del.on('change', '.chart__configurator [name]', reprint);
-	del.on('click', '.chart-configurator__copy-data', copyData);
+	del.on('click', '.chart__ui__copy-data', copyData);
 
 	[].forEach.call(container.querySelectorAll('.chart'), chartEl => {
 		const uiEl = chartEl.querySelector('.chart__ui');
@@ -78,7 +86,7 @@ export function init (container) {
 			chartEl.classList.add('chart--pre-grouped')
 		}
 
-		uiEl.insertAdjacentHTML('beforeend', `<a href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'keen-explorer')}">
+		uiEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'keen-explorer')}">
 			View in keen explorer
 		</a>`);
 	});

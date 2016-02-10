@@ -29,7 +29,7 @@ function getTimeframe(form, updatedField) {
 }
 
 function getFilters (form) {
-	return [].map.call(form.querySelectorAll('.chart-configurator__filter'), el => {
+	return [].map.call(form.querySelectorAll('.chart__configurator__filter'), el => {
 		return {
 			prop: el.name,
 			value: el.querySelector('option:checked') && el.querySelector('option:checked').value
