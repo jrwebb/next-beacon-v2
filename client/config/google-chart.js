@@ -33,6 +33,8 @@ export const defaultChartOptions = {
 		fontSize: 26,
 		bold: false
 	},
+	pointSize: 10,
+  pointShape: 'square',
 	legend: { position: 'bottom' },
 	colors: colors
 };

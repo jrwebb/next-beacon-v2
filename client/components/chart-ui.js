@@ -3,6 +3,9 @@ import {retrieveKq, storeKq} from '../data/kq-cache';
 import {fromForm as getConfigurator} from '../components/configurator';
 import oExpander from 'o-expander';
 
+const rendererMap = new WeakMap();
+
+
 function getChartContainer (el) {
 	while (!el.classList.contains('chart')) {
 		el = el.parentNode;
@@ -12,11 +15,15 @@ function getChartContainer (el) {
 
 export function renderChart (printerEl, kq, meta) {
 
-	let renderAttempt;
+	let renderPromise;
 	printerEl.classList.add('chart--loading');
 	try {
-		renderAttempt = kq.print()
+		renderPromise = kq.print()
 			.then(renderer => {
+				// avoid race condition when clicking multiple configurator buttons in quick succession
+				if (rendererMap.get(printerEl) !== renderPromise) {
+					return;
+				}
 				printerEl.classList.remove('chart--loading');
 				printerEl.classList.add('chart--loaded');
 				if (typeof renderer === 'function') {
@@ -28,10 +35,16 @@ export function renderChart (printerEl, kq, meta) {
 			});
 		storeKq(`${meta.name}:printed`, kq);
 	} catch (err) {
-		renderAttempt = Promise.reject(err)
+		renderPromise = Promise.reject(err)
 	}
 
-	renderAttempt.catch(err => {
+	rendererMap.set(printerEl, renderPromise)
+
+	renderPromise.catch(err => {
+		// avoid race condition when clicking multiple configurator buttons in quick succession
+		if (rendererMap.get(printerEl) !== renderPromise) {
+			return;
+		}
 		console.log('Error', err, kq, meta);
 		printerEl.classList.remove('chart--loading');
 		printerEl.classList.add('chart-error');
