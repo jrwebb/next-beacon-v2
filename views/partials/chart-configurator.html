@@ -35,12 +35,12 @@
 {{#unless isGlobal}}
 	<fieldset class="chart__configurator__group o-forms-group">
 			<legend class="o-forms-label">Group by:</legend>
-			<input class="o-forms-radio" type="radio" name="group" value=""><label class="o-forms-label">ungroup</label>
-			<input class="o-forms-radio" type="radio" name="group" value="device.oGridLayout"><label class="o-forms-label">screen size</label>
-			<input class="o-forms-radio" type="radio" name="group" value="device.primaryHardwareType"><label class="o-forms-label">device type</label>
-			<input class="o-forms-radio" type="radio" name="group" value="page.location.type"><label class="o-forms-label">page type</label>
-			<input class="o-forms-radio" type="radio" name="group" value="user.subscription"><label class="o-forms-label">subs</label>
-			<input class="o-forms-radio" type="radio" name="group" value="rfv.cohort"><label class="o-forms-label">rfv</label>
+			<input class="o-forms-radio" type="radio" name="group" id="group_null_{{index}}" value=""><label for="group_null_{{index}}" class="o-forms-label">ungroup</label>
+			<input class="o-forms-radio" type="radio" name="group" id="group_device.oGridLayout_{{index}}" value="device.oGridLayout"><label for="group_device.oGridLayout_{{index}}" class="o-forms-label">screen size</label>
+			<input class="o-forms-radio" type="radio" name="group" id="group_device.primaryHardwareType_{{index}}" value="device.primaryHardwareType"><label for="group_device.primaryHardwareType_{{index}}" class="o-forms-label">device type</label>
+			<input class="o-forms-radio" type="radio" name="group" id="group_page.location.type_{{index}}" value="page.location.type"><label for="group_page.location.type_{{index}}" class="o-forms-label">page type</label>
+			<input class="o-forms-radio" type="radio" name="group" id="group_user.subscription_{{index}}" value="user.subscription"><label for="group_user.subscription_{{index}}" class="o-forms-label">subs</label>
+			<input class="o-forms-radio" type="radio" name="group" id="group_rfv.cohort_{{index}}" value="rfv.cohort"><label for="group_rfv.cohort_{{index}}" class="o-forms-label">rfv</label>
 	</fieldset>
 	<fieldset class="chart__configurator__filters">
 			<legend class="o-forms-label">Filter:</legend>
