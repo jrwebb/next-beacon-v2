@@ -1,6 +1,9 @@
 'use strict';
 
 const KeenQuery = require('n-keen-query');
+
+import {renderChart} from '../components/chart-ui';
+
 const debounce = function(fn,delay){
 		let timeoutId;
 		return function debounced(){
@@ -86,19 +89,9 @@ module.exports = {
 			}
 			output.innerHTML = `<span class="error">${txt}</span>`;
 		}
-		function run() {
-			const query = input.value.trim();
-			try {
-				const keenQuery = KeenQuery.build(query);
 
-				keenQuery
-					.print('html')
-					.then(func => {
-						func(output, {})
-					}, e => output.textContent = e.message || e);
-				} catch (e) {
-					outputError(e);
-				}
+		function run() {
+			return renderChart(output, KeenQuery.build(input.value.trim()).setPrinter('LineChart'), {})
 		}
 
 		input.addEventListener('keydown', ev => {

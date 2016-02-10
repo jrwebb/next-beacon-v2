@@ -32,7 +32,7 @@ export function renderChart (printerEl, kq, meta) {
 	}
 
 	renderAttempt.catch(err => {
-		console.log('Error', err, meta);
+		console.log('Error', err, kq, meta);
 		printerEl.classList.remove('chart--loading');
 		printerEl.classList.add('chart-error');
 		printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${meta.name}, ${meta.label}, ${meta.question}: ${meta.query}</p>`;
