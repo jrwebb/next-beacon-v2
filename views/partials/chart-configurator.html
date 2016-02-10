@@ -1,4 +1,5 @@
-<nav class="chart__configurator">
+<nav class="chart__configurator {{#if isGlobal}}chart__configurator--global{{/if}}">
+
 	<form action="" method="get" style="display: inline" class="chart__configurator__form o-forms">
 	<legend class="o-forms-label">Timeframe:</legend>
 	{{#if isGlobal}}

@@ -78,3 +78,23 @@
 		right: 0;
 	}
 }
+
+.chart__configurator--global {
+	display: inline-block;
+	&:before {
+		content: 'Configure all graphs: ';
+	}
+	legend {
+		display: none;
+	}
+
+	.chart__configurator__interval {
+		display: inline-block;
+		width: auto;
+	}
+
+	fieldset {
+		display: inline-block;
+	}
+
+}

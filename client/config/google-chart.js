@@ -9,7 +9,7 @@ export const defaultChartOptions = {
 	pieSliceTextStyle: {
 		color: 'black'
 	},
-	curveType:'function',
+	// curveType:'function',
 	height: 450,
 	chartArea: {
 		top: '10%',
@@ -18,7 +18,8 @@ export const defaultChartOptions = {
 		height: '75%'
 	},
 	vAxis: {
-		viewWindow: { min: 0 }
+		viewWindow: { min: 0 },
+		format: 'short'
 	},
 	hAxis: {
 		gridlines: {
