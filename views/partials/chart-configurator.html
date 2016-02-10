@@ -1,20 +1,24 @@
 <nav class="chart__configurator">
-	<form action="" method="get" style="display: inline" class="chart__configurator__form">
-	Timeframe:
+	<form action="" method="get" style="display: inline" class="chart__configurator__form o-forms">
+	<legend class="o-forms-label">Timeframe:</legend>
 	{{#if isGlobal}}
 		<a href="?timeframe=this_14_days" data-timeframe="this_14_days">14 days</a> |
 		<a href="?timeframe=this_30_days" data-timeframe="this_30_days">30 days</a> |
 		<a href="?timeframe=this_60_days" data-timeframe="this_60_days">60 days</a> |
 		<a href="?timeframe=this_90_days" data-timeframe="this_90_days">90 days</a> |
 	{{else}}
-		<label for="this_14_days_{{index}}">14 days</label><input id="this_14_days_{{index}}" name="timeframe" type="radio" value="this_14_days" {{#ifEquals @root.timeframe 'this_14_days'}}checked{{/ifEquals}}> |
-		<label for="this_30_days_{{index}}">30 days</label><input id="this_30_days_{{index}}" name="timeframe" type="radio" value="this_30_days" {{#ifEquals @root.timeframe 'this_30_days'}}checked{{/ifEquals}}> |
-		<label for="this_60_days_{{index}}">60 days</label><input id="this_60_days_{{index}}" name="timeframe" type="radio" value="this_60_days" {{#ifEquals @root.timeframe 'this_60_days'}}checked{{/ifEquals}}> |
-		<label for="this_90_days_{{index}}">90 days</label><input id="this_90_days_{{index}}" name="timeframe" type="radio" value="this_90_days" {{#ifEquals @root.timeframe 'this_90_days'}}checked{{/ifEquals}}> |
+		<fieldset class="o-forms-group">
+			<input class="o-forms-radio" id="this_14_days_{{index}}" name="timeframe" type="radio" value="this_14_days" {{#ifEquals @root.timeframe 'this_14_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_14_days_{{index}}">14 days</label>
+			<input class="o-forms-radio" id="this_30_days_{{index}}" name="timeframe" type="radio" value="this_30_days" {{#ifEquals @root.timeframe 'this_30_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_30_days_{{index}}">30 days</label>
+			<input class="o-forms-radio" id="this_60_days_{{index}}" name="timeframe" type="radio" value="this_60_days" {{#ifEquals @root.timeframe 'this_60_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_60_days_{{index}}">60 days</label>
+			<input class="o-forms-radio" id="this_90_days_{{index}}" name="timeframe" type="radio" value="this_90_days" {{#ifEquals @root.timeframe 'this_90_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_90_days_{{index}}">90 days</label>
+			<fieldset>
+				Custom date:
+				<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
+				<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}">
+			</fieldset>
 	{{/if}}
-
-		<label>Set interval:</label>
-		<select name="interval" class="chart__configurator__interval">
+		<select name="interval" class="chart__configurator__interval o-forms-select">
 			<option value=""> -- choose interval -- </option>
 			<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
 			<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>hour</option>
@@ -22,29 +26,24 @@
 			<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
 			<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
 		</select>
-		<fieldset>
-		Custom date:
-		<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
-		<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}">
 	</fieldset>
-	<fieldset>
-		<label>view chart</label><input type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}>
-		<label>view data</label><input type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}>
-{{#unless isGlobal}}
-		<button class="chart-configurator__copy-data">Copy data</button> <small>(for pasting into your favourite spreadsheet)</small>
-{{/unless}}
+	<fieldset class="o-forms-group">
+		<input class="o-forms-radio" id="printer_default_{{index}}" type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}><label for="printer_default_{{index}}" class="o-forms-label">view graph</label>
+		<input class="o-forms-radio" id="printer_table_{{index}}" type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}><label for="printer_table_{{index}}" class="o-forms-label">view data</label>
 	</fieldset>
 {{#unless isGlobal}}
-	<fieldset class="chart-configurator__group">Group by:
-			<label>screen size</label><input type="radio" name="group" value="device.oGridLayout">
-			<label>device type</label><input type="radio" name="group" value="device.primaryHardwareType">
-			<label>page type</label><input type="radio" name="group" value="page.location.type">
-			<label>subs</label><input type="radio" name="group" value="user.subscription">
-			<label>rfv</label><input type="radio" name="group" value="rfv.cohort">
+	<fieldset class="chart__configurator__group o-forms-group">
+			<legend class="o-forms-label">Group by:</legend>
+			<input class="o-forms-radio" type="radio" name="group" value=""><label class="o-forms-label">ungroup</label>
+			<input class="o-forms-radio" type="radio" name="group" value="device.oGridLayout"><label class="o-forms-label">screen size</label>
+			<input class="o-forms-radio" type="radio" name="group" value="device.primaryHardwareType"><label class="o-forms-label">device type</label>
+			<input class="o-forms-radio" type="radio" name="group" value="page.location.type"><label class="o-forms-label">page type</label>
+			<input class="o-forms-radio" type="radio" name="group" value="user.subscription"><label class="o-forms-label">subs</label>
+			<input class="o-forms-radio" type="radio" name="group" value="rfv.cohort"><label class="o-forms-label">rfv</label>
 	</fieldset>
-	<fieldset class="chart-configurator__filters">
-			Filter:
-			<select class="chart-configurator__filter" name="device.oGridLayout">
+	<fieldset class="chart__configurator__filters">
+			<legend class="o-forms-label">Filter:</legend>
+			<select class="o-forms-select chart__configurator__filter" name="device.oGridLayout">
 				<option value=""> -- screen size -- </option>
 				<option value="default">default</option>
 				<option value="S">S</option>
@@ -52,13 +51,13 @@
 				<option value="L">L</option>
 				<option value="XL">XL</option>
 			</select>
-			<select class="chart-configurator__filter" name="device.primaryHardwareType">
+			<select class="o-forms-select chart__configurator__filter" name="device.primaryHardwareType">
 				<option value=""> -- device type -- </option>
 				<option value="Desktop">Desktop</option>
 				<option value="Mobile Phone">Phone</option>
 				<option value="Tablet">Tablet</option>
 			</select>
-			<select class="chart-configurator__filter" name="page.location.type">
+			<select class="o-forms-select chart__configurator__filter" name="page.location.type">
 				<option value=""> -- page -- </option>
 				<option value="article">article</option>
 				<option value="frontpage">frontpage</option>
@@ -67,12 +66,12 @@
 				<option value="stream">stream</option>
 				<option value="curated">curated</option>
 			</select>
-			<select class="chart-configurator__filter" name="user.subscription">
+			<select class="o-forms-select chart__configurator__filter" name="user.subscription">
 				<option value=""> -- subs -- </option>
 				<option value="subscriber">subscriber</option>
 				<option value="anon">anon</option>
 			</select>
-			<select class="chart-configurator__filter" name="rfv.cohort">
+			<select class="o-forms-select chart__configurator__filter" name="rfv.cohort">
 				<option value=""> -- rfv -- </option>
 				<option value="super-fan">super fan</option>
 				<option value="fan">fan</option>
