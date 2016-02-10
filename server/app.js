@@ -81,7 +81,11 @@ app.get(/^\/dashboard\/(.*)/, require('./controllers/dashboard'));
 // [Development] Testing multiple-print()s with the same base query (but different timeframes)
 app.get(/^\/multi-print\/(.*)/, require('./controllers/dashboard'));
 
-app.get('/', require('./controllers/overview'));
+app.get('/', function (req, res, next) {
+  req.params[0] = 'overview';
+  next();
+}, require('./controllers/dashboard'));
+
 
 KeenQuery.aliases.poll()
 	.then(() => app.listen(process.env.PORT));
