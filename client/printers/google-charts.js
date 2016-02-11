@@ -13,19 +13,39 @@ export function googleChartPrinterFactory (chartType) {
 
 	function chartBuilder (el, kq, meta) {
 
-		const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(chartType) > -1;
-		const kqData = kq.getTable().humanize(expectsDateObjects ? 'dateObject' : 'human');
-		const vizData = google.visualization.arrayToDataTable([kqData.headings].concat(kqData.rows)); // eslint-disable-line new-cap
 
+		const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(chartType) > -1;
+		const kqTable = kq.getTable();
+		const kqData = kqTable.humanize(expectsDateObjects ? 'dateObject' : 'human');
+
+		if (kqTable.dimension === 1 && meta.datalabel) {
+			kqData.headings[1] = meta.datalabel;
+		}
+
+		const vizData = google.visualization.arrayToDataTable([kqData.headings].concat(kqData.rows)); // eslint-disable-line new-cap
 		const chart = new google.visualization[chartType](el);
 
-		let options = Object.assign({}, defaultChartOptions);
+		const options = Object.assign({}, defaultChartOptions);
+
+		options.hAxis = Object.assign({}, options.hAxis, {title: kqTable.axes[0].property});
+		options.vAxis = Object.assign({}, options.vAxis, {title: kqTable.valueLabel});
 
 		// if only one data set we can try to plot a trend line
-		if (vizData.dimensions === 1) {
-			options.trendlines = { 0: {
-				color: colorsMap['Light green']
-			}};
+		if (kqTable.dimension === 1) {
+			options.trendlines = {
+				0: {
+					color: colorsMap['Light Green'],
+					pointSize: 0,
+					tooltip: false
+				}
+			};
+		}
+		if (chartType === 'PieChart') {
+			options.legend = { position: 'right' };
+		}
+
+		if (kqTable.dimension > 1) {
+			options.legend = { position: 'in' };
 		}
 
 		chart.draw(vizData, options);
