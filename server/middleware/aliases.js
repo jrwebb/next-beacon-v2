@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('n-keen-query');
+const KeenQuery = require('../../n-keen-query/lib/with-aliases');
 
 module.exports = function (req, res, next) {
 

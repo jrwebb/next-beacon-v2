@@ -1,6 +1,6 @@
 'use strict';
 // Render a group of charts in a dashboard
-const KeenQuery = require('n-keen-query');
+const KeenQuery = require('../../n-keen-query/lib/with-aliases');
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 
 module.exports = function(req, res) {

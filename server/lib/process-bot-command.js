@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('n-keen-query');
+const KeenQuery = require('../../n-keen-query/lib/with-aliases');
 const natural = require('natural');
 const classifier = new natural.LogisticRegressionClassifier();
 

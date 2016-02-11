@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('n-keen-query');
+const KeenQuery = require('../n-keen-query/lib/with-aliases');
 
 const http = require('http');
 const https = require('https');
@@ -86,6 +86,6 @@ app.get('/', function (req, res, next) {
   next();
 }, require('./controllers/dashboard'));
 
-
+console.log(KeenQuery)
 KeenQuery.aliases.poll()
 	.then(() => app.listen(process.env.PORT));

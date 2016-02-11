@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('n-keen-query');
+const KeenQuery = require('../n-keen-query/lib/with-aliases');
 const Botkit = require('botkit');
 const controller = Botkit.slackbot();
 const processBotCommand = require('./lib/process-bot-command');

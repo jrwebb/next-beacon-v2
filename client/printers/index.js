@@ -1,4 +1,4 @@
-import KeenQuery from 'n-keen-query';
+import KeenQuery from '../../n-keen-query/lib/with-aliases';
 import {supportedChartTypes} from '../config/google-chart';
 import {googleChartPrinterFactory} from './google-charts';
 import {printer as bigNumber} from './big-number';
