@@ -28,7 +28,7 @@ function update () {
 	return readFile(`${process.env.HOME}/.kq-aliases`, 'utf8')
 		.then(file => {
 			return JSON.parse(file);
-		}, err => {
+		}, () => {
 			return update;
 		})
 }
