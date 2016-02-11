@@ -86,6 +86,5 @@ app.get('/', function (req, res, next) {
   next();
 }, require('./controllers/dashboard'));
 
-console.log(KeenQuery)
 KeenQuery.aliases.poll()
 	.then(() => app.listen(process.env.PORT));
