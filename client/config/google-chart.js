@@ -2,6 +2,14 @@ import {colors} from './colors';
 
 export const supportedChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 
+const axisStyle = {
+	color: '#222',
+	fontName: 'HelveticaNeue-Light',
+	fontSize: 16,
+	bold: false,
+	italic: false
+};
+
 export const defaultChartOptions = {
 	width: '100%',
 	height: '100%',
@@ -9,7 +17,7 @@ export const defaultChartOptions = {
 	pieSliceTextStyle: {
 		color: 'black'
 	},
-	// curveType:'function',
+	curveType:'function',
 	height: 450,
 	chartArea: {
 		top: '10%',
@@ -19,23 +27,18 @@ export const defaultChartOptions = {
 	},
 	vAxis: {
 		viewWindow: { min: 0 },
-		format: 'short'
+		format: 'short',
+		titleTextStyle: axisStyle
 	},
 	hAxis: {
 		gridlines: {
 			count: 8,
 			color: '#F7F7F7'
 		},
+		titleTextStyle: axisStyle
 	},
-	titleTextStyle: {
-		color: '#222',
-		fontName: 'HelveticaNeue-Light',
-		fontSize: 26,
-		bold: false
-	},
-	pointSize: 10,
-  pointShape: 'square',
-	legend: { position: 'bottom' },
+	pointSize: 5,
+	pointShape: 'circle',
 	colors: colors
 };
 
