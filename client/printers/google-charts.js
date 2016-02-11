@@ -18,7 +18,7 @@ export function googleChartPrinterFactory (chartType) {
 		const kqTable = kq.getTable();
 		const kqData = kqTable.humanize(expectsDateObjects ? 'dateObject' : 'human');
 
-		if (kq.dimension === 1 && meta.datalabel) {
+		if (kqTable.dimension === 1 && meta.datalabel) {
 			kqData.headings[1] = meta.datalabel;
 		}
 
@@ -31,7 +31,7 @@ export function googleChartPrinterFactory (chartType) {
 		options.vAxis = Object.assign({}, options.vAxis, {title: kqTable.valueLabel});
 
 		// if only one data set we can try to plot a trend line
-		if (kq.dimension === 1) {
+		if (kqTable.dimension === 1) {
 			options.trendlines = {
 				0: {
 					color: colorsMap['Light Green'],
@@ -39,9 +39,12 @@ export function googleChartPrinterFactory (chartType) {
 				}
 			};
 		}
+		if (chartType === 'PieChart') {
+			options.legend = { position: 'right' };
+		}
 
-		if (kq.dimension > 1) {
-			options.legend = { position: 'bottom' };
+		if (kqTable.dimension > 1) {
+			options.legend = { position: 'in' };
 		}
 
 		chart.draw(vizData, options);

@@ -39,6 +39,11 @@ export const defaultChartOptions = {
 	},
 	pointSize: 5,
 	pointShape: 'circle',
-	colors: colors
-};
+	colors: colors,
 
+	// janky !!
+	// animation: {
+	// 	startup: true,
+	// 	duration: 500
+	// }
+};
