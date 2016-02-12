@@ -1,6 +1,6 @@
 'use strict';
 
-import KeenQuery from '../components/n-keen-query';
+import KeenQuery from 'keen-query';
 import {init as chartUi, renderChart} from '../components/chart-ui';
 import {fromQueryString as getConfigurator} from '../components/configurator';
 import {storeKq} from '../data/kq-cache';
