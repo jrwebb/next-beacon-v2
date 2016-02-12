@@ -2,8 +2,20 @@
 // Render a group of charts in a dashboard
 const KeenQuery = require('n-keen-query');
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
+const yaml = require('js-yaml');
+const fs = require('fs');
 
 module.exports = function(req, res) {
+
+	// Get document, or throw exception on error
+	try {
+		var doc = yaml.safeLoad(fs.readFileSync(`${__dirname}/dashboards/nextdata.yml`, 'utf8'));
+		console.log(doc);
+	}
+	catch (e) {
+		console.log(e);
+	}
+
 	let dashboardAliases = KeenQuery.aliases.get(req.params[0])
 		.map(alias => {
 			if (coreChartTypes.find(e => e === alias.printer) !== undefined) {
@@ -11,6 +23,7 @@ module.exports = function(req, res) {
 			}
 			return alias;
 		});
+
 	res.render('dashboard', {
 		layout: 'beacon',
 		dashboardAliases: dashboardAliases,
