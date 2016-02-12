@@ -4,16 +4,15 @@
 
 # http://yaml.org/type/map.html -----------------------------------------------#
 
-dashboard:
-  title: Next data
-  path: /dashboards/nextdata
-  description: Your <b>one-stop-shop</b> for data on how next.ft.com is being used
+title: Next data
+path: /dashboards/nextdata
+description: <h2>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"<br/> — Meat Loaf</h2>
 
-  #list of query names from the bertha spreadsheet
-  aliases: !!seq
-    - example/pie
-    - example/bar
-    - example/column
-    - example/line
-    - example/table
+#list of query names from the bertha spreadsheet
+aliases: !!seq
+  - example/pie
+  - example/bar
+  - example/column
+  - example/line
+  - example/table
 

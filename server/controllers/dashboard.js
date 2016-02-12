@@ -5,12 +5,18 @@ const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaCha
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-module.exports = function(req, res) {
+function getDashboardTitle (req) {
+	req.params[0].replace(/[a-z][A-Z][a-z]/g, function($1) {
+		return $1.charAt(0) + ' ' + $1.substr(1).toLowerCase();
+	}).replace(/\/$/, '');
+}
 
-	// Get document, or throw exception on error
+module.exports = function(req, res) {
+	let dashboard = {};
+
 	try {
-		var doc = yaml.safeLoad(fs.readFileSync(`${__dirname}/dashboards/nextdata.yml`, 'utf8'));
-		console.log(doc);
+		const dashboardname = req.params[0].split('/')[0];
+		dashboard = yaml.safeLoad(fs.readFileSync(`${__dirname}/dashboards/${dashboardname}.yml`, 'utf8'));
 	}
 	catch (e) {
 		console.log(e);
@@ -18,18 +24,23 @@ module.exports = function(req, res) {
 
 	let dashboardAliases = KeenQuery.aliases.get(req.params[0])
 		.map(alias => {
-			if (coreChartTypes.find(e => e === alias.printer) !== undefined) {
+			if (coreChartTypes.indexOf(alias.printer) !== -1) {
 				alias.class = 'core-chart';
 			}
 			return alias;
 		});
 
+	if (dashboard.aliases && dashboard.aliases.length) {
+		dashboardAliases = dashboardAliases.filter((a) => {
+			return dashboard.aliases.indexOf(a.queryname) !== -1;
+		});
+	}
+
 	res.render('dashboard', {
 		layout: 'beacon',
+		title: dashboard.title || getDashboardTitle(req),
+		description: dashboard.description || undefined,
 		dashboardAliases: dashboardAliases,
-		name: req.params[0].replace(/[a-z][A-Z][a-z]/g, function($1) {
-			return $1.charAt(0) + ' ' + $1.substr(1).toLowerCase();
-		}).replace(/\/$/, ''),
 		timeframe: req.query.timeframe || 'this_14_days',
 		interval: req.query.interval,
 		printer: req.query.printer === 'Table' ? 'Table' : undefined,
