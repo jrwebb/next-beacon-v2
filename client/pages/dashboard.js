@@ -22,12 +22,14 @@ export function init () {
 
 			storeKq(alias, builtQuery);
 
-			// avoid showing as big number when the default view could easily be converted to a line graph over time
-			if (builtQuery.dimension < 2 && !conf.printer) {
-				builtQuery = builtQuery.interval('d')
+			if (!conf.freeze) {
+				// avoid showing as big number when the default view could easily be converted to a line graph over time
+				if (builtQuery.dimension < 2 && !conf.printer) {
+					builtQuery = builtQuery.interval('d')
+				}
+				builtQuery = configure(builtQuery);
 			}
-			renderChart(printerEl, configure(builtQuery), conf);
-
+			renderChart(printerEl, builtQuery, conf);
 		} else {
 			printerEl.classList.add('chart-error');
 			printerEl.innerHTML = `<p class="error">Invalid chart name: ${alias}</p>`;

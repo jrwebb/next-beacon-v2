@@ -9,6 +9,7 @@
 				<a href="/chart/{{name}}{{alias.name}}">View chart</a>
 			</nav>
 			{{#unless @root.isStandaloneChart}}
+				{{#unless freeze}}
 				<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper"
 					data-o-expander-shrink-to="hidden"
 					data-o-expander-expanded-toggle-text="edit"
@@ -19,11 +20,14 @@
 						{{>chart-configurator index=@index}}
 					</div>
 				</div>
+				{{/unless}}
 			{{/unless}}
 		</div>
 		<div class="chart__printer {{class}}{{alias.class}}"></div>
 		{{#if @root.isStandaloneChart}}
-			{{>chart-configurator index=@index}}
+			{{#unless freeze}}
+				{{>chart-configurator index=@index}}
+			{{/unless}}
 		{{/if}}
 	</div>
 </div>
