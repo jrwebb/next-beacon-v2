@@ -10,17 +10,20 @@ function getDashboardTitle (req) {
 }
 
 module.exports = function(req, res) {
-	let dashboard = {};
+
 	const dashboardname = req.params[0].split('/')[0];
+
+	// find dashboardname in res.locals.dashboards
+	let dashboard = res.locals.dashboards.filter(d => {
+		return d.id === dashboardname;
+	})[0];
 
 	// Append from the spreadsheet of destiny
 	dashboard.postulates = dashboard.postulates || [];
-
 	aliases.get(req.params[0]).forEach((a) => {
-		var result = dashboard.postulates.filter(function( obj ) {
-			return obj.queryname === a.queryname;
+		const result = dashboard.postulates.filter(p => {
+			return p.queryname === a.queryname;
 		});
-
 		if (!result.length) {
 			dashboard.postulates.push(a);
 		}
@@ -34,7 +37,10 @@ module.exports = function(req, res) {
 			return postulate;
 		});
 
-// console.log(dashboard)
+	// Todo: Consider better ways to do this
+	dashboard.postulates.forEach(p => {
+		res.locals.aliases[p.name] = p;
+	});
 
 	res.render('dashboard', {
 		layout: 'beacon',
