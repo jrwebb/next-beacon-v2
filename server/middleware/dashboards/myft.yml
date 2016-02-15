@@ -1,0 +1,143 @@
+---
+id: myft
+title: <i>my</i>FT
+isprimary: true
+description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+
+# A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
+postulates:
+  -
+    question: "Average frequency of visit for a myFT user this week?"
+    dashboardfeature: "myft"
+    queryname: "overview/myftfrequency"
+    name: "myft/overview/myftfrequency"
+    query: "page:view->count(time.day)->relTime(previous_7_days)->group(user.uuid)—>tidy()->filter(user.myft.isMyFtUser=true)->reduce(avg,user.uuid)"
+    printer: null
+    freeze: true
+    datalabel: "myFT frequency"
+  -
+    question: "What % of this week's Next subs are myFT users?"
+    dashboardfeature: "myft"
+    queryname: "overview/myftusers"
+    name: "myft/overview/myftusers"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->relTime(previous_7_days)"
+    printer: null
+    freeze: true
+    datalabel: "% are myFT users this week"
+  -
+    question: "What % of last week's Next subs were myFT users?"
+    dashboardfeature: "myft"
+    queryname: "overview/myftusersprev"
+    name: "myft/overview/myftusersprev"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))"
+    printer: null
+    freeze: true
+    datalabel: "% were myFT users last week"
+  -
+    question: "What % of Next subs are myFT users"
+    dashboardfeature: "myft"
+    queryname: "overview/myftusersbyday"
+    name: "myft/overview/myftusersbyday"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))"
+    printer: null
+    freeze: null
+    datalabel: "% myFT users"
+  -
+    question: "What % of this week's Next subs are following 5 or more topics?"
+    dashboardfeature: "myft"
+    queryname: "overview/following"
+    name: "myft/overview/following"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))"
+    printer: null
+    freeze: true
+    datalabel: "% are following 5 or more this week"
+  -
+    question: "What % of last week's Next subs were following 5 or more topics?"
+    dashboardfeature: "myft"
+    queryname: "overview/followingprev"
+    name: "myft/overview/followingprev"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))"
+    printer: null
+    freeze: true
+    datalabel: "% were following 5 or more last week"
+  -
+    question: "What % of subs are following 5 or more topics?"
+    dashboardfeature: "myft"
+    queryname: "overview/followingbyday"
+    name: "myft/overview/followingbyday"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))"
+    printer: null
+    freeze: null
+    datalabel: "% following 5 or more"
+  -
+    question: "What % of this week's Next subs are opted into the daily email?"
+    dashboardfeature: "myft"
+    queryname: "overview/dailyemail"
+    name: "myft/overview/dailyemail"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true),page:view->count(user.uuid))"
+    printer: null
+    freeze: true
+    datalabel: "% are opted into daily email this week"
+  -
+    question: "What % of last week's Next subs were opted into the daily email?"
+    dashboardfeature: "myft"
+    queryname: "overview/dailyemailprev"
+    name: "myft/overview/dailyemailprev"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true),page:view->count(user.uuid))"
+    printer: null
+    freeze: true
+    datalabel: "% were opted into daily email last week"
+  -
+    question: "What % of subs are opted into the daily email?"
+    dashboardfeature: "myft"
+    queryname: "overview/dailyemailbyday"
+    name: "myft/overview/dailyemailbyday"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->interval(d),page:view->count(user.uuid)->interval(d))"
+    printer: null
+    freeze: null
+    datalabel: "% opted into daily email"
+  -
+    question: "Where are the most successful follow buttons"
+    dashboardfeature: "myft"
+    queryname: "overview/followbutton"
+    name: "myft/overview/followbutton"
+    query: "cta:click->count()->filter(context.target=follow)->group(page.location.type,context.domPath)"
+    printer: null
+    freeze: null
+    datalabel: "Button version"
+  -
+    question: "How many myFT email clicks in the past 7 days?"
+    dashboardfeature: "myft"
+    queryname: "overview/emailclicksbyweek"
+    name: "myft/overview/emailclicksbyweek"
+    query: "page:view->count(user.uuid)->relTime(this_7_days)->filter(campaign.myft=notification:daily-email:cta)"
+    printer: null
+    freeze: null
+    datalabel: null
+  -
+    question: "Where are the most successful follow buttons"
+    dashboardfeature: "myft"
+    queryname: "actions/follow"
+    name: "myft/actions/follow"
+    query: "cta:click->count()->relTime(this_14_days)->group(context.domPath)->filter(context.domPath~follow)->interval(d)"
+    printer: "PieChart"
+    freeze: null
+    datalabel: null
+  -
+    question: "What % of article views were from a myFT source?"
+    dashboardfeature: "myft"
+    queryname: "overview/articleviews"
+    name: "myft/overview/articleviews"
+    query: "@pct(page:view->count(user.uuid)->filter(campaign.myft),page:view->count(user.uuid))"
+    printer: null
+    freeze: true
+    datalabel: "% are from myFT"
+  -
+    question: "Which myFT features drive the most traffic?"
+    dashboardfeature: "myft"
+    queryname: "overview/articleviewsbysource"
+    name: "myft/overview/articleviewsbysource"
+    query: "page:view->count(user.uuid)->interval(d)->filter(campaign.myft)->group(campaign.myft)"
+    printer: null
+    freeze: null
+    datalabel: null

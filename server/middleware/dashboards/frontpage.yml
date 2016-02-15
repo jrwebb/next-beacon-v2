@@ -1,0 +1,53 @@
+---
+id: frontpage
+title: Front page
+isprimary: true
+description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+
+# A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
+postulates:
+  -
+    question: "Are daily front page member counts increasing?"
+    dashboardfeature: "frontpage"
+    queryname: "members/daily"
+    name: "frontpage/members/daily"
+    query: "page:view->count(user.uuid)->filter(page.location.type=frontpage)"
+    printer: null
+    freeze: null
+    datalabel: "Members"
+  -
+    question: "Total frontpage page views"
+    dashboardfeature: "frontpage"
+    queryname: "views"
+    name: "frontpage/views"
+    query: "page:view->count()->filter(page.location.type=frontpage)"
+    printer: null
+    freeze: null
+    datalabel: "Total"
+  -
+    question: "What percent of page views are frontpage"
+    dashboardfeature: "frontpage"
+    queryname: "views/proportion"
+    name: "frontpage/views/proportion"
+    query: "@pct(page:view->count()->filter(page.location.type=frontpage),page:view->count())"
+    printer: null
+    freeze: null
+    datalabel: "View share"
+  -
+    question: "Total of members who visited the frontpage"
+    dashboardfeature: "frontpage"
+    queryname: "visitors"
+    name: "frontpage/visitors"
+    query: "page:view->count(user.uuid)->filter(page.location.type=frontpage)"
+    printer: null
+    freeze: null
+    datalabel: "Members"
+  -
+    question: "What percent of members visited the frontpage"
+    dashboardfeature: "frontpage"
+    queryname: "visitors/proportion"
+    name: "frontpage/visitors/proportion"
+    query: "@pct(page:view->count(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid))"
+    printer: null
+    freeze: null
+    datalabel: "Member share"

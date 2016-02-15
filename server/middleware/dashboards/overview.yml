@@ -1,0 +1,26 @@
+---
+id: overview
+title: nextFT overview
+isprimary: false
+description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+
+# A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
+postulates:
+  -
+    question: "What articles have been viewed in the last 30 minutes?"
+    dashboardfeature: "overview"
+    queryname: "popular"
+    name: "overview/popular"
+    query: "page:view->count(user.uuid)->relTime(this_30_minutes)->interval(m)->group(content.title)->tidy()"
+    printer: null
+    freeze: null
+    datalabel: "Articles"
+  -
+    question: "How many members do we have?"
+    dashboardfeature: "overview"
+    queryname: "users"
+    name: "overview/users"
+    query: "page:view->count(user.uuid)"
+    printer: null
+    freeze: null
+    datalabel: "Members"

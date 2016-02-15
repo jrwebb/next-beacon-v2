@@ -3,8 +3,6 @@
 // Render a group of charts in a dashboard
 const aliases = require('../middleware/aliases');
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
-const yaml = require('js-yaml');
-const fs = require('fs');
 
 function getDashboardTitle (req) {
 	let title =  req.params[0].replace(/\/$/, '');
@@ -14,34 +12,35 @@ function getDashboardTitle (req) {
 module.exports = function(req, res) {
 	let dashboard = {};
 	const dashboardname = req.params[0].split('/')[0];
-	const file = `${__dirname}/dashboards/${dashboardname}.yml`;
 
-	try {
-		dashboard = yaml.load(fs.readFileSync(file, 'utf8'));
-	}
-	catch (e) {
-		console.log(`Dashboard file not found: ${dashboardname}.yml`);
-	}
+	// Append from the spreadsheet of destiny
+	dashboard.postulates = dashboard.postulates || [];
 
-	let dashboardAliases = aliases.get(req.params[0])
-		.map(alias => {
-			if (coreChartTypes.indexOf(alias.printer) !== -1) {
-				alias.class = 'core-chart';
+	aliases.get(req.params[0]).forEach((a) => {
+		var result = dashboard.postulates.filter(function( obj ) {
+			return obj.queryname === a.queryname;
+		});
+
+		if (!result.length) {
+			dashboard.postulates.push(a);
+		}
+	});
+
+	dashboard.postulates = dashboard.postulates
+		.map(postulate => {
+			if (coreChartTypes.indexOf(postulate.printer) !== -1) {
+				postulate.class = 'core-chart';
 			}
-			return alias;
+			return postulate;
 		});
 
-	if (dashboard.aliases && dashboard.aliases.length) {
-		dashboardAliases = dashboardAliases.filter((a) => {
-			return dashboard.aliases.indexOf(a.queryname) !== -1;
-		});
-	}
+// console.log(dashboard)
 
 	res.render('dashboard', {
 		layout: 'beacon',
 		title: dashboard.title || getDashboardTitle(req),
 		description: dashboard.description || undefined,
-		dashboardAliases: dashboardAliases,
+		postulates: dashboard.postulates,
 		timeframe: req.query.timeframe || 'this_14_days',
 		interval: req.query.interval,
 		printer: req.query.printer === 'Table' ? 'Table' : undefined,

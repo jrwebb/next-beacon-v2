@@ -1,0 +1,53 @@
+---
+id: optinout
+title: Opt in/out
+isprimary: true
+description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+
+# A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
+postulates:
+  -
+    question: "What percentage of users opt out"
+    dashboardfeature: "optinout"
+    queryname: "opt-out-rate"
+    name: "optinout/opt-out-rate"
+    query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))->round()"
+    printer: null
+    freeze: null
+    datalabel: null
+  -
+    question: "What percentage of users opt in"
+    dashboardfeature: "optinout"
+    queryname: "opt-in-rate"
+    name: "optinout/opt-in-rate"
+    query: "@pct(site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in),page:view->count(user.uuid))->round()"
+    printer: null
+    freeze: null
+    datalabel: null
+  -
+    question: "Number of users who opted out"
+    dashboardfeature: "optinout"
+    queryname: "total-optouts"
+    name: "optinout/total-optouts"
+    query: "site:optout->count(user.uuid)"
+    printer: "ColumnChart"
+    freeze: null
+    datalabel: null
+  -
+    question: "Number of users who opted in"
+    dashboardfeature: "optinout"
+    queryname: "total-optins"
+    name: "optinout/total-optins"
+    query: "site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in)"
+    printer: "ColumnChart"
+    freeze: null
+    datalabel: null
+  -
+    question: "Number of users who used the site"
+    dashboardfeature: "optinout"
+    queryname: "total-users"
+    name: "optinout/total-users"
+    query: "page:view->count(user.uuid)"
+    printer: "ColumnChart"
+    freeze: null
+    datalabel: null

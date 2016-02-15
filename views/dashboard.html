@@ -1,23 +1,26 @@
+
 {{#unless isStandaloneChart}}
 	{{>chart-configurator isGlobal=true}}
 	<div class="chart__meta">
-		<h1 class="chart__meta--title">{{title}}</h1>
+		<h1 class="chart__meta--title">{{{title}}}</h1>
 		<div class="chart__meta--description">{{{description}}}</div>
 	</div>
 {{/unless}}
 <div class="charts o-grid-row">
-	{{#each dashboardAliases}}
+	{{#each postulates}}
 		{{#if @root.isStandaloneChart}}
 			{{>chart colspan=12 }}
 		{{else}}
 			{{>chart colspan="12 L6" }}
 		{{/if}}
 	{{else}}
+		<div data-o-grid-colspan="12">
 		{{#if isStandaloneChart}}
 			<h2>Woah there - looks like this chart doesn't exist in <a href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M/edit#gid=0">THE SPREADSHEET OF DESTINY</a></h2>
 		{{else}}
 			<h2>No queries set up yet.</h2>
 			<p>Visit <a href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M/edit#gid=0">THE SPREADSHEET OF DESTINY</a> to set some up.
 		{{/if}}
+		</div>
 	{{/each}}
 </div>
