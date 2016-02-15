@@ -1,6 +1,6 @@
 'use strict';
 
-import KeenQuery from 'n-keen-query';
+import KeenQuery from 'keen-query';
 import {init as chartUi, renderChart} from '../components/chart-ui';
 import {fromQueryString as getConfigurator} from '../components/configurator';
 import {storeKq} from '../data/kq-cache';
@@ -24,7 +24,7 @@ export function init () {
 
 			if (!conf.freeze) {
 				// avoid showing as big number when the default view could easily be converted to a line graph over time
-				if (builtQuery.dimension < 2 && !conf.printer) {
+				if (builtQuery.dimension < 2 && (['LineChart','ColumnChart','Table'].indexOf(conf.printer) > -1 || !conf.printer)) {
 					builtQuery = builtQuery.interval('d')
 				}
 				builtQuery = configure(builtQuery);

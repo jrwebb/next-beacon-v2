@@ -1,6 +1,7 @@
 'use strict';
+
 // Render a group of charts in a dashboard
-const KeenQuery = require('n-keen-query');
+const aliases = require('../middleware/aliases');
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 const yaml = require('js-yaml');
 const fs = require('fs');
@@ -22,7 +23,7 @@ module.exports = function(req, res) {
 		console.log(e);
 	}
 
-	let dashboardAliases = KeenQuery.aliases.get(req.params[0])
+	let dashboardAliases = aliases.get(req.params[0])
 		.map(alias => {
 			if (coreChartTypes.indexOf(alias.printer) !== -1) {
 				alias.class = 'core-chart';
