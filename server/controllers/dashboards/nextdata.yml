@@ -5,7 +5,6 @@
 # http://yaml.org/type/map.html -----------------------------------------------#
 
 title: Next data
-path: /dashboards/nextdata
 description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
 
 #list of query names from the bertha spreadsheet

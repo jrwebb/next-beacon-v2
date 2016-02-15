@@ -1,7 +1,9 @@
 {{#unless isStandaloneChart}}
-	<h1 class="chart-title">{{name}}</h1>
-	{{{description}}}
 	{{>chart-configurator isGlobal=true}}
+	<div class="chart__meta">
+		<h1 class="chart__meta--title">{{title}}</h1>
+		<div class="chart__meta--description">{{{description}}}</div>
+	</div>
 {{/unless}}
 <div class="charts o-grid-row">
 	{{#each dashboardAliases}}

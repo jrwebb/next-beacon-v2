@@ -7,20 +7,20 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 
 function getDashboardTitle (req) {
-	req.params[0].replace(/[a-z][A-Z][a-z]/g, function($1) {
-		return $1.charAt(0) + ' ' + $1.substr(1).toLowerCase();
-	}).replace(/\/$/, '');
+	let title =  req.params[0].replace(/\/$/, '');
+	return title.charAt(0).toUpperCase() + title.slice(1);
 }
 
 module.exports = function(req, res) {
 	let dashboard = {};
+	const dashboardname = req.params[0].split('/')[0];
+	const file = `${__dirname}/dashboards/${dashboardname}.yml`;
 
 	try {
-		const dashboardname = req.params[0].split('/')[0];
-		dashboard = yaml.safeLoad(fs.readFileSync(`${__dirname}/dashboards/${dashboardname}.yml`, 'utf8'));
+		dashboard = yaml.load(fs.readFileSync(file, 'utf8'));
 	}
 	catch (e) {
-		console.log(e);
+		console.log(`Dashboard file not found: ${dashboardname}.yml`);
 	}
 
 	let dashboardAliases = aliases.get(req.params[0])

@@ -14,6 +14,7 @@ KeenQuery.prototype.toTSV = KeenQuery.Aggregator.prototype.toTSV = function () {
 		.join('\n');
 }
 
+// Todo: handle absolute timeframes
 KeenQuery.buildFromAlias = (alias) => {
 	let query = alias.query;
 	query += alias.timeframe ? `->relTime(${alias.timeframe})` : '';
