@@ -1,7 +1,5 @@
 'use strict';
 
-const KeenQuery = require('n-keen-query');
-
 const http = require('http');
 const https = require('https');
 
@@ -42,7 +40,7 @@ app.get('/hashed-assets/:path*', function(req, res) {
 app.use(cookieParser());
 app.use(auth);
 app.use(window);
-app.use(aliases);
+app.use(aliases.init);
 app.use(require('./middleware/nav'));
 
 app.get('/data/export/:limit', require('./controllers/data/export'));
@@ -86,6 +84,5 @@ app.get('/', function (req, res, next) {
   next();
 }, require('./controllers/dashboard'));
 
-
-KeenQuery.aliases.poll()
+aliases.poll()
 	.then(() => app.listen(process.env.PORT));
