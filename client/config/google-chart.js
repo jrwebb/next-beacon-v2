@@ -21,7 +21,7 @@ export const defaultChartOptions = {
 	height: 450,
 	chartArea: {
 		top: '10%',
-		left: '5%',
+		left: '8%',
 		width: '95%',
 		height: '75%'
 	},
