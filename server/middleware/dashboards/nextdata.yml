@@ -12,7 +12,7 @@ description: <dt>"Though it's cold and lonely in the deep dark night, I can see 
 # A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
 postulates:
   -
-    question: "QQQQQQ (Pie) What continents are members visiting from?"
+    question: "(Pie) What continents are members visiting from?"
     dashboardfeature: "nextdata"
     queryname: "example/pie"
     name: "nextdata/example/pie"
@@ -20,7 +20,7 @@ postulates:
     printer: "PieChart"
     datalabel: "Continents"
   -
-    question: "QQQQQQ (Bar) What continents are members visiting from?"
+    question: "(Bar) What continents are members visiting from?"
     dashboardfeature: "nextdata"
     queryname: "example/bar"
     name: "nextdata/example/bar"
@@ -28,7 +28,7 @@ postulates:
     printer: "BarChart"
     datalabel: "Continents"
   -
-    question: "QQQQQQ (Column) Are daily member counts increasing?"
+    question: "(Column) Are daily member counts increasing?"
     dashboardfeature: "nextdata"
     queryname: "example/column"
     name: "nextdata/example/column"
@@ -36,14 +36,14 @@ postulates:
     printer: "ColumnChart"
     datalabel: "Members"
   -
-    question: "QQQQQQ Are daily member counts increasing?"
+    question: "Are daily member counts increasing?"
     dashboardfeature: "nextdata"
     queryname: "example/line"
     name: "nextdata/example/line"
     query: "page:view->count(user.uuid)"
     datalabel: "Members"
   -
-    question: "QQQQQQ What continents are members visiting from?"
+    question: "What continents are members visiting from?"
     dashboardfeature: "nextdata"
     queryname: "example/table"
     name: "nextdata/example/table"
