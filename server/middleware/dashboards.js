@@ -1,6 +1,5 @@
 'use strict';
 
-const aliases = require('./aliases');
 const yaml = require('js-yaml');
 const fs = require('fs');
 

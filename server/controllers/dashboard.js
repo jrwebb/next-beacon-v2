@@ -5,7 +5,7 @@ const aliases = require('../middleware/aliases');
 const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 
 function getDashboardTitle (req) {
-	let title =  req.params[0].replace(/\/$/, '');
+	let title = req.params[0].replace(/\/$/, '');
 	return title.charAt(0).toUpperCase() + title.slice(1);
 }
 
