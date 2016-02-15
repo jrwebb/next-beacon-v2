@@ -24,7 +24,7 @@ export function init () {
 
 			if (!conf.freeze) {
 				// avoid showing as big number when the default view could easily be converted to a line graph over time
-				if (builtQuery.dimension < 2 && ['LineChart','ColumnChart','Table'].indexOf(conf.printer) > -1 || !conf.printer) {
+				if (builtQuery.dimension < 2 && (['LineChart','ColumnChart','Table'].indexOf(conf.printer) > -1 || !conf.printer)) {
 					builtQuery = builtQuery.interval('d')
 				}
 				builtQuery = configure(builtQuery);
