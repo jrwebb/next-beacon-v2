@@ -27,6 +27,12 @@ module.exports = {
 			alias[item.name] = item;
 			return alias;
 		}, {});
+
+		res.locals.dashboards = get().reduce((alias,item) => {
+			alias[item.dashboardfeature] = item;
+			return alias;
+		}, {});
+
 		next();
 	},
 
