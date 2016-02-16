@@ -1,6 +1,6 @@
 'use strict';
 
-const KeenQuery = require('n-keen-query');
+import KeenQuery from 'keen-query';
 
 import {renderChart} from '../components/chart-ui';
 
