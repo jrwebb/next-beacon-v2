@@ -1,7 +1,7 @@
 'use strict';
 
 import KeenQuery from 'keen-query';
-
+import querystring from 'querystring';
 import {renderChart} from '../components/chart-ui';
 
 const debounce = function(fn,delay){
@@ -66,6 +66,9 @@ module.exports = {
 
 		const input = document.querySelector('.query-wizard__input');
 		const output = document.querySelector('.query-wizard__output');
+
+		const parameters = querystring.parse(location.search.substr(1));
+		input.value = parameters.query || '';
 
 		function validate (str) {
 			return new Promise((res, rej) => {
