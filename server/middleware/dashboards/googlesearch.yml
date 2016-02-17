@@ -1,0 +1,13 @@
+---
+id: googlesearch
+title: Google search
+isprimary: true
+description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: "How many articles are users reading by More-on MVT cohort?"
+    dashboardfeature: "googlesearch"
+    queryname: "moreons/mvtnumber"
+    name: "googlesearch/moreons/mvtnumber"
+    query: "page:view->count()->filter(content.isCountedContent)->group(user.ab.tests.articleMoreOnNumber)->filter(user.ab.tests.articleMoreOnNumber)"
+    datalabel: "Counted Content by More-on variants"

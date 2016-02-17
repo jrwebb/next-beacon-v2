@@ -1,0 +1,44 @@
+---
+id: nextdata
+title: Next data
+isprimary: false
+description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: "(Pie) What continents are members visiting from?"
+    dashboardfeature: "nextdata"
+    queryname: "example/pie"
+    name: "nextdata/example/pie"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)"
+    printer: "PieChart"
+    datalabel: "Continents"
+  -
+    question: "(Bar) What continents are members visiting from?"
+    dashboardfeature: "nextdata"
+    queryname: "example/bar"
+    name: "nextdata/example/bar"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)"
+    printer: "BarChart"
+    datalabel: "Continents"
+  -
+    question: "(Column) Are daily member counts increasing?"
+    dashboardfeature: "nextdata"
+    queryname: "example/column"
+    name: "nextdata/example/column"
+    query: "page:view->count(user.uuid)"
+    printer: "ColumnChart"
+    datalabel: "Members"
+  -
+    question: "Are daily member counts increasing?"
+    dashboardfeature: "nextdata"
+    queryname: "example/line"
+    name: "nextdata/example/line"
+    query: "page:view->count(user.uuid)"
+    datalabel: "Members"
+  -
+    question: "What continents are members visiting from?"
+    dashboardfeature: "nextdata"
+    queryname: "example/table"
+    name: "nextdata/example/table"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)"
+    datalabel: "Continents"

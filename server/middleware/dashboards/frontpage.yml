@@ -1,0 +1,41 @@
+---
+id: frontpage
+title: Front page
+isprimary: true
+description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: "Are daily front page member counts increasing?"
+    dashboardfeature: "frontpage"
+    queryname: "members/daily"
+    name: "frontpage/members/daily"
+    query: "page:view->count(user.uuid)->filter(page.location.type=frontpage)"
+    datalabel: "Members"
+  -
+    question: "Total frontpage page views"
+    dashboardfeature: "frontpage"
+    queryname: "views"
+    name: "frontpage/views"
+    query: "page:view->count()->filter(page.location.type=frontpage)"
+    datalabel: "Total"
+  -
+    question: "What percent of page views are frontpage"
+    dashboardfeature: "frontpage"
+    queryname: "views/proportion"
+    name: "frontpage/views/proportion"
+    query: "@pct(page:view->count()->filter(page.location.type=frontpage),page:view->count())"
+    datalabel: "View share"
+  -
+    question: "Total of members who visited the frontpage"
+    dashboardfeature: "frontpage"
+    queryname: "visitors"
+    name: "frontpage/visitors"
+    query: "page:view->count(user.uuid)->filter(page.location.type=frontpage)"
+    datalabel: "Members"
+  -
+    question: "What percent of members visited the frontpage"
+    dashboardfeature: "frontpage"
+    queryname: "visitors/proportion"
+    name: "frontpage/visitors/proportion"
+    query: "@pct(page:view->count(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid))"
+    datalabel: "Member share"

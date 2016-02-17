@@ -1,0 +1,34 @@
+---
+id: status
+title: General status
+isprimary: false
+description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: "Which page types are visited?"
+    dashboardfeature: "status"
+    queryname: "page-type"
+    name: "status/page-type"
+    query: "page:view->count(user.uuid)->group(page.location.type)->filter(page.location.type)"
+    datalabel: "Visits"
+  -
+    question: "Which pages aren't identified but are visited a lot?"
+    dashboardfeature: "status"
+    queryname: "unknown-page"
+    name: "status/unknown-page"
+    query: "page:view->select(page.location.normalizedPath)->filter(!page.location.type)"
+    datalabel: "Visits"
+  -
+    question: "Which screen size are members on?"
+    dashboardfeature: "status"
+    queryname: "screen-size"
+    name: "status/screen-size"
+    query: "page:view->count(user.uuid)->group(device.oGridLayout)->filter(device.oGridLayout)"
+    datalabel: "Members"
+  -
+    question: "Which browser do members use?"
+    dashboardfeature: "status"
+    queryname: "browser"
+    name: "status/browser"
+    query: "page:view->count(user.uuid)->group(device.browserName)->filter(device.browserName)"
+    datalabel: "Members"

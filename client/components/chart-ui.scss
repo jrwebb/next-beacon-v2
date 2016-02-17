@@ -81,13 +81,16 @@
 }
 
 .chart__configurator--global {
-	display: inline-block;
 	&:before {
 		content: 'Configure all graphs: ';
 	}
 	legend {
 		display: none;
 	}
+
+	height: 38px;
+	float: right;
+	margin-top: -25px !important;
 
 	.chart__configurator__interval {
 		display: inline-block;
@@ -96,6 +99,7 @@
 
 	fieldset {
 		display: inline-block;
+		border: 0;
 	}
 
 }

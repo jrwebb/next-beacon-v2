@@ -14,6 +14,7 @@
     "ft-next-logger": "^4.2.2",
     "ft-poller": "^2.6.0",
     "humanize-plus": "^1.5.0",
+    "js-yaml": "^3.5.3",
     "isomorphic-fetch": "^2.2.1",
     "keen-query": "^2.10.5",
     "keen.io": "^0.1.3",
