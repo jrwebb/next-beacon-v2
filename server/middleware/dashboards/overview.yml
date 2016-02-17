@@ -9,8 +9,9 @@ charts:
     dashboardfeature: "overview"
     queryname: "popular"
     name: "overview/popular"
-    query: "page:view->count(user.uuid)->relTime(this_30_minutes)->interval(m)->group(content.title)->tidy()"
+    query: "page:view->count(user.uuid)->relTime(this_30_minutes)->group(content.title)->tidy()"
     datalabel: "Articles"
+    printer: "PieChart"
   -
     question: "How many members do we have?"
     dashboardfeature: "overview"
