@@ -3,9 +3,7 @@ id: googlesearch
 title: Google search
 isprimary: true
 description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
-
-# A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
-postulates:
+charts:
   -
     question: "How many articles are users reading by More-on MVT cohort?"
     dashboardfeature: "googlesearch"

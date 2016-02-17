@@ -1,16 +1,9 @@
 ---
-# Paradise by the Dashboard Light ##############################################
-################################################################################
-
-# http://yaml.org/type/map.html -----------------------------------------------#
-
 id: nextdata
 title: Next data
 isprimary: false
 description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
-
-# A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
-postulates:
+charts:
   -
     question: "(Pie) What continents are members visiting from?"
     dashboardfeature: "nextdata"

@@ -19,26 +19,26 @@ module.exports = function(req, res) {
 	})[0];
 
 	// Append from the spreadsheet of destiny
-	dashboard.postulates = dashboard.postulates || [];
+	dashboard.charts = dashboard.charts || [];
 	aliases.get(req.params[0]).forEach((a) => {
-		const result = dashboard.postulates.filter(p => {
+		const result = dashboard.charts.filter(p => {
 			return p.queryname === a.queryname;
 		});
 		if (!result.length) {
-			dashboard.postulates.push(a);
+			dashboard.charts.push(a);
 		}
 	});
 
-	dashboard.postulates = dashboard.postulates
-		.map(postulate => {
-			if (coreChartTypes.indexOf(postulate.printer) !== -1) {
-				postulate.class = 'core-chart';
+	dashboard.charts = dashboard.charts
+		.map(chart => {
+			if (coreChartTypes.indexOf(chart.printer) !== -1) {
+				chart.class = 'core-chart';
 			}
-			return postulate;
+			return chart;
 		});
 
 	// Todo: Consider better ways to do this
-	dashboard.postulates.forEach(p => {
+	dashboard.charts.forEach(p => {
 		res.locals.aliases[p.name] = p;
 	});
 
@@ -46,7 +46,7 @@ module.exports = function(req, res) {
 		layout: 'beacon',
 		title: dashboard.title || getDashboardTitle(req),
 		description: dashboard.description || undefined,
-		postulates: dashboard.postulates,
+		charts: dashboard.charts,
 		timeframe: req.query.timeframe || 'this_14_days',
 		interval: req.query.interval,
 		printer: req.query.printer === 'Table' ? 'Table' : undefined,

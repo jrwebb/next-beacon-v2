@@ -3,9 +3,7 @@ id: status
 title: General status
 isprimary: false
 description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
-
-# A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
-postulates:
+charts:
   -
     question: "Which page types are visited?"
     dashboardfeature: "status"

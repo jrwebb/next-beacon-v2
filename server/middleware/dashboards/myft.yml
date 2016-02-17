@@ -3,9 +3,7 @@ id: myft
 title: <i>my</i>FT
 isprimary: true
 description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
-
-# A postulate is "a thing suggested or assumed as true as the basis for reasoning, discussion, or belief."
-postulates:
+charts:
   -
     question: "Average frequency of visit for a myFT user this week?"
     dashboardfeature: "myft"
