@@ -10,8 +10,6 @@ charts:
     queryname: "popular"
     name: "overview/popular"
     query: "page:view->count(user.uuid)->relTime(this_30_minutes)->interval(m)->group(content.title)->tidy()"
-    printer: null
-    freeze: null
     datalabel: "Articles"
   -
     question: "How many members do we have?"
@@ -19,6 +17,4 @@ charts:
     queryname: "users"
     name: "overview/users"
     query: "page:view->count(user.uuid)"
-    printer: null
-    freeze: null
     datalabel: "Members"

@@ -10,8 +10,6 @@ charts:
     queryname: "members/daily"
     name: "frontpage/members/daily"
     query: "page:view->count(user.uuid)->filter(page.location.type=frontpage)"
-    printer: null
-    freeze: null
     datalabel: "Members"
   -
     question: "Total frontpage page views"
@@ -19,8 +17,6 @@ charts:
     queryname: "views"
     name: "frontpage/views"
     query: "page:view->count()->filter(page.location.type=frontpage)"
-    printer: null
-    freeze: null
     datalabel: "Total"
   -
     question: "What percent of page views are frontpage"
@@ -28,8 +24,6 @@ charts:
     queryname: "views/proportion"
     name: "frontpage/views/proportion"
     query: "@pct(page:view->count()->filter(page.location.type=frontpage),page:view->count())"
-    printer: null
-    freeze: null
     datalabel: "View share"
   -
     question: "Total of members who visited the frontpage"
@@ -37,8 +31,6 @@ charts:
     queryname: "visitors"
     name: "frontpage/visitors"
     query: "page:view->count(user.uuid)->filter(page.location.type=frontpage)"
-    printer: null
-    freeze: null
     datalabel: "Members"
   -
     question: "What percent of members visited the frontpage"
@@ -46,6 +38,4 @@ charts:
     queryname: "visitors/proportion"
     name: "frontpage/visitors/proportion"
     query: "@pct(page:view->count(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid))"
-    printer: null
-    freeze: null
     datalabel: "Member share"

@@ -10,8 +10,6 @@ charts:
     queryname: "page-type"
     name: "status/page-type"
     query: "page:view->count(user.uuid)->group(page.location.type)->filter(page.location.type)"
-    printer: null
-    freeze: null
     datalabel: "Visits"
   -
     question: "Which pages aren't identified but are visited a lot?"
@@ -19,8 +17,6 @@ charts:
     queryname: "unknown-page"
     name: "status/unknown-page"
     query: "page:view->select(page.location.normalizedPath)->filter(!page.location.type)"
-    printer: null
-    freeze: null
     datalabel: "Visits"
   -
     question: "Which screen size are members on?"
@@ -28,8 +24,6 @@ charts:
     queryname: "screen-size"
     name: "status/screen-size"
     query: "page:view->count(user.uuid)->group(device.oGridLayout)->filter(device.oGridLayout)"
-    printer: null
-    freeze: null
     datalabel: "Members"
   -
     question: "Which browser do members use?"
@@ -37,6 +31,4 @@ charts:
     queryname: "browser"
     name: "status/browser"
     query: "page:view->count(user.uuid)->group(device.browserName)->filter(device.browserName)"
-    printer: null
-    freeze: null
     datalabel: "Members"

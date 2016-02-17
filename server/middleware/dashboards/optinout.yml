@@ -10,18 +10,12 @@ charts:
     queryname: "opt-out-rate"
     name: "optinout/opt-out-rate"
     query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))->round()"
-    printer: null
-    freeze: null
-    datalabel: null
   -
     question: "What percentage of users opt in"
     dashboardfeature: "optinout"
     queryname: "opt-in-rate"
     name: "optinout/opt-in-rate"
     query: "@pct(site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in),page:view->count(user.uuid))->round()"
-    printer: null
-    freeze: null
-    datalabel: null
   -
     question: "Number of users who opted out"
     dashboardfeature: "optinout"
@@ -29,8 +23,6 @@ charts:
     name: "optinout/total-optouts"
     query: "site:optout->count(user.uuid)"
     printer: "ColumnChart"
-    freeze: null
-    datalabel: null
   -
     question: "Number of users who opted in"
     dashboardfeature: "optinout"
@@ -38,8 +30,6 @@ charts:
     name: "optinout/total-optins"
     query: "site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in)"
     printer: "ColumnChart"
-    freeze: null
-    datalabel: null
   -
     question: "Number of users who used the site"
     dashboardfeature: "optinout"
@@ -47,5 +37,3 @@ charts:
     name: "optinout/total-users"
     query: "page:view->count(user.uuid)"
     printer: "ColumnChart"
-    freeze: null
-    datalabel: null

@@ -10,8 +10,6 @@ charts:
     queryname: "daily"
     name: "anonymous/daily"
     query: "page:view->count(user.ab.allocationId)->filter(!user.uuid)"
-    printer: null
-    freeze: null
     datalabel: "Anonymous visitors"
   -
     question: "What sites are anons visiting from?"
@@ -20,7 +18,6 @@ charts:
     name: "anonymous/referrers"
     query: "page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.referrer.host)"
     printer: "PieChart"
-    freeze: null
     datalabel: "Continent"
   -
     question: "Are anons clicking on the propensity AB test"
@@ -28,24 +25,15 @@ charts:
     queryname: "propensityAB/clicks"
     name: "anonymous/propensityAB/clicks"
     query: "cta:click->count()->filter(context.domPath~propensity-discount)->group(user.ab.tests.propensityAbTest)->tidy()"
-    printer: null
-    freeze: null
-    datalabel: null
   -
     question: "Are anons in the AB test viewing more pages"
     dashboardfeature: "anonymous"
     queryname: "propensityAB/page-views"
     name: "anonymous/propensityAB/page-views"
     query: "page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()"
-    printer: null
-    freeze: null
-    datalabel: null
   -
     question: "Are anons in the AB test viewing more pages"
     dashboardfeature: "anonymous"
     queryname: "propensityAB/page-views"
     name: "anonymous/propensityAB/page-views"
     query: "page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()"
-    printer: null
-    freeze: null
-    datalabel: null

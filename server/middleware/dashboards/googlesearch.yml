@@ -10,6 +10,4 @@ charts:
     queryname: "moreons/mvtnumber"
     name: "googlesearch/moreons/mvtnumber"
     query: "page:view->count()->filter(content.isCountedContent)->group(user.ab.tests.articleMoreOnNumber)->filter(user.ab.tests.articleMoreOnNumber)"
-    printer: null
-    freeze: null
     datalabel: "Counted Content by More-on variants"
