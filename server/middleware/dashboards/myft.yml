@@ -1,7 +1,7 @@
 ---
 id: myft
 title: <i>my</i>FT
-isprimary: true
+isprimary: false
 description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
 charts:
   -
