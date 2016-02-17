@@ -8,7 +8,13 @@ export function renderBigNumber (el, kq, meta) {
 		html += `<div class="o-big-number__content o-big-number__content--question chart-question">${meta.question}</div>`;
 	}
 
-	const niceNumber = humanize.compactInteger(kq.getTable().data, 1);
+	let niceNumber;
+	if(kq.getTable().data >= 1000) {
+		niceNumber = humanize.compactInteger(kq.getTable().data, 1);
+	} else {
+		niceNumber = parseFloat(kq.getTable().data.toFixed(2));
+	}
+
 	html += `<div class="o-big-number__title chart-data">${niceNumber}</div>`;
 
 	if (meta.label) {
