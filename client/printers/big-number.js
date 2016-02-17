@@ -12,7 +12,7 @@ export function renderBigNumber (el, kq, meta) {
 	if(kq.getTable().data >= 1000) {
 		niceNumber = humanize.compactInteger(kq.getTable().data, 1);
 	} else {
-		niceNumber = parseFloat(kq.getTable().data.toFixed(2));
+		niceNumber = Math.round(kq.getTable().data * 10)/10;
 	}
 
 	html += `<div class="o-big-number__title chart-data">${niceNumber}</div>`;
