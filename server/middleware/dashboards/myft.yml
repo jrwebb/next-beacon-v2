@@ -9,7 +9,7 @@ charts:
     dashboardfeature: "myft"
     queryname: "overview/myftfrequency"
     name: "myft/overview/myftfrequency"
-    query: "page:view->count(time.day)->relTime(previous_7_days)->group(user.uuid)—>tidy()->filter(user.myft.isMyFtUser=true)->reduce(avg,user.uuid)"
+    query: "page:view->count(time.day)->relTime(previous_7_days)->group(user.uuid)->tidy()->filter(user.myft.isMyFtUser=true)->reduce(avg,user.uuid)"
     freeze: true
     datalabel: "myFT frequency"
   -
