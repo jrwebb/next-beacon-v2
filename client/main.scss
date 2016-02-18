@@ -1,6 +1,5 @@
 /* Hide any enhanced experience content when in core mode, and vice versa. */
-.core .o--if-js,
-.enhanced .o--if-no-js { display: none !important; }
+.o--if-no-js { display: none !important; }
 
 @import 'o-expander/main';
 

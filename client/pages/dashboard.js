@@ -17,7 +17,7 @@ export function init () {
 			let builtQuery = KeenQuery.buildFromAlias(conf);
 
 			// todo: put this in buildFromAlias
-
+			// todo: default to column chart if it has dimension but no interval... or something
 			builtQuery = builtQuery.setPrinter(conf.printer || 'LineChart').tidy();
 
 			storeKq(alias, builtQuery);
