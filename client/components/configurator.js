@@ -1,10 +1,11 @@
 import querystring from 'querystring';
 import {getFormState} from './read-configurator-form';
 
-function composeKqModifiers(funcs) {
+function composeKqModifiers(functions) {
 	const composed = kq => {
 		kq = kq.clone(true);
 		let func;
+		const funcs = functions.slice();
 		while (func = funcs.shift()) {
 			kq = func(kq);
 		}
