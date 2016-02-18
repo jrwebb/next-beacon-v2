@@ -2,7 +2,7 @@
 id: googlesearch
 title: Google search
 isprimary: true
-description: "
+description: "FKA engagement."
 charts:
   -
     question: "What % of article views are referred by other articles?"
