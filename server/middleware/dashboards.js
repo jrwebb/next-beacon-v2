@@ -3,6 +3,14 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
+const parse = function (dashboards) {
+	dashboards.forEach(d => {
+		// console.log(d);
+	})
+
+	return dashboards;
+}
+
 module.exports = (req, res, next) => {
 	let dashboards = [];
 	const directory = `${__dirname}/dashboards/`;
@@ -18,19 +26,30 @@ module.exports = (req, res, next) => {
 						dashboards.push(dashboard);
 					}
 					catch (e) {
-						console.log(`Error loading dashboard file: ${directory}${file}`);
+						console.log(`Error with dashboard file: ${directory}${file}`, e);
 					}
 				});
 
 				if (dashboards.length) {
+					dashboards = parse(dashboards);
 					res.locals.dashboards = dashboards;
 
 					let primaryDashboards = [];
 					dashboards.forEach(d => {
-						if (d.isprimary) primaryDashboards.push ({
-							id: d.id,
-							title: d.title
-						});
+						if (d.isprimary) {
+							let primaryMenu = {
+								id: d.id,
+								title: d.title
+							};
+							if (d.dashboards && d.dashboards.length) primaryMenu.dashboards = d.dashboards.map(c => {
+								return {
+									id: c.id,
+									title: c.title,
+									path: `${d.id}/${c.id}`
+								}
+							});
+							primaryDashboards.push(primaryMenu);
+						}
 					});
 					res.locals.primaryDashboards = primaryDashboards;
 				}
