@@ -3,14 +3,6 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-const parse = function (dashboards) {
-	dashboards.forEach(d => {
-		// console.log(d);
-	})
-
-	return dashboards;
-}
-
 module.exports = (req, res, next) => {
 	let dashboards = [];
 	const directory = `${__dirname}/dashboards/`;
@@ -31,7 +23,6 @@ module.exports = (req, res, next) => {
 				});
 
 				if (dashboards.length) {
-					dashboards = parse(dashboards);
 					res.locals.dashboards = dashboards;
 
 					let primaryDashboards = [];

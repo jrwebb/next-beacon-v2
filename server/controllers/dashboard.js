@@ -11,35 +11,56 @@ function getDashboardTitle (req) {
 
 module.exports = function(req, res) {
 
-	const dashboardname = req.params[0].split('/')[0];
+	const dashboardID = req.params[0].split('/')[0];
 
 	// find dashboardname in res.locals.dashboards
 	let dashboard = res.locals.dashboards.filter(d => {
-		return d.id === dashboardname;
+		return d.id === dashboardID;
 	})[0];
 
-	// Append from the spreadsheet of destiny
+	if (dashboard.dashboards && dashboard.dashboards.length) {
+		const childDashboardID = req.params[0].split('/')[1];
+		let childDashboard = dashboard.dashboards.filter(d => {
+			return d.id === childDashboardID;
+		})[0];
+		if (childDashboard)	dashboard = childDashboard;
+	}
+
 	dashboard.charts = dashboard.charts || [];
+	dashboard.charts = dashboard.charts.map(c => {
+		c.name = dashboardID;
+		c.name += (dashboard.id !== dashboardID) ? `/${dashboard.id}/${c.id}` : `/${c.id}`;
+		if (c.parent) {
+			const parentChart = dashboard.charts.filter(p => {
+				return p.name === c.parent;
+			})[0];
+			if (parentChart) {
+				c = Object.assign(c, parentChart);
+			}
+		}
+		return c;
+	});
+
+	// Append from the spreadsheet of destiny
 	aliases.get(req.params[0]).forEach((a) => {
-		const result = dashboard.charts.filter(p => {
-			return p.queryname === a.queryname;
+		const result = dashboard.charts.filter(c => {
+			return c.name === a.queryname;
 		});
 		if (!result.length) {
 			dashboard.charts.push(a);
 		}
 	});
 
-	dashboard.charts = dashboard.charts
-		.map(chart => {
-			if (coreChartTypes.indexOf(chart.printer) !== -1) {
-				chart.class = 'core-chart';
-			}
-			return chart;
-		});
+	dashboard.charts = dashboard.charts.map(c => {
+		if (coreChartTypes.indexOf(c.printer) !== -1) {
+			c.class = 'core-chart';
+		}
+		return c;
+	});
 
 	// Todo: Consider better ways to do this
-	dashboard.charts.forEach(p => {
-		res.locals.aliases[p.name] = p;
+	dashboard.charts.forEach(c => {
+		res.locals.aliases[c.name] = c;
 	});
 
 	res.render('dashboard', {

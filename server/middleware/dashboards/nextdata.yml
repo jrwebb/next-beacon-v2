@@ -7,57 +7,62 @@ dashboards:
     id: 'examples'
     title: Example charts
     description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
-    continents:
-      question: "What continents are members visiting from?"
-      query: "page:view->count(user.uuid)->group(user.geo.continent)"
-      datalabel: "Continents"
-    pie:
-      parent: "examples.continents"
-      question: "(Pie) What continents are members visiting from?"
-      printer: "PieChart"
-    daily:
-      question: "Are daily member counts increasing?"
-      query: "page:view->count(user.uuid)"
-      datalabel: "Members"
-    column:
-      parent: "examples.daily"
-      question: "(Column) Are daily member counts increasing?"
-      printer: "ColumnChart"
-    ratio:
-      question: "What's the ratio of members to continents?"
-      query: "@ratio(examples.continents,examples.daily)"
+    charts:
+      -
+        question: "What continents are members visiting from?"
+        id: "continents"
+        query: "page:view->count(user.uuid)->group(user.geo.continent)"
+        datalabel: "Continents"
+      -
+        parent: 'nextdata/examples/continents'
+        id: "pie"
+        question: "(Pie) What continents are members visiting from?"
+        printer: "PieChart"
+      -
+        question: "Are daily member counts increasing?"
+        id: "daily"
+        query: "page:view->count(user.uuid)"
+        datalabel: "Members"
+      -
+        parent: nextdata/examples/daily
+        id: "column"
+        question: "(Column) Are daily member counts increasing?"
+        printer: "ColumnChart"
+      # -
+      #   question: "What's the ratio of members to continents?"
+      #   id: "ratio"
+      #   query: "@ratio(nextdata/examples/continents,nextdata/examples/daily)"
   -
     id: "tests"
     title: Test charts
     description: Don't panic if these charts show errors. They're for beacon dashboard test purposes only.
-    complexity01:
-      question: "Question: Test 01"
-      query: "page:view->count()"
-      datalabel: "Label: Test 01"
-    complexity02:
-      question: "Question: Test 02"
-      query: "page:view->count()->group(page.location.type)->interval(d)"
-      datalabel: "Label: Test 02"
-    complexity03:
-      question: "Question: Test 03"
-      query: "page:view->count()->group(content.features.hasVideo)"
-      datalabel: "Label: Test 03"
-    complexity04:
-      question: "Question: Test 04"
-      query: "page:view->count()->group(page.location.type)"
-      datalabel: "Label: Test 04"
-    complexity05:
-      question: "Question: Test 05"
-      query: "cta->count()->group(page.location.type)->relTime(this_3_days)->interval(d)"
-      datalabel: "Label: Test 05"
-    complexity06:
-      question: "Question: Test 06"
-      query: "cta->count(user.uuid)->group(page.location.type)->relTime(this_3_days)->interval(d)"
-      datalabel: "Label: Test 06"
-    complexity07:
-      question: "Question: Test 07"
-      query: "@ratio(this.complexity05,this.complexity06)"
-      datalabel: "Label: Test 07"
-    ratio:
-      question: "What's the ratio of members to continents?"
-      query: "@ratio(examples.continents,examples.daily)"
+    charts:
+      -
+        question: "Question: Test 01"
+        id: "complexity01"
+        query: "page:view->count()"
+        datalabel: "Label: Test 01"
+      -
+        question: "Question: Test 02"
+        id: "complexity02"
+        query: "page:view->count()->group(page.location.type)->interval(d)"
+        datalabel: "Label: Test 02"
+      -
+        question: "Question: Test 03"
+        id: "complexity03"
+        query: "page:view->count()->group(content.features.hasVideo)"
+        datalabel: "Label: Test 03"
+      -
+        question: "Question: Test 04"
+        id: "complexity04"
+        query: "page:view->count()->group(page.location.type)"
+        datalabel: "Label: Test 04"
+      -
+        question: "Question: Test 05"
+        id: "complexity05"
+        query: "@ratio(cta->count()->group(page.location.type)->relTime(examples_3_days)->interval(d),cta->count(user.uuid)->group(page.location.type)->relTime(examples_3_days)->interval(d))"
+        datalabel: "Label: Test 05"
+      # -
+      #   question: "What's the ratio of members to continents?"
+      #   id: "ratio"
+      #   query: "@ratio(nextdata/examples/continents,nextdata/examples/daily)"
