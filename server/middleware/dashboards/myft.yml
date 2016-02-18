@@ -59,6 +59,14 @@ charts:
     freeze: true,
     datalabel: "% are opted into daily email this week"
   -
+    question: "How many of this week's logged-in Next users are opted into the daily email?"
+    dashboardfeature: "myft"
+    queryName: "overview/dailyemailcount"
+    name: "myft/overview/dailyemailcount"
+    query: "page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->relTime(this_7_days)"
+    freeze: true,
+    datalabel: "are opted into daily email this week"
+  -
     question: "What % of last week's logged-in Next users were opted into the daily email?"
     dashboardfeature: "myft"
     queryName: "overview/dailyemailprev"
@@ -81,6 +89,14 @@ charts:
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(this_7_days),page:view->count(user.uuid)->relTime(this_7_days))"
     freeze: true,
     datalabel: "% are opted into weekly email this week"
+  -
+    question: "How many of this week's logged-in Next users are opted into the weekly email?"
+    dashboardfeature: "myft"
+    queryName: "overview/weeklyemailcount"
+    name: "myft/overview/weeklyemailcount"
+    query: "page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(this_7_days)"
+    freeze: true,
+    datalabel: "are opted into weekly email this week"
   -
     question: "What % of last week's logged-in Next users were opted into the weekly email?"
     dashboardfeature: "myft"
