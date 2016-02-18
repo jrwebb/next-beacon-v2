@@ -98,13 +98,13 @@ module.exports = {
 		}
 
 		input.addEventListener('keydown', ev => {
-			if (ev.keyCode === 13) {
+			if (ev.keyCode === 13 && !ev.shiftKey) {
 				ev.preventDefault();
 			}
 		})
 
 		input.addEventListener('keyup', ev => {
-			if (ev.keyCode === 13) {
+			if (ev.keyCode === 13 && !ev.shiftKey) {
 				run();
 				return false;
 			}

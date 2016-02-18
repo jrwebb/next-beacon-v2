@@ -32,10 +32,10 @@
     left: -5px;
 	}
 	.query-wizard__input {
-		padding: 0 10px;
-		font-size:24px;
+		padding: 5px 10px;
+		font-size: 18px;
 		min-height: 30px;
-		line-height: 1.8;
+		line-height: 1.4;
 		background-color: aliceblue;
 	}
 
@@ -100,7 +100,10 @@
 </style>
 <div class="query-wizard o-grid-container">
 <form class="query-wizard__form">
-	<textarea class="query-wizard__input" placeholder="Enter a keen query or use the tools below to build one" rows="1"></textarea>
+	<textarea class="query-wizard__input" placeholder="Enter a keen query or use the tools below to build one
+Whitespace, including new lines, is ok between query parts
+`Shift + Enter` to start a new line
+`Enter` to submit the query and create a chart" rows="4"></textarea>
 	<div class="query-wizard__toolbar">
 		<button type="submit" class="o-buttons o-buttons--standout query-wizard__submit">Click to run</button>  (or press 'Enter')
 		<button class="o-buttons o-buttons--small query-wizard__clear-output">Clear output</button>
