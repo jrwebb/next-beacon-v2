@@ -2,8 +2,15 @@
 id: googlesearch
 title: Google search
 isprimary: true
-description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
+description: "FKA engagement."
 charts:
+  -
+    question: "What % of article views are referred by other articles?"
+    dashboardfeature: "googlesearch"
+    queryname: "article-views/article-referrer"
+    name: "googlesearch/article-views/article-referrer"
+    query: "@pct(page:view->count()->filter(page.location.type=article)->filter(page.referrer.type=article),page:view->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)"
+    datalabel: "Article views referred by articles %"
   -
     question: "How many articles are users reading by More-on MVT cohort?"
     dashboardfeature: "googlesearch"
