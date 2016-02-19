@@ -18,3 +18,10 @@ charts:
     name: "googlesearch/moreons/mvtnumber"
     query: "page:view->count()->filter(content.isCountedContent)->group(user.ab.tests.articleMoreOnNumber)->filter(user.ab.tests.articleMoreOnNumber)"
     datalabel: "Counted Content by More-on variants"
+  -
+    question: "What's the average number of articles viewed per session?"
+    dashboardfeature: "googlesearch"
+    queryname: "article-views/session"
+    name: "googlesearch/article-views/session"
+    query: "@ratio(page:view->count(),page:view->count(spoorInfo.sessionId))"
+    datalabel: "Article views per session"
