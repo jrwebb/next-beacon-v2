@@ -23,5 +23,5 @@ charts:
     dashboardfeature: "googlesearch"
     queryname: "article-views/session"
     name: "googlesearch/article-views/session"
-    query: "@ratio(page:view->count(),page:view->count(spoorInfo.sessionId))"
+    query: "@ratio(page:view->count()->filter(page.location.type=article),page:view->count(spoorInfo.sessionId))"
     datalabel: "Article views per session"
