@@ -39,3 +39,19 @@ charts:
     name: "performance/fontsLoaded"
     query: "page:load-timing->median(context.timings.marks.fontsLoaded)->multiply(0.001)"
     datalabel: fontsLoaded
+  -
+    question: "What are browsers' average load times over the past 7 days?"
+    dashboardfeature: "frontpage"
+    queryname: "performance/averagepageload/offset"
+    name: "frontpage/performance/averagepageload/offset"
+    query: "page:load-timing->median(context.timings.offset.loadEventEnd)->filter(page.location.type=frontpage)->filter(device.browserName!=false)->group(device.browserName)->divide(1000)->sortAsc(device.browserName)"
+    printer: "BarChart"
+    datalabel: "Performance: Average page load time by browser"
+  -
+    question: "What are browsers' average load times over the past 7 days (from point page has downloaded)?"
+    dashboardfeature: "frontpage"
+    queryname: "performance/averagepageload/domloadingoffset"
+    name: "frontpage/performance/averagepageload/domloadingoffset"
+    query: "page:load-timing->median(context.timings.domLoadingOffset.loadEventEnd)->filter(page.location.type=frontpage)->filter(device.browserName!=false)->group(device.browserName)->divide(1000)->sortAsc(device.browserName)"
+    printer: "BarChart"
+    datalabel: "Performance: Average page load time by browser (graphs offset from the domLoading event)"
