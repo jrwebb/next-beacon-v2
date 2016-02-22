@@ -5,11 +5,18 @@ isprimary: false
 description: <dt>"Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light"</dt><dd>— Meat Loaf</dd>
 charts:
   -
-    question: "(No printer, so, Line) Are daily member counts increasing?"
+    question: "(No printer) Are daily member counts increasing?"
     dashboardfeature: "nextdata"
     queryname: "example/line"
     name: "nextdata/example/line"
     query: "page:view->count(user.uuid)"
+    datalabel: "Members"
+  -
+    question: "(No printer)(Grouped) What continents are members visiting from?"
+    dashboardfeature: "nextdata"
+    queryname: "example/line/grouped"
+    name: "nextdata/example/line/grouped"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)"
     datalabel: "Members"
   -
     question: "(Area) Are daily member counts increasing?"
@@ -17,6 +24,14 @@ charts:
     queryname: "example/area"
     name: "nextdata/example/area"
     query: "page:view->count(user.uuid)"
+    printer: "AreaChart"
+    datalabel: "Members"
+  -
+    question: "(Area)(Grouped) What continents are members visiting from?"
+    dashboardfeature: "nextdata"
+    queryname: "example/area/grouped"
+    name: "nextdata/example/area/grouped"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)"
     printer: "AreaChart"
     datalabel: "Members"
   -
