@@ -45,7 +45,7 @@ export function googleChartPrinterFactory (chartType) {
 		}
 
 		if (kqTable.dimension > 1) {
-			options.legend = { position: 'in' };
+			options.legend = { position: 'top' };
 		}
 
 		chart.draw(vizData, options);

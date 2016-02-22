@@ -25,6 +25,7 @@ charts:
     name: "nextdata/example/line/grouped/stacked"
     query: "page:view->count(user.uuid)->group(user.geo.continent)"
     datalabel: "Members"
+    isStacked: "percent"
   -
     question: "(Area) Are daily member counts increasing?"
     dashboardfeature: "nextdata"
