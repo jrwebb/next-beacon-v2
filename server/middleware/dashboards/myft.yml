@@ -164,29 +164,6 @@ charts:
     query: "cta:click->count()->interval(d)->filter(context.domPath=follow)->filter(context.domPressed=false)"
     datalabel: "follow clicks"
   -
-    question: "What % of this week's logged-in Next users are receiving the daily email?"
-    dashboardfeature: "myft"
-    queryName: "overview/dailyemailreceipt"
-    name: "myft/overview/dailyemailreceipt"
-    query: "@pct(email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days),page:view->count(user.uuid)->relTime(this_7_days))"
-    freeze: true,
-    datalabel: "% are received daily email this week"
-  -
-    question: "What % of last week's logged-in Next users were receiving the daily email?"
-    dashboardfeature: "myft"
-    queryName: "overview/dailyemailprevreceipt"
-    name: "myft/overview/dailyemailprevreceipt"
-    query: "@pct(email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days),page:view->count(user.uuid)->relTime(previous_7_days))"
-    freeze: true,
-    datalabel: "% received daily email last week"
-  -
-    question: "What % of logged-in Next users received the daily email?"
-    dashboardfeature: "myft"
-    queryName: "overview/dailyemailbydayreceipt"
-    name: "myft/overview/dailyemailbydayreceipt"
-    query: "@pct(email:delivery->count()->filter(campaign.myft.emailType=daily)->interval(d),page:view->count(user.uuid)->interval(d))"
-    datalabel: "% received daily email"
-  -
     question: "Daily email open rate this week"
     dashboardfeature: "myft"
     queryName: "overview/dailyemailopenrate"
