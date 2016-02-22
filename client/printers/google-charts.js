@@ -12,9 +12,7 @@ function hasDimension (kq) {
 export function googleChartPrinterFactory (chartType) {
 
 	function chartBuilder (el, kq, meta) {
-
-
-		const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(chartType) > -1;
+		const expectsDateObjects = ['AreaChart','LineChart','ColumnChart'].indexOf(chartType) > -1;
 		const kqTable = kq.getTable();
 		const kqData = kqTable.humanize(expectsDateObjects ? 'dateObject' : 'human');
 
@@ -29,6 +27,8 @@ export function googleChartPrinterFactory (chartType) {
 
 		options.hAxis = Object.assign({}, options.hAxis, {title: kqTable.axes[0].property});
 		options.vAxis = Object.assign({}, options.vAxis, {title: kqTable.valueLabel});
+
+		if (meta.isStacked) options.isStacked = meta.isStacked;
 
 		// if only one data set we can try to plot a trend line
 		if (kqTable.dimension === 1) {
@@ -45,7 +45,7 @@ export function googleChartPrinterFactory (chartType) {
 		}
 
 		if (kqTable.dimension > 1) {
-			options.legend = { position: 'in' };
+			options.legend = { position: 'top' };
 		}
 
 		chart.draw(vizData, options);
@@ -58,7 +58,6 @@ export function googleChartPrinterFactory (chartType) {
 	return function () {
 		return (el, meta) => {
 			meta = meta || getDefaultMeta();
-
 			if (hasDimension(this)) {
 				google.charts.setOnLoadCallback(() => chartBuilder(el, this, meta));
 			} else {
