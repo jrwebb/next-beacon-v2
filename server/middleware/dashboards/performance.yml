@@ -9,33 +9,33 @@ charts:
     dashboardfeature: "performance"
     queryname: "loadEventStart"
     name: "performance/loadEventStart"
-    query: "page:load-timing->median(context.timings.offset.loadEventStart)->multiply(0.001)"
+    query: "page:load-timing->med(context.timings.offset.loadEventStart)"
     datalabel: loadEventStart
   -
     question: "timing of domComplete"
     dashboardfeature: "performance"
     queryname: "domComplete"
     name: "performance/domComplete"
-    query: "page:load-timing->median(context.timings.offset.domComplete)->multiply(0.001)"
+    query: "page:load-timing->med(context.timings.offset.domComplete)"
     datalabel: domComplete
   -
     question: "timing of domContentLoadedEventStart"
     dashboardfeature: "performance"
     queryname: "domContentLoadedEventStart"
     name: "performance/domContentLoadedEventStart"
-    query: "page:load-timing->median(context.timings.offset.domContentLoadedEventStart)->multiply(0.001)"
+    query: "page:load-timing->med(context.timings.offset.domContentLoadedEventStart)"
     datalabel: domContentLoadedEventStart
   -
     question: "timing of domInteractive"
     dashboardfeature: "performance"
     queryname: "domInteractive"
     name: "performance/domInteractive"
-    query: "page:load-timing->median(context.timings.offset.domInteractive)->multiply(0.001)"
+    query: "page:load-timing->med(context.timings.offset.domInteractive)"
     datalabel: domInteractive
   -
     question: "timing of fontsLoaded"
     dashboardfeature: "performance"
     queryname: "fontsLoaded"
     name: "performance/fontsLoaded"
-    query: "page:load-timing->median(context.timings.marks.fontsLoaded)->multiply(0.001)"
+    query: "page:load-timing->med(context.timings.marks.fontsLoaded)"
     datalabel: fontsLoaded
