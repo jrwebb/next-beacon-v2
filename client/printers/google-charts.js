@@ -12,9 +12,7 @@ function hasDimension (kq) {
 export function googleChartPrinterFactory (chartType) {
 
 	function chartBuilder (el, kq, meta) {
-
-
-		const expectsDateObjects = ['LineChart','ColumnChart', 'Table'].indexOf(chartType) > -1;
+		const expectsDateObjects = ['AreaChart','LineChart','ColumnChart'].indexOf(chartType) > -1;
 		const kqTable = kq.getTable();
 		const kqData = kqTable.humanize(expectsDateObjects ? 'dateObject' : 'human');
 
@@ -58,7 +56,6 @@ export function googleChartPrinterFactory (chartType) {
 	return function () {
 		return (el, meta) => {
 			meta = meta || getDefaultMeta();
-
 			if (hasDimension(this)) {
 				google.charts.setOnLoadCallback(() => chartBuilder(el, this, meta));
 			} else {
