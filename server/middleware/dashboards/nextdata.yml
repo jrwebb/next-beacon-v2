@@ -19,6 +19,13 @@ charts:
     query: "page:view->count(user.uuid)->group(user.geo.continent)"
     datalabel: "Members"
   -
+    question: "(No printer)(Grouped)(Stacked) What continents?"
+    dashboardfeature: "nextdata"
+    queryname: "example/line/grouped/stacked"
+    name: "nextdata/example/line/grouped/stacked"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)"
+    datalabel: "Members"
+  -
     question: "(Area) Are daily member counts increasing?"
     dashboardfeature: "nextdata"
     queryname: "example/area"
@@ -34,6 +41,15 @@ charts:
     query: "page:view->count(user.uuid)->group(user.geo.continent)"
     printer: "AreaChart"
     datalabel: "Members"
+  -
+    question: "(Area)(Grouped)(Stacked) What continents?"
+    dashboardfeature: "nextdata"
+    queryname: "example/area/grouped/stacked"
+    name: "nextdata/example/area/grouped/stacked"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)"
+    printer: "AreaChart"
+    datalabel: "Members"
+    isStacked: "percent"
   -
     question: "(Pie) What continents are members visiting from?"
     dashboardfeature: "nextdata"
@@ -51,6 +67,15 @@ charts:
     printer: "BarChart"
     datalabel: "Continents"
   -
+    question: "(Bar)(Stacked) What continents are members visiting from?"
+    dashboardfeature: "nextdata"
+    queryname: "example/bar/stacked"
+    name: "nextdata/example/bar/stacked"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)->interval(d)"
+    printer: "BarChart"
+    datalabel: "Continents"
+    isStacked: "percent"
+  -
     question: "(Column) Are daily member counts increasing?"
     dashboardfeature: "nextdata"
     queryname: "example/column"
@@ -58,6 +83,15 @@ charts:
     query: "page:view->count(user.uuid)"
     printer: "ColumnChart"
     datalabel: "Members"
+  -
+    question: "(Column)(Grouped)(Stacked) What continents?"
+    dashboardfeature: "nextdata"
+    queryname: "example/Column/grouped/stacked"
+    name: "nextdata/example/Column/grouped/stacked"
+    query: "page:view->count(user.uuid)->group(user.geo.continent)"
+    printer: "ColumnChart"
+    datalabel: "Members"
+    isStacked: "percent"
   -
     question: "(Table) What continents are members visiting from?"
     dashboardfeature: "nextdata"

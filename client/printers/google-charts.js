@@ -28,6 +28,8 @@ export function googleChartPrinterFactory (chartType) {
 		options.hAxis = Object.assign({}, options.hAxis, {title: kqTable.axes[0].property});
 		options.vAxis = Object.assign({}, options.vAxis, {title: kqTable.valueLabel});
 
+		if (meta.isStacked) options.isStacked = meta.isStacked;
+
 		// if only one data set we can try to plot a trend line
 		if (kqTable.dimension === 1) {
 			options.trendlines = {
