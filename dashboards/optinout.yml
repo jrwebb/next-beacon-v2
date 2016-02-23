@@ -8,11 +8,11 @@ charts:
   -
     question: What percentage of users opt out
     name: opt-out-rate
-    query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))->round()"
+    query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))"
   -
     question: What percentage of users opt in
     name: opt-in-rate
-    query: "@pct(site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in),page:view->count(user.uuid))->round()"
+    query: "@pct(site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in),page:view->count(user.uuid))"
   -
     question: Number of users who opted out
     name: total-optouts
