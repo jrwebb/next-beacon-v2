@@ -18,7 +18,9 @@ charts:
     question: How many members visited today?
     name: members/today
     query: page:view->count(user.uuid)->relTime(this_1_day)
+    freeze: true
   -
     question: How many members visited yesterday?
     name: members/yesterday
     query: page:view->count(user.uuid)->relTime(previous_1_day)
+    freeze: true
