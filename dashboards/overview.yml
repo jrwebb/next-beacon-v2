@@ -1,0 +1,18 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: overview
+title: nextFT overview
+isPrimary: false
+description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: What articles have been viewed in the last 30 minutes?
+    name: popular
+    query: page:view->count(user.uuid)->relTime(this_30_minutes)->group(content.title)->tidy()
+    datalabel: Articles
+    printer: PieChart
+  -
+    question: How many members do we have?
+    name: users
+    query: page:view->count(user.uuid)
+    datalabel: Members

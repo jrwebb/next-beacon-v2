@@ -1,0 +1,32 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: frontpage
+title: Front page
+isPrimary: true
+description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: Are daily front page member counts increasing?
+    name: members/daily
+    query: page:view->count(user.uuid)->filter(page.location.type=frontpage)
+    datalabel: Members
+  -
+    question: Total frontpage page views
+    name: views
+    query: page:view->count()->filter(page.location.type=frontpage)
+    datalabel: Total
+  -
+    question: What percent of page views are frontpage
+    name: views/proportion
+    query: "@pct(page:view->count()->filter(page.location.type=frontpage),page:view->count())"
+    datalabel: View share
+  -
+    question: Total of members who visited the frontpage
+    name: visitors
+    query: page:view->count(user.uuid)->filter(page.location.type=frontpage)
+    datalabel: Members
+  -
+    question: What percent of members visited the frontpage
+    name: visitors/proportion
+    query: "@pct(page:view->count(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid))"
+    datalabel: Member share

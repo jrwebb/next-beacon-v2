@@ -1,0 +1,27 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: status
+title: General status
+isPrimary: false
+description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: Which page types are visited?
+    name: page-type
+    query: page:view->count(user.uuid)->group(page.location.type)->filter(page.location.type)
+    datalabel: Visits
+  -
+    question: Which pages aren't identified but are visited a lot?
+    name: unknown-page
+    query: page:view->select(page.location.normalizedPath)->filter(!page.location.type)
+    datalabel: Visits
+  -
+    question: Which screen size are members on?
+    name: screen-size
+    query: page:view->count(user.uuid)->group(device.oGridLayout)->filter(device.oGridLayout)
+    datalabel: Members
+  -
+    question: Which browser do members use?
+    name: browser
+    query: page:view->count(user.uuid)->group(device.browserName)->filter(device.browserName)
+    datalabel: Members

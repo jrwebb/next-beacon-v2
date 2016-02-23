@@ -1,0 +1,193 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: myft
+title: <i>my</i>FT
+isPrimary: false
+description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: What % of this week's logged-in Next users are myFT users?
+    name: overview/myftusers
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true)->relTime(this_7_days),page:view->count(user.uuid)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% are myFT users this week"
+  -
+    question: What % of last week's logged-in Next users were myFT users?
+    name: overview/myftusersprev
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true)->relTime(previous_7_days),page:view->count(user.uuid)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% were myFT users last week"
+  -
+    question: What % of logged-in Next users are myFT users
+    name: overview/myftusersbyday
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))"
+    datalabel: "% myFT users"
+  -
+    question: What % of this week's logged-in Next users are following 5 or more topics?
+    name: overview/following
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4)->relTime(this_7_days),page:view->count(user.uuid)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% are following 5 or more this week"
+  -
+    question: What % of last week's logged-in Next users were following 5 or more topics?
+    name: overview/followingprev
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4)->relTime(previous_7_days),page:view->count(user.uuid)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% were following 5 or more last week"
+  -
+    question: What % of logged-in Next users are following 5 or more topics?
+    name: overview/followingbyday
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))"
+    datalabel: "% following 5 or more"
+  -
+    question: What % of this week's logged-in Next users are opted into the daily email?
+    name: overview/dailyemail
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->relTime(this_7_days),page:view->count(user.uuid)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% are opted into daily email this week"
+  -
+    question: How many of this week's logged-in Next users are opted into the daily email?
+    name: overview/dailyemailcount
+    query: page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->relTime(this_7_days)
+    freeze: true,
+    datalabel: are opted into daily email this week
+  -
+    question: What % of last week's logged-in Next users were opted into the daily email?
+    name: overview/dailyemailprev
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->relTime(previous_7_days),page:view->count(user.uuid)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% were opted into daily email last week"
+  -
+    question: What % of logged-in Next users are opted into the daily email?
+    name: overview/dailyemailbyday
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->interval(d),page:view->count(user.uuid)->interval(d))"
+    datalabel: "% opted into daily email"
+  -
+    question: What % of this week's logged-in Next users are opted into the weekly email?
+    name: overview/weeklyemail
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(this_7_days),page:view->count(user.uuid)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% are opted into weekly email this week"
+  -
+    question: How many of this week's logged-in Next users are opted into the weekly email?
+    name: overview/weeklyemailcount
+    query: page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(this_7_days)
+    freeze: true,
+    datalabel: are opted into weekly email this week
+  -
+    question: What % of last week's logged-in Next users were opted into the weekly email?
+    name: overview/weeklyemailprev
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(previous_7_days),page:view->count(user.uuid)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% were opted into weekly email last week"
+  -
+    question: What % of logged-in Next users are opted into the weekly email?
+    name: overview/weeklyemailbyday
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->interval(d),page:view->count(user.uuid)->interval(d))"
+    datalabel: "% opted into weekly email"
+  -
+    question: How many myFT email clicks in the past 7 days?
+    name: overview/emailclicksbyweek
+    query: page:view->count(user.uuid)->relTime(this_7_days)->filter(campaign.myft=notification:daily-email:cta)
+  -
+    question: What % of article views were from a myFT source?
+    name: overview/articleviews
+    query: "@pct(page:view->count(user.uuid)->filter(campaign.myft),page:view->count(user.uuid))"
+    freeze: true,
+    datalabel: "% are from myFT"
+  -
+    question: Which myFT features drive the most traffic?
+    name: overview/articleviewsbysource
+    query: page:view->count(user.uuid)->interval(d)->filter(campaign.myft)->group(campaign.myft)
+  -
+    question: Average frequency of visit for a myFT user this week?
+    name: overview/myftfrequency
+    query: page:view->count(time.day)->relTime(this_7_days)->group(user.uuid)->tidy()->filter(user.myft.isMyFtUser=true)->reduce(avg,user.uuid)
+    freeze: true,
+    datalabel: / 7 days a week
+  -
+    question: How many follow clicks were there this week
+    name: overview/followclicks
+    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath=follow)->filter(context.domPressed=false)
+    freeze: true,
+    datalabel: follow clicks
+  -
+    question: How many follow clicks were there last week
+    name: overview/followclicksprev
+    query: cta:click->count()->relTime(last_7_days)->filter(context.domPath=follow)->filter(context.domPressed=false)
+    freeze: true,
+    datalabel: follow clicks
+  -
+    question: How many follow clicks
+    name: overview/followclicksbyday
+    query: cta:click->count()->interval(d)->filter(context.domPath=follow)->filter(context.domPressed=false)
+    datalabel: follow clicks
+  -
+    question: Daily email open rate this week
+    name: overview/dailyemailopenrate
+    query: "@pct(email:open->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% open rate"
+  -
+    question: Daily email open rate last week
+    name: overview/dailyemailopenrateprev
+    query: "@pct(email:open->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% open rate"
+  -
+    question: Daily email open rate
+    name: overview/dailyemailopenratebyday
+    query: "@pct(email:open->count()->filter(campaign.myft.emailType=daily)->interval(d),email:delivery->count()->filter(campaign.myft.emailType=daily)->interval(d))"
+  -
+    question: Weekly email open rate this week
+    name: overview/weeklyemailopenrate
+    query: "@pct(email:open->count()->filter(campaign.myft.emailType=weekly)->relTime(this_7_days),email:delivery->count()->filter(campaign.myft.emailType=weekly)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% open rate"
+  -
+    question: Weekly email open rate last week
+    name: overview/weeklyemailopenrateprev
+    query: "@pct(email:open->count()->filter(campaign.myft.emailType=weekly)->relTime(previous_7_days),email:delivery->count()->filter(campaign.myft.emailType=weekly)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% open rate"
+  -
+    question: Weekly email open rate
+    name: overview/weeklyemailopenratebyday
+    query: "@pct(email:open->count()->filter(campaign.myft.emailType=weekly)->interval(d),email:delivery->count()->filter(campaign.myft.emailType=weekly)->interval(d))"
+  -
+    question: Daily email click-through rate this week
+    name: overview/dailyemailclickthroughrate
+    query: "@pct(email:click->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% click-through rate"
+  -
+    question: Daily email click-through rate last week
+    name: overview/dailyemailclickthroughrateprev
+    query: "@pct(email:click->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% click-through rate"
+  -
+    question: Daily email click-through rate
+    name: overview/dailyemailclickthroughratebyday
+    query: "@pct(email:click->count()->filter(campaign.myft.emailType=daily)->interval(d),email:delivery->count()->filter(campaign.myft.emailType=daily)->interval(d))"
+  -
+    question: Weekly email click-through rate this week
+    name: overview/weeklyemailclickthroughrate
+    query: "@pct(email:click->count()->filter(campaign.myft.emailType=weekly)->relTime(this_7_days),email:delivery->count()->filter(campaign.myft.emailType=weekly)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% click-through rate"
+  -
+    question: Weekly email click-through rate last week
+    name: overview/weeklyemailclickthroughrateprev
+    query: "@pct(email:click->count()->filter(campaign.myft.emailType=weekly)->relTime(previous_7_days),email:delivery->count()->filter(campaign.myft.emailType=weekly)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% click-through rate"
+  -
+    question: Weekly email click-through rate
+    name: overview/weeklyemailclickthroughratebyday
+    query: "@pct(email:click->count()->filter(campaign.myft.emailType=weekly)->interval(d),email:delivery->count()->filter(campaign.myft.emailType=weekly)->interval(d))"
+  -
+    question: Where are the most successful follow buttons
+    name: actions/follow
+    query: cta:click->count()->relTime(this_14_days)->group(context.domPath)->filter(context.domPath~follow)->interval(d)
+    printer: PieChart

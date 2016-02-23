@@ -6,7 +6,7 @@ const https = require('https');
 const auth = require('./middleware/auth');
 const window = require('./middleware/window');
 const aliases = require('./middleware/aliases');
-const dashboards = require('./middleware/dashboards');
+const dashboards = require('./lib/dashboards');
 
 const cookieParser	= require('cookie-parser');
 const app = module.exports = require('ft-next-express')({
@@ -42,7 +42,7 @@ app.use(cookieParser());
 app.use(auth);
 app.use(window);
 app.use(aliases.init);
-app.use(dashboards);
+app.use(dashboards.middleware);
 app.use(require('./middleware/nav'));
 
 app.get('/data/export/:limit', require('./controllers/data/export'));

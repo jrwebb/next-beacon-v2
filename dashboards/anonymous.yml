@@ -1,0 +1,30 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: anonymous
+title: Anonymous
+isPrimary: true
+description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: Are daily anonymous visitor counts increasing?
+    name: daily
+    query: page:view->count(user.ab.allocationId)->filter(!user.uuid)
+    datalabel: Anonymous visitors
+  -
+    question: What sites are anons visiting from?
+    name: referrers
+    query: page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.referrer.host)
+    printer: PieChart
+    datalabel: Continent
+  -
+    question: Are anons clicking on the propensity AB test
+    name: propensityAB/clicks
+    query: cta:click->count()->filter(context.domPath~propensity-discount)->group(user.ab.tests.propensityAbTest)->tidy()
+  -
+    question: Are anons in the AB test viewing more pages
+    name: propensityAB/page-views
+    query: page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()
+  -
+    question: Are anons in the AB test viewing more pages
+    name: propensityAB/page-views
+    query: page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()

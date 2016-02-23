@@ -1,0 +1,30 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: optinout
+title: Opt in/out
+isPrimary: true
+description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: What percentage of users opt out
+    name: opt-out-rate
+    query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))->round()"
+  -
+    question: What percentage of users opt in
+    name: opt-in-rate
+    query: "@pct(site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in),page:view->count(user.uuid))->round()"
+  -
+    question: Number of users who opted out
+    name: total-optouts
+    query: site:optout->count(user.uuid)
+    printer: ColumnChart
+  -
+    question: Number of users who opted in
+    name: total-optins
+    query: site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in)
+    printer: ColumnChart
+  -
+    question: Number of users who used the site
+    name: total-users
+    query: page:view->count(user.uuid)
+    printer: ColumnChart

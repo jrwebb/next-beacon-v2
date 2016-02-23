@@ -1,0 +1,27 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: googlesearch
+title: Google search
+isPrimary: true
+description: FKA engagement.
+charts:
+  -
+    question: What's the average number of articles viewed per session?
+    name: article-views/session
+    query: "@ratio(page:view->count()->filter(page.location.type=article),page:view->count(spoorInfo.sessionId))"
+    datalabel: Article views per session
+  -
+    question: How many articles are users reading per week?
+    name: article-views/week
+    query: "@ratio(page:view->count(),page:view->count(user.uuid))->interval(w)->filter(page.location.type=article)"
+    datalabel: Article views per week
+  -
+    question: What % of article views are referred by other articles?
+    name: article-views/article-referrer
+    query: "@pct(page:view->count()->filter(page.location.type=article)->filter(page.referrer.type=article),page:view->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)"
+    datalabel: Article views referred by articles %
+  -
+    question: How many articles are users reading by More-on MVT cohort?
+    name: moreons/mvtnumber
+    query: page:view->count()->filter(content.isCountedContent)->group(user.ab.tests.articleMoreOnNumber)->filter(user.ab.tests.articleMoreOnNumber)
+    datalabel: Counted Content by More-on variants

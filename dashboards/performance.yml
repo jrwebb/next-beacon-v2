@@ -1,0 +1,32 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: performance
+title: Performance
+isPrimary: true
+description: Fastest site in the west
+charts:
+  -
+    question: timing of loadEventStart
+    name: loadEventStart
+    query: page:load-timing->med(context.timings.offset.loadEventStart)
+    datalabel: loadEventStart
+  -
+    question: timing of domComplete
+    name: domComplete
+    query: page:load-timing->med(context.timings.offset.domComplete)
+    datalabel: domComplete
+  -
+    question: timing of domContentLoadedEventStart
+    name: domContentLoadedEventStart
+    query: page:load-timing->med(context.timings.offset.domContentLoadedEventStart)
+    datalabel: domContentLoadedEventStart
+  -
+    question: timing of domInteractive
+    name: domInteractive
+    query: page:load-timing->med(context.timings.offset.domInteractive)
+    datalabel: domInteractive
+  -
+    question: timing of fontsLoaded
+    name: fontsLoaded
+    query: page:load-timing->med(context.timings.marks.fontsLoaded)
+    datalabel: fontsLoaded
