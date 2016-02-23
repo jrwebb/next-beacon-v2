@@ -99,13 +99,9 @@ export function init (container) {
 			chartEl.classList.add('chart--pre-grouped')
 		}
 
-		uiEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'keen-explorer')}">
-			View in keen explorer
-		</a>`);
+		uiEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'explorer')}">View in keen explorer</a>`);
 
-		uiEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a href="/data/query-wizard?query=${window.aliases[alias].query}">
-			View in query wizard
-		</a>`);
+		uiEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a href="/data/query-wizard?query=${window.aliases[alias].query}">View in query wizard</a>`);
 	});
 }
 
