@@ -23,7 +23,7 @@ charts:
   -
     question: How many articles are users reading by More-on MVT cohort?
     name: moreons/mvtnumber
-    query: page:view->count()->filter(content.isCountedContent)->group(user.ab.tests.articleMoreOnNumber)->filter(user.ab.tests.articleMoreOnNumber)
+    query: @ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleMoreOnNumber)->tidy()
     datalabel: Counted Content by More-on variants
  -
     question: What's the CTR on the Recommended Reads Component?
