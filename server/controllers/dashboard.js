@@ -16,7 +16,7 @@ module.exports = function(req, res) {
 	// find dashboardname in res.locals.dashboards
 	let dashboard = res.locals.dashboards.filter(d => {
 		return d.id === dashboardname;
-	})[0];
+	})[0] || {};
 
 	// Append from the spreadsheet of destiny
 	dashboard.charts = dashboard.charts || [];
