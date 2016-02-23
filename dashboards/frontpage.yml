@@ -1,0 +1,412 @@
+# Note: Any strings begining with "@ or %, or containing a : followed by a space, must be wrapped in quote marks"
+---
+id: frontpage
+title: Front page
+isPrimary: true
+description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+charts:
+
+  # PRE-PREPARED --------------------------------------------------
+  -
+    question: Are daily front page member counts increasing?
+    name: members/daily
+    query: page:view->count(user.uuid)->filter(page.location.type=frontpage)
+    datalabel: Members
+  -
+    question: Total frontpage page views
+    name: views
+    query: page:view->count()->filter(page.location.type=frontpage)
+    datalabel: Total
+  -
+    question: What percentage of page views are frontpage?
+    name: views/proportion
+    query: "@pct(page:view->count()->filter(page.location.type=frontpage),page:view->count())"
+    datalabel: View share
+  -
+    question: Total of members who visited the frontpage
+    name: visitors
+    query: page:view->count(user.uuid)->filter(page.location.type=frontpage)
+    datalabel: Members
+  -
+    question: What percentage of members visited the frontpage?
+    name: visitors/proportion
+    query: "@pct(page:view->count(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid))"
+    datalabel: Member share
+
+  # PERFORMANCE --------------------------------------------------
+  -
+    question: What is the performance of the fonts loading?
+    name: performance/fontload/marks
+    query: page:load-timing->median(context.timings.marks.fontsLoaded)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Fonts loaded"
+  -
+    question: What is the performance of the fonts loading (from point page has downloaded)?
+    name: performance/fontload/domloadingoffset
+    query: page:load-timing->median(context.timings.domLoadingOffset.fontsLoaded)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Fonts loaded (offset from the domLoading event)"
+  -
+    question: What is the performance of the page starting to render?
+    name: performance/pagestartrender/custom
+    query: page:load-timing->median(context.timings.custom.firstPaint)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page starts to render"
+  -
+    question: What is the performance of the page starting to render (from point page has downloaded)?
+    name: performance/pagestartrender/domloadingoffset
+    query: page:load-timing->median(context.timings.domLoadingOffset.firstPaint)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page starts to render (offset from the domLoading event)"
+  -
+    question: What is the performance of the page loading?
+    name: performance/pageload/offset
+    query: page:load-timing->median(context.timings.offset.loadEventEnd)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loaded"
+  -
+    question: What is the performance of the page loading (from point page has downloaded)?
+    name: performance/pageload/domloadingoffset
+    query: page:load-timing->median(context.timings.domLoadingOffset.loadEventEnd)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loaded (offset from the domLoading event)"
+  -
+    question: What are browsers' average load times over the past 7 days?
+    name: performance/averagepageload/offset
+    query: page:load-timing->median(context.timings.offset.loadEventEnd)->relTime(previous_7_days)->filter(page.location.type=frontpage)->filter(device.browserName!=false)->group(device.browserName)->divide(1000)->sortAsc(device.browserName)
+    printer: BarChart
+    datalabel: "Performance: Average page load time by browser"
+  -
+    question: What are browsers' average load times over the past 7 days (from point page has downloaded)?
+    name: performance/averagepageload/domloadingoffset
+    query: page:load-timing->median(context.timings.domLoadingOffset.loadEventEnd)->relTime(previous_7_days)->filter(page.location.type=frontpage)->filter(device.browserName!=false)->group(device.browserName)->divide(1000)->sortAsc(device.browserName)
+    printer: BarChart
+    datalabel: "Performance: Average page load time by browser (offset from the domLoading event)"
+  -
+    question: What is the timing of page loading events (loadEventStart)?
+    name: performance/pageloadingevents/loadeventstart/offset
+    query: page:load-timing->median(context.timings.offset.loadEventStart)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loading events (loadEventStart)"
+  -
+    question: What is the timing of page loading events (loadEventStart) (from point page has downloaded)?
+    name: performance/pageloadingevents/loadeventstart/domloadingoffset
+    query: page:load-timing->median(context.timings.domLoadingOffset.loadEventStart)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loading events (loadEventStart) (offset from the domLoading event)"
+  -
+    question: What is the timing of page loading events (domComplete)?
+    name: performance/pageloadingevents/domcomplete/offset
+    query: page:load-timing->median(context.timings.offset.domComplete)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loading events (domComplete)"
+  -
+    question: What is the timing of page loading events (domComplete) (from point page has downloaded)?
+    name: performance/pageloadingevents/domcomplete/domloadingoffset
+    query: page:load-timing->median(context.timings.domLoadingOffset.domComplete)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loading events (domComplete) (offset from the domLoading event)"
+  -
+    question: What is the timing of page loading events (domContentLoadedEventStart)?
+    name: performance/pageloadingevents/domcontentloadedeventstart/offset
+    query: page:load-timing->median(context.timings.offset.domContentLoadedEventStart)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loading events (domContentLoadedEventStart)"
+  -
+    question: What is the timing of page loading events (domContentLoadedEventStart) (from point page has downloaded)?
+    name: performance/pageloadingevents/domcontentloadedeventstart/domloadingoffset
+    query: page:load-timing->median(context.timings.domLoadingOffset.domContentLoadedEventStart)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loading events (domContentLoadedEventStart) (offset from the domLoading event)"
+  -
+    question: What is the timing of page loading events (domInteractive)?
+    name: performance/pageloadingevents/dominteractive/offset
+    query: page:load-timing->median(context.timings.offset.domInteractive)->filter(page.location.type=frontpage)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loading events (domInteractive)"
+  -
+    question: What is the timing of page loading events (domInteractive) (from point page has downloaded)?
+    name: performance/pageloadingevents/dominteractive/domloadingoffset
+    query: page:load-timing->median(context.timings.domLoadingOffset.domInteractive)->filter(page.location.type=frontpage)->filter(context.timings.offset.domInteractive)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: "Performance: Page loading events (domInteractive) (offset from the domLoading event)"
+
+  # SCROLL DEPTH --------------------------------------------------
+  # -
+  #   question: What percentage of frontpage users are scrolling to each section?
+  #   name: scrolldepth
+  #   query: page:scrolldepth->count()->filter(page.location.type=frontpage)->filter(context.domPath)->group(context.domPath, context.componentPos)
+  #   datalabel: Scroll depth
+
+  # CTR (average percentage of clicks) --------------------------------------------------
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections?
+    name: ctr/average/percentage/all
+    query: "@pct(cta:click->count(user.uuid),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (all)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Header)?
+    name: ctr/average/percentage/header
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~header),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Header)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Top Stories)?
+    name: ctr/average/percentage/top-stories
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~top-stories),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Top Stories)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from FastFT)?
+    name: ctr/average/percentage/fastft
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~fastft),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (FastFT)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Editors' Picks)?
+    name: ctr/average/percentage/editors-picks
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~editors-picks),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Editors' Picks)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Opinion)?
+    name: ctr/average/percentage/opinion
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~opinion),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Opinion)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from myFT)?
+    name: ctr/average/percentage/myft
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~myft),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (myFT)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Most Popular)?
+    name: ctr/average/percentage/most-popular
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~most-popular),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Most Popular)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Life & Arts)?
+    name: ctr/average/percentage/life-and-arts
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Life & Arts)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Markets)?
+    name: ctr/average/percentage/markets
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~markets),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Markets)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Technology)?
+    name: ctr/average/percentage/technology
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~technology),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Technology)
+  -
+    question: What percentage (average) of frontpage users are clicking through to other sections (from Video)?
+    name: ctr/average/percentage/video
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~video),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average percentage (Video)
+
+  # CTR (average clicks) --------------------------------------------------
+  -
+    question: How many clicks (average) are users making on the frontpage?
+    name: ctr/average/clicks/all
+    query: "@ratio(cta:click->count(),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user
+  -
+    question: How many clicks (average) are users making on the frontpage (from Header)?
+    name: ctr/average/clicks/header
+    query: "@ratio(cta:click->count()->filter(context.domPath~header),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Header)
+  -
+    question: How many clicks (average) are users making on the frontpage (from Top Stories)?
+    name: ctr/average/clicks/top-stories
+    query: "@ratio(cta:click->count()->filter(context.domPath~top-stories),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Top Stories)
+  -
+    question: How many clicks (average) are users making on the frontpage (from FastFT)?
+    name: ctr/average/clicks/fastft
+    query: "@ratio(cta:click->count()->filter(context.domPath~fastft),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (FastFT)
+  -
+    question: How many clicks (average) are users making on the frontpage (from Editors' Picks)?
+    name: ctr/average/clicks/editors-picks
+    query: "@ratio(cta:click->count()->filter(context.domPath~editors-picks),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Editors' Picks)
+  -
+    question: How many clicks (average) are users making on the frontpage (from Opinion)?
+    name: ctr/average/clicks/opinion
+    query: "@ratio(cta:click->count()->filter(context.domPath~opinion),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Opinion)
+  -
+    question: How many clicks (average) are users making on the frontpage (from myFT)?
+    name: ctr/average/clicks/myft
+    query: "@ratio(cta:click->count()->filter(context.domPath~myft),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (myFT)
+  -
+    question: How many clicks (average) are users making on the frontpage (from Most Popular)?
+    name: ctr/average/clicks/most-popular
+    query: "@ratio(cta:click->count()->filter(context.domPath~most-popular),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Most Popular)
+  -
+    question: How many clicks (average) are users making on the frontpage (from Life & Arts)?
+    name: ctr/average/clicks/life-and-arts
+    query: "@ratio(cta:click->count()->filter(context.domPath~life-and-arts),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Life & Arts)
+  -
+    question: How many clicks (average) are users making on the frontpage (from Markets)?
+    name: ctr/average/clicks/markets
+    query: "@ratio(cta:click->count()->filter(context.domPath~markets),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Markets)
+  -
+    question: How many clicks (average) are users making on the frontpage (from Technology)?
+    name: ctr/average/clicks/technology
+    query: "@ratio(cta:click->count()->filter(context.domPath~technology),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Technology)
+  -
+    question: How many clicks (average) are users making on the frontpage (from Video)?
+    name: ctr/average/clicks/video
+    query: "@ratio(cta:click->count()->filter(context.domPath~video),page:view->count(user.uuid))->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
+    freeze: true
+    datalabel: CTR average clicks per user (Video)
+  # -
+  # **Average across 8 weeks (duration given in this instance)**
+    # question: How many frontpage users are there averaged across 8 weeks?
+    # name: ctr/users
+    # query:
+    # freeze: true
+    # datalabel: CTR number of frontpage users
+  # -
+  # **Average across 8 weeks (duration given in this instance)**
+    # question: How many frontpage views are there averaged across 8 weeks?
+    # name: ctr/views
+    # query:
+    # freeze: true
+    # datalabel: CTR number of frontpage views
+
+  # CTR (percentage) --------------------------------------------------
+  -
+    question: What percentage of frontpage users are clicking through to other sections?
+    name: ctr/average/duration/all
+    query: "@pct(cta:click->count(user.uuid),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Header)?
+    name: ctr/average/duration/header
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~header),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Header)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Top Stories)?
+    name: ctr/average/duration/top-stories
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~top-stories),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Top Stories)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from FastFT)?
+    name: ctr/average/duration/fastft
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~fastft),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (FastFT)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Editors' Picks)?
+    name: ctr/average/duration/editors-picks
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~editors-picks),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Editors' Picks)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Opinion)?
+    name: ctr/average/duration/opinion
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~opinion),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Opinion)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from myFT)?
+    name: ctr/average/duration/myft
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~myft),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (myFT)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Most Popular)?
+    name: ctr/average/duration/most-popular
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~most-popular),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Most Popular)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Life & Arts)?
+    name: ctr/average/duration/life-and-arts
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Life & Arts)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Markets)?
+    name: ctr/average/duration/markets
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~markets),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Markets)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Technology)?
+    name: ctr/average/duration/technology
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~technology),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Technology)
+  -
+    question: What percentage of frontpage users are clicking through to other sections (from Video)?
+    name: ctr/average/duration/video
+    query: "@pct(cta:click->count(user.uuid)->filter(context.domPath~video),page:view->count(user.uuid))->filter(page.location.type=frontpage)"
+    datalabel: CTR average percentage duration (Video)
+
+  # VOLUME/FREQUENCY/USERS --------------------------------------------------
+  # -
+  #   question: How many articles do frontpage users read per week?
+  #   name: volume/articlespw
+  #   query:
+  #   datalabel: Volume: Articles read per week
+  # -
+  #   question: What percentage of frontpage users read at least 7 articles per week?
+  #   name: volume/min7articlespw
+  #   query:
+  #   datalabel: Volume: Minimum 7 articles read per week
+  # -
+  #   question: What percentage of frontpage users read at least 11 articles per week?
+  #   name: volume/min11articlespw
+  #   query:
+  #   datalabel: Volume: Minimum 11 articles read per week
+  # -
+  #   question: How many visits on average do frontpage users made to next.ft.com per week?
+  #   name: frequency/visitspw
+  #   query:
+  #   datalabel: Frequency: Average visits per week
+  # -
+  #   question: How many frontpage users on next.ft.com per week?
+  #   name: users/userspw
+  #   query:
+  #   datalabel: Users: Number per week
+
+  # VISITS --------------------------------------------------
+  -
+    question: What percentage of yesterday's site-wide page views were frontpage views?
+    name: visits/views/percent
+    query: "@pct(page:view->count()->filter(page.location.type=frontpage),page:view->count())->relTime(previous_1_days)"
+    freeze: true
+    datalabel: "Visits: Percentage of site-wide views"
+  -
+    question: What was the total of yesterday's frontpage views?
+    name: visits/views/total
+    query: page:view->count()->filter(page.location.type=frontpage)->relTime(previous_1_days)
+    freeze: true
+    datalabel: "Visits: Total of frontpage views"
+  -
+    question: What percentage of the past four weeks' site-wide page views were frontpage views?
+    name: visits/views/duration
+    query: "@pct(page:view->count()->filter(page.location.type=frontpage),page:view->count())->relTime(previous_28_days)"
+    datalabel: "Visits: Number of views"
+  -
+    question: What percentage of yesterday's site-wide visitors were frontpage visitors?
+    name: visits/visitors/percent
+    query: "@pct(page:view->count(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid))->relTime(previous_1_days)"
+    freeze: true
+    datalabel: "Visits: Percentage of site-wide visitors"
+  -
+    question: What was the total of yesterday's frontpage visitors?
+    name: visits/visitors/total
+    query: page:view->count(user.uuid)->filter(page.location.type=frontpage)->relTime(previous_1_days)
+    freeze: true
+    datalabel: "Visits: Total of frontpage visitors"
+  -
+    question: What percentage of the past four weeks' site-wide visitors were frontpage visitors?
+    name: visits/visitors/duration
+    query: "@pct(page:view->count(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid))->relTime(previous_28_days)"
+    datalabel: "Visits: Number of visitors"

@@ -1,0 +1,105 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: nextdata
+title: Next data
+isPrimary: false
+description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+charts:
+  -
+    question: (No printer) Are daily member counts increasing?
+    name: example/line
+    query: page:view->count(user.uuid)
+    datalabel: Members
+  -
+    question: (No printer)(Grouped) What continents are members visiting from?
+    name: example/line/grouped
+    query: page:view->count(user.uuid)->group(user.geo.continent)
+    datalabel: Members
+  -
+    question: (No printer)(Grouped)(Stacked) What continents?
+    name: example/line/grouped/stacked
+    query: page:view->count(user.uuid)->group(user.geo.continent)
+    datalabel: Members
+    isStacked: percent
+  -
+    question: (Area) Are daily member counts increasing?
+    name: example/area
+    query: page:view->count(user.uuid)
+    printer: AreaChart
+    datalabel: Members
+  -
+    question: (Area)(Grouped) What continents are members visiting from?
+    name: example/area/grouped
+    query: page:view->count(user.uuid)->group(user.geo.continent)
+    printer: AreaChart
+    datalabel: Members
+  -
+    question: (Area)(Grouped)(Stacked) What continents?
+    name: example/area/grouped/stacked
+    query: page:view->count(user.uuid)->group(user.geo.continent)
+    printer: AreaChart
+    datalabel: Members
+    isStacked: percent
+  -
+    question: (Pie) What continents are members visiting from?
+    name: example/pie
+    query: page:view->count(user.uuid)->group(user.geo.continent)
+    printer: PieChart
+    datalabel: Continents
+  -
+    question: (Bar) What continents are members visiting from?
+    name: example/bar
+    query: page:view->count(user.uuid)->group(user.geo.continent)
+    printer: BarChart
+    datalabel: Continents
+  -
+    question: (Bar)(Stacked) What continents are members visiting from?
+    name: example/bar/stacked
+    query: page:view->count(user.uuid)->group(user.geo.continent)->interval(d)
+    printer: BarChart
+    datalabel: Continents
+    isStacked: percent
+  -
+    question: (Column) Are daily member counts increasing?
+    name: example/column
+    query: page:view->count(user.uuid)
+    printer: ColumnChart
+    datalabel: Members
+  -
+    question: (Column)(Grouped)(Stacked) What continents?
+    name: example/Column/grouped/stacked
+    query: page:view->count(user.uuid)->group(user.geo.continent)
+    printer: ColumnChart
+    datalabel: Members
+    isStacked: percent
+  -
+    question: (Table) What continents are members visiting from?
+    name: example/table
+    query: page:view->count(user.uuid)->group(user.geo.continent)
+    printer: Table
+    datalabel: Continents
+  # -
+  #   question: Question: Test 01
+  #   name: test/complexity01
+  #   query: page:view->count()
+  #   datalabel: Label: Test 01
+  # -
+  #   question: Question: Test 02
+  #   name: test/complexity02
+  #   query: page:view->count()->group(page.location.type)->interval(d)
+  #   datalabel: Label: Test 02
+  # -
+  #   question: Question: Test 03
+  #   name: test/complexity03
+  #   query: page:view->count()->group(content.features.hasVideo)
+  #   datalabel: Label: Test 03
+  # -
+  #   question: Question: Test 04
+  #   name: test/complexity04
+  #   query: page:view->count()->group(page.location.type)
+  #   datalabel: Label: Test 04
+  # -
+  #   question: Question: Test 05
+  #   name: test/complexity05
+  #   query: @ratio(cta->count()->group(page.location.type)->relTime(this_3_days)->interval(d),cta->count(user.uuid)->group(page.location.type)->relTime(this_3_days)->interval(d))
+  #   datalabel: Label: Test 05
