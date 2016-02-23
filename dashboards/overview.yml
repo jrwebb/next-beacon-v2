@@ -9,10 +9,16 @@ charts:
     question: What articles have been viewed in the last 30 minutes?
     name: popular
     query: page:view->count(user.uuid)->relTime(this_30_minutes)->group(content.title)->tidy()
-    datalabel: Articles
     printer: PieChart
   -
     question: How many members do we have?
-    name: users
+    name: members
     query: page:view->count(user.uuid)
-    datalabel: Members
+  -
+    question: How many members visited today?
+    name: members/today
+    query: page:view->count(user.uuid)->relTime(this_1_day)
+  -
+    question: How many members visited yesterday?
+    name: members/yesterday
+    query: page:view->count(user.uuid)->relTime(previous_1_day)
