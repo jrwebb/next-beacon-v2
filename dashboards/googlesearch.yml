@@ -26,12 +26,22 @@ charts:
     query: "@pct(page:view->count()->filter(page.location.type=article)->filter(page.referrer.type=article),page:view->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)"
     datalabel: Article views referred by articles %
   -
-    question: Articles read by More-on cohort
+    question: Article views per user by More-on MVT
     name: moreons/mvtnumber
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleMoreOnNumber)->tidy()"
-    datalabel: Counted Content by More-on variants
+    datalabel: Article views per user by More-on variants
   -
     question: Recommended Reads CTR
     name: article-elements/recommended
     query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))"
     datalabel: CTR on Recommended Reads
+  -
+    question: Recommended Reads CTR by Link Style
+    name: article-elements/recommendedAB
+    query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
+    datalabel: CTR on Recommended Reads
+  -
+    question: Article views per user by Link Style A/B test
+    name: article-views/week
+    query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
+    datalabel: Article views per user by Link Style variants
