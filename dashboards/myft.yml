@@ -114,7 +114,7 @@ charts:
   -
     question: How many follow clicks were there last week
     name: overview/followclicksprev
-    query: cta:click->count()->relTime(last_7_days)->filter(context.domPath=follow)->filter(context.domPressed=false)
+    query: cta:click->count()->relTime(previous_7_days)->filter(context.domPath=follow)->filter(context.domPressed=false)
     freeze: true,
     datalabel: follow clicks
   -
@@ -125,13 +125,13 @@ charts:
   -
     question: Daily email open rate this week
     name: overview/dailyemailopenrate
-    query: "@pct(email:open->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days))"
+    query: "@pct(email:open->count(),email:delivery->count())->relTime(this_7_days)->filter(campaign.myft.emailType=daily)"
     freeze: true,
     datalabel: "% open rate"
   -
     question: Daily email open rate last week
     name: overview/dailyemailopenrateprev
-    query: "@pct(email:open->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days))"
+    query: "@pct(email:open->count(),email:delivery->count())->relTime(previous_7_days)->filter(campaign.myft.emailType=daily)"
     freeze: true,
     datalabel: "% open rate"
   -
