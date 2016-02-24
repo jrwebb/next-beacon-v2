@@ -100,7 +100,7 @@ charts:
   -
     question: How many myFT email clicks in the past 7 days?
     name: overview/emailclicksbyweek
-    query: page:view->count(user.uuid)->relTime(this_7_days)->filter(campaign.myft=notification:daily-email:cta)
+    query: page:view->count(user.uuid)->relTime(this_7_days)->filter(campaign.myft.source=notification:daily-email:cta)
   -
     question: What % of this week's article views were from a myFT source?
     name: overview/articleviews
