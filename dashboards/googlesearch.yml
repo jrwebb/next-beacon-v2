@@ -30,7 +30,7 @@ charts:
     name: moreons/mvtnumber
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleMoreOnNumber)->tidy()"
     datalabel: Counted Content by More-on variants
- -
+  -
     question: Recommended Reads CTR
     name: article-elements/recommended
     query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))"
