@@ -50,9 +50,6 @@ export function googleChartPrinterFactory (chartType) {
 
 		chart.draw(vizData, options);
 
-		if (meta.question) {
-			el.insertAdjacentHTML('afterbegin', `<h2>${meta.question}</h2>`);
-		}
 	}
 
 	return function () {

@@ -33,9 +33,9 @@ module.exports = function(req, res) {
 		res.locals.aliases[p.name] = p;
 	});
 
-	if (req.layout && req.layout === 'presentation') {
+	if (req.view && req.view === 'presentation') {
 		res.render('presentation', {
-			layout: 'presentation',
+			layout: null,
 			title: dashboard.title || getDashboardTitle(req),
 			description: dashboard.description || undefined,
 			charts: dashboard.charts

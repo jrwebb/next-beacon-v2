@@ -1,12 +1,12 @@
 <div data-o-grid-colspan="{{colspan}}">
 
-	<div class="chart" data-keen-alias="{{name}}{{alias.name}}">
+	<div class="chart" data-keen-alias="{{name}}">
 		<div class="chart__ui">
 			<nav class="chart__ui__links">
 				{{#unless isGlobal}}
 						<button class="chart__ui__copy-data o-buttons">Copy data to clipboard</button>
 				{{/unless}}
-				<a href="/chart/{{name}}{{alias.name}}">View chart</a>
+				<a href="/chart/{{name}}">View chart</a>
 			</nav>
 			{{#unless @root.isStandaloneChart}}
 				{{#unless freeze}}
@@ -23,6 +23,7 @@
 				{{/unless}}
 			{{/unless}}
 		</div>
+		<h2>{{question}}</h2>
 		<div class="chart__printer core-chart"></div>
 		{{#if @root.isStandaloneChart}}
 			{{#unless freeze}}

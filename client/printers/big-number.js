@@ -4,10 +4,6 @@ import {getDefaultMeta} from './util';
 export function renderBigNumber (el, kq, meta) {
 	let html = `<div class="o-big-number o-big-number--standard" title="${meta.question}">`
 
-	if (meta.question) {
-		html += `<div class="o-big-number__content o-big-number__content--question chart-question">${meta.question}</div>`;
-	}
-
 	let niceNumber;
 	if(kq.getTable().data >= 1000) {
 		niceNumber = humanize.compactInteger(kq.getTable().data, 1);
