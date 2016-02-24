@@ -4,7 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Beacon - next.ft.com performance dashboard</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-typography@^3.0.0,o-table@^3.0.0,o-big-number@^1.1.2,o-grid@^4.0.0,o-ft-icons@^2.2.1,o-buttons@^3.0.3,o-forms@^2.0.0,o-gallery@^1.7.4">
+	<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-gallery@^1.7.4">
 	<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}"/>
 	<script>
 		window.KEEN_PROJECT_ID = '{{KEEN_PROJECT_ID}}';
@@ -13,47 +13,20 @@
 	</script>
 	<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js" defer></script>
 	<script src="https://www.gstatic.com/charts/loader.js" defer></script>
-	<script src="//build.origami.ft.com/v2/bundles/js?modules=o-typography@^3.0.0,o-table@^3.0.0,o-hierarchical-nav@^3.1.0,o-gallery@^1.7.4" async></script>
+	<script src="//build.origami.ft.com/v2/bundles/js?modules=o-gallery@^1.7.4" async></script>
 	<script src="{{#hashedAsset}}main.js{{/hashedAsset}}" defer></script>
 </head>
-<body class="o-techdocs">
-	<header data-o-component="o-header" class="o-header">
-		<div class="o-header__container beacon-container">
-			<div class="o-header__inner">
-				<div class="o-header__primary">
-					<div class="o-header__primary__left">
-						<a class="o-header__logo o-header__logo--ft" href="/">
-							<abbr title="Financial Times">FT</abbr>
-							<h1 class="o-header__title">Beacon - next.ft.com realtime user data</h1>
-						</a>
-					</div>
-				</div>
-				<div class="o-header__secondary">
-					{{> primary-navigation}}
-				</div>
-			</div>
-		</div>
-	</header>
+<body class="o-techdocs" style="padding:20px">
 
-	<div class="o-techdocs-container beacon-container">
-		<div class="o-techdocs-layout">
-			<div class="o-techdocs-main-is-broken" data-o-grid-colspan="12">
-				<div class="o-techdocs-content">
-
-					<div class="o-gallery" data-o-component="o-gallery" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
-						<ol class="charts o-gallery__items">
-							{{#each charts}}
-								<li class="o-gallery__item">
-									<h2>{{question}}</h2>
-									<div class="o-gallery__item__content"><div class="chart" data-keen-alias="{{name}}"><div class="chart__printer"></div></div></div>
-								</li>
-							{{/each}}
-						</ol>
-					</div>
-
-				</div>
-			</div>
-		</div>
+	<div class="o-gallery" data-o-component="o-gallery" data-o-gallery-captions="false">
+		<ol class="charts o-gallery__items">
+			{{#each charts}}
+				<li class="o-gallery__item">
+					<h2>{{question}}</h2>
+					<div class="o-gallery__item__content"><div class="chart" data-keen-alias="{{name}}"><div class="chart__printer"></div></div></div>
+				</li>
+			{{/each}}
+		</ol>
 	</div>
 
 </body>
