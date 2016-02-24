@@ -34,11 +34,12 @@ charts:
     datalabel: Member share
 
   # SCROLL DEPTH --------------------------------------------------
-  # -
-  #   question: What percentage of frontpage users are scrolling to each section?
-  #   name: scrolldepth
-  #   query: page:scrolldepth->count()->filter(page.location.type=frontpage)->filter(context.domPath)->group(context.domPath, context.componentPos)
-  #   datalabel: Scroll depth
+  -
+    question: What percentage of frontpage users are scrolling to each section?
+    name: scrolldepth
+    query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=top-stories))->filter(page.location.type=frontpage)->filter(context.componentId)->sortDesc()"
+    printer: BarChart
+    datalabel: Scroll depth
 
   # CTR (average percentage of clicks) --------------------------------------------------
   -
