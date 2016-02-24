@@ -12,6 +12,18 @@ charts:
     freeze: true,
     datalabel: "% are myFT users this week"
   -
+    question: How many logged in users came to Next this week?
+    name: overview/nextusercount
+    query: "page:view->count(user.uuid)->relTime(this_7_days)"
+    freeze: true,
+    datalabel: "Logged-in Next users"
+  -
+    question: How many logged in myFT users came to Next this week?
+    name: overview/myftusercount
+    query: "page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true)->relTime(this_7_days)"
+    freeze: true,
+    datalabel: "Logged-in myFT users"
+  -
     question: What % of last week's logged-in Next users were myFT users?
     name: overview/myftusersprev
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true)->relTime(previous_7_days),page:view->count(user.uuid)->relTime(previous_7_days))"
@@ -190,4 +202,3 @@ charts:
     question: Where are the most successful follow buttons
     name: actions/follow
     query: cta:click->count()->relTime(this_14_days)->group(context.domPath)->filter(context.domPath~follow)->interval(d)
-    printer: PieChart
