@@ -1,9 +1,10 @@
-<div class="charts o-grid-row">
-	{{#each charts}}
-	<div data-o-grid-colspan="12">
-		<div class="chart" data-keen-alias="{{name}}">
-			<div class="chart__printer"></div>
-		</div>
-	</div>
-	{{/each}}
+<div class="o-gallery" data-o-component="o-gallery" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
+	<ol class="charts o-gallery__items">
+		{{#each charts}}
+			<li class="o-gallery__item">
+				<div class="o-gallery__item__content"><div class="chart" data-keen-alias="{{name}}"><div class="chart__printer"></div></div></div>
+				<div class="o-gallery__item__caption">{{description}}</div>
+			</li>
+		{{/each}}
+	</ol>
 </div>
