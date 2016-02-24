@@ -18,7 +18,7 @@ charts:
     freeze: true,
     datalabel: "% were myFT users last week"
   -
-    question: What % of logged-in Next users are myFT users
+    question: What % of logged-in Next users are myFT users each day?
     name: overview/myftusersbyday
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))"
     datalabel: "% myFT users"
@@ -90,15 +90,15 @@ charts:
     name: overview/emailclicksbyweek
     query: page:view->count(user.uuid)->relTime(this_7_days)->filter(campaign.myft=notification:daily-email:cta)
   -
-    question: What % of article views were from a myFT source?
+    question: What % of this week's article views were from a myFT source?
     name: overview/articleviews
-    query: "@pct(page:view->count(user.uuid)->filter(campaign.myft),page:view->count(user.uuid))"
+    query: "@pct(page:view->count(user.uuid)->filter(campaign.myft.source),page:view->count(user.uuid))->relTime(this_7_days)"
     freeze: true,
     datalabel: "% are from myFT"
   -
     question: Which myFT features drive the most traffic?
     name: overview/articleviewsbysource
-    query: page:view->count(user.uuid)->interval(d)->filter(campaign.myft)->group(campaign.myft)
+    query: page:view->count(user.uuid)->interval(d)->filter(campaign.myft.source)->group(campaign.myft.source)
   -
     question: Average frequency of visit for a myFT user this week?
     name: overview/myftfrequency
