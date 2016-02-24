@@ -9,6 +9,7 @@ clean:
 	git clean -fxd
 
 verify:
+	find dashboards -exec cat {} *.yml \;| js-yaml -t > /dev/null
 	nbt verify --skip-layout-checks
 
 test: verify
@@ -16,7 +17,7 @@ test: verify
 run:
 	nbt run --local
 
-run-bot: 
+run-bot:
 	nbt run --procfile
 
 build:
