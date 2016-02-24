@@ -2,7 +2,6 @@
 
 // Render a group of charts in a dashboard
 const aliases = require('../middleware/aliases');
-const coreChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
 
 function getDashboardTitle (req) {
 	let title = req.params[0].replace(/\/$/, '');
@@ -29,27 +28,29 @@ module.exports = function(req, res) {
 		}
 	});
 
-	dashboard.charts = dashboard.charts
-		.map(chart => {
-			if (coreChartTypes.indexOf(chart.printer) !== -1) {
-				chart.class = 'core-chart';
-			}
-			return chart;
-		});
-
 	// Todo: Consider better ways to do this
 	dashboard.charts.forEach(p => {
 		res.locals.aliases[p.name] = p;
 	});
 
-	res.render('dashboard', {
-		layout: 'beacon',
-		title: dashboard.title || getDashboardTitle(req),
-		description: dashboard.description || undefined,
-		charts: dashboard.charts,
-		timeframe: req.query.timeframe || 'this_14_days',
-		interval: req.query.interval,
-		printer: req.query.printer === 'Table' ? 'Table' : undefined,
-		isStandaloneChart: /^\/chart/.test(req.path)
-	});
+	if (req.layout && req.layout === 'presentation') {
+		res.render('presentation', {
+			layout: 'presentation',
+			title: dashboard.title || getDashboardTitle(req),
+			description: dashboard.description || undefined,
+			charts: dashboard.charts
+		});
+	}
+	else {
+		res.render('dashboard', {
+			layout: req.layout || 'beacon',
+			title: dashboard.title || getDashboardTitle(req),
+			description: dashboard.description || undefined,
+			charts: dashboard.charts,
+			timeframe: req.query.timeframe || 'this_14_days',
+			interval: req.query.interval,
+			printer: req.query.printer === 'Table' ? 'Table' : undefined,
+			isStandaloneChart: /^\/chart/.test(req.path)
+		});
+	}
 }
