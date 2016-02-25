@@ -70,7 +70,7 @@ body {
 }
 
 // Ugly hack award
-.o-gallery__item__content div[aria-label="A chart."] {
+.o-gallery__item__content [aria-label="A chart."] {
 	position: relative !important;
 }
 

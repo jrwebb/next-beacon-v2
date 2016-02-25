@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-gallery@^1.7.4">
 	<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}"/>
 	<script>
+		window.view = 'presentation';
 		window.KEEN_PROJECT_ID = '{{KEEN_PROJECT_ID}}';
 		window.KEEN_READ_KEY = '{{KEEN_READ_KEY}}';
 		window.aliases = {{{json aliases}}}
@@ -22,7 +23,7 @@
 		<ol class="charts o-gallery__items">
 			{{#each charts}}
 				<li class="o-gallery__item">
-					<h2>{{question}}</h2>
+					<h2>{{{question}}}</h2>
 					<div class="o-gallery__item__content"><div class="chart" data-keen-alias="{{name}}"><div class="chart__printer"></div></div></div>
 				</li>
 			{{/each}}

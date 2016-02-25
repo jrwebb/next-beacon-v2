@@ -48,6 +48,11 @@ export function googleChartPrinterFactory (chartType) {
 			options.legend = { position: 'top' };
 		}
 
+		if (window.view && window.view === 'presentation') {
+			const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+			options.height = viewportHeight * 0.8;
+		}
+
 		chart.draw(vizData, options);
 
 	}
