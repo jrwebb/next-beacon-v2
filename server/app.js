@@ -86,9 +86,10 @@ app.get('/data/reports/*', function(req, res) {
 
 app.get(/^\/chart\/(.*)/, require('./controllers/dashboard'));
 app.get(/^\/dashboard\/(.*)/, require('./controllers/dashboard'));
-
-// [Development] Testing multiple-print()s with the same base query (but different timeframes)
-app.get(/^\/multi-print\/(.*)/, require('./controllers/dashboard'));
+app.get(/^\/presentation\/(.*)/, function (req, res, next) {
+  req.view = 'presentation';
+  next();
+}, require('./controllers/dashboard'));
 
 app.get('/', function (req, res, next) {
   req.params[0] = 'overview';
