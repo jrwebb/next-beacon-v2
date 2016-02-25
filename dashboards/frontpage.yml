@@ -58,7 +58,6 @@ charts:
               cta:click->count(user.uuid),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (all)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Header)?
@@ -67,7 +66,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~header),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Header)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Top Stories)?
@@ -76,7 +74,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~top-stories),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Top Stories)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from FastFT)?
@@ -85,7 +82,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~fastft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (FastFT)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Editors' Picks)?
@@ -94,7 +90,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~editors-picks),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Editors' Picks)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Opinion)?
@@ -103,7 +98,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~opinion),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Opinion)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from myFT)?
@@ -112,7 +106,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~myft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (myFT)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Most Popular)?
@@ -121,7 +114,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~most-popular),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Most Popular)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Life & Arts)?
@@ -130,7 +122,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Life & Arts)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Markets)?
@@ -139,7 +130,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~markets),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Markets)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Technology)?
@@ -148,7 +138,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~technology),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Technology)
   -
     question: What percentage (average) of frontpage users are clicking through to other sections (from Video)?
@@ -157,7 +146,6 @@ charts:
               cta:click->count(user.uuid)->filter(context.domPath~video),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average percentage (Video)
 
   # CTR (average clicks) --------------------------------------------------
@@ -168,7 +156,6 @@ charts:
               cta:click->count(),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user
   -
     question: How many clicks (average) are users making on the frontpage (from Header)?
@@ -177,7 +164,6 @@ charts:
               cta:click->count()->filter(context.domPath~header),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Header)
   -
     question: How many clicks (average) are users making on the frontpage (from Top Stories)?
@@ -186,7 +172,6 @@ charts:
               cta:click->count()->filter(context.domPath~top-stories),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Top Stories)
   -
     question: How many clicks (average) are users making on the frontpage (from FastFT)?
@@ -195,7 +180,6 @@ charts:
               cta:click->count()->filter(context.domPath~fastft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (FastFT)
   -
     question: How many clicks (average) are users making on the frontpage (from Editors' Picks)?
@@ -204,7 +188,6 @@ charts:
               cta:click->count()->filter(context.domPath~editors-picks),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Editors' Picks)
   -
     question: How many clicks (average) are users making on the frontpage (from Opinion)?
@@ -213,7 +196,6 @@ charts:
               cta:click->count()->filter(context.domPath~opinion),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Opinion)
   -
     question: How many clicks (average) are users making on the frontpage (from myFT)?
@@ -222,7 +204,6 @@ charts:
               cta:click->count()->filter(context.domPath~myft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (myFT)
   -
     question: How many clicks (average) are users making on the frontpage (from Most Popular)?
@@ -231,7 +212,6 @@ charts:
               cta:click->count()->filter(context.domPath~most-popular),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Most Popular)
   -
     question: How many clicks (average) are users making on the frontpage (from Life & Arts)?
@@ -240,7 +220,6 @@ charts:
               cta:click->count()->filter(context.domPath~life-and-arts),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Life & Arts)
   -
     question: How many clicks (average) are users making on the frontpage (from Markets)?
@@ -249,7 +228,6 @@ charts:
               cta:click->count()->filter(context.domPath~markets),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Markets)
   -
     question: How many clicks (average) are users making on the frontpage (from Technology)?
@@ -258,7 +236,6 @@ charts:
               cta:click->count()->filter(context.domPath~technology),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Technology)
   -
     question: How many clicks (average) are users making on the frontpage (from Video)?
@@ -267,22 +244,7 @@ charts:
               cta:click->count()->filter(context.domPath~video),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->interval(d)->reduce(avg,timeframe)"
-    freeze: true
     datalabel: Average clicks per user (Video)
-  # -
-  # **Average across 8 weeks (period given in this instance)**
-    # question: How many frontpage users are there averaged across 8 weeks?
-    # name: ctr/users
-    # query:
-    # freeze: true
-    # datalabel: CTR number of frontpage users
-  # -
-  # **Average across 8 weeks (period given in this instance)**
-    # question: How many frontpage views are there averaged across 8 weeks?
-    # name: ctr/views
-    # query:
-    # freeze: true
-    # datalabel: CTR number of frontpage views
 
   # CTR (percentage) --------------------------------------------------
   -
@@ -382,33 +344,6 @@ charts:
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Video)
 
-  # VOLUME/FREQUENCY/USERS --------------------------------------------------
-  # -
-  #   question: How many articles do frontpage users read per week?
-  #   name: volume/articlespw
-  #   query:
-  #   datalabel: Volume: Articles read per week
-  # -
-  #   question: What percentage of frontpage users read at least 7 articles per week?
-  #   name: volume/min7articlespw
-  #   query:
-  #   datalabel: Volume: Minimum 7 articles read per week
-  # -
-  #   question: What percentage of frontpage users read at least 11 articles per week?
-  #   name: volume/min11articlespw
-  #   query:
-  #   datalabel: Volume: Minimum 11 articles read per week
-  # -
-  #   question: How many visits on average do frontpage users made to next.ft.com per week?
-  #   name: frequency/visitspw
-  #   query:
-  #   datalabel: Frequency: Average visits per week
-  # -
-  #   question: How many frontpage users on next.ft.com per week?
-  #   name: users/userspw
-  #   query:
-  #   datalabel: Users: Number per week
-
   # VISITS --------------------------------------------------
   -
     question: What percentage of yesterday's site-wide page views were frontpage views?
@@ -491,13 +426,13 @@ charts:
   -
     question: What are browsers' average load times?
     name: performance/averagepageload/offset
-    query: page:load-timing->median(context.timings.offset.loadEventEnd)->filter(page.location.type=frontpage)->filter(device.browserName!=false)->group(device.browserName)->divide(1000)->sortAsc(device.browserName)
+    query: page:load-timing->median(context.timings.offset.loadEventEnd)->filter(page.location.type=frontpage)->filter(device.browserName!=false)->group(device.browserName)->divide(1000)->sortAsc()
     printer: BarChart
     datalabel: Average page load time by browser
   -
     question: What are browsers' average load times (from point page has downloaded)?
     name: performance/averagepageload/domloadingoffset
-    query: page:load-timing->median(context.timings.domLoadingOffset.loadEventEnd)->filter(page.location.type=frontpage)->filter(device.browserName!=false)->group(device.browserName)->divide(1000)->sortAsc(device.browserName)
+    query: page:load-timing->median(context.timings.domLoadingOffset.loadEventEnd)->filter(page.location.type=frontpage)->filter(device.browserName!=false)->group(device.browserName)->divide(1000)->sortAsc()
     printer: BarChart
     datalabel: Average page load time by browser (offset from the domLoading event)
   -
