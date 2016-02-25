@@ -538,5 +538,5 @@ charts:
   -
     question: What is the timing of page loading events (domInteractive) (from point page has downloaded)?
     name: performance/pageloadingevents/dominteractive/domloadingoffset
-    query: page:load-timing->median(context.timings.domLoadingOffset.domInteractive)->filter(page.location.type=frontpage)->filter(context.timings.offset.domInteractive)->relTime(previous_28_days)->interval(d)->divide(1000
-    datalabel: Page loading events (domInteractive) (offset from the domLoading event)"
+    query: page:load-timing->median(context.timings.domLoadingOffset.domInteractive)->filter(page.location.type=frontpage)->filter(context.timings.offset.domInteractive)->relTime(previous_28_days)->interval(d)->divide(1000)
+    datalabel: Page loading events (domInteractive) (offset from the domLoading event)
