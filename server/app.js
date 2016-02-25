@@ -2,7 +2,7 @@
 
 const http = require('http');
 const https = require('https');
-
+var aws4 = require('aws4');
 const auth = require('./middleware/auth');
 const window = require('./middleware/window');
 const aliases = require('./middleware/aliases');
@@ -68,9 +68,18 @@ app.get('/data/query-wizard', function(req, res) {
 });
 
 // pipe through to an AWS bucket containing Redshift exports
-app.get('/data/reports/:name', function(req, res) {
-	var path = process.env.S3_HOST + '/' + req.params.name;
-	https.get(path, function(proxyRes) {
+app.get('/data/reports/*', function(req, res) {
+	var signed = aws4.sign({
+		service: 's3',
+		hostname: process.env.S3_HOST,
+		path: '/' + req.params[0],
+		signQuery: true,
+		region: 'eu-west-1',
+	}, {
+		accessKeyId: process.env.S3_AWS_ACCESS,
+		secretAccessKey: process.env.S3_AWS_SECRET
+	});
+	https.get(signed, function(proxyRes) {
 		proxyRes.pipe(res);
 	});
 });

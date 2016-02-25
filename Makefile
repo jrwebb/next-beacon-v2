@@ -9,7 +9,7 @@ clean:
 	git clean -fxd
 
 verify:
-	find dashboards -exec cat {} *.yml \;| js-yaml -t > /dev/null
+	find ./dashboards -path '**/*.yml' -exec cat {} \;| js-yaml -t > /dev/null
 	nbt verify --skip-layout-checks
 
 test: verify
