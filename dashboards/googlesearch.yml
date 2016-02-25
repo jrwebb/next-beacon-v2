@@ -45,3 +45,8 @@ charts:
     name: article-views/week
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: Article views per user by Link Style variants
+  -
+    question: Link Style Conversions by A/B test
+    name: article-views/conversions
+    query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
+    datalabel: Conversions by Link Style variants
