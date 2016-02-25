@@ -540,3 +540,20 @@ charts:
     name: performance/pageloadingevents/dominteractive/domloadingoffset
     query: page:load-timing->median(context.timings.domLoadingOffset.domInteractive)->filter(page.location.type=frontpage)->filter(context.timings.offset.domInteractive)->relTime(previous_28_days)->interval(d)->divide(1000)
     datalabel: Page loading events (domInteractive) (offset from the domLoading event)
+
+  # BROWSER USAGE --------------------------------------------------
+  -
+    question: Which browsers are used for frontpage visits (percentage)?
+    name: browsers/visits/percentage
+    query: "@pct(
+              page:view->count()->group(device.browserName),
+              page:view->count(),
+            )->filter(page.location.type=frontpage)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false)->sortDesc()"
+    printer: BarChart
+    datalabel: Percentage of frontpage visits
+  -
+    question: Which browsers are used for frontpage visits (number)?
+    name: browsers/visits/total
+    query: page:view->count()->filter(page.location.type=frontpage)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false)->group(device.browserName)->sortDesc()
+    printer: BarChart
+    datalabel: Number of frontpage visits
