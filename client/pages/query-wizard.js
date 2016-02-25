@@ -94,7 +94,11 @@ module.exports = {
 		}
 
 		function run() {
-			return renderChart(output, KeenQuery.build(input.value.trim()).setPrinter('LineChart'), {})
+			let kq = KeenQuery.build(input.value.trim())
+			if (!kq._printer) {
+				kq = kq.setPrinter('LineChart');
+			}
+			return renderChart(output, kq, {})
 		}
 
 		input.addEventListener('keydown', ev => {
