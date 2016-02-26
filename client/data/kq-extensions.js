@@ -2,7 +2,7 @@ import KeenQuery from 'keen-query';
 
 // exclude staff by default
 KeenQuery.forceQuery(function () {
-	const instance = this.filter('user.isStaff=false');
+	return this.filter('user.isStaff=false');
 });
 
 // define some shortcut queries
