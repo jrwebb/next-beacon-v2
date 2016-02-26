@@ -27,7 +27,7 @@ charts:
     datalabel: Article views per session
   -
     question: Article views per user
-    name: article-views/week
+    name: article-views/user
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)"
     datalabel: Article views per user
   -
@@ -37,7 +37,7 @@ charts:
     datalabel: Article views referred by articles %
   -
     question: Article views per user by More-on MVT
-    name: moreons/mvtnumber
+    name: moreonMVT/articleviews
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleMoreOnNumber)->tidy()"
     datalabel: Article views per user by More-on variants
   -
@@ -52,17 +52,17 @@ charts:
     datalabel: CTR on Recommended Reads
   -
     question: Recommended Reads CTR by Link Style
-    name: article-elements/recommendedAB
+    name: recommendedAB/ctr
     query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: CTR on Recommended Reads
   -
     question: Article views per user by Link Style A/B test
-    name: article-views/week
+    name: recommendedAB/articleviews
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: Article views per user by Link Style variants
   -
     question: Link Style Conversions by A/B test
-    name: article-views/conversions
+    name: recommendedAB/conversions
     query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: Conversions by Link Style variants
   -
@@ -72,6 +72,6 @@ charts:
     datalabel: Visits to the fastFT Stream Page
   -
     question: fastFT articles expanded per visit
-    name: fastFT/views
+    name: fastFT/article-expanded
     query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))"
     datalabel: Articles expanded per visit
