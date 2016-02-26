@@ -84,8 +84,13 @@ app.get('/data/reports/*', function(req, res) {
 	});
 });
 
-app.get(/^\/chart\/(.*)/, require('./controllers/dashboard'));
 app.get(/^\/dashboard\/(.*)/, require('./controllers/dashboard'));
+
+app.get(/^\/chart\/(.*)/, function (req, res, next) {
+  req.view = 'chart';
+  next();
+}, require('./controllers/dashboard'));
+
 app.get(/^\/presentation\/(.*)/, function (req, res, next) {
   req.view = 'presentation';
   next();

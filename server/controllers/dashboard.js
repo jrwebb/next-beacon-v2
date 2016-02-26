@@ -17,22 +17,32 @@ module.exports = function(req, res) {
 		return d.id === dashboardname;
 	})[0] || {};
 
-	// Append from the spreadsheet of destiny
 	let charts = dashboard.charts || [];
-	aliases.get(req.params[0]).forEach((a) => {
-		const result = charts.filter(p => {
-			return p.queryname === a.queryname;
-		});
-		if (!result.length) {
-			charts.push(a);
-		}
-	});
 
-	// Only include charts whose names include the dashboard path
-	charts = charts.reduce((charts, c) => {
-		if (c.name.indexOf(dashboardpath) !== -1) charts.push(c);
-		return charts;
-	},[]);
+	// Only show a single chart if appropriate
+	if (req.view && req.view === 'chart') {
+		charts = charts.filter(c => {
+			return c.name === dashboardpath;
+		}) || [];
+	}
+	else {
+
+		// Append charts from the spreadsheet of destiny
+		aliases.get(req.params[0]).forEach((a) => {
+			const result = charts.filter(p => {
+				return p.queryname === a.queryname;
+			});
+			if (!result.length) {
+				charts.push(a);
+			}
+		});
+
+		// Only include charts whose names include the dashboard path
+		charts = charts.reduce((charts, c) => {
+			if (c.name.indexOf(dashboardpath) !== -1) charts.push(c);
+			return charts;
+		},[]);
+	}
 
 	// Todo: Consider better ways to do this
 	charts.forEach(p => {
