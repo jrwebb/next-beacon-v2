@@ -1,14 +1,6 @@
-<nav class="chart__configurator {{#if isGlobal}}chart__configurator--global{{/if}}">
-
+<nav class="chart__configurator">
 	<form action="" method="get" style="display: inline" class="chart__configurator__form o-forms">
 	<legend class="o-forms-label">Timeframe:</legend>
-	{{#if isGlobal}}
-		<a class="o-buttons" href="?timeframe=this_48_hours&amp;interval=hour" data-timeframe="this_48_hours">2 days</a>
-		<a class="o-buttons" href="?timeframe=this_7_days&amp;interval=day" data-timeframe="this_7_days">7 days</a>
-		<a class="o-buttons" href="?timeframe=this_14_days&amp;interval=day" data-timeframe="this_14_days">14 days</a>
-		<a class="o-buttons" href="?timeframe=this_30_days&amp;interval=day" data-timeframe="this_30_days">30 days</a>
-		&nbsp;
-	{{else}}
 		<fieldset class="o-forms-group">
 			<input class="o-forms-radio o-forms-radio--small" id="this_48_hours_{{index}}" name="timeframe" type="radio" value="this_48_hours" {{#ifEquals @root.timeframe 'this_48_hours'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_48_hours_{{index}}">2 days</label>
 			<input class="o-forms-radio o-forms-radio--small" id="this_7_days_{{index}}" name="timeframe" type="radio" value="this_7_days" {{#ifEquals @root.timeframe 'this_7_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_7_days_{{index}}">7 days</label>
@@ -19,7 +11,6 @@
 				<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
 				<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}">
 			</fieldset>
-	{{/if}}
 		<select name="interval" class="chart__configurator__interval o-forms-select o-forms-select--small">
 			<option value=""> -- choose interval -- </option>
 			<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
@@ -33,7 +24,6 @@
 		<input class="o-forms-radio o-forms-radio--small" id="printer_default_{{index}}" type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}><label for="printer_default_{{index}}" class="o-forms-label">View graph</label>
 		<input class="o-forms-radio o-forms-radio--small" id="printer_table_{{index}}" type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}><label for="printer_table_{{index}}" class="o-forms-label">View data</label>
 	</fieldset>
-{{#unless isGlobal}}
 	<fieldset class="chart__configurator__group o-forms-group">
 			<legend class="o-forms-label">Group by:</legend>
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_null_{{index}}" value=""><label for="group_null_{{index}}" class="o-forms-label">ungroup</label>
@@ -84,9 +74,5 @@
 				<option value="disengaged-long-tail">disengaged long tail</option>
 			</select>
 	</fieldset>
-{{/unless}}
-{{#if isGlobal}}
-		<button class="o-buttons timeframe__submit">Submit</button>
-{{/if}}
 	</form>
 </nav>
