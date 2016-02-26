@@ -8,7 +8,7 @@ charts:
   -
     question: Total number of article views
     name: article-views/total
-    query: page:view->count()->filter(page.location.type=article)
+    query: "page:view->count()->filter(page.location.type=article)"
     datalabel: Article views
   -
     question: Article views per session
@@ -50,3 +50,13 @@ charts:
     name: article-views/conversions
     query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: Conversions by Link Style variants
+  -
+    question: fastFT Stream Page Views
+    name: fastFT/views
+    query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
+    datalabel: Visits to the fastFT Stream Page
+  -
+    question: fastFT articles expanded per visit
+    name: fastFT/views
+    query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))"
+    datalabel: Articles expanded per visit
