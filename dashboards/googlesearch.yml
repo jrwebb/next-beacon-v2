@@ -57,6 +57,6 @@ charts:
     datalabel: Visits to the fastFT Stream Page
   -
     question: fastFT articles expanded per visit
-    name: fastFT/views
+    name: fastFT/article-expanded
     query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))"
     datalabel: Articles expanded per visit
