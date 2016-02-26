@@ -3,7 +3,7 @@
 .beacon__printer,
 .chart {
 	position: relative;
-	margin-bottom: 2em;
+	margin: 1em 0em 4em;
 	h2 {
 		border: 0px;
 		padding: 0px;
@@ -66,12 +66,14 @@
 	left: 0;
 	right: 0;
 	z-index: 5;
-	background: oColorsGetPaletteColor('pink-tint1');
-	opacity: 0.9;
 
 	.o-expander__content {
 		max-height: none;
-
+		margin: 1em 0em 2em 2em;
+		background: oColorsGetPaletteColor('pink-tint1');
+		opacity: 0.9;
+		padding: 2em;
+		border: 1px solid oColorsGetPaletteColor('grey-tint1');
 	}
 	.o-expander__toggle {
 		position: absolute;
