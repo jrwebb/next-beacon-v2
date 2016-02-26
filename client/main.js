@@ -2,8 +2,10 @@
 
 'use strict';
 
-require('./printers');
+import './data/kq-extensions';
+import './printers';
 import {init as dashboard} from './pages/dashboard';
+
 
 if (document.querySelector('.query-wizard')) {
 	require('./pages/query-wizard').init();

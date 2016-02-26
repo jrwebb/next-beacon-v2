@@ -24,9 +24,17 @@ export function googleChartPrinterFactory (chartType) {
 		const chart = new google.visualization[chartType](el);
 
 		const options = Object.assign({}, defaultChartOptions);
+		const labelAxis = Object.assign({}, options.hAxis, {title: kqTable.axes[0].property === 'timeframe' ? undefined : kqTable.axes[0].property});
+		const valueAxis = Object.assign({}, options.vAxis, {title: kqTable.valueLabel});
 
-		options.hAxis = Object.assign({}, options.hAxis, {title: kqTable.axes[0].property});
-		options.vAxis = Object.assign({}, options.vAxis, {title: kqTable.valueLabel});
+		options.hAxis = labelAxis;
+		options.vAxis = valueAxis;
+
+		if (chartType === 'BarChart') {
+			options.hAxis = valueAxis;
+			options.vAxis = labelAxis;
+			options.vAxis.textPosition = 'in';
+		}
 
 		if (meta.isStacked) options.isStacked = meta.isStacked;
 

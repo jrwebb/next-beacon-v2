@@ -196,5 +196,19 @@ charts:
     query: "@pct(email:click->count()->filter(campaign.myft.emailType=weekly)->interval(d),email:delivery->count()->filter(campaign.myft.emailType=weekly)->interval(d))"
   -
     question: Where are the most successful follow buttons
-    name: actions/follow
-    query: cta:click->count()->relTime(this_14_days)->group(context.domPath)->filter(context.domPath~follow)->print(PieChart)
+    name: actions/follow/good
+    query: cta:click->count()->group(context.domPath)->filter(context.domPath~| follow)->relTime(14)->top(10)
+    printer: BarChart
+    freeze: true
+  -
+    question: Where are the least successful follow buttons
+    name: actions/follow/bad
+    query: cta:click->count()->group(context.domPath)->filter(context.domPath~| follow)->relTime(14)->bottom(10)
+    printer: BarChart
+    freeze: true
+  -
+    question: How are save buttons performing
+    name: actions/save/good
+    query: cta:click->count()->group(context.domPath)->filter(context.domPath~save-for-later)->relTime(14)->sortDesc()
+    printer: BarChart
+    freeze: true

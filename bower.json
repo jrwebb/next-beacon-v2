@@ -2,13 +2,13 @@
   "name": "next-beacon-dashboard",
   "dependencies": {
     "ab-test-confidence": "^1.2.0",
-    "o-date": "~2.1.0",
-    "fetch": "~0.10.1",
+    "o-date": "^2.1.0",
+    "fetch": "^0.10.1",
     "dom-delegate": "ftdomdelegate#~2.0.3",
-    "keen-query": "^2.10.5",
+    "keen-query": "^2.19.1",
     "querystring": "~3.46.1",
-    "o-colors": "~3.3.1",
-    "o-expander": "~2.0.1"
+    "o-colors": "^3.3.1",
+    "o-expander": "^2.0.1"
   },
   "authors": [
     "Rhys Evans <rhys.evans@ft.com>"
