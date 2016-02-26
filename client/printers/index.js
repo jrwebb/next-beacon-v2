@@ -27,25 +27,10 @@ KeenQuery.generateExplorerUrl = (builtQuery) => {
 	return builtQuery.generateKeenUrl('/data/explorer?','explorer');
 }
 
-// exclude staff by default
-KeenQuery.forceQuery(function () {
-	this.filter('user.isStaff=false');
-});
 
 // define printers
 supportedChartTypes.forEach(chartType => KeenQuery.definePrinter(chartType, googleChartPrinterFactory(chartType)))
 
 KeenQuery.definePrinter('big-number', bigNumber);
 
-// define some shortcut queries
-KeenQuery.defineQuery('anon', function () {
-	return this.filter('!user.uuid');
-});
 
-KeenQuery.defineQuery('subs', function () {
-	return this.filter('user.uuid');
-});
-
-KeenQuery.defineQuery('myft', function (n) {
-	return this.filter(`user.myft.following>${n || 0}`);
-});
