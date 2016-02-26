@@ -35,6 +35,12 @@ body {
 			nav {
 				float: left;
 			}
+			.o-hierarchical-nav {
+				width: 100%;
+				.internal-tool-links {
+					float: right;
+				}
+			}
 		}
 	}
 	.o-techdocs-container {
@@ -64,6 +70,7 @@ body {
 		font-weight: bold;
 	}
 }
+
 .feature-search {
 	margin-top: 1px;
 	margin-bottom: 0;

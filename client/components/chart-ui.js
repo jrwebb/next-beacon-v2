@@ -111,8 +111,10 @@ export function init (container) {
 			chartEl.classList.add('chart--pre-grouped')
 		}
 
-		chartEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a class="o-buttons o-buttons--small" href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'explorer')}">View in keen explorer</a>`);
-		chartEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a class="o-buttons o-buttons--small" href="/data/query-wizard?query=${window.aliases[alias].query}">View in query wizard</a>`);
+		const chartLinksEl = chartEl.querySelector('.chart__ui__links');
+		if (chartLinksEl) {
+			chartLinksEl.insertAdjacentHTML('beforeend', `<a class="o-buttons o-buttons--small" href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'explorer')}">View in keen explorer</a> <a class="o-buttons o-buttons--small" href="/data/query-wizard?query=${window.aliases[alias].query}">View in query wizard</a>`);
+		}
 	});
 }
 
