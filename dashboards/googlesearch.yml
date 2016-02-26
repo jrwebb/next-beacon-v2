@@ -11,6 +11,16 @@ charts:
     query: "page:view->count()->filter(page.location.type=article)"
     datalabel: Article views
   -
+    question: Referrals to articles
+    name: article-views/allreferrals
+    query: "page:view->count()->filter(page.location.type=article)->group(page.referrer.websiteType)->tidy()"
+    datalabel: Article views by referrer
+  -
+    question: Internal referrals to articles
+    name: article-views/intreferrals
+    query: "page:view->count()->filter(page.location.type=article)->group(page.referrer.type)->tidy()"
+    datalabel: Article views by referrer
+  -
     question: Article views per session
     name: article-views/session
     query: "@ratio(page:view->count()->filter(page.location.type=article),page:view->count(spoorInfo.sessionId))"
