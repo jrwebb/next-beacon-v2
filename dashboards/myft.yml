@@ -147,9 +147,21 @@ charts:
     freeze: true,
     datalabel: "% open rate"
   -
-    question: Daily email open rate
-    name: overview/dailyemailopenratebyday
-    query: "@pct(email:open->count()->filter(campaign.myft.emailType=daily)->interval(d),email:delivery->count()->filter(campaign.myft.emailType=daily)->interval(d))"
+    question: Daily email click-through rate this week
+    name: overview/dailyemailclickthroughrate
+    query: "@pct(email:click->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days))"
+    freeze: true,
+    datalabel: "% click-through rate"
+  -
+    question: Daily email click-through rate last week
+    name: overview/dailyemailclickthroughrateprev
+    query: "@pct(email:click->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days))"
+    freeze: true,
+    datalabel: "% click-through rate"
+  -
+    question: Daily email open and click-through rate
+    name: overview/dailyemailopenclickratebyday
+    query: "@concat(@pct(email:click->count(),email:delivery->count())->relTime(this_10_days)->filter(campaign.myft.emailType=daily)->interval(d),@pct(email:open->count(),email:delivery->count())->interval(d)->relTime(this_10_days)->filter(campaign.myft.emailType=daily))"
   -
     question: Weekly email open rate this week
     name: overview/weeklyemailopenrate
@@ -166,22 +178,6 @@ charts:
     question: Weekly email open rate
     name: overview/weeklyemailopenratebyday
     query: "@pct(email:open->count()->filter(campaign.myft.emailType=weekly)->interval(d),email:delivery->count()->filter(campaign.myft.emailType=weekly)->interval(d))"
-  -
-    question: Daily email click-through rate this week
-    name: overview/dailyemailclickthroughrate
-    query: "@pct(email:click->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(this_7_days))"
-    freeze: true,
-    datalabel: "% click-through rate"
-  -
-    question: Daily email click-through rate last week
-    name: overview/dailyemailclickthroughrateprev
-    query: "@pct(email:click->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days),email:delivery->count()->filter(campaign.myft.emailType=daily)->relTime(previous_7_days))"
-    freeze: true,
-    datalabel: "% click-through rate"
-  -
-    question: Daily email click-through rate
-    name: overview/dailyemailclickthroughratebyday
-    query: "@pct(email:click->count()->filter(campaign.myft.emailType=daily)->interval(d),email:delivery->count()->filter(campaign.myft.emailType=daily)->interval(d))"
   -
     question: Weekly email click-through rate this week
     name: overview/weeklyemailclickthroughrate
