@@ -50,6 +50,66 @@ charts:
     printer: BarChart
     datalabel: Scroll depth
 
+  # CTR (breakdown by section) --------------------------------------------------
+  -
+    question: What percentage (average) of frontpage users are clicking through to other pages (breakdown by section)?
+    name: ctr/average/percentage/sectionbreakdown
+    query: "@concat(
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~header),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~top-stories),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~fastft),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~editors-picks),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~opinion),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~myft),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~most-popular),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~markets),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~technology),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~video),page:view->count(user.uuid))
+            )->filter(page.location.type=frontpage)
+            ->relabel(CONCATENATION_RESULT,header,top stories,fastft,editors picks,opinion,myFT,most popular,life & arts,markets,technology,video)->interval(d)->reduce(avg,timeframe)"
+    printer: BarChart
+    datalabel: Average percentage
+  -
+    question: How many clicks (average) are users making on the frontpage (breakdown by section)?
+    name: ctr/average/clicks/sectionbreakdown
+    query: "@concat(
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~header),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~top-stories),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~fastft),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~editors-picks),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~opinion),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~myft),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~most-popular),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~markets),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~technology),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(context.domPath~video),page:view->count(user.uuid))
+            )->filter(page.location.type=frontpage)
+            ->relabel(CONCATENATION_RESULT,header,top stories,fastft,editors picks,opinion,myFT,most popular,life & arts,markets,technology,video)->interval(d)->reduce(avg,timeframe)"
+    printer: BarChart
+    datalabel: Average clicks per user
+  -
+    question: What percentage of frontpage users are clicking through to other pages (breakdown by section)?
+    name: ctr/percentage/sectionbreakdown
+    query: "@concat(
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~header),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~top-stories),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~fastft),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~editors-picks),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~opinion),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~myft),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~most-popular),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~markets),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~technology),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(context.domPath~video),page:view->count(user.uuid))
+            )->filter(page.location.type=frontpage)
+            ->relabel(CONCATENATION_RESULT,header,top stories,fastft,editors picks,opinion,myFT,most popular,life & arts,markets,technology,video)"
+    printer: BarChart
+    freeze: true
+    datalabel: Average percentage over period
+
   # CTR (all) --------------------------------------------------
   -
     question: What percentage (average) of frontpage users are clicking through to other pages?
