@@ -19,6 +19,17 @@ body {
 		margin-bottom: 1em;
 		top: 0;
 		width: 100%;
+		.o-header__primary {
+			height: 45px;
+			padding-top: 5px;
+			.o-header__primary__left {
+				padding-left: 0px;
+			}
+			.o-header__primary__right {
+				text-align: right;
+				padding-top: 10px;
+			}
+		}
 		.o-header__secondary {
 			padding: 2px 0px;
 			nav {

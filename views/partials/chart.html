@@ -3,9 +3,7 @@
 	<div class="chart" data-keen-alias="{{name}}">
 		<div class="chart__ui">
 			<nav class="chart__ui__links">
-				{{#unless isGlobal}}
-						<button class="chart__ui__copy-data o-buttons">Copy data to clipboard</button>
-				{{/unless}}
+				<button class="chart__ui__copy-data o-buttons">Copy data to clipboard</button>
 				<a href="/chart/{{name}}">View chart</a>
 			</nav>
 			{{#unless @root.isStandaloneChart}}
