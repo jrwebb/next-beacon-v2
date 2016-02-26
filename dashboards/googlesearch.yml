@@ -11,13 +11,23 @@ charts:
     query: "page:view->count()->filter(page.location.type=article)"
     datalabel: Article views
   -
+    question: Referrals to articles
+    name: article-views/allreferrals
+    query: "page:view->count()->filter(page.location.type=article)->group(page.referrer.websiteType)->tidy()"
+    datalabel: Article views by referrer
+  -
+    question: Internal referrals to articles
+    name: article-views/intreferrals
+    query: "page:view->count()->filter(page.location.type=article)->group(page.referrer.type)->tidy()"
+    datalabel: Article views by referrer
+  -
     question: Article views per session
     name: article-views/session
     query: "@ratio(page:view->count()->filter(page.location.type=article),page:view->count(spoorInfo.sessionId))"
     datalabel: Article views per session
   -
     question: Article views per user
-    name: article-views/week
+    name: article-views/user
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)"
     datalabel: Article views per user
   -
@@ -27,9 +37,14 @@ charts:
     datalabel: Article views referred by articles %
   -
     question: Article views per user by More-on MVT
-    name: moreons/mvtnumber
+    name: moreonMVT/articleviews
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleMoreOnNumber)->tidy()"
     datalabel: Article views per user by More-on variants
+  -
+    question: CTR by article link type
+    name: article-elements/ctr
+    query: "@concat(@pct(cta:click->count()->filter(context.domPath~headline-link--topic),page:view->count()),@pct(cta:click->count()->filter(context.domPath~headline-link--topic--moreRecent),page:view->count()),@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-article-headline),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-headline),page:view->count()),)->filter(page.location.type=article)->interval(h)->relTime(1)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Read Next,Read Latest,Recommended,More Ons,Promoboxes)"
+    datalabel: CTR by link type
   -
     question: Recommended Reads CTR
     name: article-elements/recommended
@@ -37,17 +52,17 @@ charts:
     datalabel: CTR on Recommended Reads
   -
     question: Recommended Reads CTR by Link Style
-    name: article-elements/recommendedAB
+    name: recommendedAB/ctr
     query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: CTR on Recommended Reads
   -
     question: Article views per user by Link Style A/B test
-    name: article-views/week
+    name: recommendedAB/articleviews
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: Article views per user by Link Style variants
   -
     question: Link Style Conversions by A/B test
-    name: article-views/conversions
+    name: recommendedAB/conversions
     query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: Conversions by Link Style variants
   -
