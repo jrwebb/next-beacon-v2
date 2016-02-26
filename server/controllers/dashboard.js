@@ -9,8 +9,8 @@ function getDashboardTitle (req) {
 }
 
 module.exports = function(req, res) {
-
-	const dashboardname = req.params[0].split('/')[0];
+	const dashboardpath = req.params[0];
+	const dashboardname = dashboardpath.split('/')[0];
 
 	// find dashboardname in res.locals.dashboards
 	let dashboard = res.locals.dashboards.filter(d => {
@@ -18,18 +18,24 @@ module.exports = function(req, res) {
 	})[0] || {};
 
 	// Append from the spreadsheet of destiny
-	dashboard.charts = dashboard.charts || [];
+	let charts = dashboard.charts || [];
 	aliases.get(req.params[0]).forEach((a) => {
-		const result = dashboard.charts.filter(p => {
+		const result = charts.filter(p => {
 			return p.queryname === a.queryname;
 		});
 		if (!result.length) {
-			dashboard.charts.push(a);
+			charts.push(a);
 		}
 	});
 
+	// Only include charts whose names include the dashboard path
+	charts = charts.reduce((charts, c) => {
+		if (c.name.indexOf(dashboardpath) !== -1) charts.push(c);
+		return charts;
+	},[]);
+
 	// Todo: Consider better ways to do this
-	dashboard.charts.forEach(p => {
+	charts.forEach(p => {
 		res.locals.aliases[p.name] = p;
 	});
 
@@ -38,7 +44,7 @@ module.exports = function(req, res) {
 			layout: null,
 			title: dashboard.title || getDashboardTitle(req),
 			description: dashboard.description || undefined,
-			charts: dashboard.charts
+			charts: charts
 		});
 	}
 	else {
@@ -46,7 +52,7 @@ module.exports = function(req, res) {
 			layout: req.layout || 'beacon',
 			title: dashboard.title || getDashboardTitle(req),
 			description: dashboard.description || undefined,
-			charts: dashboard.charts,
+			charts: charts,
 			timeframe: req.query.timeframe || 'this_14_days',
 			interval: req.query.interval,
 			printer: req.query.printer === 'Table' ? 'Table' : undefined,
