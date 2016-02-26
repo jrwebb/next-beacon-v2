@@ -201,4 +201,4 @@ charts:
   -
     question: Where are the most successful follow buttons
     name: actions/follow
-    query: cta:click->count()->relTime(this_14_days)->group(context.domPath)->filter(context.domPath~follow)->interval(d)
+    query: cta:click->count()->relTime(this_14_days)->group(context.domPath)->filter(context.domPath~follow)->print(PieChart)
