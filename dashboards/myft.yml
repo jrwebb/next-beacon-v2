@@ -149,15 +149,15 @@ charts:
   -
     question: Daily email click-through rate this week
     name: overview/dailyemailclickthroughrate
-    query: "@pct(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=daily)->relTime(this_7_days)"
+    query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=daily)->relTime(this_7_days)"
     freeze: true,
-    datalabel: "% click-through rate"
+    datalabel: "clicks per email"
   -
     question: Daily email click-through rate last week
     name: overview/dailyemailclickthroughrateprev
-    query: "@pct(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=daily)->relTime(previous_7_days)"
+    query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=daily)->relTime(previous_7_days)"
     freeze: true,
-    datalabel: "% click-through rate"
+    datalabel: "clicks per email"
   -
     question: Daily email open and click-through rate
     name: overview/dailyemailopenclickratebyday
@@ -181,19 +181,19 @@ charts:
   -
     question: Weekly email click-through rate this week
     name: overview/weeklyemailclickthroughrate
-    query: "@pct(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(this_7_days)"
+    query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(this_7_days)"
     freeze: true,
-    datalabel: "% click-through rate"
+    datalabel: "clicks per email"
   -
     question: Weekly email click-through rate last week
     name: overview/weeklyemailclickthroughrateprev
-    query: "@pct(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(previous_7_days)"
+    query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(previous_7_days)"
     freeze: true,
-    datalabel: "% click-through rate"
+    datalabel: "clicks per email"
   -
     question: Weekly email click-through rate
     name: overview/weeklyemailclickthroughratebyday
-    query: "@pct(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->interval(d)"
+    query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->interval(d)"
   -
     question: Where are the most successful follow buttons
     name: actions/follow/good
