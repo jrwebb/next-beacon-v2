@@ -13,7 +13,7 @@ charts:
   -
     question: What sites are anons visiting from?
     name: referrers
-    query: page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.referrer.host)
+    query: page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->sortDesc()
     printer: PieChart
     datalabel: Continent
   -
