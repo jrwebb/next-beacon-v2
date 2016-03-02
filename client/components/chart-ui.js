@@ -45,11 +45,15 @@ export function renderChart (printerEl, kq, meta) {
 		if (rendererMap.get(printerEl) !== renderPromise) {
 			return;
 		}
-		console.log('Error', err, kq, meta);
-		printerEl.classList.remove('chart--loading');
-		printerEl.classList.add('chart-error');
-		printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${meta.name}, ${meta.label}, ${meta.question}: ${meta.query}</p>`;
+		displayError(printerEl, err, kq, meta);
 	});
+}
+
+export function displayError (printerEl, err, kq, meta) {
+	console.log('Error', err, kq, meta);
+	printerEl.classList.remove('chart--loading');
+	printerEl.classList.add('chart-error');
+	printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${meta.name}, ${meta.label}, ${meta.question}: ${meta.query}</p>`;
 }
 
 function reprint (ev) {
@@ -95,6 +99,9 @@ export function init (container) {
 
 		const alias = chartEl.dataset.keenAlias;
 		const kq = retrieveKq(alias);
+		if (!kq) {
+			return;
+		}
 		if (kq.dimension > 1) {
 			chartEl.classList.add('chart--pre-grouped')
 		}
