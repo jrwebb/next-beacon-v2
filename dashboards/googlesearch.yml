@@ -85,3 +85,18 @@ charts:
     name: fastFT/article-expanded
     query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))"
     datalabel: Articles expanded per visit
+  -
+    question: fastFT dwell time
+    name: fastFT/dwelltime
+    query: "page:attention->avg(context.meta.attention)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
+    datalabel: Seconds on page
+  -
+    question: fastFT users by device type
+    name: fastFT/usersbydevice
+    query: "page:view->count(user.uuid)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->group(device.primaryHardwareType)->tidy()"
+    datalabel: Users by device
+  -
+    question: fastFT internal referrers
+    name: fastFT/internalreferrers
+    query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->group(page.referrer.type)->tidy(page.referrer.websiteType)"
+    datalabel: Number of referrals
