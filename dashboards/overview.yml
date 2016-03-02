@@ -6,21 +6,104 @@ isPrimary: false
 description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
 charts:
   -
-    question: What articles have been viewed in the last 30 minutes?
-    name: popular
-    query: page:view->count(user.uuid)->relTime(this_30_minutes)->group(content.title)->tidy()
-    printer: PieChart
-  -
-    question: How many members do we have?
+    question: How many users do we have?
     name: members
-    query: page:view->count(user.uuid)
+    query: "@concat(
+      page:view->count(user.uuid),
+      page:view->count(user.ab.allocationId)->filter(!user.uuid)
+    )->relabel(CONCATENATION_RESULT,Logged in, Anonymous)"
+    isStacked: true
+    printer: AreaChart
   -
-    question: How many members visited today?
-    name: members/today
-    query: page:view->count(user.uuid)->relTime(this_1_day)
+    question: What types of page get the most traffic?
+    name: page-types
+    query: page:view->count()->group(page.location.type)
+  -
+    question: What screen sizes are most commonly used?
+    name: screen-size
+    query: page:view->count(user.uuid)->group(device.oGridLayout)->sortProp(device.oGridLayout,default,XS,S,M,L,XL,XXL)
+  -
+    question: Which top level nav links are being clicked most (desktop)?
+    name: header/primary
+    printer: BarChart
+    query: "cta:click->count()
+      ->filter(context.domPath~group--sections)
+      ->filter(device.oGridLayout?M,L,XL,XXL)
+      ->group(context.target)->sortProp(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
+  -
+    question: 'Excluding secondary nav, what is being clicked most in the header'
+    name: header/clicks
+    printer: BarChart
+    query: "cta:click->count()
+       ->filter(device.oGridLayout?M,L,XL,XXL)
+       ->filter(context.domPath~header)
+       ->filter(context.domPath!~article)
+       ->filter(context.domPath!~secondary-navigation)
+       ->group(context.target)
+       ->top(10)"
     freeze: true
   -
-    question: How many members visited yesterday?
-    name: members/yesterday
-    query: page:view->count(user.uuid)->relTime(previous_1_day)
+    question: Which secondary nav links are being clicked most (desktop)?
+    name: header/secondary-most
+    printer: BarChart
+    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
     freeze: true
+  -
+    question: Which secondary nav links are being clicked least (desktop)?
+    name: header/secondary-least
+    printer: BarChart
+    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
+    freeze: true
+  -
+    question: Which nav links are being clicked most (mobile)?
+    name: header/mobile-most
+    printer: BarChart
+    query: "cta:click->count()
+       ->filter(device.oGridLayout?default,XS,S)
+       ->filter(context.domPath~secondary-navigation)
+       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
+       ->group(context.target)->top(10)"
+    freeze: true
+  -
+    question: Which nav links are being clicked least (mobile)?
+    name: header/mobile-least
+    printer: BarChart
+    query: "cta:click->count()
+       ->filter(device.oGridLayout?default,XS,S)
+       ->filter(context.domPath~secondary-navigation)
+       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
+       ->group(context.target)->bottom(10)"
+    freeze: true
+  -
+    question: What are the commonest search terms?
+    name: header/searches
+    printer: Table
+    query: "page:view->count()->filter(page.location.type=search)->group(page.location.search)->top(30)"
+    freeze: true
+  - # TODO - need to mark these typeahead links up better with metadata
+    question: What are the commonest typeahead clicks?
+    name: header/typeaheads
+    printer: Table
+    query: "cta:click->count()->filter(context.target=typeahead)->group(context.conceptId)->top(30)"
+    freeze: true
+
+
+
+  # -
+  #   question: How many members visited today?
+  #   name: members/today
+  #   query: page:view->count(user.uuid)->relTime(this_1_day)
+  #   freeze: true
+  # -
+  #   question: How many members visited yesterday?
+  #   name: members/yesterday
+  #   query: page:view->count(user.uuid)->relTime(previous_1_day)
+  #   freeze: true
+
+
+
+  # -
+  #   question: What articles have been viewed in the last 30 minutes?
+  #   name: popular
+  #   query: page:view->count(user.uuid)->relTime(this_30_minutes)->group(content.title)->tidy()
+  #   printer: PieChart
