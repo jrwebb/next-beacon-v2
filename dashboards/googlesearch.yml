@@ -83,12 +83,12 @@ charts:
   -
     question: fastFT articles expanded per visit
     name: fastFT/article-expanded
-    query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))"
+    query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))->relTime(previous_14_days)->interval(d)->plotThreshold(2,FT Benchmark)"
     datalabel: Articles expanded per visit
   -
     question: fastFT dwell time
     name: fastFT/dwelltime
-    query: "page:attention->avg(context.meta.attention)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
+    query: "page:attention->avg(context.meta.attention)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d)->plotThreshold(144,FT Benchmark)"
     datalabel: Seconds on page
   -
     question: fastFT users by device type
