@@ -17,6 +17,6 @@ if (document.querySelector('.feature-search')) {
 	require('./components/feature-search');
 }
 
-google.charts.load('current', {
+google.charts.load('43', { // version 44 is VERY broken
 	packages: ['corechart', 'table']
 });
