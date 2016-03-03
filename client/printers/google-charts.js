@@ -16,10 +16,6 @@ export function googleChartPrinterFactory (chartType) {
 		const kqTable = kq.getTable();
 		const kqData = kqTable.humanize(expectsDateObjects ? 'dateObject' : 'human');
 
-		// if (kqTable.dimension === 1 || (kqTable.dimension === 2 && kqTable.timeHeadingsLocation > -1) && ) {
-
-		// }
-
 		if (meta.datalabel && kqTable.dimension === 1) {
 			kqData.headings[1] = meta.datalabel;
 		}

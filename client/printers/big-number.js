@@ -13,8 +13,8 @@ export function renderBigNumber (el, kq, meta) {
 
 	html += `<div class="o-big-number__title chart-data">${niceNumber}</div>`;
 
-	if (meta.label) {
-		html += `<div class="o-big-number__content chart-label">${meta.label}</div>`;
+	if (meta.datalabel) {
+		html += `<div class="o-big-number__content chart-label">${meta.datalabel}</div>`;
 	}
 
 	el.innerHTML = html + `</div>`;
