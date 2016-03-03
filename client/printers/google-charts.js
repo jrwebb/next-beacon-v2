@@ -16,7 +16,11 @@ export function googleChartPrinterFactory (chartType) {
 		const kqTable = kq.getTable();
 		const kqData = kqTable.humanize(expectsDateObjects ? 'dateObject' : 'human');
 
-		if (kqTable.dimension === 1 && meta.datalabel) {
+		// if (kqTable.dimension === 1 || (kqTable.dimension === 2 && kqTable.timeHeadingsLocation > -1) && ) {
+
+		// }
+
+		if (meta.datalabel && kqTable.dimension === 1) {
 			kqData.headings[1] = meta.datalabel;
 		}
 
@@ -25,7 +29,9 @@ export function googleChartPrinterFactory (chartType) {
 
 		const options = Object.assign({}, defaultChartOptions);
 		const labelAxis = Object.assign({}, options.hAxis, {title: kqTable.axes[0].property === 'timeframe' ? undefined : kqTable.axes[0].property});
-		const valueAxis = Object.assign({}, options.vAxis, {title: kqTable.valueLabel});
+		const valueAxis = Object.assign({}, options.vAxis, {title: meta.datalabel || kqTable.valueLabel});
+
+
 
 		options.hAxis = labelAxis;
 		options.vAxis = valueAxis;

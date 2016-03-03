@@ -19,6 +19,9 @@ try {
 						c.queryname = c.name;
 						c.name = `${dashboard.id}/${c.queryname}`;
 						c.dashboardfeature = dashboard.id;
+						if (c.question.charAt(c.question.length -1) !== '?') {
+							c.question = c.question + '?';
+						}
 					});
 				} catch (e) {
 					console.log(`Error loading dashboard file: ${directory}${file}`);
