@@ -22,6 +22,7 @@ try {
 						if (c.question.charAt(c.question.length -1) !== '?') {
 							c.question = c.question + '?';
 						}
+						c.hasConfigurableInterval = c.interval == null; //eslint-disable-line
 					});
 				} catch (e) {
 					console.log(`Error loading dashboard file: ${directory}${file}`);

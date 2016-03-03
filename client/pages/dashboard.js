@@ -22,13 +22,13 @@ export function init () {
 
 				storeKq(alias, builtQuery);
 
-				if (!conf.freeze) {
+				if (conf.hasConfigurableInterval) {
 					// avoid showing as big number when the default view could easily be converted to a line graph over time
 					if (builtQuery.dimension < 2 && (['AreaChart','LineChart','ColumnChart'].indexOf(conf.printer) > -1 || !conf.printer)) {
 						builtQuery = builtQuery.interval('d')
 					}
-					builtQuery = configure(builtQuery);
 				}
+				builtQuery = configure(builtQuery, (conf.hasConfigurableInterval ? [] : ['interval']));
 				renderChart(printerEl, builtQuery, conf);
 			} catch (err) {
 				displayError(printerEl, err, null, conf);

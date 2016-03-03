@@ -18,7 +18,7 @@ KeenQuery.prototype.toTSV = KeenQuery.Aggregator.prototype.toTSV = function () {
 KeenQuery.buildFromAlias = (alias) => {
 	let query = alias.query;
 	query += alias.timeframe ? `->relTime(${alias.timeframe})` : '';
-	query += alias.interval ? `->interval(${alias.interval})` : '';
+	query += typeof alias.interval === 'string' ? `->interval(${alias.interval})` : '';
 	return KeenQuery.build(query);
 }
 
