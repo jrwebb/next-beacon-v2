@@ -10,24 +10,28 @@ charts:
     name: overview/myftusers
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% are myFT users this week"
   -
     question: How many logged in users came to Next this week?
     name: overview/nextusercount
     query: "page:view->count(user.uuid)->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "Logged-in Next users"
   -
     question: How many logged in myFT users came to Next this week?
     name: overview/myftusercount
     query: "page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true)->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "Logged-in myFT users"
   -
     question: What % of last week's logged-in Next users were myFT users?
     name: overview/myftusersprev
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->relTime(previous_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% were myFT users last week"
   -
     question: What % of logged-in Next users are myFT users each day?
@@ -35,16 +39,19 @@ charts:
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))"
     datalabel: "% myFT users"
   -
+    break: true
     question: What % of this week's logged-in Next users are following 5 or more topics?
     name: overview/following
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% are following 5 or more this week"
   -
     question: What % of last week's logged-in Next users were following 5 or more topics?
     name: overview/followingprev
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))->relTime(previous_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% were following 5 or more last week"
   -
     question: What % of logged-in Next users are following 5 or more topics?
@@ -52,22 +59,26 @@ charts:
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))"
     datalabel: "% following 5 or more"
   -
+    break: true
     question: What % of this week's logged-in Next users are opted into the daily email?
     name: overview/dailyemail
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true),page:view->count(user.uuid))->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% are opted into daily email this week"
   -
     question: How many of this week's logged-in Next users are opted into the daily email?
     name: overview/dailyemailcount
     query: page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->relTime(this_7_days)
     interval: false
+    colspan: 6 L3
     datalabel: are opted into daily email this week
   -
     question: What % of last week's logged-in Next users were opted into the daily email?
     name: overview/dailyemailprev
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true),page:view->count(user.uuid))->relTime(previous_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% were opted into daily email last week"
   -
     question: What % of logged-in Next users are opted into the daily email?
@@ -75,22 +86,26 @@ charts:
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->interval(d),page:view->count(user.uuid)->interval(d))"
     datalabel: "% opted into daily email"
   -
+    break: true
     question: What % of this week's logged-in Next users are opted into the weekly email?
     name: overview/weeklyemail
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(this_7_days),page:view->count(user.uuid)->relTime(this_7_days))"
     interval: false
+    colspan: 6 L3
     datalabel: "% are opted into weekly email this week"
   -
     question: How many of this week's logged-in Next users are opted into the weekly email?
     name: overview/weeklyemailcount
     query: page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(this_7_days)
     interval: false
+    colspan: 6 L3
     datalabel: are opted into weekly email this week
   -
     question: What % of last week's logged-in Next users were opted into the weekly email?
     name: overview/weeklyemailprev
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(previous_7_days),page:view->count(user.uuid)->relTime(previous_7_days))"
     interval: false
+    colspan: 6 L3
     datalabel: "% were opted into weekly email last week"
   -
     question: What % of logged-in Next users are opted into the weekly email?
@@ -98,6 +113,7 @@ charts:
     query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->interval(d),page:view->count(user.uuid)->interval(d))"
     datalabel: "% opted into weekly email"
   -
+    break: true
     question: How many myFT email clicks in the past 7 days?
     name: overview/emailclicksbyweek
     query: page:view->count(user.uuid)->relTime(this_7_days)->filter(campaign.myft.source=notification:daily-email:cta)
@@ -106,6 +122,7 @@ charts:
     name: overview/articleviews
     query: "@pct(page:view->count(user.uuid)->filter(campaign.myft.source),page:view->count(user.uuid))->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% are from myFT"
   -
     question: Which myFT features drive the most traffic?
@@ -116,18 +133,21 @@ charts:
     name: overview/myftfrequency
     query: page:view->count(time.day)->relTime(this_7_days)->group(user.uuid)->tidy()->filter(user.myft.isMyFtUser=true)->reduce(avg,user.uuid)
     interval: false
+    colspan: 6 L3
     datalabel: / 7 days a week
   -
     question: How many follow clicks were there this week
     name: overview/followclicks
     query: cta:click->count()->relTime(this_7_days)->filter(context.domPath=follow)->filter(context.domPressed=false)
     interval: false
+    colspan: 6 L3
     datalabel: follow clicks
   -
     question: How many follow clicks were there last week
     name: overview/followclicksprev
     query: cta:click->count()->relTime(previous_7_days)->filter(context.domPath=follow)->filter(context.domPressed=false)
     interval: false
+    colspan: 6 L3
     datalabel: follow clicks
   -
     question: How many follow clicks
@@ -139,24 +159,28 @@ charts:
     name: overview/dailyemailopenrate
     query: "@pct(email:open->count(),email:delivery->count())->relTime(this_7_days)->filter(campaign.myft.emailType=daily)"
     interval: false
+    colspan: 6 L3
     datalabel: "% open rate"
   -
     question: Daily email open rate last week
     name: overview/dailyemailopenrateprev
     query: "@pct(email:open->count(),email:delivery->count())->relTime(previous_7_days)->filter(campaign.myft.emailType=daily)"
     interval: false
+    colspan: 6 L3
     datalabel: "% open rate"
   -
     question: Daily email click-through rate this week
     name: overview/dailyemailclickthroughrate
     query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=daily)->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "clicks per email"
   -
     question: Daily email click-through rate last week
     name: overview/dailyemailclickthroughrateprev
     query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=daily)->relTime(previous_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "clicks per email"
   -
     question: Daily email open and click-through rate
@@ -167,12 +191,14 @@ charts:
     name: overview/weeklyemailopenrate
     query: "@pct(email:open->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% open rate"
   -
     question: Weekly email open rate last week
     name: overview/weeklyemailopenrateprev
     query: "@pct(email:open->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(previous_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "% open rate"
   -
     question: Weekly email open rate
@@ -183,12 +209,14 @@ charts:
     name: overview/weeklyemailclickthroughrate
     query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(this_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "clicks per email"
   -
     question: Weekly email click-through rate last week
     name: overview/weeklyemailclickthroughrateprev
     query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(previous_7_days)"
     interval: false
+    colspan: 6 L3
     datalabel: "clicks per email"
   -
     question: Weekly email click-through rate
@@ -200,15 +228,18 @@ charts:
     query: cta:click->count()->group(context.domPath)->filter(context.domPath~| follow)->relTime(14)->top(10)
     printer: BarChart
     interval: false
+    colspan: 6 L3
   -
     question: Where are the least successful follow buttons
     name: actions/follow/bad
     query: cta:click->count()->group(context.domPath)->filter(context.domPath~| follow)->relTime(14)->bottom(10)
     printer: BarChart
     interval: false
+    colspan: 6 L3
   -
     question: How are save buttons performing
     name: actions/save/good
     query: cta:click->count()->group(context.domPath)->filter(context.domPath~save-for-later)->relTime(14)->sortDesc()
     printer: BarChart
     interval: false
+    colspan: 6 L3

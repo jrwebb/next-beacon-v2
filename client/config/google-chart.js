@@ -18,7 +18,6 @@ export const defaultChartOptions = {
 		color: 'black'
 	},
 	curveType:'function',
-	height: 450,
 	chartArea: {
 		top: '10%',
 		left: '8%',

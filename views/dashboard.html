@@ -7,10 +7,14 @@
 {{/unless}}
 <div class="charts o-grid-row">
 	{{#each charts}}
+		{{#if this.break}}
+			</div>
+			<div class="o-grid-row">
+		{{/if}}
 		{{#if @root.isStandaloneChart}}
 			{{>chart colspan=12 }}
 		{{else}}
-			{{>chart colspan="12 L6" }}
+			{{>chart colspan=this.colspan }}
 		{{/if}}
 	{{else}}
 		<div data-o-grid-colspan="12">
