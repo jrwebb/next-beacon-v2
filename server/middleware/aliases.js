@@ -2,7 +2,7 @@
 
 let aliases = [];
 const Poller = require('ft-poller');
-const url = 'http://bertha.ig.ft.com/view/publish/gss/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M/aliases';
+const url = 'https://bertha.ig.ft.com/view/publish/gss/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M/aliases';
 
 const poller = new Poller({
 	url: url,
