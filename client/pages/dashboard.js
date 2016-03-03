@@ -28,7 +28,17 @@ export function init () {
 						builtQuery = builtQuery.interval('d')
 					}
 				}
-				builtQuery = configure(builtQuery, (conf.hasConfigurableInterval ? [] : ['interval']));
+				const configuratorSkipSteps = [];
+
+				if (!conf.hasConfigurableInterval) {
+					configuratorSkipSteps.push('interval');
+				}
+
+				if (conf.timeframe) {
+					configuratorSkipSteps.push('timeframe');
+				}
+
+				builtQuery = configure(builtQuery, configuratorSkipSteps);
 				renderChart(printerEl, builtQuery, conf);
 			} catch (err) {
 				displayError(printerEl, err, null, conf);
