@@ -4,6 +4,7 @@ import {colorsMap} from '../config/colors';
 import {defaultChartOptions} from '../config/google-chart';
 import {renderBigNumber} from './big-number';
 import {getDefaultMeta} from './util';
+import viewport from 'o-viewport';
 
 function hasDimension (kq) {
 	return kq.getTable().dimension;
@@ -26,8 +27,6 @@ export function googleChartPrinterFactory (chartType) {
 		const options = Object.assign({}, defaultChartOptions);
 		const labelAxis = Object.assign({}, options.hAxis, {title: kqTable.axes[0].property === 'timeframe' ? undefined : kqTable.axes[0].property});
 		const valueAxis = Object.assign({}, options.vAxis, {title: meta.datalabel || kqTable.valueLabel});
-
-
 
 		options.hAxis = labelAxis;
 		options.vAxis = valueAxis;
@@ -59,12 +58,12 @@ export function googleChartPrinterFactory (chartType) {
 		}
 
 		if (window.view && window.view === 'presentation') {
-			const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-			options.height = viewportHeight * 0.8;
+			options.height = viewport.getSize().height * 0.8;
+		} else {
+			options.height = Math.min(viewport.getSize().height / 3, 450);
 		}
 
 		chart.draw(vizData, options);
-
 	}
 
 	return function () {

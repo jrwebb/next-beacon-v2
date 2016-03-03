@@ -6,29 +6,34 @@ isPrimary: true
 description: Anonymous users, barriers and subscription overview
 charts:
   -
-    question: Are daily anonymous visitor counts increasing?
+    question: Are weekly anonymous visitor counts increasing?
     name: daily
+    colspan: 12
     query: page:view->count(user.ab.allocationId)->filter(!user.uuid)
-    datalabel: Anonymous visitors
+    timeframe: this_14_weeks
+    interval: w
+    datalabel: Anonymous visitors per week
   -
     question: Which sites are anons visiting from?
     name: referrers
     query: page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->sortDesc()
     printer: PieChart
-    datalabel: Continent
+    interval: false
   -
     question: Which pages are anons viewing most?
     name: pages
     query: "@pct(page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.location.path),page:view->count(user.ab.allocationId)->filter(!user.uuid))->top(20)"
-    printer: Table
+    printer: BarChart
+    datalabel: "% of anons visting the page"
   -
     question: Which barriers are anons being presented with?
     name: barriers/type
     query: barrier:view->count()->group(context.type)
-  -
-    question: Where are barriers being shown?
-    name: barriers/where
-    query: barrier:view->count()->group(context.url)
+    colspan: 12 L4
+  # -
+  #   question: Where are barriers being shown?
+  #   name: barriers/where
+  #   query: barrier:view->count()->group(context.url)
   -
     question: Are users interacting with barriers
     name: barriers/click-count
@@ -37,6 +42,7 @@ charts:
       barrier:view->count(user.ab.allocationId)
     )"
     datalabel: pct of users clicking on barriers
+    colspan: 12 L4
   - #TODO group by AB test
     question: Are barriers successful at getting users to sign in or subscribe
     name: barriers/click-types
@@ -45,6 +51,7 @@ charts:
       cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier)->filter(context.domPath~subscribe),
       cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier)->filter(context.domPath~sign-in)
     )->relabel(CONCATENATION_RESULT,Other,Subscribe,Sign in)"
+    colspan: 12 L4
   -
     question: Are anons clicking on the propensity AB test
     name: propensityAB/clicks
@@ -53,7 +60,4 @@ charts:
     question: Are anons in the AB test viewing more pages
     name: propensityAB/page-views
     query: page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()
-  -
-    question: Are anons in the AB test viewing more pages
-    name: propensityAB/page-views
-    query: page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()
+

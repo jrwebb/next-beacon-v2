@@ -23,6 +23,7 @@ try {
 							c.question = c.question + '?';
 						}
 						c.hasConfigurableInterval = c.interval == null; //eslint-disable-line
+						c.colspan = c.colspan || '12 L6'
 					});
 				} catch (e) {
 					console.log(`Error loading dashboard file: ${directory}${file}`);
