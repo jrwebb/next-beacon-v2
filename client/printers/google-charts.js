@@ -64,6 +64,7 @@ export function googleChartPrinterFactory (chartType) {
 		}
 
 		chart.draw(vizData, options);
+		return chart;
 	}
 
 	return function () {

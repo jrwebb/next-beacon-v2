@@ -6,25 +6,18 @@ isPrimary: true
 description: Fastest site in the west
 charts:
   -
-    question: timing of loadEventStart
-    name: loadEventStart
-    query: page:load-timing->median(context.timings.offset.loadEventStart)
-    datalabel: loadEventStart
-  -
-    question: timing of domComplete
-    name: domComplete
-    query: page:load-timing->median(context.timings.offset.domComplete)
-    datalabel: domComplete
-  -
-    question: timing of domContentLoadedEventStart
-    name: domContentLoadedEventStart
-    query: page:load-timing->median(context.timings.offset.domContentLoadedEventStart)
-    datalabel: domContentLoadedEventStart
-  -
-    question: timing of domInteractive
-    name: domInteractive
-    query: page:load-timing->median(context.timings.offset.domInteractive)
-    datalabel: domInteractive
+    question: How is the site's performance overall
+    name: timings
+    query:  "@concat(
+              page:load-timing->median(context.timings.offset.loadEventStart),
+              page:load-timing->median(context.timings.offset.domComplete),
+              page:load-timing->median(context.timings.offset.domContentLoadedEventStart),
+              page:load-timing->median(context.timings.offset.domInteractive)
+            )
+            ->divide(1000)
+            ->relabel(CONCATENATION_RESULT,Start,Dom complete,Content loaded,Interactive)"
+    datalabel: Seconds
+    printer: AreaChart
   -
     question: timing of fontsLoaded
     name: fontsLoaded

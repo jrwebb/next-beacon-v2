@@ -7,7 +7,7 @@ function composeKqModifiers(functions) {
 		let func;
 		const funcs = functions.slice();
 		while (func = funcs.shift()) {
-			if (skip.includes(func._name)) {
+			if (skip && skip.includes(func._name)) {
 				return kq;
 			}
 			kq = func(kq);
