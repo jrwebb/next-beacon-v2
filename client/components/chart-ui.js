@@ -4,7 +4,7 @@ import {fromForm as getConfigurator} from '../components/configurator';
 import oExpander from 'o-expander';
 
 const rendererMap = new WeakMap();
-
+const chartsMap = new WeakMap();
 
 function getChartContainer (el) {
 	while (!el.classList.contains('chart')) {
@@ -18,6 +18,7 @@ export function renderChart (printerEl, kq, meta) {
 	let renderPromise;
 	printerEl.classList.add('chart--loading');
 	try {
+
 		renderPromise = kq.print()
 			.then(renderer => {
 				// avoid race condition when clicking multiple configurator buttons in quick succession
@@ -27,7 +28,13 @@ export function renderChart (printerEl, kq, meta) {
 				printerEl.classList.remove('chart--loading');
 				printerEl.classList.add('chart--loaded');
 				if (typeof renderer === 'function') {
-					renderer(printerEl, meta);
+					let chart = chartsMap.get(printerEl);
+					// avoid google charts related memory leaks
+					if (chart) {
+						chart.clearChart();
+					}
+					chart = renderer(printerEl, meta);
+					chartsMap.set(printerEl, chart);
 				} else {
 					printerEl.classList.add('chart-error');
 					throw 'Keen query did not return printable output.'

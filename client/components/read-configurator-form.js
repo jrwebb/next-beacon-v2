@@ -41,7 +41,7 @@ function getFilters (form) {
 export function getFormState (form, updatedField) {
 	return {
 		timeframe: getTimeframe(form, updatedField),
-		interval: form.querySelector('[name="interval"]').value,
+		interval: form.querySelector('[name="interval"]') && form.querySelector('[name="interval"]').value,
 		printer: form.querySelector('[name="printer"]:checked').value,
 		group: form.querySelector('[name="group"]:checked') && form.querySelector('[name="group"]:checked').value,
 		filters: getFilters(form)
