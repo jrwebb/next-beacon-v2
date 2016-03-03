@@ -11,14 +11,16 @@
 				<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
 				<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}">
 			</fieldset>
-		<select name="interval" class="chart__configurator__interval o-forms-select o-forms-select--small">
-			<option value=""> -- choose interval -- </option>
-			<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
-			<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>hour</option>
-			<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>day</option>
-			<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
-			<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
-		</select>
+		{{#if hasConfigurableInterval}}
+			<select name="interval" class="chart__configurator__interval o-forms-select o-forms-select--small">
+				<option value=""> -- choose interval -- </option>
+				<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
+				<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>hour</option>
+				<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>day</option>
+				<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
+				<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
+			</select>
+		{{/if}}
 	</fieldset>
 	<fieldset class="o-forms-group">
 		<input class="o-forms-radio o-forms-radio--small" id="printer_default_{{index}}" type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}><label for="printer_default_{{index}}" class="o-forms-label">View graph</label>

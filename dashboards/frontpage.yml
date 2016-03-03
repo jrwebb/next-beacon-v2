@@ -107,7 +107,7 @@ charts:
             )->filter(page.location.type=frontpage)
             ->relabel(CONCATENATION_RESULT,header,top stories,fastft,editors picks,opinion,myFT,most popular,life & arts,markets,technology,video)"
     printer: BarChart
-    freeze: true
+    interval: false
     datalabel: Average percentage over period
 
   # CTR (all) --------------------------------------------------
@@ -430,13 +430,13 @@ charts:
               page:view->count()->filter(page.location.type=frontpage),
               page:view->count()
             )->relTime(previous_1_days)"
-    freeze: true
+    interval: false
     datalabel: Percentage of site-wide views
   -
     question: What was the total of yesterday's frontpage views?
     name: visits/views/total
     query: page:view->count()->filter(page.location.type=frontpage)->relTime(previous_1_days)
-    freeze: true
+    interval: false
     datalabel: Total of frontpage views
   -
     question: What percentage of site-wide page views were frontpage views?
@@ -453,13 +453,13 @@ charts:
               page:view->count(user.uuid)->filter(page.location.type=frontpage),
               page:view->count(user.uuid)
             )->relTime(previous_1_days)"
-    freeze: true
+    interval: false
     datalabel: Percentage of site-wide visitors
   -
     question: What was the total of yesterday's frontpage visitors?
     name: visits/visitors/total
     query: page:view->count(user.uuid)->filter(page.location.type=frontpage)->relTime(previous_1_days)
-    freeze: true
+    interval: false
     datalabel: Total of frontpage visitors
   -
     question: What percentage of site-wide visitors were frontpage visitors?

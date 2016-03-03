@@ -41,19 +41,19 @@ charts:
        ->filter(context.domPath!~secondary-navigation)
        ->group(context.target)
        ->top(10)"
-    freeze: true
+    interval: false
   -
     question: Which secondary nav links are being clicked most (desktop)?
     name: header/secondary-most
     printer: BarChart
     query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
-    freeze: true
+    interval: false
   -
     question: Which secondary nav links are being clicked least (desktop)?
     name: header/secondary-least
     printer: BarChart
     query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
-    freeze: true
+    interval: false
   -
     question: Which nav links are being clicked most (mobile)?
     name: header/mobile-most
@@ -63,7 +63,7 @@ charts:
        ->filter(context.domPath~secondary-navigation)
        ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
        ->group(context.target)->top(10)"
-    freeze: true
+    interval: false
   -
     question: Which nav links are being clicked least (mobile)?
     name: header/mobile-least
@@ -73,19 +73,19 @@ charts:
        ->filter(context.domPath~secondary-navigation)
        ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
        ->group(context.target)->bottom(10)"
-    freeze: true
+    interval: false
   -
     question: What are the commonest search terms?
     name: header/searches
     printer: Table
     query: "page:view->count()->filter(page.location.type=search)->group(page.location.search)->top(30)"
-    freeze: true
+    interval: false
   - # TODO - need to mark these typeahead links up better with metadata
     question: What are the commonest typeahead clicks?
     name: header/typeaheads
     printer: Table
     query: "cta:click->count()->filter(context.target=typeahead)->group(context.conceptId)->top(30)"
-    freeze: true
+    interval: false
 
 
 
@@ -93,12 +93,12 @@ charts:
   #   question: How many members visited today?
   #   name: members/today
   #   query: page:view->count(user.uuid)->relTime(this_1_day)
-  #   freeze: true
+  #   interval: false
   # -
   #   question: How many members visited yesterday?
   #   name: members/yesterday
   #   query: page:view->count(user.uuid)->relTime(previous_1_day)
-  #   freeze: true
+  #   interval: false
 
 
 

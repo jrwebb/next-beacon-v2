@@ -2,11 +2,14 @@ import querystring from 'querystring';
 import {getFormState} from './read-configurator-form';
 
 function composeKqModifiers(functions) {
-	const composed = kq => {
+	const composed = (kq, skip) => {
 		kq = kq.clone(true);
 		let func;
 		const funcs = functions.slice();
 		while (func = funcs.shift()) {
+			if (skip.includes(func._name)) {
+				return kq;
+			}
 			kq = func(kq);
 		}
 		return kq;
@@ -15,26 +18,30 @@ function composeKqModifiers(functions) {
 }
 
 function timeframeModifier (timeframe) {
-
+	let func;
+	if (typeof timeframe === 'string' && timeframe.charAt(0) === '{') {
+		timeframe = JSON.parse(timeframe)
+	}
 	if (typeof timeframe === 'string') {
-		if (timeframe.charAt(0) === '{') {
-			timeframe = JSON.parse(timeframe)
-		} else {
-			return kq => kq.relTime(timeframe);
-		}
+		func = kq => kq.relTime(timeframe);
+	} else if (timeframe && timeframe.start && timeframe.end) {
+		func = kq => kq.absTime(timeframe.start, timeframe.end);
+	} else {
+		func = kq => kq;
 	}
-	if (timeframe && timeframe.start && timeframe.end) {
-		return kq => kq.absTime(timeframe.start, timeframe.end);
-	}
-	return kq => kq;
+	func._name = 'timeframe';
+	return func;
 }
 
 function simpleKqModifier(method, value) {
+	let func;
 	if (value) {
-		return kq => kq[method](value);
+		func = kq => kq[method](value);
 	} else {
-		return kq => kq;
+		func = kq => kq;
 	}
+	func._name = method;
+	return func;
 }
 
 function getKqConfigurer (opts) {
