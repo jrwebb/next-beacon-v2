@@ -87,6 +87,7 @@ function copyData (ev) {
 	try {
 		document.execCommand('copy');
 		container.removeChild(copyTextarea);
+		// todo: output some kind of user feedback e.g. "Copied!"
 	} catch (err) {
 		container.removeChild(copyTextarea);
 		alert('Oops, unable to copy');
@@ -101,9 +102,6 @@ export function init (container) {
 	del.on('click', '.chart__ui__copy-data', copyData);
 
 	[].forEach.call(container.querySelectorAll('.chart'), chartEl => {
-		const uiEl = chartEl.querySelector('.chart__ui');
-		if (!uiEl) return;
-
 		const alias = chartEl.dataset.keenAlias;
 		const kq = retrieveKq(alias);
 		if (!kq) {
@@ -113,9 +111,10 @@ export function init (container) {
 			chartEl.classList.add('chart--pre-grouped')
 		}
 
-		uiEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'explorer')}">View in keen explorer</a>`);
-
-		uiEl.querySelector('.chart__ui__links').insertAdjacentHTML('beforeend', `<a href="/data/query-wizard?query=${window.aliases[alias].query}">View in query wizard</a>`);
+		const chartLinksEl = chartEl.querySelector('.chart__ui__links');
+		if (chartLinksEl) {
+			chartLinksEl.insertAdjacentHTML('beforeend', `<a class="o-buttons o-buttons--small" href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'explorer')}">View in keen explorer</a> <a class="o-buttons o-buttons--small" href="/data/query-wizard?query=${window.aliases[alias].query}">View in query wizard</a>`);
+		}
 	});
 }
 
