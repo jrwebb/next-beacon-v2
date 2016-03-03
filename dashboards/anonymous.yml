@@ -3,7 +3,7 @@
 id: anonymous
 title: Anonymous
 isPrimary: true
-description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+description: Anonymous users, barriers and subscription overview
 charts:
   -
     question: Are daily anonymous visitor counts increasing?
@@ -11,11 +11,40 @@ charts:
     query: page:view->count(user.ab.allocationId)->filter(!user.uuid)
     datalabel: Anonymous visitors
   -
-    question: What sites are anons visiting from?
+    question: Which sites are anons visiting from?
     name: referrers
     query: page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->sortDesc()
     printer: PieChart
     datalabel: Continent
+  -
+    question: Which pages are anons viewing most?
+    name: pages
+    query: "@pct(page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.location.path),page:view->count(user.ab.allocationId)->filter(!user.uuid))->top(20)"
+    printer: Table
+  -
+    question: Which barriers are anons being presented with?
+    name: barriers/type
+    query: barrier:view->count()->group(context.type)
+  -
+    question: Where are barriers being shown?
+    name: barriers/where
+    query: barrier:view->count()->group(context.url)
+  -
+    question: Are users interacting with barriers
+    name: barriers/click-count
+    query: "@pct(
+      cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier),
+      barrier:view->count(user.ab.allocationId)
+    )"
+    datalabel: pct of users clicking on barriers
+  - #TODO group by AB test
+    question: Are barriers successful at getting users to sign in or subscribe
+    name: barriers/click-types
+    query: "@concat(
+      cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier)->filter(context.domPath!~subscribe)->filter(context.domPath!~sign-in),
+      cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier)->filter(context.domPath~subscribe),
+      cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier)->filter(context.domPath~sign-in)
+    )->relabel(CONCATENATION_RESULT,Other,Subscribe,Sign in)"
   -
     question: Are anons clicking on the propensity AB test
     name: propensityAB/clicks
