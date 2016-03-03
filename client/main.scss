@@ -16,7 +16,7 @@ body {
 	.o-header {
 		z-index: 100;
 		position: fixed;
-		margin-bottom: 1em;
+		margin-bottom: 16px;
 		top: 0;
 		width: 100%;
 		.o-header__primary {
@@ -35,15 +35,17 @@ body {
 			nav {
 				float: left;
 			}
+			.o-hierarchical-nav {
+				width: 100%;
+				.internal-tool-links {
+					float: right;
+				}
+			}
 		}
 	}
 	.o-techdocs-container {
 		margin-top: 80px;
 	}
-}
-
-.chart__meta {
-	margin-bottom: 2em;
 }
 
 .o-forms-suffix--small {
@@ -64,6 +66,7 @@ body {
 		font-weight: bold;
 	}
 }
+
 .feature-search {
 	margin-top: 1px;
 	margin-bottom: 0;
@@ -71,7 +74,7 @@ body {
 
 .o-ft-icons-icon {
 	text-decoration: none;
-	margin: 0 0.1em 0 0.3em;
+	margin: 0 1.4px 0 4.2px;
 }
 
 .o-header__nav--secondary-theme {
@@ -80,9 +83,8 @@ body {
 	}
 }
 
-// Ugly hack award
-.o-gallery__item__content [aria-label="A chart."] {
-	position: relative !important;
+.o-big-number__title {
+	font-size: 200px;
 }
 
 @import 'components/chart-ui';

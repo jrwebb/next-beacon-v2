@@ -1,34 +1,30 @@
-<div data-o-grid-colspan="{{colspan}}">
+<div class="chart" data-keen-alias="{{name}}" data-o-grid-colspan="{{colspan}}">
 
-	<div class="chart" data-keen-alias="{{name}}">
-		<div class="chart__ui">
-			<nav class="chart__ui__links">
-				<button class="chart__ui__copy-data o-buttons">Copy data to clipboard</button>
-				<a href="/chart/{{name}}">View chart</a>
-			</nav>
-			{{#unless @root.isStandaloneChart}}
-				<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper"
-					data-o-expander-shrink-to="hidden"
-					data-o-expander-expanded-toggle-text="Edit"
-					data-o-expander-collapsed-toggle-text="Edit"
-					>
-					<button class="chart__ui__toggle-configurator o-expander__toggle o--if-js"></button>
-					<div class="o-expander__content">
-						{{>chart-configurator index=@index}}
-					</div>
-				</div>
-			{{/unless}}
-		</div>
-		{{#if question}}
-		<h2>{{question}}</h2>
-		{{/if}}
-		<div class="chart__printer core-chart"></div>
-		{{#if @root.isStandaloneChart}}
+	{{#unless @root.isStandaloneChart}}
+	<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper animated" data-o-expander-shrink-to="hidden" data-o-expander-expanded-toggle-text="Edit" data-o-expander-collapsed-toggle-text="Edit">
+		<div class="o-expander__content">
 			{{>chart-configurator index=@index}}
-		{{/if}}
+		</div>
+		<div class="chart__ui">
+			<button class="o-buttons o-buttons--small chart__ui__toggle-configurator o-expander__toggle o--if-js" aria-expanded="false"></button>
+		</div>
 	</div>
+	{{/unless}}
+
+	{{#if question}}
+		<h2>{{question}}</h2>
+	{{/if}}
+
+	<div class="chart__printer core-chart"></div>
+
+	<nav class="chart__ui__links">
+		<button class="chart__ui__copy-data o-buttons o-buttons--small">Copy data to clipboard</button>
+		<a class="o-buttons o-buttons--small" href="/chart/{{name}}">View chart</a>
+		<a target="_blank" class="external o-buttons o-buttons--small" href="/presentation/{{name}}">Present chart <i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i></a>
+	</nav>
+
+	{{#if @root.isStandaloneChart}}
+		{{>chart-configurator index=@index}}
+	{{/if}}
+
 </div>
-
-
-
-

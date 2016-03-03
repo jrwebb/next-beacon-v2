@@ -1,46 +1,41 @@
 <nav class="o-hierarchical-nav o-header__nav--secondary-theme" data-o-component="o-hierarchical-nav">
-	<div data-o-grid-colspan="8">
-		<ul data-o-hierarchical-nav-level="1">
-			<li class="o-hierarchical-nav__parent"><a>☰</a>
-				<ul data-o-hierarchical-nav-level="2">
-					<li class="o-hierarchical-nav__parent"><a>Custom dashboards <i></i></a>
-						<ul data-o-hierarchical-nav-level="3">
-							{{#each customDashboards}}{{#if dashboardfeature}}
-							<li><a href="/dashboard/{{dashboardfeature}}">{{dashboardfeature}}</a></li>
-							{{/if}}{{/each}}
-						</ul>
-					</li>
-					<li><a target="_blank" class="external" title="Glossary" href="https://www.lucidchart.com/documents/edit/5c47f2dd-2e96-4825-a9c1-65c74f42b62d#"> <i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i> FT visitor types</a></li>
-					<li><a target="_blank" class="external" title="Raw data" href="https://keen.io/project/{{KEEN_PROJECT_ID}}/explorer"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Keen IO</a></li>
-					<li><a target="_blank" class="external" title="Slack channel" href="https://financialtimes.slack.com/messages/next-beacon-helpline/"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Slack: #next-beacon-helpline</a></li>
-					<li><a target="_blank" class="external" title="Developers' guide" href="https://financial-times.github.io/next/docs/developer-guide/measuring-next/"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Measuring next ft</a></li>
-					<li><a target="_blank" class="external" title="Configure charts" href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>The spreadsheet of destiny</a></li>
-				</ul>
-			</li>
-			{{#each primaryDashboards}}{{#if title}}
-			<li><a href="/dashboard/{{id}}/">{{{title}}}</a></li>
-			{{/if}}{{/each}}
-			<li class="o-hierarchical-nav__parent"><a><span style="font-style: italic">my</span>FT <i></i></a>
-				<ul data-o-hierarchical-nav-level="2">
-					<li><a href="/dashboard/myft/onsite">Onsite</a></li>
-					<li><a href="/dashboard/myft/offsite">Offsite</a></li>
-				</ul>
-			</li>
-			<li class="o-hierarchical-nav__parent"><a>Next data <i></i></a>
-				<ul data-o-hierarchical-nav-level="2">
-					<li><a href="/dashboard/nextdata/example/">Example charts</a></li>
-					<li><a href="/dashboard/nextdata/test/">Test charts</a></li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-	<div data-o-grid-colspan="2">
+	<div class="internal-tool-links">
 		<ul data-o-hierarchical-nav-level="1">
 			<li><a class="internal tool" href="/data/query-wizard">Query wizard</a></li>
 			<li><a class="internal tool" href="/data/explorer">Data explorer</a></li>
 		</ul>
 	</div>
-	<div data-o-grid-colspan="2">
-		{{> feature-search}}
-	</div>
+	<ul data-o-hierarchical-nav-level="1">
+		<li class="o-hierarchical-nav__parent"><a>☰</a>
+			<ul data-o-hierarchical-nav-level="2">
+				<li class="o-hierarchical-nav__parent"><a>Custom dashboards <i></i></a>
+					<ul data-o-hierarchical-nav-level="3">
+						{{#each customDashboards}}{{#if dashboardfeature}}
+						<li><a href="/dashboard/{{dashboardfeature}}">{{dashboardfeature}}</a></li>
+						{{/if}}{{/each}}
+					</ul>
+				</li>
+				<li><a target="_blank" class="external" title="Glossary" href="https://www.lucidchart.com/documents/edit/5c47f2dd-2e96-4825-a9c1-65c74f42b62d#"> <i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i> FT visitor types</a></li>
+				<li><a target="_blank" class="external" title="Raw data" href="https://keen.io/project/{{KEEN_PROJECT_ID}}/explorer"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Keen IO</a></li>
+				<li><a target="_blank" class="external" title="Slack channel" href="https://financialtimes.slack.com/messages/next-beacon-helpline/"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Slack: #next-beacon-helpline</a></li>
+				<li><a target="_blank" class="external" title="Developers' guide" href="https://financial-times.github.io/next/docs/developer-guide/measuring-next/"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Measuring next ft</a></li>
+				<li><a target="_blank" class="external" title="Configure charts" href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>The spreadsheet of destiny</a></li>
+			</ul>
+		</li>
+		{{#each primaryDashboards}}{{#if title}}
+		<li><a href="/dashboard/{{id}}/">{{{title}}}</a></li>
+		{{/if}}{{/each}}
+		<li class="o-hierarchical-nav__parent"><a><span style="font-style: italic">my</span>FT <i></i></a>
+			<ul data-o-hierarchical-nav-level="2">
+				<li><a href="/dashboard/myft/onsite">Onsite</a></li>
+				<li><a href="/dashboard/myft/offsite">Offsite</a></li>
+			</ul>
+		</li>
+		<li class="o-hierarchical-nav__parent"><a>Next data <i></i></a>
+			<ul data-o-hierarchical-nav-level="2">
+				<li><a href="/dashboard/nextdata/example/">Example charts</a></li>
+				<li><a href="/dashboard/nextdata/test/">Test charts</a></li>
+			</ul>
+		</li>
+	</ul>
 </nav>
