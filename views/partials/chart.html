@@ -1,6 +1,6 @@
 <div class="chart" data-keen-alias="{{name}}" data-o-grid-colspan="{{colspan}}">
 
-	{{#unless @root.isStandaloneChart}}{{#unless freeze}}
+	{{#unless @root.isStandaloneChart}}
 	<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper animated" data-o-expander-shrink-to="hidden" data-o-expander-expanded-toggle-text="Edit" data-o-expander-collapsed-toggle-text="Edit">
 		<div class="o-expander__content">
 			{{>chart-configurator index=@index}}
@@ -9,10 +9,11 @@
 			<button class="o-buttons o-buttons--small chart__ui__toggle-configurator o-expander__toggle o--if-js" aria-expanded="false"></button>
 		</div>
 	</div>
-	{{/unless}}{{/unless}}
+	{{/unless}}
 
-
-	<h2>{{question}}</h2>
+	{{#if question}}
+		<h2>{{question}}</h2>
+	{{/if}}
 
 	<div class="chart__printer core-chart"></div>
 
@@ -23,7 +24,7 @@
 	</nav>
 
 	{{#if @root.isStandaloneChart}}
-		{{#unless freeze}}{{>chart-configurator index=@index}}{{/unless}}
+		{{>chart-configurator index=@index}}
 	{{/if}}
 
 </div>

@@ -19,7 +19,7 @@ try {
 						c.queryname = c.name;
 						c.name = `${dashboard.id}/${c.queryname}`;
 						c.dashboardfeature = dashboard.id;
-						if (c.question.charAt(c.question.length -1) !== '?') {
+						if (c.question && c.question.charAt(c.question.length -1) !== '?') {
 							c.question = c.question + '?';
 						}
 						c.hasConfigurableInterval = c.interval == null; //eslint-disable-line
