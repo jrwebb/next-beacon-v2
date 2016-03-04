@@ -7,12 +7,18 @@ description: Anonymous users, barriers and subscription overview
 charts:
   -
     question: Are weekly anonymous visitor counts increasing?
-    name: daily
-    colspan: 12
+    name: weekly
     query: page:view->count(user.ab.allocationId)->filter(!user.uuid)
     timeframe: this_14_weeks
     interval: w
     datalabel: Anonymous visitors per week
+  -
+    question: Are daily anonymous visitor counts increasing?
+    name: daily
+    query: page:view->count(user.ab.allocationId)->filter(!user.uuid)
+    timeframe: this_4_weeks
+    interval: d
+    datalabel: Anonymous visitors per day
   -
     question: Which sites are anons visiting from?
     name: referrers
@@ -22,7 +28,7 @@ charts:
   -
     question: Which pages are anons viewing most?
     name: pages
-    query: "@pct(page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.location.path),page:view->count(user.ab.allocationId)->filter(!user.uuid))->top(20)"
+    query: "page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.location.path)->top(20)"
     printer: BarChart
     datalabel: "% of anons visting the page"
   -

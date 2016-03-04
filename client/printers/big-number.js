@@ -18,6 +18,13 @@ export function renderBigNumber (el, kq, meta) {
 	}
 
 	el.innerHTML = html + `</div>`;
+	const bigNumberEl = el.querySelector('.o-big-number__title');
+	const bigNumberTextWidth = bigNumberEl.scrollWidth;
+	const bigNumberContainerWidth = bigNumberEl.clientWidth;
+	if (bigNumberTextWidth > bigNumberContainerWidth) {
+		const bigNumberFontSize = parseInt(getComputedStyle(bigNumberEl).getPropertyValue('font-size'), 10);
+		bigNumberEl.style.fontSize = (bigNumberFontSize * bigNumberContainerWidth / bigNumberTextWidth ) + 'px';
+	}
 }
 
 
