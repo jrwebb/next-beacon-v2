@@ -1,4 +1,5 @@
 @import 'o-colors/main';
+@import 'o-grid/main';
 
 .beacon__printer,
 .chart {
@@ -33,9 +34,16 @@
 .chart--pre-grouped .chart__configurator__group {
 	display: none;
 }
+
 .core-chart {
-	// min-height: 450px;
-	// min-width: 120px;
+	height: 200px;
+}
+
+@include oGridRespondTo(L) {
+	.core-chart {
+		height: auto;
+		min-height: 200px;
+	}
 }
 
 .chart__ui__links a {

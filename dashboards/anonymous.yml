@@ -28,7 +28,7 @@ charts:
   -
     question: Which pages are anons viewing most?
     name: pages
-    query: "@pct(page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.location.path),page:view->count(user.ab.allocationId)->filter(!user.uuid))->top(20)"
+    query: "page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.location.path)->top(20)"
     printer: BarChart
     datalabel: "% of anons visting the page"
   -

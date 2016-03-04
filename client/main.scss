@@ -2,6 +2,7 @@
 .o--if-no-js { display: none !important; }
 
 @import 'o-expander/main';
+@import 'o-grid/main';
 
 html,
 body {
@@ -83,8 +84,11 @@ body {
 	}
 }
 
-.o-big-number__title {
-	font-size: 200px;
+@include oGridRespondTo(L) {
+	.o-big-number__title {
+		font-size: 200px;
+		line-height: 200px;
+	}
 }
 
 @import 'components/chart-ui';
