@@ -20,14 +20,15 @@ export function init () {
 				// todo: default to column chart if it has dimension but no interval... or something
 				builtQuery = builtQuery.setPrinter(conf.printer || 'LineChart').tidy();
 
-				storeKq(alias, builtQuery);
-
 				if (conf.hasConfigurableInterval) {
 					// avoid showing as big number when the default view could easily be converted to a line graph over time
 					if (builtQuery.dimension < 2 && (['AreaChart','LineChart','ColumnChart'].indexOf(conf.printer) > -1 || !conf.printer)) {
 						builtQuery = builtQuery.interval('d')
 					}
 				}
+
+				storeKq(alias, builtQuery);
+
 				const configuratorSkipSteps = [];
 
 				if (!conf.hasConfigurableInterval) {
