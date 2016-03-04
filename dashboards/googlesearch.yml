@@ -6,97 +6,111 @@ isPrimary: true
 description: FKA engagement.
 charts:
   -
-    question: Total number of article views
+    question: What's the total number of articles viewed?
     name: article-views/total
     query: "page:view->count()->filter(page.location.type=article)"
     datalabel: Article views
+    colspan: 12
   -
-    question: Referrals to articles
+    question: Where are article readers coming from outside Next?
     name: article-views/allreferrals
     query: "page:view->count()->filter(page.location.type=article)->group(page.referrer.websiteType)->tidy()"
     datalabel: Article views by referrer
   -
-    question: Internal referrals to articles
+    question: Where are article readers coming from inside Next?
     name: article-views/intreferrals
     query: "page:view->count()->filter(page.location.type=article)->group(page.referrer.type)->tidy()"
     datalabel: Article views by referrer
   -
-    question: Article views per session
-    name: article-views/session
-    query: "@ratio(page:view->count()->filter(page.location.type=article),page:view->count(spoorInfo.sessionId))"
-    datalabel: Article views per session
-  -
-    question: Article views per user
+    question: How many articles are people reading?
     name: article-views/user
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)"
     datalabel: Article views per user
+    colspan: 12 L4
   -
-    question: Article views referred by other articles
+    question: How many articles are people readong per session?
+    name: article-views/session
+    query: "@ratio(page:view->count()->filter(page.location.type=article),page:view->count(spoorInfo.sessionId))"
+    datalabel: Article views per session
+    colspan: 12 L4
+  -
+    question: How many article views come from other articles?
     name: article-views/article-referrer
     query: "@pct(page:view->count()->filter(page.location.type=article)->filter(page.referrer.type=article),page:view->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)"
     datalabel: Article views referred by articles %
+    colspan: 12 L4
   -
-    question: Article views per user by More-on MVT
+    question: How many articles are being read by More-on MVT?
     name: moreonMVT/articleviews
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleMoreOnNumber)->tidy()"
     datalabel: Article views per user by More-on variants
+    break: true
+    colspan: 12
   -
-    question: CTR by article link type
+    question: What's the CTR on articles by link type?
     name: article-elements/ctr
     query: "@concat(@pct(cta:click->count()->filter(context.domPath~headline-link--topic),page:view->count()),@pct(cta:click->count()->filter(context.domPath~headline-link--topic--moreRecent),page:view->count()),@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-article-headline),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-headline),page:view->count()),)->filter(page.location.type=article)->interval(h)->relTime(1)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Read Next,Read Latest,Recommended,More Ons,Promoboxes)"
     datalabel: CTR by link type
+    break: true
+    colspan: 12
   -
-    question: Clicks by social buttons (Top)
+    question: What's the CTR by social buttons (Top)?
     name: article-elements/socialctrtop
     query: "@concat(cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~whatsapp),)->filter(page.location.type=article)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Facebook,LinkedIn,Twitter,WhatsApp)"
     datalabel: Total clicks social channel
+    colspan: 12 L4
   -
-    question: Clicks by social buttons (Bottom)
+    question: What's the CTR by social buttons (Bottom)?
     name: article-elements/socialctrbottom
     query: "@concat(cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~whatsapp),)->filter(page.location.type=article)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Facebook,LinkedIn,Twitter,WhatsApp)"
     datalabel: Total clicks by social channel
+    colspan: 12 L4
   -
-    question: Recommended Reads CTR
+    question: What's the CTR for Recommended Reads?
     name: article-elements/recommended
     query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))"
     datalabel: CTR on Recommended Reads
+    colspan: 12 L4
   -
-    question: Recommended Reads CTR by Link Style
+    question: What's the CTR for Recommended Reads (by Link Style)?
     name: recommendedAB/ctr
     query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: CTR on Recommended Reads
+    colspan: 12 L4
   -
-    question: Article views per user by Link Style A/B test
+    question: How many articles are users reading (by Link Style)?
     name: recommendedAB/articleviews
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: Article views per user by Link Style variants
+    colspan: 12 L4
   -
-    question: Link Style Conversions by A/B test
+    question: How many conversions for the Link Style A/B test?
     name: recommendedAB/conversions
     query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
     datalabel: Conversions by Link Style variants
+    colspan: 12 L4
   -
-    question: fastFT Stream Page Views
+    question: How many views is the fastFT Stream Page getting?
     name: fastFT/views
     query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
     datalabel: Visits to the fastFT Stream Page
   -
-    question: fastFT articles expanded per visit
+    question: How many articles are expanded on fastFT per visit?
     name: fastFT/article-expanded
     query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))->relTime(previous_14_days)->interval(d)->plotThreshold(2,FT Benchmark)"
     datalabel: Articles expanded per visit
   -
-    question: fastFT dwell time
+    question: How long are people spending on fastFT?
     name: fastFT/dwelltime
     query: "page:attention->avg(context.meta.attention)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d)->plotThreshold(144,FT Benchmark)"
     datalabel: Seconds on page
   -
-    question: fastFT users by device type
+    question: What devices are fastFT readers using?
     name: fastFT/usersbydevice
     query: "page:view->count(user.uuid)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->group(device.primaryHardwareType)->tidy()"
     datalabel: Users by device
   -
-    question: fastFT internal referrers
+    question: Where are fastFT readers coming from?
     name: fastFT/internalreferrers
     query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->group(page.referrer.type)->tidy(page.referrer.websiteType)"
     datalabel: Number of referrals
