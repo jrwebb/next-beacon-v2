@@ -16,11 +16,15 @@ charts:
     name: article-views/allreferrals
     query: "page:view->count()->filter(page.location.type=article)->group(page.referrer.websiteType)->tidy()"
     datalabel: Article views by referrer
+    isStacked: true
+    printer: AreaChart
   -
     question: Where are article readers coming from inside Next?
     name: article-views/intreferrals
     query: "page:view->count()->filter(page.location.type=article)->group(page.referrer.type)->tidy()"
     datalabel: Article views by referrer
+    isStacked: true
+    printer: AreaChart
   -
     question: How many articles are people reading?
     name: article-views/user
@@ -53,18 +57,24 @@ charts:
     datalabel: CTR by link type
     break: true
     colspan: 12
+    isStacked: true
+    printer: AreaChart
   -
     question: What's the CTR by social buttons (Top)?
     name: article-elements/socialctrtop
     query: "@concat(cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~whatsapp),)->filter(page.location.type=article)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Facebook,LinkedIn,Twitter,WhatsApp)"
     datalabel: Total clicks social channel
     colspan: 12 L4
+    isStacked: true
+    printer: AreaChart
   -
     question: What's the CTR by social buttons (Bottom)?
     name: article-elements/socialctrbottom
     query: "@concat(cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~whatsapp),)->filter(page.location.type=article)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Facebook,LinkedIn,Twitter,WhatsApp)"
     datalabel: Total clicks by social channel
     colspan: 12 L4
+    isStacked: true
+    printer: AreaChart
   -
     question: What's the CTR for Recommended Reads?
     name: article-elements/recommended
@@ -109,8 +119,12 @@ charts:
     name: fastFT/usersbydevice
     query: "page:view->count(user.uuid)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->group(device.primaryHardwareType)->tidy()"
     datalabel: Users by device
+    isStacked: true
+    printer: AreaChart
   -
     question: Where are fastFT readers coming from?
     name: fastFT/internalreferrers
     query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->group(page.referrer.type)->tidy(page.referrer.websiteType)"
     datalabel: Number of referrals
+    isStacked: true
+    printer: AreaChart
