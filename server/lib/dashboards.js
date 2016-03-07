@@ -22,7 +22,12 @@ try {
 						if (c.question && c.question.charAt(c.question.length -1) !== '?') {
 							c.question = c.question + '?';
 						}
+						// disable configuring timeframe in the UI if timeframe set to false
+						// (generally meaning that the query string manually sets a fixed value for it)
+						c.hasConfigurableTimeframe = c.timeframe !== false; //eslint-disable-line
+						// disable configuring interval in the UI if any value at all set for interval
 						c.hasConfigurableInterval = c.interval == null; //eslint-disable-line
+
 						c.colspan = c.colspan || '12 L6'
 					});
 				} catch (e) {
