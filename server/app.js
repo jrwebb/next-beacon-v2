@@ -45,6 +45,8 @@ app.use(aliases.init);
 app.use(dashboards.middleware);
 app.use(require('./middleware/nav'));
 
+app.get('/keen-cache/:url', require('./controllers/keen-cache'));
+
 app.get('/data/export/:limit', require('./controllers/data/export'));
 
 app.get('/data/explorer', function(req, res) {
