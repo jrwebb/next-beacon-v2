@@ -35,7 +35,7 @@ export function init () {
 					configuratorSkipSteps.push('interval');
 				}
 
-				if (conf.timeframe) {
+				if (!conf.hasConfigurableTimeframe) {
 					configuratorSkipSteps.push('timeframe');
 				}
 

@@ -18,13 +18,41 @@ charts:
     name: total-optouts
     query: site:optout->count(user.uuid)
     printer: ColumnChart
+    colspan: 12 L4
   -
     question: Number of users who opted in
     name: total-optins
     query: site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in)
     printer: ColumnChart
+    colspan: 12 L4
   -
     question: Number of users who used the site
     name: total-users
     query: page:view->count(user.uuid)
     printer: ColumnChart
+    colspan: 12 L4
+  -
+    question: What's the ratio of optouts to opt out form views
+    name: form-completion
+    query: "@pct(site:optout->count(),page:view->count()->filter(page.location.path~opt-out-confirm))"
+    colspan: 12 L4
+  -
+    question: Are any browsers showing unusually high opt out rates?
+    name: opt-out-rate/by-browser
+    query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))->group(device.browserName)->tidy(true)->top(5)"
+    interval: false
+    printer: BarChart
+    colspan: 12 L4
+  -
+    question: Which browsers have a higher opt out rate now compared to 2 weeks ago?
+    name: opt-out-rate/weekly-change-by-browser
+    query: "@ratio(
+      @pct(site:optout->count(user.uuid),page:view->count(user.uuid))->relTime(this_2_weeks),
+      @pct(site:optout->count(user.uuid),page:view->count(user.uuid))->relTime(previous_2_weeks)
+    )->group(device.browserName)->tidy(true)->cutoff(1)"
+    timeframe: false
+    interval: false
+    printer: BarChart
+    datalabel: current opt out rate / past opt out rate
+    colspan: 12 L4
+
