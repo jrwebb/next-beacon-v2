@@ -46,3 +46,8 @@ charts:
       ->divide(1000)"
     printer: BarChart
     datalabel: Average page load time by browser
+  -
+    question: What percentage of users are on a HTTP/2 connection?
+    name: http2-split
+    query: "page:view->count()->relTime(this_1_days)->group(device.h2.h2Enabled)->print(PieChart)"
+    printer: PieChart
