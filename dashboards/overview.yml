@@ -3,107 +3,166 @@
 id: overview
 title: nextFT overview
 isPrimary: false
-description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
+description: ""
 charts:
+  # User numbers
   -
-    question: How many users do we have?
-    name: members
+    question: How many users do we have overall?
+    name: users
+    query: "page:view->count(user.ab.allocationId)"
+    colspan: 12 L4
+  -
+    question: How many signed in users do we have?
+    name: users/logged-in
+    query: "page:view->count(user.uuid)"
+    colspan: 12 L4
+  -
+    question: How many anonymous users do we have?
+    name: users/anonymous
+    query: "page:view->count(user.ab.allocationId)->filter(!user.uuid)"
+    colspan: 12 L4
+  -
+    break: true
+    question: How many pages are being viewed overall?
+    name: views
+    query: "page:view->count()"
+    colspan: 12 L4
+  -
+    question: How many pages are being viewed by signed in users?
+    name: views/logged-in
+    query: "page:view->count()->filter(user.uuid)"
+    colspan: 12 L4
+  -
+    question: How many pages are being viewed by anonymous users?
+    name: views/anonymous
+    query: "page:view->count()->filter(!user.uuid)"
+    colspan: 12 L4
+  -
+    question: What's the weekly trend of user numbers?
+    name: users/trend
     query: "@concat(
       page:view->count(user.uuid),
       page:view->count(user.ab.allocationId)->filter(!user.uuid)
     )->relabel(CONCATENATION_RESULT,Logged in, Anonymous)"
     isStacked: true
     printer: AreaChart
+    timeframe: previous_10_weeks
+    interval: w
+  # Opt in / out
   -
-    question: What types of page get the most traffic?
+    break: true
+    question: What percentage of users opt out
+    name: opt-out-rate
+    query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))"
+    colspan: 12 L3
+  -
+    question: What percentage of users opt in
+    name: opt-in-rate
+    query: "@pct(site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in),page:view->count(user.uuid))"
+    colspan: 12 L3
+  -
+    question: Number of users who opted out
+    name: total-optouts
+    query: site:optout->count(user.uuid)
+    printer: ColumnChart
+    colspan: 12 L3
+  -
+    question: Number of users who opted in
+    name: total-optins
+    query: site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in)
+    printer: ColumnChart
+    colspan: 12 L3
+
+  # Last week's usage
+  -
+    question: What RFV cohorts did our users come from last week?
+    name: rfv
+    query: page:view->count(user.uuid)->group(user.rfv.cohort)->tidy()->sortProp(user.rfv.cohort,super-fan,fan,engaged-frequent-free,borderline-engaged,half-engaged,occasional-skimmer,disengaged-long-tail)
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    colspan: 12 L4
+  -
+    question: What types of page got the most traffic last week?
     name: page-types
-    query: page:view->count()->group(page.location.type)
+    query: page:view->count()->group(page.location.type)->tidy()
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    colspan: 12 L4
   -
-    question: What screen sizes are most commonly used?
+    question: What screen sizes were most commonly used last week?
     name: screen-size
-    query: page:view->count(user.uuid)->group(device.oGridLayout)->sortProp(device.oGridLayout,default,XS,S,M,L,XL,XXL)
+    query: page:view->count(user.uuid)->group(device.oGridLayout)->tidy()->sortProp(device.oGridLayout,default,XS,S,M,L,XL,XXL)
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    colspan: 12 L4
+
+  # Navigation: first, second, third level (weekly, bars)
   -
-    question: Which top level nav links are being clicked most (desktop)?
+    question: Which top level nav links were being clicked most last week (desktop)?
     name: header/primary
+    interval: false
+    timeframe: previous_1_week
     printer: BarChart
     query: "cta:click->count()
       ->filter(context.domPath~group--sections)
       ->filter(device.oGridLayout?M,L,XL,XXL)
       ->group(context.target)->sortProp(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
+    colspan: 12 L4
   -
-    question: 'Excluding secondary nav, what is being clicked most in the header'
-    name: header/clicks
-    printer: BarChart
-    query: "cta:click->count()
-       ->filter(device.oGridLayout?M,L,XL,XXL)
-       ->filter(context.domPath~header)
-       ->filter(context.domPath!~article)
-       ->filter(context.domPath!~secondary-navigation)
-       ->group(context.target)
-       ->top(10)"
-    interval: false
-  -
-    question: Which secondary nav links are being clicked most (desktop)?
+    question: Which secondary nav links were clicked most last week (desktop)?
     name: header/secondary-most
+    interval: false
+    timeframe: previous_1_week
     printer: BarChart
     query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
-    interval: false
+    colspan: 12 L4
   -
-    question: Which secondary nav links are being clicked least (desktop)?
+    question: Which secondary nav links were clicked least last week (desktop)?
     name: header/secondary-least
-    printer: BarChart
     query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
     interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    colspan: 12 L4
   -
-    question: Which nav links are being clicked most (mobile)?
+    question: Which nav links were clicked most last week(mobile)?
     name: header/mobile-most
+    interval: false
+    timeframe: previous_1_week
     printer: BarChart
     query: "cta:click->count()
        ->filter(device.oGridLayout?default,XS,S)
        ->filter(context.domPath~secondary-navigation)
        ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
        ->group(context.target)->top(10)"
-    interval: false
+    colspan: 12 L6
   -
-    question: Which nav links are being clicked least (mobile)?
+    question: Which nav links were clicked least last week (mobile)?
     name: header/mobile-least
-    printer: BarChart
     query: "cta:click->count()
        ->filter(device.oGridLayout?default,XS,S)
        ->filter(context.domPath~secondary-navigation)
        ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
        ->group(context.target)->bottom(10)"
     interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    colspan: 12 L6
   -
-    question: What are the commonest search terms?
-    name: header/searches
-    printer: Table
-    query: "page:view->count()->filter(page.location.type=search)->group(page.location.search)->top(30)"
+    question: Which were the most popular streams last week (excluding top level nav links)?
+    name: most-popular-sreams
     interval: false
-  - # TODO - need to mark these typeahead links up better with metadata
-    question: What are the commonest typeahead clicks?
-    name: header/typeaheads
-    printer: Table
-    query: "cta:click->count()->filter(context.target=typeahead)->group(context.conceptId)->top(30)"
+    timeframe: previous_1_week
+    printer: BarChart
+    query: "page:view->count()->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)->group(page.location.streamId)->top(15)"
+  -
+    question: Which were the most popular stream taxonomies last week (excluding top level nav links)?
+    name: most-popular-taxonomies
     interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    query: "page:view->count()->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)->group(page.location.streamTaxonomy)->top(15)"
 
-
-
-  # -
-  #   question: How many members visited today?
-  #   name: members/today
-  #   query: page:view->count(user.uuid)->relTime(this_1_day)
-  #   interval: false
-  # -
-  #   question: How many members visited yesterday?
-  #   name: members/yesterday
-  #   query: page:view->count(user.uuid)->relTime(previous_1_day)
-  #   interval: false
-
-
-
-  # -
-  #   question: What articles have been viewed in the last 30 minutes?
-  #   name: popular
-  #   query: page:view->count(user.uuid)->relTime(this_30_minutes)->group(content.title)->tidy()
-  #   printer: PieChart
