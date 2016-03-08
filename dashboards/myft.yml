@@ -76,34 +76,34 @@ charts:
     break: true
     question: How many follow clicks were there this week
     name: onsite/followclicks
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath=follow)->filter(context.domPressed=false)
+    query: cta:click->count()->relTime(this_7_days)->filter(context.target=follow)->filter(context.domPressed=false)
     interval: false
     colspan: 6 L3
     datalabel: follow clicks
   -
     question: How many follow clicks were there last week
     name: onsite/followclicksprev
-    query: cta:click->count()->relTime(previous_7_days)->filter(context.domPath=follow)->filter(context.domPressed=false)
+    query: cta:click->count()->relTime(previous_7_days)->filter(context.target=follow)->filter(context.domPressed=false)
     interval: false
     colspan: 6 L3
     datalabel: follow clicks
   -
     question: How many follow clicks
     name: onsite/followclicksbyday
-    query: cta:click->count()->interval(d)->filter(context.domPath=follow)->filter(context.domPressed=false)
+    query: cta:click->count()->interval(d)->filter(context.domPath=target)->filter(context.domPressed=false)
     datalabel: follow clicks
     colspan: 12 L6
   -
     question: Where are the most successful follow buttons
     name: onsite/follow/good
-    query: cta:click->count()->group(context.domPath)->filter(context.domPath~| follow)->relTime(14)->top(10)
+    query: cta:click->count()->group(context.domPath)->filter(context.target=follow)->relTime(14)->top(10)
     printer: BarChart
     interval: false
     colspan: 6 L3
   -
     question: Where are the least successful follow buttons
     name: onsite/follow/bad
-    query: cta:click->count()->group(context.domPath)->filter(context.domPath~| follow)->relTime(14)->bottom(10)
+    query: cta:click->count()->group(context.domPath)->filter(context.target=follow)->relTime(14)->bottom(10)
     printer: BarChart
     interval: false
     colspan: 6 L3
