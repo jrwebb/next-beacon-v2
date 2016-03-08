@@ -1,21 +1,15 @@
 'use strict';
 const NodeCache = require('node-cache');
 
+// Units are in seconds
 const OPTIONS = {
 	stdTTL: 30,
 	checkperiod: 60
 };
 
 let cacheInstance;
-let metrics;
 
-function calculateTimeDiff(startTime) {
-	let endTime = process.hrtime(startTime);
-	return (endTime[0] * 1000) + Math.round(endTime[1] / 1e6);
-}
-
-function init(opts) {
-	metrics = opts.metrics;
+function init() {
 	if (!cacheInstance) {
 		cacheInstance = new NodeCache(OPTIONS);
 	}
@@ -34,18 +28,7 @@ function store(key, value) {
 }
 
 function retrieve(key) {
-	let startTime = process.hrtime();
-	let value = cacheInstance.get(key);
-	let timeTaken = calculateTimeDiff(startTime);
-	let result = timeTaken ? 'hits' : 'miss';
-	metrics.count(`internal_cache.$ {
-		result
-	}`);
-	metrics.histogram(`internal_cache.$ {
-		result
-	}
-	_time`, timeTaken);
-	return value;
+	return cacheInstance.get(key);
 }
 
 module.exports = {
