@@ -69,7 +69,20 @@ function reprint (ev) {
 	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target.name);
 	const alias = container.dataset.keenAlias;
 	const kq = configure(retrieveKq(alias));
+	buildChartLinks(kq, container);
 	renderChart(container.querySelector('.chart__printer'), kq, window.aliases[alias]);
+}
+
+function buildChartLinks (kq, chartEl) {
+	const explorerLink = chartEl.querySelector('.chart__ui__explorer-link');
+	const wizardLink = chartEl.querySelector('.chart__ui__wizard-link');
+	if (explorerLink) {
+		explorerLink.href = kq.generateKeenUrl('/data/explorer?', 'explorer');
+	}
+
+	if (wizardLink) {
+		wizardLink.href = `/data/query-wizard?query=${encodeURIComponent(kq.toString())}`
+	}
 }
 
 function copyData (ev) {
@@ -110,11 +123,8 @@ export function init (container) {
 		if (kq.dimension > 1) {
 			chartEl.classList.add('chart--pre-grouped')
 		}
+		buildChartLinks(kq, chartEl);
 
-		const chartLinksEl = chartEl.querySelector('.chart__ui__links');
-		if (chartLinksEl) {
-			chartLinksEl.insertAdjacentHTML('beforeend', `<a class="o-buttons o-buttons--small" href="${retrieveKq(chartEl.dataset.keenAlias).generateKeenUrl('/data/explorer?', 'explorer')}">View in keen explorer</a> <a class="o-buttons o-buttons--small" href="/data/query-wizard?query=${window.aliases[alias].query}">View in query wizard</a>`);
-		}
 	});
 }
 
