@@ -1,10 +1,11 @@
 'use strict';
 const NodeCache = require('node-cache');
 
-// Units are in seconds
+// Units are in seconds.
+// Default to hourly cache as queries are rarely in minute intervals.
 const OPTIONS = {
-	stdTTL: 30,
-	checkperiod: 60
+	stdTTL: 60*60,
+	checkperiod: 60*60*3
 };
 
 let cacheInstance;
@@ -15,9 +16,9 @@ function init() {
 	}
 }
 
-function store(key, value) {
+function store(key, value, ttl) {
 	return new Promise(function(resolve, reject) {
-		cacheInstance.set(key, value, function(err) {
+		cacheInstance.set(key, value, ttl, function(err) {
 			if (err) {
 				return reject(err);
 			}

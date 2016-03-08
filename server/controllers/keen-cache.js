@@ -13,22 +13,25 @@ module.exports = (req, res, next) => {
 
 	let cacheItem = cache.retrieve(keenURL);
 	if (cacheItem) {
-		console.log("hit")
+		// console.log("Cache:hit")
 		res.json(cacheItem);
 		next();
 	}
 	else {
-		console.log("miss")
+		// console.log("Cache:miss")
 		fetch(keenURL)
 			.then(response => {
-				if (response.status >= 400) {
-					res.sendStatus(500).send('Error. Bad response from keen.');
-				}
+				res.status(response.status);
 				return response.json();
 			})
 			.then(json => {
-				cache.store(keenURL, json);
 				res.json(json);
+
+				// Only cache if there's a result (that is, there's no error)
+				if (json.result !== undefined) {
+					let ttl = /interval=minutely/.test(keenURL) ? 60 : 60*60;
+					cache.store(keenURL, json, ttl);
+				}
 				next();
 			});
 	}
