@@ -90,7 +90,7 @@ charts:
   -
     question: How many follow clicks
     name: onsite/followclicksbyday
-    query: cta:click->count()->interval(d)->filter(context.domPath=target)->filter(context.domPressed=false)
+    query: cta:click->count()->interval(d)->filter(context.target=follow)->filter(context.domPressed=false)
     datalabel: follow clicks
     colspan: 12 L6
   -
