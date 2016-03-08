@@ -8,8 +8,8 @@ module.exports = (req, res, next) => {
 	cache.init();
 
 	let keenURL = req.originalUrl
-		.replace(/https:\/\/api\.keen\.io\//i, '')
-		.replace(/\/keen-cache\//i,'https://api.keen.io/');
+		.replace(/https:\/\/api\.keen\.io\/3\.0\//i, '')
+		.replace(/\/keen-cache\/3\.0\//i,'https://api.keen.io/3.0/');
 
 	let cacheItem = cache.retrieve(keenURL);
 	if (cacheItem) {
