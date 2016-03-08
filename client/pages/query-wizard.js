@@ -68,7 +68,11 @@ module.exports = {
 		const output = document.querySelector('.query-wizard__output');
 
 		const parameters = querystring.parse(location.search.substr(1));
-		input.value = parameters.query || '';
+		if (parameters.query) {
+			input.value = decodeURIComponent(parameters.query);
+			run();
+		}
+
 
 		function validate (str) {
 			return new Promise((res, rej) => {
@@ -98,6 +102,7 @@ module.exports = {
 			if (!kq._printer) {
 				kq = kq.setPrinter('LineChart');
 			}
+			history.pushState({}, "", `/data/query-wizard?query=${encodeURIComponent(kq.toString())}`);
 			return renderChart(output, kq, {})
 		}
 
