@@ -261,6 +261,12 @@ charts:
 
   -
     break: true
+    question: How are Explore link clicks performing?
+    name: onsite/explore/inbound
+    query: cta:click->count()->filter(context.target=my-topics)->group(context.domPath)->relTime(this_7_days)->print(PieChart)
+    interval: false
+    colspan: 12
+  -
     question: How are the recommended slices performing (by follows)?
     name: onsite/explore/slices/follows
     query: cta:click->count()->filter(context.domPath~page:myft-page)->filter(context.domPath~concept)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)->group(context.domPath)->print(PieChart)
