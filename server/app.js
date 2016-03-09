@@ -46,12 +46,18 @@ app.use(aliases.init);
 app.use(dashboards.middleware);
 app.use(require('./middleware/nav'));
 
-const worker = require('fs').readFileSync(require('path').join(process.cwd(), 'public/worker.js'), 'utf8');
+try {
+	const worker = require('fs').readFileSync(require('path').join(process.cwd(), 'public/worker.js'), 'utf8');
+	app.get('/worker.js', function (req, res) {
+		res.set('Content-Type', 'text/javascript')
+		res.send(worker);
+	})
+}
+catch (err) {
+	console.log('Error. Did you forget to run `Make build`?\n', err)
+}
 
-app.get('/worker.js', function (req, res) {
-	res.set('Content-Type', 'text/javascript')
-	res.send(worker);
-})
+app.get(/^\/data\/keen-cache\/(.*)/, require('./controllers/data/keen-cache'));
 
 app.get('/data/export/:limit', require('./controllers/data/export'));
 
