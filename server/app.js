@@ -46,9 +46,6 @@ app.use(aliases.init);
 app.use(dashboards.middleware);
 app.use(require('./middleware/nav'));
 
-
-app.get(/^\/keen-cache\/(.*)/, require('./controllers/keen-cache'));
-
 try {
 	const worker = require('fs').readFileSync(require('path').join(process.cwd(), 'public/worker.js'), 'utf8');
 	app.get('/worker.js', function (req, res) {
@@ -59,6 +56,8 @@ try {
 catch (err) {
 	console.log('Error. Did you forget to run `Make build`?\n', err)
 }
+
+app.get(/^\/keen-cache\/(.*)/, require('./controllers/keen-cache'));
 
 app.get('/data/export/:limit', require('./controllers/data/export'));
 
