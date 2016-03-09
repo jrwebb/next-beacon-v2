@@ -13,6 +13,12 @@ function getChartContainer (el) {
 	return el;
 }
 
+function finishRender (printerEl, chart) {
+	chartsMap.set(printerEl, chart);
+	printerEl.classList.remove('chart--loading');
+	printerEl.classList.add('chart--loaded');
+}
+
 export function renderChart (printerEl, kq, meta) {
 
 	let renderPromise;
@@ -25,16 +31,24 @@ export function renderChart (printerEl, kq, meta) {
 				if (rendererMap.get(printerEl) !== renderPromise) {
 					return;
 				}
-				printerEl.classList.remove('chart--loading');
-				printerEl.classList.add('chart--loaded');
+
 				if (typeof renderer === 'function') {
 					let chart = chartsMap.get(printerEl);
 					// avoid google charts related memory leaks
 					if (chart) {
 						chart.clearChart();
 					}
-					chart = renderer(printerEl, meta);
-					chartsMap.set(printerEl, chart);
+					const rendererResult = renderer(printerEl, meta);
+
+					if (rendererResult && rendererResult.then) {
+						return rendererResult.then(chart => {
+							finishRender(printerEl, chart);
+						});
+					} else {
+						finishRender(printerEl, rendererResult)
+						return rendererResult;
+					}
+
 				} else {
 					printerEl.classList.add('chart-error');
 					throw 'Keen query did not return printable output.'
