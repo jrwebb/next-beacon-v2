@@ -1,15 +1,15 @@
 'use strict';
 
-const cache = require('../lib/cache');
+const cache = require('../../lib/cache');
 
 // Accepts a keen-io API URL.
-// Example: /keen-cache/3.0/projects/{project ID}/queries/count_unique?api_key={API key}
+// Example: /data/keen-cache/3.0/projects/{project ID}/queries/count_unique?api_key={API key}
 module.exports = (req, res, next) => {
 	cache.init();
 
 	let keenURL = req.originalUrl
 		.replace(/https:\/\/api\.keen\.io\/3\.0\//i, '') // <- for debugging
-		.replace(/\/keen-cache\/3\.0\//i,'https://api.keen.io/3.0/');
+		.replace(/\/data\/keen-cache\/3\.0\//i,'https://api.keen.io/3.0/');
 
 	let cacheItem = cache.retrieve(keenURL);
 	if (cacheItem) {

@@ -57,7 +57,7 @@ catch (err) {
 	console.log('Error. Did you forget to run `Make build`?\n', err)
 }
 
-app.get(/^\/keen-cache\/(.*)/, require('./controllers/keen-cache'));
+app.get(/^\/data\/keen-cache\/(.*)/, require('./controllers/data/keen-cache'));
 
 app.get('/data/export/:limit', require('./controllers/data/export'));
 
