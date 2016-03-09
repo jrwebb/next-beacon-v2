@@ -263,28 +263,28 @@ charts:
     break: true
     question: How many follows this week from the "Topics from your industry" slice?
     name: onsite/explore/industry/follows
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | from-your-industry | concept | follow")->filter(context.domPressed=false)
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~from-your-industry)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)
     interval: false
     colspan: 4 L2
     datalabel: Follows
   -
     question: How many follows this week from the "Recommended topics" slice?
     name: onsite/explore/recommended/follows
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | because-you-followed | concept | follow")->filter(context.domPressed=false)
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~because-you-followed)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)
     interval: false
     colspan: 4 L2
     datalabel: Follows
   -
     question: How many follows this week from the "Topics today" slice?
     name: onsite/explore/topics-today/follows
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | todays-topics | concept | follow")->filter(context.domPressed=false)
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~todays-topics)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)
     interval: false
     colspan: 4 L2
     datalabel: Follows
   -
     question: How many follows this week from the "Popular topics" slice?
     name: onsite/explore/popular-topics/follows
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | popular-topics | concept | follow")->filter(context.domPressed=false)
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~popular-topics)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)
     interval: false
     colspan: 4 L2
     datalabel: Follows
@@ -293,28 +293,28 @@ charts:
     break: true
     question: How many article clicks this week from the "Topics from your industry" slice?
     name: onsite/explore/industry/articles
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | from-your-industry | concept | article")
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~from-your-industry)->filter(context.target=article)->filter(context.domPressed=false)->relTime(this_7_days)
     interval: false
     colspan: 4 L2
     datalabel: Follows
   -
     question: How many article clicks this week from the "Recommended topics" slice?
     name: onsite/explore/recommended/articles
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | because-you-followed | concept | article")
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~because-you-followed)->filter(context.target=article)->filter(context.domPressed=false)->relTime(this_7_days)
     interval: false
     colspan: 4 L2
     datalabel: Follows
   -
     question: How many article clicks this week from the "Topics today" slice?
     name: onsite/explore/topics-today/articles
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | todays-topics | concept | article")
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~todays-topics)->filter(context.target=article)->filter(context.domPressed=false)->relTime(this_7_days)
     interval: false
     colspan: 4 L2
     datalabel: Follows
   -
     question: How many article clicks this week from the "Popular topics" slice?
     name: onsite/explore/popular-topics/articles
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | popular-topics | concept | article")
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~popular-topics)->filter(context.target=article)->filter(context.domPressed=false)->relTime(this_7_days)
     interval: false
     colspan: 4 L2
     datalabel: Follows
@@ -323,7 +323,7 @@ charts:
     break: true
     question: How many clicks on "Change industry" this week?
     name: onsite/explore/change-industry
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | from-your-industry | change-industry")
+    query: cta:click->count()->filter(context.domPath~mypage)->filter(context.domPath~from-your-industry)->filter(context.domPath~change-industry)->relTime(this_7_days)
     interval: false
     colspan: 12
     datalabel: Clicks
