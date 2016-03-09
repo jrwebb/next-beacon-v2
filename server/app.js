@@ -64,6 +64,7 @@ app.get('/data/export/:limit', require('./controllers/data/export'));
 app.get('/data/explorer', function(req, res) {
 	res.render('keen', {
 		layout: null,
+		title: 'Data explorer',
 		projectId: process.env.KEEN_PROJECT_ID,
 		readKey: process.env.KEEN_READ_KEY,
 		masterKey: process.env.KEEN_MASTER
@@ -76,6 +77,7 @@ const keenProperties = require('./jobs/keen-properties');
 app.get('/data/query-wizard', function(req, res) {
 	res.render('query-wizard', {
 		layout: 'beacon',
+		title: 'Query wizard',
 		collections: keenCollections.getData(),
 		properties: keenProperties.getData()
 	});

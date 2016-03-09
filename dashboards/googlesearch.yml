@@ -3,7 +3,6 @@
 id: googlesearch
 title: Google Search
 isPrimary: true
-description: FKA engagement.
 charts:
   -
     question: What's the total number of articles viewed?

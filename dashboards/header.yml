@@ -3,7 +3,6 @@
 id: header
 title: nextFT header interactions
 isPrimary: false
-description: ""
 charts:
   # Navigation: first, second, third level (weekly, bars)
   -

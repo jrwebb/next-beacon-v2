@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}"/>
 	<script src="//build.origami.ft.com/v2/bundles/js?modules=o-typography@^3.0.0,o-table@^3.0.0,o-hierarchical-nav@^3.1.0&minify=none" async></script>
 </head>
-<body class="o-techdocs"style="padding-top:100px;">
+<body class="o-techdocs data-explorer"style="padding-top:100px;">
 	{{> header}}
 
 	<div id="explorer"></div>
@@ -37,16 +37,6 @@
 
 			app.render(); // Render the app's UI into the targetId provided in the config.
 		});
-
-		// Note: Duplicate of client/components/feature-search.js
-		(() => {
-			const el = document.querySelector('.feature-search');
-			el.addEventListener('submit', (e) => {
-				if (e.preventDefault) e.preventDefault();
-				window.location = `/dashboard/${document.querySelector('.featureFlagText').value}`;
-				return false;
-			});
-		})();
 	</script>
 </body>
 </html>

@@ -1,8 +1,6 @@
 
 {{#unless isStandaloneChart}}
 	<div class="chart__meta">
-		<h1 class="chart__meta--title">{{{title}}}</h1>
-		<div class="chart__meta--description">{{{description}}}</div>
 		{{#if isUserDashboard}}
 			<form class="o-forms o-forms-group">
 				<input style="display: inline-block; width: 300px;" value="{{uuid}}" type="search" name="uuid" class="o-forms-text" placeholder="Enter user uuid">
