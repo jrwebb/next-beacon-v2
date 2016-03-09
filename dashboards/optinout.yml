@@ -37,17 +37,17 @@ charts:
     query: "@pct(site:optout->count(),page:view->count()->filter(page.location.path~opt-out-confirm))"
     colspan: 12 L4
   -
-    question: Are any browsers showing unusually high opt out rates?
+    question: Are any browsers showing unusually high opt out rates (excluding browsers with <5 opt outs)?
     name: opt-out-rate/by-browser
-    query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))->group(device.browserName)->tidy(true)->top(5)"
+    query: "@pct(site:optout->count(user.uuid)->cutoff(5),page:view->count(user.uuid))->group(device.browserName)->tidy(true)->top(10)->print(BarChart)"
     interval: false
     printer: BarChart
     colspan: 12 L4
   -
-    question: Which browsers have a higher opt out rate now compared to 2 weeks ago?
+    question: Which browsers have a higher opt out rate now compared to 2 weeks ago (excluding browsers with <5 opt outs)?
     name: opt-out-rate/weekly-change-by-browser
     query: "@ratio(
-      @pct(site:optout->count(user.uuid),page:view->count(user.uuid))->relTime(this_2_weeks),
+      @pct(site:optout->count(user.uuid)->cutoff(5),page:view->count(user.uuid))->relTime(this_2_weeks),
       @pct(site:optout->count(user.uuid),page:view->count(user.uuid))->relTime(previous_2_weeks)
     )->group(device.browserName)->tidy(true)->cutoff(1)"
     timeframe: false

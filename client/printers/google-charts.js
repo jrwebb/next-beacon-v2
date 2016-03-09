@@ -25,7 +25,10 @@ export function googleChartPrinterFactory (chartType) {
 		const chart = new google.visualization[chartType](el);
 
 		const options = Object.assign({}, defaultChartOptions);
-		const labelAxis = Object.assign({}, options.hAxis, {title: kqTable.axes[0].property === 'timeframe' ? undefined : kqTable.axes[0].property});
+		const labelAxis = Object.assign({}, options.hAxis, {
+			title: kqTable.axes[0].property === 'timeframe' ? undefined : kqTable.axes[0].property,
+			format: kqTable.axes[0].property === 'timeframe' ? 'd/M' : undefined
+		});
 		const valueAxis = Object.assign({}, options.vAxis, {title: meta.datalabel || kqTable.valueLabel});
 
 		options.hAxis = labelAxis;
