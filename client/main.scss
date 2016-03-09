@@ -20,6 +20,9 @@ body {
 		margin-bottom: 16px;
 		top: 0;
 		width: 100%;
+		.o-header__sitename {
+			color: oColorsGetPaletteColor('grey-tint2');
+		}
 		.o-header__primary {
 			height: 45px;
 			padding-top: 5px;
@@ -48,7 +51,9 @@ body {
 		margin-top: 80px;
 	}
 }
-
+.data-explorer .o-header .o-header__primary {
+	height: 50px;
+}
 .o-forms-suffix--small {
 	font-size: 14px;
 	padding-top: 0;

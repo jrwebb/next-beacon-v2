@@ -77,17 +77,21 @@
 
 	.o-expander__content {
 		max-height: none;
-		margin: 15px 0px 30px 30px;
+		margin: 5px 0px 30px 20px;
 		background: oColorsGetPaletteColor('pink-tint1');
 		opacity: 0.9;
 		padding: 30px;
 		border: 1px solid oColorsGetPaletteColor('grey-tint1');
+		min-width: 710px;
+		display: none;
 	}
-
+	.o-expander__content[aria-hidden="false"] {
+		display: inherit;
+	}
 	.o-expander__toggle {
 		position: absolute;
-		top: 0;
-		right: 0;
+		top: -10px;
+		left: 20px;
 	}
 }
 

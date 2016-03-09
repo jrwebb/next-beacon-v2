@@ -3,7 +3,6 @@
 id: anonymous
 title: Anonymous
 isPrimary: true
-description: Anonymous users, barriers and subscription overview
 charts:
   -
     question: Are weekly anonymous visitor counts increasing?

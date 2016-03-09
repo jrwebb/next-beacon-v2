@@ -3,7 +3,6 @@
 id: myft
 title: <i>my</i>FT
 isPrimary: false
-description: Insert myFT mission statement here
 charts:
   -
     question: How many logged in myFT users came to Next this week?

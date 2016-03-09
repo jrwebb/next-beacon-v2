@@ -3,7 +3,6 @@
 id: optinout
 title: Opt in/out
 isPrimary: true
-description: <dt>Though it's cold and lonely in the deep dark night, I can see paradise by the dashboard light</dt><dd>— Meat Loaf</dd>
 charts:
   -
     question: What percentage of users opt out

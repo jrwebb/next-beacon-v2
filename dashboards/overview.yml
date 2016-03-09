@@ -3,7 +3,6 @@
 id: overview
 title: nextFT overview
 isPrimary: false
-description: ""
 charts:
   # User numbers
   -
