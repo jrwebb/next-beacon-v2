@@ -24,8 +24,7 @@ module.exports = function(req, res) {
 		charts = charts.filter(c => {
 			return c.name === dashboardpath;
 		}) || [];
-	}
-	else {
+	} else {
 
 		// Append charts from the spreadsheet of destiny
 		aliases.get(req.params[0]).forEach((a) => {
