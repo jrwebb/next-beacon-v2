@@ -81,9 +81,9 @@
 		margin: 30px 20px;
 		background: oColorsGetPaletteColor('pink-tint1');
 		opacity: 0.9;
-		padding: 5px;
+		padding: 20px 5px 5px;
 		border: 1px solid oColorsGetPaletteColor('grey-tint1');
-		min-width: 710px;
+		width: 710px;
 		display: none;
 	}
 	.o-expander__content[aria-hidden="false"] {

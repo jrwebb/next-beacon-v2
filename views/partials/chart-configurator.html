@@ -1,7 +1,7 @@
 <nav class="chart__configurator">
 	<form action="" method="get" style="display: inline" class="chart__configurator__form o-forms">
-	<legend class="o-forms-label">Timeframe:</legend>
 		<fieldset class="o-forms-group">
+			<legend class="o-forms-label">Timeframe:</legend>
 			<input class="o-forms-radio o-forms-radio--small" id="this_48_hours_{{index}}" name="timeframe" type="radio" value="this_48_hours" {{#ifEquals @root.timeframe 'this_48_hours'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_48_hours_{{index}}">2 days</label>
 			<input class="o-forms-radio o-forms-radio--small" id="this_7_days_{{index}}" name="timeframe" type="radio" value="this_7_days" {{#ifEquals @root.timeframe 'this_7_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_7_days_{{index}}">7 days</label>
 			<input class="o-forms-radio o-forms-radio--small" id="this_14_days_{{index}}" name="timeframe" type="radio" value="this_14_days" {{#ifEquals @root.timeframe 'this_14_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_14_days_{{index}}">14 days</label>
