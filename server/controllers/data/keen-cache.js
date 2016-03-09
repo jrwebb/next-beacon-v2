@@ -25,13 +25,13 @@ module.exports = (req, res, next) => {
 				return response.json();
 			})
 			.then(json => {
-				res.json(json);
-
 				// Only cache if there's a result (that is, there's no error)
 				if (json.result !== undefined) {
 					let ttl = /interval=minutely/.test(keenURL) ? 60 : 60*60;
 					cache.store(keenURL, json, ttl);
+					res.set('Cache-Control', `max-age=${ttl}`);
 				}
+				res.json(json);
 				next();
 			});
 	}
