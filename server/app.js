@@ -98,6 +98,7 @@ app.get('/data/reports/*', function(req, res) {
 	});
 });
 
+app.get('/user', require('./controllers/user'));
 app.get(/^\/dashboard\/(.*)/, require('./controllers/dashboard'));
 
 app.get(/^\/chart\/(.*)/, function (req, res, next) {

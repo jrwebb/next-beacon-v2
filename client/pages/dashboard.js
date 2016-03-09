@@ -10,10 +10,10 @@ export function init () {
 	const configure = getConfigurator();
 
 	[].forEach.call(document.querySelectorAll('.chart'), el => {
-		const alias = el.dataset.keenAlias;
+		const chartName = el.dataset.chartName;
 		const printerEl = el.querySelector('.chart__printer')
 		let conf;
-		if (conf = window.aliases[alias]) {
+		if (conf = window.charts.find(c => c.name === chartName)) {
 			try {
 				let builtQuery = KeenQuery.buildFromAlias(conf);
 
@@ -27,7 +27,7 @@ export function init () {
 					}
 				}
 
-				storeKq(alias, builtQuery);
+				storeKq(chartName, builtQuery);
 
 				const configuratorSkipSteps = [];
 
@@ -45,7 +45,7 @@ export function init () {
 				displayError(printerEl, err, null, conf);
 			}
 		} else {
-			displayError(printerEl, `Invalid chart name: ${alias}`);
+			displayError(printerEl, `Invalid chart name: ${chartName}`);
 		}
 	});
 

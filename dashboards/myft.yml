@@ -261,69 +261,31 @@ charts:
 
   -
     break: true
-    question: How many follows this week from the "Topics from your industry" slice?
-    name: onsite/explore/industry/follows
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | from-your-industry | concept | follow")->filter(context.domPressed=false)
+    question: How are Explore link clicks performing?
+    name: onsite/explore/inbound
+    query: cta:click->count()->filter(context.target=my-topics)->group(context.domPath)->relTime(this_7_days)
+    printer: PieChart
     interval: false
-    colspan: 4 L2
-    datalabel: Follows
+    colspan: 12
   -
-    question: How many follows this week from the "Recommended topics" slice?
-    name: onsite/explore/recommended/follows
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | because-you-followed | concept | follow")->filter(context.domPressed=false)
+    question: How are the recommended slices performing (by follows)?
+    name: onsite/explore/slices/follows
+    query: cta:click->count()->filter(context.domPath~page:myft-page)->filter(context.domPath~concept)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)->group(context.domPath)
+    printer: PieChart
     interval: false
-    colspan: 4 L2
-    datalabel: Follows
+    colspan: 12 L6
   -
-    question: How many follows this week from the "Topics today" slice?
-    name: onsite/explore/topics-today/follows
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | todays-topics | concept | follow")->filter(context.domPressed=false)
+    question: How are the recommended slices performing (by article clicks)?
+    name: onsite/explore/slices/articles
+    query: cta:click->count()->filter(context.domPath~page:myft-page)->filter(context.domPath~concept)->filter(context.target=article)->relTime(this_7_days)->group(context.domPath)
+    printer: PieChart
     interval: false
-    colspan: 4 L2
-    datalabel: Follows
-  -
-    question: How many follows this week from the "Popular topics" slice?
-    name: onsite/explore/popular-topics/follows
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | popular-topics | concept | follow")->filter(context.domPressed=false)
-    interval: false
-    colspan: 4 L2
-    datalabel: Follows
-
-  -
-    break: true
-    question: How many article clicks this week from the "Topics from your industry" slice?
-    name: onsite/explore/industry/articles
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | from-your-industry | concept | article")
-    interval: false
-    colspan: 4 L2
-    datalabel: Follows
-  -
-    question: How many article clicks this week from the "Recommended topics" slice?
-    name: onsite/explore/recommended/articles
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | because-you-followed | concept | article")
-    interval: false
-    colspan: 4 L2
-    datalabel: Follows
-  -
-    question: How many article clicks this week from the "Topics today" slice?
-    name: onsite/explore/topics-today/articles
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | todays-topics | concept | article")
-    interval: false
-    colspan: 4 L2
-    datalabel: Follows
-  -
-    question: How many article clicks this week from the "Popular topics" slice?
-    name: onsite/explore/popular-topics/articles
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | popular-topics | concept | article")
-    interval: false
-    colspan: 4 L2
-    datalabel: Follows
-
+    colspan: 12 L6
   -
     break: true
     question: How many clicks on "Change industry" this week?
     name: onsite/explore/change-industry
-    query: cta:click->count()->relTime(this_7_days)->filter(context.domPath="mypage | from-your-industry | change-industry")
+    query: cta:click->count()->filter(context.domPath~page:myft-page)->filter(context.domPath~from-your-industry)->filter(context.domPath~change-industry)->relTime(this_7_days)
     interval: false
     colspan: 12
     datalabel: Clicks
