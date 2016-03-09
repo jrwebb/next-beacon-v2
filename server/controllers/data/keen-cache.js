@@ -1,38 +1,42 @@
 'use strict';
 
 const cache = require('../../lib/cache');
+cache.init();
 
 // Accepts a keen-io API URL.
 // Example: /data/keen-cache/3.0/projects/{project ID}/queries/count_unique?api_key={API key}
 module.exports = (req, res, next) => {
-	cache.init();
 
-	let keenURL = req.originalUrl
+	const keenURL = req.originalUrl
 		.replace(/https:\/\/api\.keen\.io\/3\.0\//i, '') // <- for debugging
 		.replace(/\/data\/keen-cache\/3\.0\//i,'https://api.keen.io/3.0/');
 
-	let cacheItem = cache.retrieve(keenURL);
+	const cacheItem = cache.retrieve(keenURL);
+	const ttl = /interval=minutely/.test(keenURL) ? 60 : 60 * 60;
+
 	if (cacheItem) {
 		// console.log("Cache:hit")
+		res.set('Cache-Control', `max-age=${ttl}`);
 		res.json(cacheItem);
-		next();
-	}
-	else {
+	} else {
 		// console.log("Cache:miss")
 		fetch(keenURL)
 			.then(response => {
-				res.status(response.status);
+				if (!response.ok) {
+					throw 'Bad response from keen';
+				}
 				return response.json();
 			})
 			.then(json => {
+
 				// Only cache if there's a result (that is, there's no error)
 				if (json.result !== undefined) {
-					let ttl = /interval=minutely/.test(keenURL) ? 60 : 60*60;
-					cache.store(keenURL, json, ttl);
 					res.set('Cache-Control', `max-age=${ttl}`);
+					cache.store(keenURL, json, ttl);
 				}
 				res.json(json);
-				next();
-			});
+
+			})
+			.catch(next);
 	}
 }
