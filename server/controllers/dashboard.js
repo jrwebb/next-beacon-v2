@@ -43,11 +43,6 @@ module.exports = function(req, res) {
 		},[]);
 	}
 
-	// Todo: Consider better ways to do this
-	charts.forEach(p => {
-		res.locals.aliases[p.name] = p;
-	});
-
 	if (req.view && req.view === 'presentation') {
 		res.render('presentation', {
 			layout: null,

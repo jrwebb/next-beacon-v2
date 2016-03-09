@@ -27,8 +27,8 @@ self.addEventListener('fetch', function (event) {
 	if (/www\.gstatic\.com\//.test(request.url)) {
 		console.log('trying to find in cache', request.url)
 		return event.respondWith(
-		      caches.match(request)
-		        .then(function (response) {
+					caches.match(request)
+						.then(function (response) {
 				if (response) {
 					// console.log('delivering cached', request.url);
 					return response.clone();
@@ -39,8 +39,8 @@ self.addEventListener('fetch', function (event) {
 						putInCache(request, res);
 						return res.clone();
 					})
-        })
-    );
+				})
+		);
 	}
 
 	event.respondWith(fetch(request))
