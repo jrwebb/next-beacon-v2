@@ -129,8 +129,8 @@ export function init (container) {
 	del.on('click', '.chart__ui__copy-data', copyData);
 
 	[].forEach.call(container.querySelectorAll('.chart'), chartEl => {
-		const alias = chartEl.dataset.keenAlias;
-		const kq = retrieveKq(alias);
+		const chartName = chartEl.dataset.chartName;
+		const kq = retrieveKq(chartName);
 		if (!kq) {
 			return;
 		}
