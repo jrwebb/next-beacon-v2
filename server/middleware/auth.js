@@ -6,6 +6,7 @@
 var authS3O = require('s3o-middleware');
 
 var auth = function(req, res, next) {
+	res.unVaryAll();
 	authS3O(req, res, next);
 };
 
