@@ -1,13 +1,11 @@
 <div class="chart" data-chart-name="{{name}}" data-o-grid-colspan="{{colspan}}">
 
 	{{#unless @root.isStandaloneChart}}
-	<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper animated" data-o-expander-shrink-to="hidden" data-o-expander-expanded-toggle-text="Edit" data-o-expander-collapsed-toggle-text="Edit">
+	<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper" data-o-expander-shrink-to="hidden" data-o-expander-expanded-toggle-text="✖" data-o-expander-collapsed-toggle-text="☰">
 		<div class="o-expander__content">
 			{{>chart-configurator index=@index}}
 		</div>
-		<div class="chart__ui">
-			<button class="o-buttons o-buttons--small chart__ui__toggle-configurator o-expander__toggle o--if-js" aria-expanded="false"></button>
-		</div>
+		<button class="chart__ui__toggle-configurator o-expander__toggle o--if-js" aria-expanded="false"></button>
 	</div>
 	{{/unless}}
 
