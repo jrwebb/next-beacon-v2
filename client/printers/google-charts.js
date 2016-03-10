@@ -56,8 +56,12 @@ export function googleChartPrinterFactory (chartType) {
 			}
 			if (chartType === 'PieChart') {
 				options.legend = { position: 'right' };
-			} else if (chartType === 'Table') {
+			}
+
+			if (chartType === 'Table') {
 				el.style = `max-height: 400px; overflow: scroll`;
+			} else {
+				el.style = "";
 			}
 
 			if (kqTable.dimension > 1) {

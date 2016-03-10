@@ -37,15 +37,9 @@
 }
 
 .core-chart {
-	height: 200px;
+	min-height: 200px;
 }
 
-@include oGridRespondTo(L) {
-	.core-chart {
-		height: auto;
-		min-height: 200px;
-	}
-}
 
 .chart__ui__links a {
 	margin-right: 5px;

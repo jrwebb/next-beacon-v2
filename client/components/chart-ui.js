@@ -81,10 +81,10 @@ function reprint (ev) {
 	ev.preventDefault();
 	const container = getChartContainer(ev.target);
 	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target.name);
-	const alias = container.dataset.keenAlias;
-	const kq = configure(retrieveKq(alias));
+	const chartName = container.dataset.chartName;
+	const kq = configure(retrieveKq(chartName));
 	buildChartLinks(kq, container);
-	renderChart(container.querySelector('.chart__printer'), kq, window.aliases[alias]);
+	renderChart(container.querySelector('.chart__printer'), kq, window.charts[chartName]);
 }
 
 function buildChartLinks (kq, chartEl) {
@@ -102,8 +102,8 @@ function buildChartLinks (kq, chartEl) {
 function copyData (ev) {
 	ev.preventDefault();
 	const container = getChartContainer(ev.target);
-	const alias = container.dataset.keenAlias;
-	const kq = retrieveKq(`${alias}:printed`);
+	const chartName = container.dataset.chartName;
+	const kq = retrieveKq(`${chartName}:printed`);
 
 	const copyTextarea = document.createElement('textarea');
 
@@ -114,7 +114,11 @@ function copyData (ev) {
 	try {
 		document.execCommand('copy');
 		container.removeChild(copyTextarea);
-		// todo: output some kind of user feedback e.g. "Copied!"
+		ev.target.insertAdjacentHTML('beforeend', '<span style="color: black"> - Copied!</span>');
+		setTimeout(() => {
+			const span = ev.target.querySelector('span');
+			span.parentNode.removeChild(span);
+		}, 1500);
 	} catch (err) {
 		container.removeChild(copyTextarea);
 		alert('Oops, unable to copy');
