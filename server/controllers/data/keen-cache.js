@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
 
 	if (cacheItem) {
 		// console.log("Cache:hit")
-		res.set('Cache-Control', `max-age=${ttl}`);
+		res.set('Cache-Control', `public, max-age=${ttl}`);
 		res.json(cacheItem);
 	} else {
 		// console.log("Cache:miss")
@@ -31,7 +31,7 @@ module.exports = (req, res, next) => {
 
 				// Only cache if there's a result (that is, there's no error)
 				if (json.result !== undefined) {
-					res.set('Cache-Control', `max-age=${ttl}`);
+					res.set('Cache-Control', `public, max-age=${ttl}`);
 					cache.store(keenURL, json, ttl);
 				}
 				res.json(json);
