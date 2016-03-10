@@ -1,5 +1,8 @@
 import KeenQuery from 'keen-query';
 
+
+KeenQuery.setFetchOptions({credentials: 'include'});
+
 // exclude staff by default
 KeenQuery.forceQuery(function () {
 	return this.filter('user.isStaff=false');
