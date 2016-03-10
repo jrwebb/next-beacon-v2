@@ -27,11 +27,17 @@ export function googleChartPrinterFactory (chartType) {
 			const chart = new google.visualization[chartType](el);
 
 			const options = Object.assign({}, defaultChartOptions);
+
+			options.chartArea = Object.assign({}, options.chartArea);
+
 			const labelAxis = Object.assign({}, options.hAxis, {
 				title: kqTable.axes[0].property === 'timeframe' ? undefined : kqTable.axes[0].property,
 				format: kqTable.axes[0].property === 'timeframe' ? 'd/M' : undefined
 			});
-			const valueAxis = Object.assign({}, options.vAxis, {title: meta.datalabel || kqTable.valueLabel});
+
+			const valueAxis = Object.assign({}, options.vAxis, {
+				title: meta.datalabel || kqTable.valueLabel
+			});
 
 			options.hAxis = labelAxis;
 			options.vAxis = valueAxis;
@@ -40,6 +46,7 @@ export function googleChartPrinterFactory (chartType) {
 				options.hAxis = valueAxis;
 				options.vAxis = labelAxis;
 				options.vAxis.textPosition = 'in';
+				options.chartArea.left = '50';
 			}
 
 			if (meta.isStacked) options.isStacked = meta.isStacked;
