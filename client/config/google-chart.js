@@ -20,7 +20,7 @@ export const defaultChartOptions = {
 	curveType:'function',
 	chartArea: {
 		top: '10%',
-		left: '8%',
+		left: '80',
 		width: '95%',
 		height: '75%'
 	},
@@ -39,10 +39,4 @@ export const defaultChartOptions = {
 	pointSize: 5,
 	pointShape: 'circle',
 	colors: colors,
-
-	// janky !!
-	// animation: {
-	// 	startup: true,
-	// 	duration: 500
-	// }
 };
