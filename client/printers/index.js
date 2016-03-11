@@ -9,9 +9,10 @@ import KeenQuery from 'keen-query';
 // the document.execCommand('copy') API is allowed.
 KeenQuery.prototype.toTSV = KeenQuery.Aggregator.prototype.toTSV = function () {
 	const table = this.getTable().humanize('human');
-	return [table.headings].concat(table.rows)
-		.map(row => row.join('\t'))
-		.join('\n');
+	const rows = table.headings ? [table.headings] : []
+	return rows.concat(table.rows)
+			.map(row => row.join('\t'))
+			.join('\n');
 }
 
 // Todo: handle absolute timeframes
