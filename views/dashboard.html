@@ -1,13 +1,14 @@
 
 {{#unless isStandaloneChart}}
-	<div class="chart__meta">
-		{{#if isUserDashboard}}
-			<form class="o-forms o-forms-group">
-				<input style="display: inline-block; width: 300px;" value="{{uuid}}" type="search" name="uuid" class="o-forms-text" placeholder="Enter user uuid">
+	{{#if isUserDashboard}}
+		<form class="o-forms o-forms-group">
+			<h3>
+				Usage summary for user:
+				<input style="display: inline-block; width: 350px;" value="{{uuid}}" type="search" name="uuid" class="o-forms-text" placeholder="Enter user uuid">
 				<button style="display: inline-block;" class="o-buttons o-buttons--standout">Submit</button>
-			</form>
-		{{/if}}
-	</div>
+			</h3>
+		</form>
+	{{/if}}
 {{/unless}}
 <div class="charts">
 	<div class="o-grid-row">
