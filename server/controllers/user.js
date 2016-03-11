@@ -11,7 +11,7 @@ module.exports = function(req, res) {
 			layout: 'beacon',
 			isUserDashboard: true,
 			uuid: '',
-			title: 'Search for a uuid to see usage summary for a user',
+			title: 'User data',
 			charts: []
 		});
 	}
@@ -20,7 +20,7 @@ module.exports = function(req, res) {
 		layout: 'beacon',
 		isUserDashboard: true,
 		uuid: uuid,
-		title: `Usage summary for user ${uuid}`,
+		title: 'User data',
 		charts: yaml.load(`
 -
   question: When has this user visited next?
