@@ -25,7 +25,7 @@ self.addEventListener('fetch', function (event) {
 	var request = event.request;
 	// console.log('real fetch', request.url)
 	if (/www\.gstatic\.com\//.test(request.url)) {
-		console.log('trying to find in cache', request.url)
+		// console.log('trying to find in cache', request.url)
 		return event.respondWith(
 					caches.match(request)
 						.then(function (response) {
