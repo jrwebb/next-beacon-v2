@@ -1,12 +1,8 @@
 <nav class="o-hierarchical-nav o-header__nav--secondary-theme" data-o-component="o-hierarchical-nav">
-	<div class="internal-tool-links">
-		<ul data-o-hierarchical-nav-level="1">
-			<li><a class="internal tool" href="/data/query-wizard">Query wizard</a></li>
-			<li><a class="internal tool" href="/data/explorer">Data explorer</a></li>
-		</ul>
-	</div>
 	<ul data-o-hierarchical-nav-level="1">
-		<li class="o-hierarchical-nav__parent"><a>☰</a>
+		<li data-priority="60" class="internal-tool"><a href="/data/query-wizard">Query wizard</a></li>
+		<li data-priority="70" class="internal-tool"><a href="/data/explorer">Data explorer</a></li>
+		<li data-priority="1" class="o-hierarchical-nav__parent"><a>☰</a>
 			<ul data-o-hierarchical-nav-level="2">
 				<li class="o-hierarchical-nav__parent"><a>Custom dashboards <i></i></a>
 					<ul data-o-hierarchical-nav-level="3">
@@ -24,20 +20,21 @@
 			</ul>
 		</li>
 		{{#each primaryDashboards}}{{#if title}}
-		<li><a href="/dashboard/{{id}}/">{{{title}}}</a></li>
+		<li data-priority="2{{@index}}"><a href="/dashboard/{{id}}/">{{{title}}}</a></li>
 		{{/if}}{{/each}}
-		<li class="o-hierarchical-nav__parent"><a><span style="font-style: italic">my</span>FT <i></i></a>
+		<li data-priority="30" class="o-hierarchical-nav__parent"><a><span style="font-style: italic">my</span>FT <i></i></a>
 			<ul data-o-hierarchical-nav-level="2">
 				<li><a href="/dashboard/myft/onsite">Onsite</a></li>
 				<li><a href="/dashboard/myft/offsite">Offsite</a></li>
 			</ul>
 		</li>
-		<li><a href="/user">User</a></li>
-		<li class="o-hierarchical-nav__parent"><a>Next data <i></i></a>
+		<li data-priority="40"><a href="/user">User</a></li>
+		<li data-priority="50" class="o-hierarchical-nav__parent"><a>Next data <i></i></a>
 			<ul data-o-hierarchical-nav-level="2">
 				<li><a href="/dashboard/nextdata/example/">Example charts</a></li>
 				<li><a href="/dashboard/nextdata/test/">Test charts</a></li>
 			</ul>
 		</li>
+		<li data-more="" class="o-hierarchical-nav__parent" aria-hidden="true"><a><span class="o-hierarchical-nav__more--if-some">More</span><span class="o-hierarchical-nav__more--if-all">Menu</span> <i></i></a></li>
 	</ul>
 </nav>
