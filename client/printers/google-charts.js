@@ -66,9 +66,9 @@ export function googleChartPrinterFactory (chartType) {
 			}
 
 			if (chartType === 'Table') {
-				el.style = `max-height: 400px; overflow: scroll`;
+				el.setAttribute('style', `max-height: 400px; overflow: scroll`);
 			} else {
-				el.style = "";
+				el.removeAttribute('style');
 			}
 
 			if (kqTable.dimension > 1) {
