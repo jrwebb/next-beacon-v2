@@ -156,7 +156,11 @@ charts:
     interval: false
     timeframe: previous_1_week
     printer: BarChart
-    query: "page:view->count()->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)->group(page.location.streamId)->top(15)"
+    query: "page:view->count()
+     ->group(page.location.path)
+     ->filter(page.location.type=stream)
+     ->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)
+     ->top(10)"
   -
     question: Which were the most popular stream taxonomies last week (excluding top level nav links)?
     name: most-popular-taxonomies
