@@ -49,6 +49,25 @@ body {
 	}
 	.o-techdocs-container {
 		margin-top: 80px;
+
+		[data-o-grid-colspan~=L4] {
+			h2,
+			.o-expander {
+				font-size: 24px;
+			}
+		}
+		[data-o-grid-colspan~=L3] {
+			h2,
+			.o-expander {
+				font-size: 20px;
+			}
+		}
+		[data-o-grid-colspan~=L2] {
+			h2,
+			.o-expander {
+				font-size: 18px;
+			}
+		}
 	}
 }
 .data-explorer .o-header .o-header__primary {
