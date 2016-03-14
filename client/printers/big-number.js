@@ -1,12 +1,13 @@
-import humanize from 'humanize-plus';
+import numeral from 'numeral';
 import {getDefaultMeta} from './util';
 
 export function renderBigNumber (el, kq, meta) {
 	let html = `<div class="o-big-number o-big-number--standard" title="${meta.question}">`
 
+	// Todo: Add support for percentages; i.e. format('0%')
 	let niceNumber;
 	if(kq.getTable().data >= 1000) {
-		niceNumber = humanize.compactInteger(kq.getTable().data, 1);
+		niceNumber = numeral(kq.getTable().data).format('0.0a');
 	} else {
 		niceNumber = Math.round(kq.getTable().data * 10)/10;
 	}
