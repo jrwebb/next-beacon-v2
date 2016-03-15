@@ -12,13 +12,14 @@ module.exports = (req, res, next) => {
 
 	fetch(keenURL)
 		.then(response => {
-			if (!response.ok) {
-				throw 'Bad response from keen';
+			if (response.ok) {
+				res.set('Cache-Control', `max-age=${ttl}`);
+				res.set('Content-type', 'application/json');
+			} else {
+				res.set('Cache-Control', 'no-cache');
+				res.status(response.status);
 			}
-			return response.json();
-		})
-		.then(json => {
-			res.json(json);
+			response.body.pipe(res);
 		})
 		.catch(next);
 }
