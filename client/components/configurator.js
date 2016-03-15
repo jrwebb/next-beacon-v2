@@ -72,5 +72,9 @@ export function fromQueryString () {
 }
 
 export function fromForm (form, updatedInput) {
-	return getKqConfigurer(getFormState(form, updatedInput));
+	const formState = getFormState(form, updatedInput);
+	if (!formState.timeframe) {
+		return;
+	}
+	return getKqConfigurer(formState);
 }

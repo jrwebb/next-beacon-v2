@@ -81,10 +81,13 @@ function reprint (ev) {
 	ev.preventDefault();
 	const container = getChartContainer(ev.target);
 	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target.name);
+	if (!configure) {
+		return;
+	}
 	const chartName = container.dataset.chartName;
 	const kq = configure(retrieveKq(chartName));
 	buildChartLinks(kq, container);
-	renderChart(container.querySelector('.chart__printer'), kq, window.charts[chartName]);
+	renderChart(container.querySelector('.chart__printer'), kq, window.charts.find(c => c.name === chartName));
 }
 
 function buildChartLinks (kq, chartEl) {

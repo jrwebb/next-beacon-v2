@@ -20,6 +20,8 @@
 				<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
 				<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
 			</select>
+		{{else}}
+		<p>Interval configuration disabled for this chart. Click 'View in query wizard' for full control</p>
 		{{/if}}
 	</fieldset>
 	<fieldset class="o-forms-group">
