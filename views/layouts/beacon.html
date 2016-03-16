@@ -7,7 +7,7 @@
 		{{#if isPresentation}}
 		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-gallery@^1.7.4,o-big-number@^1.1.2">
 		{{else}}
-		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-typography@^3.0.0,o-table@^3.0.0,o-big-number@^1.1.2,o-grid@^4.0.0,o-ft-icons@^3.0.1,o-buttons@^3.0.3,o-forms@^2.0.0">
+		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-typography@^3.0.0,o-table@^3.0.0,o-big-number@^1.1.2,o-grid@^4.0.0,o-ft-icons@^3.0.1,o-buttons@^3.0.3,o-forms@^2.0.0,o-tabs">
 		{{/if}}
 		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
 		<script>
@@ -24,7 +24,7 @@
 		{{#if isPresentation}}
 		<script src="//build.origami.ft.com/v2/bundles/js?modules=o-gallery@^1.7.4" async></script>
 		{{else}}
-		<script src="//build.origami.ft.com/v2/bundles/js?modules=o-typography@^3.0.0,o-table@^3.0.0,o-hierarchical-nav@^3.1.0&amp;minify=none" async></script>
+		<script src="//build.origami.ft.com/v2/bundles/js?modules=o-tabs,o-typography@^3.0.0,o-table@^3.0.0,o-hierarchical-nav@^3.1.0&amp;minify=none" async></script>
 		{{/if}}
 		<script src="{{#hashedAsset}}main.js{{/hashedAsset}}" defer></script>
 	</head>

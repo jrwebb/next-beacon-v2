@@ -34,4 +34,16 @@ supportedChartTypes.forEach(chartType => KeenQuery.definePrinter(chartType, goog
 
 KeenQuery.definePrinter('big-number', bigNumber);
 
+KeenQuery.definePrinter('TSV', function () {
+	return (el) => {
+		el.innerHTML = `<pre>${this.toTSV()}</pre>`;
+	}
+});
+
+KeenQuery.definePrinter('YML', function () {
+	return (el) => {
+		el.innerHTML = `<pre>You ask too much! YAML printer will be ready soon :-)</pre>`;
+	}
+});
+
 

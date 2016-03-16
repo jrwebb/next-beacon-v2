@@ -72,7 +72,6 @@ app.get('/data/explorer', function(req, res) {
 });
 
 const keenCollections = require('./jobs/keen-collections');
-const keenProperties = require('./jobs/keen-properties');
 
 app.get('/data/query-wizard', function(req, res) {
 	res.render('query-wizard', {

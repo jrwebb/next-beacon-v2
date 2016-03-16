@@ -1,246 +1,224 @@
-
 {{> header}}
-<style>
-
-	.query-wizard {
-	}
-
-	.query-wizard .error {
-		font-size: 24px;
-		line-height: 1.2;
-		color: red;
-	}
-
-	.query-wizard input[type="text"],
-	.query-wizard textarea {
-		box-sizing: border-box;
-		width: 100%;
-	}
-
-	.query-wizard__box {
-		border: 1px solid gray;
-		padding: 0 10px 10px;
-		margin-top: 10px;
-		position: relative;
-	}
-
-	.query-wizard__interjection {
-    position: absolute;
-    font-size: 20px;
-    background: white;
-    padding: 2px;
-    top: -5px;
-    left: -5px;
-	}
-	.query-wizard__input {
-		padding: 5px 10px;
-		font-size: 18px;
-		min-height: 30px;
-		line-height: 1.4;
-		background-color: aliceblue;
-	}
-
-	.query-wizard__properties-filter {
-		padding: 0 5px;
-		font-size: 18px;
-		min-height: 24px;
-		line-height: 1.8;
-	}
-
-	.query-wizard__output + h2 {
-		margin-top: 5px;
-	}
-
-	.query-wizard__reference {
-		list-style: none;
-		padding: 0;
-	}
-
-	.query-wizard__reference .o-buttons {
-		margin-right: 5px;
-	}
-
-	.query-wizard__reference--collections li {
-		display: inline-block;
-		margin: 5px;
-		padding: 5px;
-		background: aliceblue;
-	}
-
-	.query-wizard__reference--stacked ul {
-		display: block;
-	}
-
-	.query-wizard__reference--stacked li {
-		padding-bottom: 5px;
-	}
-
-	.query-wizard__reference > [data-o-grid-colspan] {
-		padding-bottom: 10px;
-	}
-
-	.query-wizard__reference > li.hidden {
-		display: none;
-	}
-
-	.query-wizard__form {
-		background: white;
-		padding: 10px;
-		border-bottom: 1px solid #ccc;
-	}
-
-	small code {
-		font-size: 0.9em;
-	}
-
-</style>
 <div class="query-wizard">
-<form class="query-wizard__form">
-	<textarea class="query-wizard__input" placeholder="Enter a keen query or use the tools below to build one
-Whitespace, including new lines, is ok between query parts
-`Shift + Enter` to start a new line
-`Enter` to submit the query and create a chart" rows="4"></textarea>
+<form class="query-wizard__form" data-o-grid-colspan="12 L5">
+	<h1>Enter a keen query or use the tools on the right to build one</h1>
+	<ul>
+		<li>Whitespace, including new lines, is ok between query parts</li>
+		<li>`Shift + Enter` to start a new line</li>
+		<li>`Shift + Space` to open a property picker (not implemented yet... but will be soon)</li>
+		<li>`Enter` to submit the query and create a chart</li>
+	</ul>
+	<textarea class="query-wizard__input" id="query-wizard__input" rows="12"></textarea>
 	<div class="query-wizard__toolbar">
 		<button type="submit" class="o-buttons o-buttons--standout query-wizard__submit">Click to run</button>  (or press 'Enter')
 		<button class="o-buttons o-buttons--small query-wizard__clear-output">Clear output</button>
 	</div>
 	<div class="query-wizard__output"></div>
 </form>
-<div class="o-grid-container">
-<div class="query-wizard__box">
-	<h2>Step 1: Begin a query</h2>
-	<div class="o-grid-row">
-		<div data-o-grid-colspan="3">
-			<div class="query-wizard__box">
-				<em class="query-wizard__interjection">either</em>
-				<h3>Choose from one of the following common Starter queries</h3>
-				<p>(you can customize later)</p>
-				<ul class="query-wizard__reference query-wizard__reference--starters">
-					<li class="o-buttons o-buttons--small" data-str="page:view->count(user.uuid)">Count unique users</li>
-					<li class="o-buttons o-buttons--small" data-str="page:view->count()">Count all page views</li>
-					<li class="o-buttons o-buttons--small" data-str="cta:click->count()">Count all clicks on links, buttons etc.</li>
-				</ul>
-			</div>
+<div data-o-grid-colspan="12 L7">
+	<ul data-o-component="o-tabs" class="o-tabs o-tabs--buttontabs" role="tablist">
+		<li role="tab"><a href="#step1">Step 1 - choose data set</a></li>
+		<li role="tab"><a href="#step2">Step 2 - filter &amp; group</a></li>
+		<li role="tab"><a href="#step3">Step 3 - time range</a></li>
+		<li role="tab"><a href="#step4">Step 4 - presentation</a></li>
+	</ul>
+	<div id="step1" class="query-wizard__box">
+		<h2>Step 1: Begin a query by choosing the data set to look at.</h2>
+		<p><strong>Warning: will wipe anything you've already entered!</strong></p>
+		<ul data-o-component="o-tabs" class="o-tabs o-tabs--buttontabs" role="tablist">
+			<li role="tab"><a href="#commonQueryStarters">Common starter queries</a></li>
+			<li role="tab"><a href="#customQueryStarters">Full event and analysis options</a></li>
+		</ul>
+		<div id="commonQueryStarters" class="o-tabs__tabpanel">
+			<table class="o-table query-wizard__reference query-wizard__reference--starters">
+				<thead>
+				<tr>
+				<th>User type</th>
+				<th>Clicks</th>
+				<th>Page Views</th>
+				<th>Unique users</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+				<th>All</th>
+				<td><button class="o-buttons o-buttons--small" data-str="cta:click->count()">cta:click->count()</button></td>
+				<td><button class="o-buttons o-buttons--small" data-str="page:view->count()">page:view->count()</button></td>
+				<td><button class="o-buttons o-buttons--small" data-str="page:view->count(user.ab.allocationId)">page:view->count(user.ab.allocationId)</button></td>
+				</tr>
+				<tr>
+				<th>Logged in users</th>
+				<td><button class="o-buttons o-buttons--small" data-str="cta:click->count()->filter(user.uuid)">cta:click->count()->filter(user.uuid)</button></td>
+				<td><button class="o-buttons o-buttons--small" data-str="page:view->count()->filter(user.uuid)">page:view->count()->filter(user.uuid)</button></td>
+				<td><button class="o-buttons o-buttons--small" data-str="page:view->count(user.uuid)->filter(user.uuid)">page:view->count(user.uuid)->filter(user.uuid)</button></td>
+				</tr>
+				<tr>
+				<th>Anonymous</th>
+				<td><button class="o-buttons o-buttons--small" data-str="cta:click->count()->filter(!user.uuid)">cta:click->count()->filter(!user.uuid)</button></td>
+				<td><button class="o-buttons o-buttons--small" data-str="page:view->count()->filter(!user.uuid)">page:view->count()->filter(!user.uuid)</button></td>
+				<td><button class="o-buttons o-buttons--small" data-str="page:view->count(user.ab.allocationId)->filter(!user.uuid)">page:view->count(user.ab.allocationId)->filter(!user.uuid)</button></td>
+				</tr>
+				</tbody>
+			</table>
 		</div>
-		<div data-o-grid-colspan="9">
-			<div class="query-wizard__box">
-				<em class="query-wizard__interjection">or</em>
-				<div class="o-grid-row">
-					<div data-o-grid-colspan="8">
-						<h3>Choose a type of <b>event</b> to look at...</h3>
-						<ul class="query-wizard__reference query-wizard__reference--collections">
-							{{#each collections}}
-							<li>
-									{{#each this}}
-										<button class="o-buttons o-buttons--small" data-str="{{category}}:{{action}}">{{category}}: {{action}}</button>
-									{{/each}}
-							</li>
-							{{/each}}
-						</ul>
+		<div id="customQueryStarters" class="o-tabs__tabpanel">
+			<div class="o-grid-row">
+				<div data-o-grid-colspan="8">
+					<h3>Choose a type of <b>event</b> to look at...</h3>
+					<ul class="query-wizard__reference query-wizard__reference--collections">
+						{{#each collections}}
+						<li>
+								{{#each this}}
+									<button class="o-buttons o-buttons--small" data-str="{{category}}:{{action}}">{{category}}: {{action}}</button>
+								{{/each}}
+						</li>
+						{{/each}}
+					</ul>
 				</div>
 				<div data-o-grid-colspan="4">
-							<h3>...and pick an analysis method (or <b>extraction</b> in keen parlance)</h3>
-							<div class="query-wizard__reference--extractions">
-								<p><span class="o-buttons o-buttons--small" data-str="count()">Count</span> or <span class="o-buttons o-buttons--small" data-str="count({use the metadata picker})">Count unique</span> are what you'll normally want, but also available are:
-								<ul class="query-wizard__reference">
-									<li class="o-buttons o-buttons--small" data-str="min({use the metadata picker})">Minimum value</li>
-									<li class="o-buttons o-buttons--small" data-str="max({use the metadata picker})">Maximum value</li>
-									<li class="o-buttons o-buttons--small" data-str="sum({use the metadata picker})">Sum of values</li>
-									<li class="o-buttons o-buttons--small" data-str="avg({use the metadata picker})">Average value</li>
-									<li class="o-buttons o-buttons--small" data-str="med({use the metadata picker})">Median value</li>
-									<li class="o-buttons o-buttons--small" data-str="pct({use the metadata picker},{percentile})">Percentile value</li>
-									<li class="o-buttons o-buttons--small" data-str="select({use the metadata picker})">List all unique values</li>
-								</ul>
-							</div>
-					</div>
+						<h3>...and pick an analysis method (or <b>extraction</b> in keen parlance)</h3>
+						<div class="query-wizard__reference--extractions">
+							<p><span class="o-buttons o-buttons--small" data-str="count()">Count</span> or <span class="o-buttons o-buttons--small" data-str="count({property})">Count unique</span> are what you'll normally want, but also available are:
+							<ul class="query-wizard__reference">
+								<li class="o-buttons o-buttons--small" data-str="min({property})">Minimum value</li>
+								<li class="o-buttons o-buttons--small" data-str="max({property})">Maximum value</li>
+								<li class="o-buttons o-buttons--small" data-str="sum({property})">Sum of values</li>
+								<li class="o-buttons o-buttons--small" data-str="avg({property})">Average value</li>
+								<li class="o-buttons o-buttons--small" data-str="med({property})">Median value</li>
+								<li class="o-buttons o-buttons--small" data-str="pct({property},{percentile})">Percentile value</li>
+								<li class="o-buttons o-buttons--small" data-str="select({property})">List all unique values</li>
+							</ul>
+						</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="query-wizard__box query-wizard__reference--methods">
-	<h2>Step 2: Choose a time range for the data</h2>
-	<p>There are two things to set:</p>
-	<h3>The <b>timeframe</b> - when to collect data from and until</h3>
-	<ul class="query-wizard__reference">
-		<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">last 14 days including today</li>
-		<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">last 14 days excluding today</li>
-		<li class="o-buttons o-buttons--small" data-str="relTime(this_10_weeks)">last 10 weeks including this week</li>
-		<li class="o-buttons o-buttons--small" data-str="relTime(this_6_months)">last 6 months including this month</li>
-		<li class="o-buttons o-buttons--small" data-str="relTime(this_1_days)">Today so far</li>
-		<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">custom time range</li>
-	</ul>
-	<h3>The <b>interval</b> (optional) - how to split up this time range e.g. daily, hourly</h3>
-	<ul class="query-wizard__reference">
-		<li class="o-buttons o-buttons--small" data-str="interval(m)">Set the interval to minutely</li>
-		<li class="o-buttons o-buttons--small" data-str="interval(h)">Set the interval to hourly</li>
-		<li class="o-buttons o-buttons--small" data-str="interval(d)">Set the interval to daily</li>
-		<li class="o-buttons o-buttons--small" data-str="interval(w)">Set the interval to weekly</li>
-	</ul>
-</div>
-<div class="query-wizard__box">
 
-	<div class="o-grid-row">
-
-
-		<div data-o-grid-colspan="6" class="query-wizard__reference--methods">
-			<h2>Step 3: Refine the query</h2>
-			<p>Use the options below, and the <b>metadata picker</b> on the right, to refine what data is collected in your query. If you feel confident you can also edit the light blue text box above directly</p>
-
-			<h3>Include/exclude data based on whether a condition is met (filters)</h3>
-			<ul class="query-wizard__reference query-wizard__reference--stacked">
-				<li class="o-buttons o-buttons--small" data-str="raw()">Include staff (by default tracking data for staff is excluded)</li>
-				<li><button class="o-buttons o-buttons--small" data-str="filter({use the metadata picker})">Property must exist </button><small> e.g. <code>filter(user.uuid)</code> to get subscribers</small></li>
-				<li><button class="o-buttons o-buttons--small" data-str="filter(!{use the metadata picker})"> Property must not exist</button><small> e.g. <code>filter(!user.uuid)</code> to get anonymous users</small></li>
-				<li><button class="o-buttons o-buttons--small" data-str="filter({use the metadata picker}={value})">Property must be equal to a value</button><small> e.g. <code>filter(geo.continent=AS)</code> to include only Asian visitors</small></li>
-				<li><button class="o-buttons o-buttons--small" data-str="filter({use the metadata picker}!={value})">Property must not be equal to a value</button><small> e.g. <code>filter(geo.continent!=AS)</code> to exclude Asian visitors</small></li>
-				<li><button class="o-buttons o-buttons--small" data-str="filter({use the metadata picker}>{value})">Property must be greater than some number</button><small> e.g. <code>filter(content.age&gt;234568)</code> to get old content</small></li>
-				<li><button class="o-buttons o-buttons--small" data-str="filter({use the metadata picker}<{value})">Property must be less than some number</button><small> e.g. <code>filter(content.age&lt;234568)</code> to get recent content</small></li>
-				<li><button class="o-buttons o-buttons--small" data-str="filter({use the metadata picker}~{value})">Property must contain some text</button><small> e.g. <code>filter(meta.domPath~header)</code> to get clicks in the header</small></li>
-				<li><button class="o-buttons o-buttons--small" data-str="filter({use the metadata picker}?{value})">Property must be one of a list of words</button><small> e.g. <code>filter(page.type?stream,frontpage)</code> to get data for stream and frontpage only</small></li>
-			</ul>
-
-			<h3>Grouping data</h3>
-			<p>You might want to split the data in order to e.g. compare usage on desktop and mobile. To do this it's a matter of passing in one or more properties you want to split the data by. A few common use cases are provided below:</p>
-			<p class="query-wizard__reference--methods">In case you get lots of <b>null</b> values you can <button class="o-buttons o-buttons--small" data-str="tidy()">exclude null data</button></p>
-			<ul class="query-wizard__reference query-wizard__reference--methods">
-				<li class="o-buttons o-buttons--small" data-str="group(device.primaryHardwareType)">Group by device type</li>
-				<li class="o-buttons o-buttons--small" data-str="group(page.location.type)">Group by page type</li>
-				<li class="o-buttons o-buttons--small" data-str="group(device.layout)">Group by screen size</li>
-				<li class="o-buttons o-buttons--small" data-str="group(device.browserName)">Group by browser</li>
-				<li class="o-buttons o-buttons--small" data-str="group({use the metadata picker})">Group by something else</li>
-			</ul>
-			<p><strong>Warning: If also defining an interval (see <b>Step 2</b>) then the data produced may become unwieldy if you also group by more than one property</strong></p>
-
-			<h3>Manipulating data</h3>
-			<p>Keen offers a limited set of data analysis methods (see Step 1 above). keen-query has started to build on top of this, so far providing:</p>
-			<ul class="query-wizard__reference query-wizard__reference--methods">
-				<li class="o-buttons o-buttons--small" data-str="interval(d)->reduce(avg,timeframe)">Take a daily average</li>
-				<li class="o-buttons o-buttons--small" data-str="interval(w)->reduce(avg,timeframe)">Take a weekly average</li>
-				<li>Round to some number of decimal/nearest multiple of 10<br><button class="o-buttons o-buttons--small" data-str="round(2)">123.45</button><button class="o-buttons o-buttons--small" data-str="round(1)">123.4</button><button class="o-buttons o-buttons--small" data-str="round()">123</button><button class="o-buttons o-buttons--small" data-str="round(-1)">120</button><button class="o-buttons o-buttons--small" data-str="round(-2)">100</button></li>
-
-				<li>Many more available, but best to speak to a developer/the data team to have them explained</li>
-			</ul>
-		</div>
-		<div data-o-grid-colspan="6">
-			<h3>Metadata picker</h3>
-			<p>Each event stored in keen has lots of <b>metadata</b> attached, which can be referenced in order to <b>filter</b> or <b>group</b> the data. (click to insert in last set of parentheses)</p>
-			<p><strong>Back soon in an improved form :-)</strong>. In the meantime click the links below to see rudimentary representations of what's available for each event type</p>
-
-			<ul class="query-wizard__reference">
-				{{#each collections}}
-				<li>
-						{{#each this}}
-							<a target="_blank" class="o-buttons o-buttons--small" href="/data/keen-properties/{{category}}:{{action}}">{{category}}: {{action}}</a>
-						{{/each}}
-				</li>
-				{{/each}}
-			</ul>
-			<!-- <input type="text" class="query-wizard__properties-filter" placeholder="Search for a metadata property">
-			<ul class="query-wizard__reference query-wizard__reference--properties">
-			{{#each properties}}<li class="o-buttons o-buttons--small" data-str="{{lowerCase}}">{{name}}</li>{{/each}}
-			</ul> -->
+	<div id="step2" class="query-wizard__box">
+		<div class="query-wizard__reference--methods">
+			<h2>Step 2: Filter and group the data</h2>
+				<h3>Include/exclude data based on whether a condition is met (filters)</h3>
+				<p>Select a filtering method below - you will be prompted to fill in further options (... will be implemented soon)</p>
+				<ul class="query-wizard__reference query-wizard__reference--methods o-grid-row">
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property})">Some property must exist </button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter(!{property})"> Some property must not exist</button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property}={value})">Some property must be equal to a value</button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property}!={value})">Some property must not be equal to a value</button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property}>{value})">Some property must be greater than some number</button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property}<{value})">Some property must be less than some number</button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property}~{value})">Some property must contain a piece of text</button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property}!~{value})">Some property must not contain a piece of text</button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property}?{value})">Some property must be one of a list of words</button></li>
+					<li data-o-grid-colspan="6 M4 L3"><button class="o-buttons o-buttons--small" data-str="filter({property}!?{value})">Some property must not be one of a list of words</button></li>
+				</ul>
+				<h3>and/or Group data based on a property</h3>
+				<p class="query-wizard__reference--methods">In case you get lots of <b>null</b> values you can <button class="o-buttons o-buttons--small" data-str="tidy()">exclude null data</button></p>
+				<ul class="query-wizard__reference query-wizard__reference--methods">
+					<li><button class="o-buttons o-buttons--small" data-str="group(device.primaryHardwareType)">Group by device type</button></li>
+					<li><button class="o-buttons o-buttons--small" data-str="group(page.location.type)">Group by page type</button></li>
+					<li><button class="o-buttons o-buttons--small" data-str="group(device.layout)">Group by screen size</button></li>
+					<li><button class="o-buttons o-buttons--small" data-str="group(device.browserName)">Group by browser</button></li>
+					<li><button class="o-buttons o-buttons--small" data-str="group({property})">Group by something else</button></li>
+				</ul>
+				<p><strong>Warning: If also defining an interval (see <b>Step 3</b>) then the data produced may become unwieldy if you also group by more than one property</strong></p>
 		</div>
 	</div>
+
+	<div id="step3" class="query-wizard__box query-wizard__reference--methods">
+		<h2>Step 3: Choose a time range for the data</h2>
+		<p>There are two things to set (Note - the default is to total all data from the last 2 weeks)</p>
+		<h3>The <b>timeframe</b> - when to collect data from and until</h3>
+		<ul class="query-wizard__reference">
+			<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">last 14 days including today</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">last 14 days excluding today</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(this_10_weeks)">last 10 weeks including this week</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(this_6_months)">last 6 months including this month</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(this_1_days)">Today so far</li>
+			<li class="o-buttons o-buttons--small" data-str="absTime({start},{finish})">custom time range</li>
+		</ul>
+		<h3>The <b>interval</b> (optional) - how to split up this time range e.g. daily, hourly</h3>
+		<ul class="query-wizard__reference">
+			<li class="o-buttons o-buttons--small" data-str="interval(m)">Set the interval to minutely</li>
+			<li class="o-buttons o-buttons--small" data-str="interval(h)">Set the interval to hourly</li>
+			<li class="o-buttons o-buttons--small" data-str="interval(d)">Set the interval to daily</li>
+			<li class="o-buttons o-buttons--small" data-str="interval(w)">Set the interval to weekly</li>
+		</ul>
+	</div>
+	<div id="step4" class="query-wizard__box query-wizard__reference--methods">
+		<h2>Step 4: Choose how to present the data</h2>
+		<p>Note, the default is a line chart</p>
+		<ul class="query-wizard__reference ">
+			<li class="o-buttons o-buttons--small" data-str="print(Table)">Data table</li>
+			<li class="o-buttons o-buttons--small" data-str="print(PieChart)">Pie chart</li>
+			<li class="o-buttons o-buttons--small" data-str="print(TSV)">Tabbed data (to copy to spreadsheet)</li>
+			<li class="o-buttons o-buttons--small" data-str="print(YML)">YAML (to copy to dashboard config)</li>
+		</ul>
+		<table class="o-table o-table--compact">
+			<thead>
+			<tr>
+			<th>Chart type</th>
+			<th>Normal</th>
+			<th>Stacked</th>
+			<th>Stacked as percent</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Line</th>
+					<td><button class="o-buttons o-buttons--small" data-str="print(LineChart)">print(LineChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(StackedLineChart)">print(StackedLineChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(PercentLineChart)">print(PercentLineChart)</button></td>
+				</tr>
+				<tr>
+					<th>Bar</th>
+					<td><button class="o-buttons o-buttons--small" data-str="print(BarChart)">print(BarChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(StackedBarChart)">print(StackedBarChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(PercentBarChart)">print(PercentBarChart)</button></td>
+				</tr>
+				<tr>
+					<th>Column</th>
+					<td><button class="o-buttons o-buttons--small" data-str="print(ColumnChart)">print(ColumnChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(StackedColumnChart)">print(StackedColumnChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(PercentColumnChart)">print(PercentColumnChart)</button></td>
+				</tr>
+				<tr>
+					<th>Area</th>
+					<td><button class="o-buttons o-buttons--small" data-str="print(AreaChart)">print(AreaChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(StackedAreaChart)">print(StackedAreaChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(PercentAreaChart)">print(PercentAreaChart)</button></td>
+				</tr>
+				<tr>
+					<th>SteppedArea</th>
+					<td><button class="o-buttons o-buttons--small" data-str="print(SteppedAreaChart)">print(SteppedAreaChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(StackedSteppedAreaChart)">print(StackedSteppedAreaChart)</button></td>
+					<td><button class="o-buttons o-buttons--small" data-str="print(PercentSteppedAreaChart)">print(PercentSteppedAreaChart)</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="query-wizard__box">
+		<h3>Metadata picker</h3>
+		<p>Each event stored in keen has lots of <b>metadata</b> attached, which can be referenced in order to <b>filter</b> or <b>group</b> the data. (click to insert in last set of parentheses)</p>
+		<p><strong>Back soon in an improved form :-)</strong>. In the meantime click the links below to see rudimentary representations of what's available for each event type</p>
+
+		<ul class="query-wizard__reference">
+			{{#each collections}}
+			<li>
+					{{#each this}}
+						<a target="_blank" class="o-buttons o-buttons--small" href="/data/keen-properties/{{category}}:{{action}}">{{category}}: {{action}}</a>
+					{{/each}}
+			</li>
+			{{/each}}
+		</ul>
+		<!-- <input type="text" class="query-wizard__properties-filter" placeholder="Search for a metadata property">
+		<ul class="query-wizard__reference query-wizard__reference--properties">
+		{{#each properties}}<li class="o-buttons o-buttons--small" data-str="{{lowerCase}}">{{name}}</li>{{/each}}
+		</ul> -->
+	</div>
 </div>
-</div>
+
+
+
+
+
+

@@ -1,0 +1,118 @@
+.query-wizard {
+	padding: 10px;
+}
+
+.query-wizard h1 {
+	margin: 0;
+	font-size: 24px;
+}
+
+.query-wizard h2 {
+	margin: 10px 0;
+	font-size: 18px;
+}
+
+.query-wizard h3 {
+	margin: 5px 0;
+	font-size: 16px;
+}
+
+.query-wizard .error {
+	font-size: 24px;
+	line-height: 1.2;
+	color: red;
+}
+
+.query-wizard [type="text"],
+.query-wizard textarea {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.query-wizard__box {
+	border: 1px solid gray;
+	padding: 0 10px 10px;
+	margin-top: 10px;
+	position: relative;
+}
+
+.query-wizard__interjection {
+  position: absolute;
+  font-size: 20px;
+  background: white;
+  padding: 2px;
+  top: -5px;
+  left: -5px;
+}
+.query-wizard__input {
+	padding: 5px 10px;
+	font-size: 18px;
+	min-height: 30px;
+	line-height: 1.4;
+	background-color: aliceblue;
+}
+
+.query-wizard__properties-filter {
+	padding: 0 5px;
+	font-size: 18px;
+	min-height: 24px;
+	line-height: 1.8;
+}
+
+.query-wizard__output {
+	position: relative;
+}
+
+.query-wizard__output + h2 {
+	margin-top: 5px;
+}
+
+.query-wizard__reference {
+	list-style: none;
+	padding: 0;
+}
+
+.query-wizard__reference .o-buttons {
+	margin-right: 5px;
+}
+
+.query-wizard__reference--collections li {
+	display: inline-block;
+	margin: 5px;
+	padding: 5px;
+	background: aliceblue;
+}
+
+.query-wizard__reference--stacked ul {
+	display: block;
+}
+
+.query-wizard__reference > [data-o-grid-colspan] {
+	padding-bottom: 10px;
+}
+
+.query-wizard__reference > li {
+	display: inline-block;
+	padding-bottom: 5px;
+}
+
+.query-wizard__reference > [data-o-grid-colspan] > button {
+	display: block;
+	width: 100%;
+}
+
+.query-wizard__reference > .hidden {
+	display: none;
+}
+
+.query-wizard__form {
+	background: white;
+	padding: 10px;
+	border-bottom: 1px solid #cccccc;
+}
+
+.query-wizard small code {
+	font-size: 0.9em;
+}
+
+
