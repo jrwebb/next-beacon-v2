@@ -11,6 +11,15 @@ function hasDimension (kq) {
 }
 
 export function googleChartPrinterFactory (chartType) {
+	let stacked;
+
+	if (chartType.indexOf('Stacked') === 0) {
+		chartType = chartType.substr(7);
+		stacked = true;
+	} else if (chartType.indexOf('Percent') === 0) {
+		chartType = chartType.substr(7);
+		stacked = 'percent';
+	}
 
 	function chartBuilder (el, kq, meta) {
 		return new Promise((resolve, reject) => {
@@ -51,7 +60,7 @@ export function googleChartPrinterFactory (chartType) {
 				options.chartArea.left = '50';
 			}
 
-			if (meta.isStacked) options.isStacked = meta.isStacked;
+			options.isStacked = stacked || meta.isStacked || false;
 
 			// if only one data set we can try to plot a trend line
 			if (kqTable.dimension === 1) {

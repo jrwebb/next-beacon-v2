@@ -4,65 +4,65 @@ import KeenQuery from 'keen-query';
 import querystring from 'querystring';
 import {renderChart} from '../components/chart-ui';
 
-const debounce = function(fn,delay){
-		let timeoutId;
-		return function debounced(){
-				if(timeoutId){
-						clearTimeout(timeoutId);
-				}
-				const args = arguments;
-				timeoutId = setTimeout(function() {
-						fn.apply(this, args);
-				}.bind(this), delay);
-		};
-};
+// const debounce = function(fn,delay){
+// 		let timeoutId;
+// 		return function debounced(){
+// 				if(timeoutId){
+// 						clearTimeout(timeoutId);
+// 				}
+// 				const args = arguments;
+// 				timeoutId = setTimeout(function() {
+// 						fn.apply(this, args);
+// 				}.bind(this), delay);
+// 		};
+// };
 
-class PropertySearch {
+// class PropertySearch {
 
-	constructor () {
-		this.searchEl = document.querySelector('.query-wizard__properties-filter');
-		this.items = [].slice.call(document.querySelectorAll('.query-wizard__reference--properties .o-buttons'))
-			.map(el => {
-				return {
-					el,
-					property: el.getAttribute('data-str')
-				}
-			});
-	}
-	init () {
-		const self = this;
+// 	constructor () {
+// 		this.searchEl = document.querySelector('.query-wizard__properties-filter');
+// 		this.items = [].slice.call(document.querySelectorAll('.query-wizard__reference--properties .o-buttons'))
+// 			.map(el => {
+// 				return {
+// 					el,
+// 					property: el.getAttribute('data-str')
+// 				}
+// 			});
+// 	}
+// 	init () {
+// 		const self = this;
 
-		this.onType = debounce(this.onType, 150).bind(this);
+// 		this.onType = debounce(this.onType, 150).bind(this);
 
-		this.searchEl.addEventListener('keyup', function(ev) {
-			switch(ev.which) {
-				case 13 : return; // enter
-				case 9 : return; // tab
-				case 40 : return;
-				default :
-					self.onType(ev);
-				break;
-			}
-		});
-	}
+// 		this.searchEl.addEventListener('keyup', function(ev) {
+// 			switch(ev.which) {
+// 				case 13 : return; // enter
+// 				case 9 : return; // tab
+// 				case 40 : return;
+// 				default :
+// 					self.onType(ev);
+// 				break;
+// 			}
+// 		});
+// 	}
 
-	onType () {
-		const str = this.searchEl.value.toLowerCase();
-		this.items.forEach(item => {
-			if (item.property.indexOf(str) === -1) {
-				item.el.classList.add('hidden');
-			} else {
-				item.el.classList.remove('hidden');
-			}
-		})
-	}
-}
+// 	onType () {
+// 		const str = this.searchEl.value.toLowerCase();
+// 		this.items.forEach(item => {
+// 			if (item.property.indexOf(str) === -1) {
+// 				item.el.classList.add('hidden');
+// 			} else {
+// 				item.el.classList.remove('hidden');
+// 			}
+// 		})
+// 	}
+// }
 const Delegate = require('dom-delegate');
 
 module.exports = {
 	init: () => {
 		const del = new Delegate(document.querySelector('.query-wizard'));
-		new PropertySearch().init();
+		// new PropertySearch().init();
 
 		const input = document.querySelector('.query-wizard__input');
 		const output = document.querySelector('.query-wizard__output');
@@ -100,7 +100,7 @@ module.exports = {
 		function sanitisedQuery () {
 			let q = input.value.trim();
 			let printer = '';
-			q = q.replace(/->print\(\w+\)/g, function (match) {
+			q = q.replace(/\s*->print\(\w+\)/g, function (match) {
 				printer = match;
 				return '';
 			}) + printer;
@@ -159,7 +159,7 @@ module.exports = {
 		del.on('click', '.query-wizard__reference--methods .o-buttons', ev => {
 			validate()
 				.then(() => {
-					input.value += '->' + ev.target.getAttribute('data-str');
+					input.value += '\n->' + ev.target.getAttribute('data-str');
 					input.focus();
 				}, e => {
 					outputError(e);
@@ -168,12 +168,12 @@ module.exports = {
 
 		});
 
-		del.on('click', '.query-wizard__reference--properties', ev => {
-			if (/\)$/.test(input.value)) {
-				input.value = input.value.replace(/\{use the metadata picker\}/, `{${ev.target.textContent}}`).replace(/\([^\)]*\)$/, `(${ev.target.textContent})`);
-				input.focus();
-			}
-		})
+		// del.on('click', '.query-wizard__reference--properties', ev => {
+		// 	if (/\)$/.test(input.value)) {
+		// 		input.value = input.value.replace(/\{use the metadata picker\}/, `{${ev.target.textContent}}`).replace(/\([^\)]*\)$/, `(${ev.target.textContent})`);
+		// 		input.focus();
+		// 	}
+		// })
 
 	}
 }

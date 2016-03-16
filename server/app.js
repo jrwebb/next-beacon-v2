@@ -11,7 +11,8 @@ const dashboards = require('./lib/dashboards');
 const cookieParser	= require('cookie-parser');
 const app = module.exports = require('ft-next-express')({
 	layoutsDir: __dirname + '/../views/layouts',
-	withBackendAuthentication: false
+	withBackendAuthentication: false,
+	withFlags: false
 });
 
 
@@ -44,7 +45,6 @@ app.use(auth);
 app.use(window);
 app.use(aliases.init);
 app.use(dashboards.middleware);
-app.use(require('./middleware/nav'));
 
 try {
 	const worker = require('fs').readFileSync(require('path').join(process.cwd(), 'public/worker.js'), 'utf8');
@@ -52,13 +52,13 @@ try {
 		res.set('Content-Type', 'text/javascript')
 		res.send(worker);
 	})
-}
-catch (err) {
+} catch (err) {
 	console.log('Error. Did you forget to run `Make build`?\n', err)
 }
 
-app.get(/^\/data\/keen-cache\/(.*)/, require('./controllers/data/keen-cache'));
-
+app.get(/^\/data\/keen-proxy\/(.*)/, require('./controllers/data/keen-proxy'));
+app.get('/data/keen-properties/:eventName', require('./controllers/data/keen-properties'))
+app.get('/data/keen-properties/:eventName/:propertyName', require('./controllers/data/keen-properties'))
 app.get('/data/export/:limit', require('./controllers/data/export'));
 
 app.get('/data/explorer', function(req, res) {
@@ -72,14 +72,12 @@ app.get('/data/explorer', function(req, res) {
 });
 
 const keenCollections = require('./jobs/keen-collections');
-const keenProperties = require('./jobs/keen-properties');
 
 app.get('/data/query-wizard', function(req, res) {
 	res.render('query-wizard', {
 		layout: 'beacon',
 		title: 'Query wizard',
-		collections: keenCollections.getData(),
-		properties: keenProperties.getData()
+		collections: keenCollections.getData()
 	});
 });
 
@@ -119,4 +117,4 @@ app.get('/', function (req, res, next) {
 }, require('./controllers/dashboard'));
 
 aliases.poll()
-	.then(() => app.listen(process.env.PORT));
+app.listen(process.env.PORT);

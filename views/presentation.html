@@ -1,35 +1,16 @@
-<html>
-<head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Beacon - next.ft.com performance dashboard</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-gallery@^1.7.4,o-big-number@^1.1.2">
-	<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}"/>
-	<script>
-		window.view = 'presentation';
-		window.KEEN_PROJECT_ID = '{{KEEN_PROJECT_ID}}';
-		window.KEEN_READ_KEY = '{{KEEN_READ_KEY}}';
-		window.KEEN_HOST = '{{KEEN_HOST}}';
-		window.aliases = {{{json aliases}}}
-	</script>
-	<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js" defer></script>
-	<script src="https://www.gstatic.com/charts/loader.js" defer></script>
-	<script src="//build.origami.ft.com/v2/bundles/js?modules=o-gallery@^1.7.4" async></script>
-	<script src="{{#hashedAsset}}main.js{{/hashedAsset}}" defer></script>
-</head>
-<body class="o-techdocs" style="padding:20px">
-
+<div style="padding:20px">
 	<div class="o-gallery" data-o-component="o-gallery" data-o-gallery-captions="false">
 		<ol class="charts o-gallery__items">
 			{{#each charts}}
 				<li class="o-gallery__item">
-					<h2>{{{question}}}</h2>
-					<div class="o-gallery__item__content"><div class="chart" data-keen-alias="{{name}}"><div class="chart__printer"></div></div></div>
+					<div class="o-gallery__item__content">
+						<h2 style="font-size: 30px; font-family: arial, helvetica, sans-serif; font-weight: 400;">{{{question}}}</h2>
+						<div class="chart" data-chart-name="{{name}}">
+							<div class="chart__printer"></div>
+						</div>
+					</div>
 				</li>
 			{{/each}}
 		</ol>
 	</div>
-
-</body>
-</html>
+</div>

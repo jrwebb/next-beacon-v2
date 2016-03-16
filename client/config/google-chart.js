@@ -1,6 +1,11 @@
 import {colors} from './colors';
 
-export const supportedChartTypes = ['LineChart','PieChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart','Table'];
+export const supportedChartTypes = [
+	'PieChart', 'Table',
+	'LineChart','BarChart','ColumnChart','AreaChart','SteppedAreaChart',
+	'StackedLineChart','StackedBarChart','StackedColumnChart','StackedAreaChart', 'StackedSteppedAreaChart',
+	'PercentLineChart','PercentBarChart','PercentColumnChart','PercentAreaChart', 'PercentSteppedAreaChart'
+];
 
 const axisStyle = {
 	color: '#222',
