@@ -97,12 +97,23 @@ module.exports = {
 			output.innerHTML = `<span class="error">${txt}</span>`;
 		}
 
+		function sanitisedQuery () {
+			let q = input.value.trim();
+			let printer = '';
+			q = q.replace(/->print\(\w+\)/g, function (match) {
+				printer = match;
+				return '';
+			}) + printer;
+			input.value = q;
+			return q;
+		}
+
 		function run() {
-			let kq = KeenQuery.build(input.value.trim())
+			let kq = KeenQuery.build(sanitisedQuery())
 			if (!kq._printer) {
 				kq = kq.setPrinter('LineChart');
 			}
-			history.pushState({}, "", `/data/query-wizard?query=${encodeURIComponent(kq.toString())}`);
+			history.pushState({}, "", `/data/query-wizard?query=${encodeURIComponent(kq.toString().replace('->print(LineChart)', ''))}`);
 			return renderChart(output, kq, {})
 		}
 

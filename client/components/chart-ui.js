@@ -98,7 +98,7 @@ function buildChartLinks (kq, chartEl) {
 	}
 
 	if (wizardLink) {
-		wizardLink.href = `/data/query-wizard?query=${encodeURIComponent(kq.toString())}`
+		wizardLink.href = `/data/query-wizard?query=${encodeURIComponent(kq.toString().replace('->print(LineChart)', ''))}`
 	}
 }
 
