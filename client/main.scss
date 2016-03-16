@@ -15,11 +15,7 @@ body {
 }
 .o-techdocs {
 	.o-header {
-		z-index: 100;
-		position: fixed;
 		margin-bottom: 16px;
-		top: 0;
-		width: 100%;
 		.o-header__sitename {
 			color: oColorsGetPaletteColor('grey-tint2');
 		}
@@ -47,8 +43,11 @@ body {
 			}
 		}
 	}
+
+}
+
+@include oGridRespondTo(L) {
 	.o-techdocs-container {
-		margin-top: 80px;
 
 		[data-o-grid-colspan~=L4] {
 			h2,
@@ -70,6 +69,7 @@ body {
 		}
 	}
 }
+
 .data-explorer .o-header .o-header__primary {
 	height: 50px;
 }

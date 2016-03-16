@@ -1,20 +1,40 @@
 'use strict';
 
-const Poller = require('ft-poller');
+const blacklist = [];
 
-module.exports = new Poller({
-	url: `https://api.keen.io/3.0/projects/${process.env.KEEN_PROJECT_ID}/events/cta:click?api_key=${process.env.KEEN_READ_KEY}`,
-	defaultData: [],
-	autostart: true,
-	parseData: data => Object.keys(data.properties)
-	.filter(name => name.indexOf('.querystring') === -1)
-	.sort()
-	.map(name => {
-		return {
-			name,
-			lowerCase: name.toLowerCase()
-		}
-	})
-})
+const propertiesMap = {};
+
+module.exports = {
+	update: list => {
+
+		list.forEach(eventName => {
+			fetch(`https://api.keen.io/3.0/projects/${process.env.KEEN_PROJECT_ID}/events/${eventName}?api_key=${process.env.KEEN_MASTER_KEY}`)
+				.then(res => {
+					if (!res.ok) {
+						throw 'keen response not ok';
+					}
+					return res.json()
+				})
+				.then(data => {
+					propertiesMap[eventName] = Object.keys(data.properties)
+						.filter(propName => propName.indexOf('.querystring') === -1)
+						.filter(propName => blacklist.indexOf(propName) === -1)
+						.sort()
+						.map(propName => {
+							return {
+								name: propName,
+								lowerCase: propName.toLowerCase(),
+								type: data.properties[propName]
+							}
+						})
+				})
+
+		})
+	},
+
+	get: eventName => {
+		return propertiesMap[eventName] || [];
+	}
 
 
+}

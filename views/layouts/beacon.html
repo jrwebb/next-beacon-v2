@@ -4,41 +4,31 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Beacon - next.ft.com performance dashboard</title>
-		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
+		{{#if isPresentation}}
+		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-gallery@^1.7.4,o-big-number@^1.1.2">
+		{{else}}
 		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-typography@^3.0.0,o-table@^3.0.0,o-big-number@^1.1.2,o-grid@^4.0.0,o-ft-icons@^3.0.1,o-buttons@^3.0.3,o-forms@^2.0.0">
+		{{/if}}
 		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
 		<script>
 			window.KEEN_PROJECT_ID = '{{KEEN_PROJECT_ID}}';
 			window.KEEN_READ_KEY = '{{KEEN_READ_KEY}}';
 			window.KEEN_HOST = '{{KEEN_HOST}}';
-			window.charts = {{{json charts}}}
+			window.charts = {{{json charts}}};
+			{{#if isPresentation}}
+			window.view = 'presentation';
+			{{/if}}
 		</script>
 		<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js" defer></script>
 		<script src="https://www.gstatic.com/charts/loader.js" defer></script>
+		{{#if isPresentation}}
+		<script src="//build.origami.ft.com/v2/bundles/js?modules=o-gallery@^1.7.4" async></script>
+		{{else}}
 		<script src="//build.origami.ft.com/v2/bundles/js?modules=o-typography@^3.0.0,o-table@^3.0.0,o-hierarchical-nav@^3.1.0&amp;minify=none" async></script>
+		{{/if}}
 		<script src="{{#hashedAsset}}main.js{{/hashedAsset}}" defer></script>
 	</head>
 	<body class="o-techdocs">
-		{{> header}}
-
-		<div class="o-techdocs-container beacon-container">
-			<div class="o-techdocs-layout">
-				<div class="o-techdocs-main-is-broken" data-o-grid-colspan="12">
-					<div class="o-techdocs-content">
-						{{{body}}}
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<footer class="o-techdocs-footer beacon-container">
-			<div>
-				<a title="Glossary" target="_blank" class="external" title="Glossary" href="https://www.lucidchart.com/documents/edit/5c47f2dd-2e96-4825-a9c1-65c74f42b62d#"> <i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i> FT visitor types</a>&nbsp;&nbsp;
-				<a title="Raw data" target="_blank" class="external" href="https://keen.io/project/{{KEEN_PROJECT_ID}}/explorer"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Keen IO</a>&nbsp;&nbsp;
-				<a title="Slack channel" target="_blank" class="external" href="https://financialtimes.slack.com/messages/next-beacon-helpline/"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>#next-beacon-helpline</a>&nbsp;&nbsp;
-				<a title="Developers' guide" target="_blank" class="external" href="https://financial-times.github.io/next/docs/developer-guide/measuring-next/"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>Measuring Next</a>&nbsp;&nbsp;
-				<a title="Configure charts" target="_blank" class="external" href="https://docs.google.com/spreadsheets/d/1jH15yE5T6omD-B58UJfu1y4j8qN4QIs17u-52_Jkw7M"><i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i>The spreadsheet of destiny</a><br>
-			</div>
-		</footer>
+		{{{body}}}
 	</body>
 </html>

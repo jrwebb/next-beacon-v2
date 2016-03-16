@@ -45,15 +45,16 @@ module.exports = function(req, res) {
 
 	if (req.view && req.view === 'presentation') {
 		res.render('presentation', {
-			layout: null,
+			layout: 'beacon',
 			title: dashboard.title || getDashboardTitle(req),
 			description: dashboard.description || undefined,
-			charts: charts
+			charts: charts,
+			isPresentation: true
 		});
 	}
 	else {
 		res.render('dashboard', {
-			layout: req.layout || 'beacon',
+			layout: 'beacon',
 			title: dashboard.title || getDashboardTitle(req),
 			description: dashboard.description || undefined,
 			charts: charts,

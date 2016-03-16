@@ -62,7 +62,7 @@ const Delegate = require('dom-delegate');
 module.exports = {
 	init: () => {
 		const del = new Delegate(document.querySelector('.query-wizard'));
-		new PropertySearch().init();
+		// new PropertySearch().init();
 
 		const input = document.querySelector('.query-wizard__input');
 		const output = document.querySelector('.query-wizard__output');
@@ -168,12 +168,12 @@ module.exports = {
 
 		});
 
-		del.on('click', '.query-wizard__reference--properties', ev => {
-			if (/\)$/.test(input.value)) {
-				input.value = input.value.replace(/\{use the metadata picker\}/, `{${ev.target.textContent}}`).replace(/\([^\)]*\)$/, `(${ev.target.textContent})`);
-				input.focus();
-			}
-		})
+		// del.on('click', '.query-wizard__reference--properties', ev => {
+		// 	if (/\)$/.test(input.value)) {
+		// 		input.value = input.value.replace(/\{use the metadata picker\}/, `{${ev.target.textContent}}`).replace(/\([^\)]*\)$/, `(${ev.target.textContent})`);
+		// 		input.focus();
+		// 	}
+		// })
 
 	}
 }

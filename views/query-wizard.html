@@ -1,7 +1,8 @@
+
+{{> header}}
 <style>
 
 	.query-wizard {
-		padding-top: 160px;
 	}
 
 	.query-wizard .error {
@@ -84,12 +85,7 @@
 
 	.query-wizard__form {
 		background: white;
-		z-index: 1;
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		padding: 90px 10px 10px;
+		padding: 10px;
 		border-bottom: 1px solid #ccc;
 	}
 
@@ -98,7 +94,7 @@
 	}
 
 </style>
-<div class="query-wizard o-grid-container">
+<div class="query-wizard">
 <form class="query-wizard__form">
 	<textarea class="query-wizard__input" placeholder="Enter a keen query or use the tools below to build one
 Whitespace, including new lines, is ok between query parts
@@ -110,6 +106,7 @@ Whitespace, including new lines, is ok between query parts
 	</div>
 	<div class="query-wizard__output"></div>
 </form>
+<div class="o-grid-container">
 <div class="query-wizard__box">
 	<h2>Step 1: Begin a query</h2>
 	<div class="o-grid-row">
@@ -228,10 +225,22 @@ Whitespace, including new lines, is ok between query parts
 		<div data-o-grid-colspan="6">
 			<h3>Metadata picker</h3>
 			<p>Each event stored in keen has lots of <b>metadata</b> attached, which can be referenced in order to <b>filter</b> or <b>group</b> the data. (click to insert in last set of parentheses)</p>
-			<input type="text" class="query-wizard__properties-filter" placeholder="Search for a metadata property">
+			<p><strong>Back soon in an improved form :-)</strong>. In the meantime click the links below to see rudimentary representations of what's available for each event type</p>
+
+			<ul class="query-wizard__reference">
+				{{#each collections}}
+				<li>
+						{{#each this}}
+							<a target="_blank" class="o-buttons o-buttons--small" href="/data/keen-properties/{{category}}:{{action}}">{{category}}: {{action}}</a>
+						{{/each}}
+				</li>
+				{{/each}}
+			</ul>
+			<!-- <input type="text" class="query-wizard__properties-filter" placeholder="Search for a metadata property">
 			<ul class="query-wizard__reference query-wizard__reference--properties">
 			{{#each properties}}<li class="o-buttons o-buttons--small" data-str="{{lowerCase}}">{{name}}</li>{{/each}}
-			</ul>
+			</ul> -->
 		</div>
 	</div>
+</div>
 </div>
