@@ -110,18 +110,6 @@
 	background: white;
 }
 
-.global__configurator {
-	padding: 5px 20px;
-	background: oColorsGetPaletteColor('grey-tint4');
-	color: white;
-	text-align: right;
-	.o-forms-select {
-		width: auto;
-	}
-}
-
-
-
 // Ugly hack award
 .o-gallery__item__content [aria-label="A chart."] {
 	position: relative !important;

@@ -1,17 +1,50 @@
-<div class="global__configurator">
+<form action="" method="get" class="global__configurator__form o-forms">
 	<label>Timeframe:
-		<select class="o-forms-select o-forms-select--small">
-			<option value="timeframe=previous_1_days&amp;interval=hour">Yesterday (hourly)</option>
-			<option value="timeframe=this_1_days&amp;interval=hour">Today (hourly)</option>
-			<option value="timeframe=this_2_days&amp;interval=hour">The last 2 days (hourly)</option>
-			<option value="timeframe=this_7_days&amp;interval=day">The last 7 days (daily)</option>
-			<option value="timeframe=this_14_days&amp;interval=day">The last 14 days (daily)</option>
-			<option value="timeframe=this_30_days&amp;interval=day">The last 30 days (daily)</option>
-			<option value="timeframe=this_60_days&amp;interval=week">The last 60 days (weekly)</option>
-			<option value="timeframe=this_90_days&amp;interval=week">The last 90 days (weekly)</option>
-			<option value="timeframe=this_3_months&amp;interval=week">The last 3 months (weekly)</option>
-			<option value="timeframe=this_6_months&amp;interval=month">The last 6 months (monthly)</option>
-			<option value="timeframe=this_12_months&amp;interval=month">The last 12 months (monthly)</option>
+		<select class="timeframe o-forms-select o-forms-select--small">
+			<option
+				{{#ifEquals @root.timeframe 'previous_1_days'}}selected{{/ifEquals}}
+				value="timeframe=previous_1_days&amp;interval=hour">Yesterday (hourly)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_1_days'}}selected{{/ifEquals}}
+				value="timeframe=this_1_days&amp;interval=hour">Today (hourly)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_2_days'}}selected{{/ifEquals}}
+				value="timeframe=this_2_days&amp;interval=hour">The last 2 days (hourly)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_7_days'}}selected{{/ifEquals}}
+				value="timeframe=this_7_days&amp;interval=day">The last 7 days (daily)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_14_days'}}selected{{/ifEquals}}
+				value="timeframe=this_14_days&amp;interval=day">The last 14 days (daily)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_30_days'}}selected{{/ifEquals}}
+				value="timeframe=this_30_days&amp;interval=day">The last 30 days (daily)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_60_days'}}selected{{/ifEquals}}
+				value="timeframe=this_60_days&amp;interval=week">The last 60 days (weekly)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_90_days'}}selected{{/ifEquals}}
+				value="timeframe=this_90_days&amp;interval=week">The last 90 days (weekly)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_3_months'}}selected{{/ifEquals}}
+				value="timeframe=this_3_months&amp;interval=week">The last 3 months (weekly)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_6_months'}}selected{{/ifEquals}}
+				value="timeframe=this_6_months&amp;interval=month">The last 6 months (monthly)
+			</option>
+			<option
+				{{#ifEquals @root.timeframe 'this_12_months'}}selected{{/ifEquals}}
+				value="timeframe=this_12_months&amp;interval=month">The last 12 months (monthly)
+			</option>
 		</select>
 	</label>
 <!-- 	<label>Page type:
@@ -24,4 +57,4 @@
 			<option value="curated">Curated</option>
 		</select>
 	</label> -->
-</div>
+</form>

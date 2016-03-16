@@ -1,9 +1,15 @@
-const el = document.querySelector('.global__configurator');
-// el.addEventListener('click', (e) => {
+//import {fromForm as getConfigurator} from '../components/configurator';
 
-// debugger;
+const el = document.querySelector('.global__configurator__form');
+el.addEventListener('change', (e) => {
+	if (e.preventDefault) e.preventDefault();
 
-// if (e.preventDefault) e.preventDefault();
-// //	window.location = `/dashboard/${document.querySelector('.featureFlagText').value}`;
-// return false;
-// });
+	const form = e.currentTarget;
+	const timeframeValue = form.querySelector('.timeframe').value;
+
+	let querystring = '?' + encodeURIComponent(timeframeValue);
+	history.pushState({}, "", querystring);
+
+//	window.location = `/dashboard/${document.querySelector('.featureFlagText').value}`;
+	return false;
+});

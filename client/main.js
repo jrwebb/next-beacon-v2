@@ -33,7 +33,7 @@ if (document.querySelector('.feature-search')) {
 	require('./components/feature-search');
 }
 
-if (document.querySelector('.global__configurator')) {
+if (document.querySelector('.global__configurator__form')) {
 	require('./components/global-configurator');
 }
 
