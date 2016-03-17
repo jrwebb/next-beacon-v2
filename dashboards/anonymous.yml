@@ -7,27 +7,27 @@ charts:
   -
     question: Are weekly anonymous visitor counts increasing?
     name: weekly
-    query: page:view->count(user.ab.allocationId)->filter(!user.uuid)
+    query: page:view->count(device.spoorId)->filter(!user.uuid)
     timeframe: this_14_weeks
     interval: w
     datalabel: Anonymous visitors per week
   -
     question: Are daily anonymous visitor counts increasing?
     name: daily
-    query: page:view->count(user.ab.allocationId)->filter(!user.uuid)
+    query: page:view->count(device.spoorId)->filter(!user.uuid)
     timeframe: this_4_weeks
     interval: d
     datalabel: Anonymous visitors per day
   -
     question: Which sites are anons visiting from?
     name: referrers
-    query: page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->sortDesc()
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->sortDesc()
     printer: PieChart
     interval: false
   -
     question: Which pages are anons viewing most?
     name: pages
-    query: "page:view->count(user.ab.allocationId)->filter(!user.uuid)->group(page.location.path)->top(20)"
+    query: "page:view->count(device.spoorId)->filter(!user.uuid)->group(page.location.path)->top(20)"
     printer: BarChart
     datalabel: "% of anons visting the page"
   -
@@ -43,8 +43,8 @@ charts:
     question: Are users interacting with barriers
     name: barriers/click-count
     query: "@pct(
-      cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier),
-      barrier:view->count(user.ab.allocationId)
+      cta:click->count(device.spoorId)->filter(context.domPath~barrier),
+      barrier:view->count(device.spoorId)
     )"
     datalabel: pct of users clicking on barriers
     colspan: 12 L4
@@ -52,9 +52,9 @@ charts:
     question: Are barriers successful at getting users to sign in or subscribe
     name: barriers/click-types
     query: "@concat(
-      cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier)->filter(context.domPath!~subscribe)->filter(context.domPath!~sign-in),
-      cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier)->filter(context.domPath~subscribe),
-      cta:click->count(user.ab.allocationId)->filter(context.domPath~barrier)->filter(context.domPath~sign-in)
+      cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath!~subscribe)->filter(context.domPath!~sign-in),
+      cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath~subscribe),
+      cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath~sign-in)
     )->relabel(CONCATENATION_RESULT,Other,Subscribe,Sign in)"
     colspan: 12 L4
   -
@@ -65,4 +65,9 @@ charts:
     question: Are anons in the AB test viewing more pages
     name: propensityAB/page-views
     query: page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()
-
+  -
+    question: What's the distribution of propensity scores on Next?
+    name: referrers
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(user.propensity.any.score)
+    printer: PieChart
+    interval: false
