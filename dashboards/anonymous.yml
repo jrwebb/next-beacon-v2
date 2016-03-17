@@ -67,7 +67,7 @@ charts:
     query: page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()
   -
     question: What's the distribution of propensity scores on Next?
-    name: referrers
+    name: propensity
     query: page:view->count(device.spoorId)->filter(!user.uuid)->group(user.propensity.any.score)
     printer: PieChart
     interval: false
