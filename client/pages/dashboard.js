@@ -1,12 +1,10 @@
 'use strict';
 
-import Delegate from 'dom-delegate';
 import {init as chartUi} from '../components/chart-ui';
 import {init as dashboardUi} from '../components/dashboard-ui';
 import {buildAndRenderChart, displayError} from '../components/chart';
-import {storeKq} from '../data/kq-cache';
 
-function renderAllCharts () {
+export function renderAllCharts () {
 	[].forEach.call(document.querySelectorAll('.chart'), el => {
 		const chartName = el.dataset.chartName;
 		const printerEl = el.querySelector('.chart__printer')
@@ -26,9 +24,6 @@ export function init () {
 	// Init UI for all charts
 	chartUi(document.querySelector('.charts'));
 
-	// Dashboard UI
-	if (document.querySelector('.dashboard__configurator__form')) {
-		const delegate = new Delegate(document.body);
-		delegate.on('change', '.dashboard__configurator__form', renderAllCharts);
-	}
+	// Init dashboard UI
+	dashboardUi();
 }

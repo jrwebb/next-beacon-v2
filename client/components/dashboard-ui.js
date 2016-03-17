@@ -1,19 +1,24 @@
-const el = document.querySelector('.dashboard__configurator__form');
-el.addEventListener('change', (e) => {
+import Delegate from 'dom-delegate';
+import {renderAllCharts} from '../pages/dashboard';
+
+function handleDashboardConfigChange (e) {
 	if (e.preventDefault) e.preventDefault();
-	const form = e.currentTarget;
+
+	const form = document.querySelector('.dashboard__configurator__form');
 	const timeframeValue = form.querySelector('.timeframe').value;
 	let querystring = '?' + timeframeValue;
 
-	// Todo: Tell the charts to update and reprint themselves (based on querystring perhaps?)
-	// [].forEach.call(document.querySelectorAll('.chart .chart__configurator [name]'), chartEl => {
-	// 	//del.on('change', '.chart__configurator [name]', reprint);
-	// 	console.log(chartEl);
-	// 	chartEl.dispatchEvent(new Event('change'));
-	// });
+	history.pushState({}, "", querystring);
+	//	window.location = querystring;
 
-	// history.pushState({}, "", querystring);
-	window.location = querystring;
+	renderAllCharts();
+}
 
-	return false;
-});
+export function init () {
+	if (!document.querySelector('.dashboard__configurator__form')) {
+		return false;
+	} else {
+		const delegate = new Delegate(document.body);
+		delegate.on('change', '.dashboard__configurator__form', handleDashboardConfigChange);
+	}
+}
