@@ -8,7 +8,7 @@ charts:
   -
     question: How many users do we have overall?
     name: users
-    query: "page:view->count(user.ab.allocationId)"
+    query: "page:view->count(device.spoorId)"
     colspan: 12 L4
   -
     question: How many signed in users do we have?
@@ -18,7 +18,7 @@ charts:
   -
     question: How many anonymous users do we have?
     name: users/anonymous
-    query: "page:view->count(user.ab.allocationId)->filter(!user.uuid)"
+    query: "page:view->count(device.spoorId)->filter(!user.uuid)"
     colspan: 12 L4
   -
     break: true
@@ -41,7 +41,7 @@ charts:
     name: users/trend
     query: "@concat(
       page:view->count(user.uuid),
-      page:view->count(user.ab.allocationId)->filter(!user.uuid)
+      page:view->count(device.spoorId)->filter(!user.uuid)
     )->relabel(CONCATENATION_RESULT,Logged in, Anonymous)"
     isStacked: true
     printer: AreaChart
