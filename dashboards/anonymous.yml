@@ -68,6 +68,6 @@ charts:
   -
     question: What's the distribution of propensity scores on Next?
     name: propensity
-    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(user.propensity.any.score)
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(user.propensity.any.cohort)
     printer: PieChart
     interval: false
