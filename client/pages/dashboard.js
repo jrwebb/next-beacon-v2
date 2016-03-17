@@ -2,6 +2,7 @@
 
 import Delegate from 'dom-delegate';
 import {init as chartUi} from '../components/chart-ui';
+import {init as dashboardUi} from '../components/dashboard-ui';
 import {buildAndRenderChart, displayError} from '../components/chart';
 import {storeKq} from '../data/kq-cache';
 
@@ -26,8 +27,8 @@ export function init () {
 	chartUi(document.querySelector('.charts'));
 
 	// Dashboard UI
-	if (document.querySelector('.global__configurator__form')) {
+	if (document.querySelector('.dashboard__configurator__form')) {
 		const delegate = new Delegate(document.body);
-		delegate.on('change', '.global__configurator__form', renderAllCharts);
+		delegate.on('change', '.dashboard__configurator__form', renderAllCharts);
 	}
 }

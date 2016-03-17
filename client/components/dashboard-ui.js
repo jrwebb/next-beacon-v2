@@ -1,6 +1,4 @@
-//import {fromForm as getConfigurator} from '../components/configurator';
-
-const el = document.querySelector('.global__configurator__form');
+const el = document.querySelector('.dashboard__configurator__form');
 el.addEventListener('change', (e) => {
 	if (e.preventDefault) e.preventDefault();
 	const form = e.currentTarget;
