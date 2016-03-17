@@ -2,7 +2,8 @@
 <html class="o-hoverable-on" data-next-app="{{__name}}"{{#if __isProduction}} data-next-is-production{{/if}}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Temporary hack to cope with slight bugginess of nav width on ios-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 		<title>Beacon - next.ft.com performance dashboard</title>
 		{{#if isPresentation}}
 		<link rel="stylesheet" href="//build.origami.ft.com/v2/bundles/css?modules=o-techdocs@^5.0.0,o-gallery@^1.7.4,o-big-number@^1.1.2">

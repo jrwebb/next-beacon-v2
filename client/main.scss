@@ -10,12 +10,17 @@ body {
 	font-weight: 100;
 	margin: 0;
 }
+
 .beacon-container {
 	max-width: 100%;
 }
 .o-techdocs {
 	.o-header {
-		margin-bottom: 16px;
+		margin-bottom: 10px;
+		@include oGridRespondTo(M) {
+			margin-bottom: 16px;
+		}
+		width: 100%;
 		.o-header__sitename {
 			color: oColorsGetPaletteColor('grey-tint2');
 		}

@@ -4,7 +4,11 @@
 .beacon__printer,
 .chart {
 	position: relative;
-	margin: 15px 0px 60px;
+	margin: 15px 0px;
+
+	@include oGridRespondTo(L) {
+		margin-bottom: 60px;
+	}
 	h2 {
 		border: 0px;
 		padding: 0px;
