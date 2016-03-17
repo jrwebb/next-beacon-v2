@@ -1,4 +1,6 @@
+import KeenQuery from 'keen-query';
 import {storeKq} from '../data/kq-cache';
+import {fromQueryString as getConfiguratorFromQueryString} from './configurator';
 
 const rendererMap = new WeakMap();
 const chartsMap = new WeakMap();
@@ -16,13 +18,12 @@ export function displayError (printerEl, err, kq, meta) {
 	printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${meta.name}, ${meta.label}, ${meta.question}: ${meta.query}</p>`;
 }
 
-export function renderChart (printerEl, kq, meta) {
-
+export function renderChart (printerEl, builtQuery, chart) {
 	let renderPromise;
 	printerEl.classList.add('chart--loading');
 	try {
 
-		renderPromise = kq.print()
+		renderPromise = builtQuery.print()
 			.then(renderer => {
 				// avoid race condition when clicking multiple configurator buttons in quick succession
 				if (rendererMap.get(printerEl) !== renderPromise) {
@@ -35,7 +36,7 @@ export function renderChart (printerEl, kq, meta) {
 					if (chart) {
 						chart.clearChart();
 					}
-					const rendererResult = renderer(printerEl, meta);
+					const rendererResult = renderer(printerEl, chart);
 
 					if (rendererResult && rendererResult.then) {
 						return rendererResult.then(chart => {
@@ -51,7 +52,7 @@ export function renderChart (printerEl, kq, meta) {
 					throw 'Keen query did not return printable output.'
 				}
 			});
-		storeKq(`${meta.name}:printed`, kq);
+		storeKq(`${chart.name}:printed`, builtQuery);
 	} catch (err) {
 		renderPromise = Promise.reject(err)
 	}
@@ -63,8 +64,41 @@ export function renderChart (printerEl, kq, meta) {
 		if (rendererMap.get(printerEl) !== renderPromise) {
 			return;
 		}
-		displayError(printerEl, err, kq, meta);
+		displayError(printerEl, err, builtQuery, chart);
 	});
 }
 
+export function buildAndRenderChart (chart, printerEl) {
+	try {
+		let builtQuery = KeenQuery.buildFromAlias(chart);
+
+		// todo: default to column chart if it has dimension but no interval... or something
+		builtQuery = builtQuery.setPrinter(chart.printer || 'LineChart').tidy();
+
+		if (chart.hasConfigurableInterval) {
+			// avoid showing as big number when the default view could easily be converted to a line graph over time
+			if (builtQuery.dimension < 2 && (['AreaChart','LineChart','ColumnChart'].indexOf(chart.printer) > -1 || !chart.printer)) {
+				builtQuery = builtQuery.interval('d')
+			}
+		}
+
+		storeKq(chart.name, builtQuery);
+
+		const configuratorSkipSteps = [];
+
+		if (!chart.hasConfigurableInterval) {
+			configuratorSkipSteps.push('interval');
+		}
+
+		if (!chart.hasConfigurableTimeframe) {
+			configuratorSkipSteps.push('timeframe');
+		}
+
+		const configure = getConfiguratorFromQueryString();
+		builtQuery = configure(builtQuery, configuratorSkipSteps);
+		renderChart(printerEl, builtQuery, chart);
+	} catch (err) {
+		displayError(printerEl, err, null, chart);
+	}
+}
 
