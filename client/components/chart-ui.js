@@ -128,10 +128,10 @@ function copyData (ev) {
 	}
 }
 
-// Utilities for user interface (ui) elements
 export function init (container) {
-	const del = new Delegate(container);
 	oExpander.init(container);
+
+	const del = new Delegate(container);
 	del.on('change', '.chart__configurator [name]', reprint);
 	del.on('click', '.chart__ui__copy-data', copyData);
 
@@ -145,7 +145,6 @@ export function init (container) {
 			chartEl.classList.add('chart--pre-grouped')
 		}
 		buildChartLinks(kq, chartEl);
-
 	});
 }
 
