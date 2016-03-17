@@ -58,14 +58,6 @@ charts:
     )->relabel(CONCATENATION_RESULT,Other,Subscribe,Sign in)"
     colspan: 12 L4
   -
-    question: Are anons clicking on the propensity AB test
-    name: propensityAB/clicks
-    query: cta:click->count()->filter(context.domPath~propensity-discount)->group(user.ab.tests.propensityAbTest)->tidy()
-  -
-    question: Are anons in the AB test viewing more pages
-    name: propensityAB/page-views
-    query: page:view->count()->group(user.ab.tests.propensityAbTest)->tidy()
-  -
     question: What's the distribution of propensity scores on Next?
     name: propensity
     query: page:view->count(device.spoorId)->filter(!user.uuid)->group(user.propensity.any.cohort)
