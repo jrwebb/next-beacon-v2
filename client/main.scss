@@ -53,7 +53,6 @@ body {
 
 @include oGridRespondTo(L) {
 	.o-techdocs-container {
-		margin-top: 120px;
 
 		[data-o-grid-colspan~=L4] {
 			h2,
