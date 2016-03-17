@@ -47,6 +47,9 @@ function reprint (ev) {
 	const chartName = container.dataset.chartName;
 	const kq = configure(retrieveKq(chartName));
 	buildChartLinks(kq, container);
+
+	// Todo: Add an attribute to signify this chart has been deliberately configured by
+	// the user (and therefore should not be reprinted when dashboard chart UI is changed)
 	renderChart(container.querySelector('.chart__printer'), kq, window.charts.find(c => c.name === chartName));
 }
 

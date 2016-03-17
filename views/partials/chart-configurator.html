@@ -2,10 +2,62 @@
 	<form action="" method="get" style="display: inline" class="chart__configurator__form o-forms">
 		<fieldset class="o-forms-group">
 			<legend class="o-forms-label">Timeframe:</legend>
-			<input class="o-forms-radio o-forms-radio--small" id="this_48_hours_{{index}}" name="timeframe" type="radio" value="this_48_hours" {{#ifEquals @root.timeframe 'this_48_hours'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_48_hours_{{index}}">2 days</label>
-			<input class="o-forms-radio o-forms-radio--small" id="this_7_days_{{index}}" name="timeframe" type="radio" value="this_7_days" {{#ifEquals @root.timeframe 'this_7_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_7_days_{{index}}">7 days</label>
-			<input class="o-forms-radio o-forms-radio--small" id="this_14_days_{{index}}" name="timeframe" type="radio" value="this_14_days" {{#ifEquals @root.timeframe 'this_14_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_14_days_{{index}}">14 days</label>
-			<input class="o-forms-radio o-forms-radio--small" id="this_30_days_{{index}}" name="timeframe" type="radio" value="this_30_days" {{#ifEquals @root.timeframe 'this_30_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_30_days_{{index}}">30 days</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="previous_1_days_{{index}}"
+				value="previous_1_days" {{#ifEquals @root.timeframe 'previous_1_days'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="previous_1_days_{{index}}">Yesterday</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_1_days_{{index}}"
+				value="this_1_days" {{#ifEquals @root.timeframe 'this_1_days'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_1_days_{{index}}">Today</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_2_days_{{index}}"
+				value="this_2_days" {{#ifEquals @root.timeframe 'this_2_days'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_2_days_{{index}}">2 days</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_7_days_{{index}}"
+				value="this_7_days" {{#ifEquals @root.timeframe 'this_7_days'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_7_days_{{index}}">7 days</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_14_days_{{index}}"
+				value="this_14_days" {{#ifEquals @root.timeframe 'this_14_days'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_14_days_{{index}}">14 days</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_30_days_{{index}}"
+				value="this_30_days" {{#ifEquals @root.timeframe 'this_30_days'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_30_days_{{index}}">30 days</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_60_days_{{index}}"
+				value="this_60_days" {{#ifEquals @root.timeframe 'this_60_days'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_60_days_{{index}}">60 days</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_90_days_{{index}}"
+				value="this_90_days" {{#ifEquals @root.timeframe 'this_90_days'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_90_days_{{index}}">90 days</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_3_months_{{index}}"
+				value="this_3_months" {{#ifEquals @root.timeframe 'this_3_months'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_3_months_{{index}}">3 months</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_6_months_{{index}}"
+				value="this_6_months" {{#ifEquals @root.timeframe 'this_6_months'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_6_months_{{index}}">6 months</label>
+
+			<input name="timeframe" type="radio" class="o-forms-radio o-forms-radio--small"
+				id="this_12_months_{{index}}"
+				value="this_12_months" {{#ifEquals @root.timeframe 'this_12_months'}}checked{{/ifEquals}}>
+			<label class="o-forms-label" for="this_12_months_{{index}}">12 months</label>
+
 			<fieldset>
 				Custom date:
 				<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
