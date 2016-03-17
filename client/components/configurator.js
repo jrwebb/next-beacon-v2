@@ -64,6 +64,14 @@ function getStateFromQuery () {
 		};
 	}
 	q.filters = [];
+
+	if (q.pagetype) {
+		q.filters.push({
+			prop:'page.location.type',
+			value:q.pagetype
+		});
+	}
+
 	return q;
 }
 
