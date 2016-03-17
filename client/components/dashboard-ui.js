@@ -8,8 +8,13 @@ function handleDashboardConfigChange (e) {
 	const timeframeValue = form.querySelector('.timeframe').value;
 	let querystring = '?' + timeframeValue;
 
+	// Add to querystring any filters (e.g. page-type, device-type, rfv)
+	const pagetypeValue = form.querySelector('.pagetype').value;
+	querystring += '&' + pagetypeValue;
+
+
+	// Todo: Render charts when user clicks the "back" button in the browser
 	history.pushState({}, "", querystring);
-	//	window.location = querystring;
 
 	renderAllCharts();
 }

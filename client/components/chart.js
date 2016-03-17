@@ -9,6 +9,8 @@ function finishRender (printerEl, chart) {
 	chartsMap.set(printerEl, chart);
 	printerEl.classList.remove('chart--loading');
 	printerEl.classList.add('chart--loaded');
+
+	// Todo: Trigger an update of the chart UI form (to reflect the properties of the built query)
 }
 
 export function displayError (printerEl, err, kq, meta) {
