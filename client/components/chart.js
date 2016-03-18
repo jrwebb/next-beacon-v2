@@ -5,22 +5,20 @@ import {fromQueryString as getConfiguratorFromQueryString} from './configurator'
 const rendererMap = new WeakMap();
 const chartsMap = new WeakMap();
 
-function finishRender (printerEl, chart) {
-	chartsMap.set(printerEl, chart);
+function finishRender (printerEl, chartConfig) {
+	chartsMap.set(printerEl, chartConfig);
 	printerEl.classList.remove('chart--loading');
 	printerEl.classList.add('chart--loaded');
-
-	// Todo: Trigger an update of the chart UI form (to reflect the properties of the built query)
 }
 
-export function displayError (printerEl, err, kq, meta) {
-	console.log('Error', err, kq, meta);
+export function displayError (printerEl, err, kq, chartConfig) {
+	console.log('Error', err, kq, chartConfig);
 	printerEl.classList.remove('chart--loading');
 	printerEl.classList.add('chart-error');
-	printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${meta.name}, ${meta.label}, ${meta.question}: ${meta.query}</p>`;
+	printerEl.innerHTML = `<p class="error"><strong>Error: </strong>${err.message || err}</span><p>${chartConfig.name}, ${chartConfig.label}, ${chartConfig.question}: ${chartConfig.query}</p>`;
 }
 
-export function renderChart (printerEl, builtQuery, chart) {
+export function renderChart (printerEl, builtQuery, chartConfig) {
 	let renderPromise;
 	printerEl.classList.add('chart--loading');
 	try {
@@ -33,16 +31,16 @@ export function renderChart (printerEl, builtQuery, chart) {
 				}
 
 				if (typeof renderer === 'function') {
-					let chart = chartsMap.get(printerEl);
+					let chartConfig = chartsMap.get(printerEl);
 					// avoid google charts related memory leaks
-					if (chart) {
-						chart.clearChart();
+					if (chartConfig) {
+						chartConfig.clearChart();
 					}
-					const rendererResult = renderer(printerEl, chart);
+					const rendererResult = renderer(printerEl, chartConfig);
 
 					if (rendererResult && rendererResult.then) {
-						return rendererResult.then(chart => {
-							finishRender(printerEl, chart);
+						return rendererResult.then(chartConfig => {
+							finishRender(printerEl, chartConfig);
 						});
 					} else {
 						finishRender(printerEl, rendererResult)
@@ -54,7 +52,8 @@ export function renderChart (printerEl, builtQuery, chart) {
 					throw 'Keen query did not return printable output.'
 				}
 			});
-		storeKq(`${chart.name}:printed`, builtQuery);
+
+		storeKq(`${chartConfig.name}:printed`, builtQuery);
 	} catch (err) {
 		renderPromise = Promise.reject(err)
 	}
@@ -66,41 +65,41 @@ export function renderChart (printerEl, builtQuery, chart) {
 		if (rendererMap.get(printerEl) !== renderPromise) {
 			return;
 		}
-		displayError(printerEl, err, builtQuery, chart);
+		displayError(printerEl, err, builtQuery, chartConfig);
 	});
 }
 
-export function buildAndRenderChart (chart, printerEl) {
+export function buildAndRenderChart (chartConfig, printerEl) {
 	try {
-		let builtQuery = KeenQuery.buildFromAlias(chart);
+		let builtQuery = KeenQuery.buildFromAlias(chartConfig);
 
 		// todo: default to column chart if it has dimension but no interval... or something
-		builtQuery = builtQuery.setPrinter(chart.printer || 'LineChart').tidy();
+		builtQuery = builtQuery.setPrinter(chartConfig.printer || 'LineChart').tidy();
 
-		if (chart.hasConfigurableInterval) {
+		if (chartConfig.hasConfigurableInterval) {
 			// avoid showing as big number when the default view could easily be converted to a line graph over time
-			if (builtQuery.dimension < 2 && (['AreaChart','LineChart','ColumnChart'].indexOf(chart.printer) > -1 || !chart.printer)) {
+			if (builtQuery.dimension < 2 && (['AreaChart','LineChart','ColumnChart'].indexOf(chartConfig.printer) > -1 || !chartConfig.printer)) {
 				builtQuery = builtQuery.interval('d')
 			}
 		}
 
-		storeKq(chart.name, builtQuery);
+		storeKq(chartConfig.name, builtQuery);
 
 		const configuratorSkipSteps = [];
 
-		if (!chart.hasConfigurableInterval) {
+		if (!chartConfig.hasConfigurableInterval) {
 			configuratorSkipSteps.push('interval');
 		}
 
-		if (!chart.hasConfigurableTimeframe) {
+		if (!chartConfig.hasConfigurableTimeframe) {
 			configuratorSkipSteps.push('timeframe');
 		}
 
 		const configure = getConfiguratorFromQueryString();
 		builtQuery = configure(builtQuery, configuratorSkipSteps);
-		renderChart(printerEl, builtQuery, chart);
+		renderChart(printerEl, builtQuery, chartConfig);
 	} catch (err) {
-		displayError(printerEl, err, null, chart);
+		displayError(printerEl, err, null, chartConfig);
 	}
 }
 
