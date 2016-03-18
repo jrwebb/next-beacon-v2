@@ -27,10 +27,19 @@ charts:
     ->tidy()"
     interval: false
   -
+    question: Which browsers are visitors using
+    name: browsers
+    query: "page:view->count(device.spoorId)->group(device.browserName)
+->cutoff(1,percent)
+->tidy(true)"
+    interval: false
+    printer: BarChart
+  -
     question: Are any browsers showing unusually high opt out rates (excluding browsers with <5 opt outs)?
     name: opt-out-rate/by-browser
     query: "@pct(site:optout->count(user.uuid)->cutoff(5),page:view->count(user.uuid))->group(device.browserName)->tidy(true)->top(10)->print(BarChart)"
     interval: false
+    colspan: 12 L4
     printer: BarChart
   -
     question: Which browsers have a higher opt out rate now compared to 2 weeks ago (excluding browsers with <5 opt outs)?
@@ -42,4 +51,5 @@ charts:
     timeframe: false
     interval: false
     printer: BarChart
+    colspan: 12 L4
     datalabel: current opt out rate / past opt out rate
