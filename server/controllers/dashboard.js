@@ -59,6 +59,7 @@ module.exports = function(req, res) {
 			description: dashboard.description || undefined,
 			charts: charts,
 			timeframe: req.query.timeframe || 'this_14_days',
+			pagetype: req.query.pagetype || '',
 			interval: req.query.interval,
 			printer: req.query.printer === 'Table' ? 'Table' : undefined,
 			isStandaloneChart: /^\/chart/.test(req.path)

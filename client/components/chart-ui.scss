@@ -57,12 +57,18 @@
 	> fieldset {
 		border-bottom: 1px solid oColorsGetPaletteColor('pink-tint2');
 	}
-}
-
-.chart__configurator__filters .o-forms-select {
-	display: inline-block;
-	width: auto;
-	margin: 5px;
+	.o-forms-select,
+	.o-forms-text--small {
+		display: inline-block;
+		width: auto;
+		margin: 5px;
+	}
+	.chart__configurator__absolute-time {
+		float: right;
+		.absolute-time__block {
+			white-space: nowrap;
+		}
+	}
 }
 
 .chart__ui {

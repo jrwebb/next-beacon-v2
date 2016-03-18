@@ -1,0 +1,81 @@
+<form action="" method="get" class="dashboard__configurator__form o-forms">
+
+	Charts include data for
+
+	<select class="pagetype o-forms-select o-forms-select--small">
+		<option value="">all page types</option>
+		<option
+			{{#ifEquals @root.pagetype 'article'}}selected{{/ifEquals}}
+			value="pagetype=article">articles
+		</option>
+		<option
+			{{#ifEquals @root.pagetype 'frontpage'}}selected{{/ifEquals}}
+			value="pagetype=frontpage">the frontpage
+		</option>
+		<option
+			{{#ifEquals @root.pagetype 'myft'}}selected{{/ifEquals}}
+			value="pagetype=myft"><i>my</i>FT
+		</option>
+		<option
+			{{#ifEquals @root.pagetype 'search'}}selected{{/ifEquals}}
+			value="pagetype=search">searches
+		</option>
+		<option
+			{{#ifEquals @root.pagetype 'stream'}}selected{{/ifEquals}}
+			value="pagetype=stream">streams
+		</option>
+		<option
+			{{#ifEquals @root.pagetype 'curated'}}selected{{/ifEquals}}
+			value="pagetype=curated">curated streams
+		</option>
+	</select>
+
+	from
+
+	<select class="timeframe o-forms-select o-forms-select--small">
+		<option
+			{{#ifEquals @root.timeframe 'previous_1_days'}}selected{{/ifEquals}}
+			value="timeframe=previous_1_days&amp;interval=hour">yesterday (hourly)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_1_days'}}selected{{/ifEquals}}
+			value="timeframe=this_1_days&amp;interval=hour">today (hourly)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_2_days'}}selected{{/ifEquals}}
+			value="timeframe=this_2_days&amp;interval=hour">the last 2 days (hourly)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_7_days'}}selected{{/ifEquals}}
+			value="timeframe=this_7_days&amp;interval=day">the last 7 days (daily)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_14_days'}}selected{{/ifEquals}}
+			value="timeframe=this_14_days&amp;interval=day">the last 14 days (daily)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_30_days'}}selected{{/ifEquals}}
+			value="timeframe=this_30_days&amp;interval=day">the last 30 days (daily)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_60_days'}}selected{{/ifEquals}}
+			value="timeframe=this_60_days&amp;interval=week">the last 60 days (weekly)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_90_days'}}selected{{/ifEquals}}
+			value="timeframe=this_90_days&amp;interval=week">the last 90 days (weekly)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_3_months'}}selected{{/ifEquals}}
+			value="timeframe=this_3_months&amp;interval=week">the last 3 months (weekly)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_6_months'}}selected{{/ifEquals}}
+			value="timeframe=this_6_months&amp;interval=month">the last 6 months (monthly)
+		</option>
+		<option
+			{{#ifEquals @root.timeframe 'this_12_months'}}selected{{/ifEquals}}
+			value="timeframe=this_12_months&amp;interval=month">the last 12 months (monthly)
+		</option>
+	</select>
+</form>

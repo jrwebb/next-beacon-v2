@@ -2,19 +2,15 @@
 	<div class="o-header__container beacon-container">
 		<div class="o-header__inner">
 			<div class="o-header__primary">
-				<div class="o-header__primary__left" data-o-grid-colspan="6">
-					<a class="o-header__logo o-header__logo--ft" href="/">
-						<abbr title="Financial Times">FT</abbr>
-						<h1 class="o-header__title" title="Real-time user data"><span class="o-header__sitename">Beacon.ft.com /</span> {{{title}}}</h1>
-					</a>
-				</div>
-				<div class="o-header__primary__right" data-o-grid-colspan="6">
-					{{#if charts}}{{> global-configurator}}{{/if}}
-				</div>
+				<a class="o-header__logo o-header__logo--ft" href="/">
+					<abbr title="Financial Times">FT</abbr>
+					<h1 class="o-header__title" title="Real-time user data"><span class="o-header__sitename">Beacon.ft.com /</span> {{{title}}}</h1>
+				</a>
 			</div>
 			<div class="o-header__secondary">
 				{{> primary-navigation}}
 			</div>
 		</div>
 	</div>
+	{{#if charts}}{{> dashboard-configurator}}{{/if}}
 </header>

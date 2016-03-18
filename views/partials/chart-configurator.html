@@ -1,17 +1,67 @@
 <nav class="chart__configurator">
 	<form action="" method="get" style="display: inline" class="chart__configurator__form o-forms">
-		<fieldset class="o-forms-group">
-			<legend class="o-forms-label">Timeframe:</legend>
-			<input class="o-forms-radio o-forms-radio--small" id="this_48_hours_{{index}}" name="timeframe" type="radio" value="this_48_hours" {{#ifEquals @root.timeframe 'this_48_hours'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_48_hours_{{index}}">2 days</label>
-			<input class="o-forms-radio o-forms-radio--small" id="this_7_days_{{index}}" name="timeframe" type="radio" value="this_7_days" {{#ifEquals @root.timeframe 'this_7_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_7_days_{{index}}">7 days</label>
-			<input class="o-forms-radio o-forms-radio--small" id="this_14_days_{{index}}" name="timeframe" type="radio" value="this_14_days" {{#ifEquals @root.timeframe 'this_14_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_14_days_{{index}}">14 days</label>
-			<input class="o-forms-radio o-forms-radio--small" id="this_30_days_{{index}}" name="timeframe" type="radio" value="this_30_days" {{#ifEquals @root.timeframe 'this_30_days'}}checked{{/ifEquals}}><label class="o-forms-label" for="this_30_days_{{index}}">30 days</label>
-			<fieldset>
-				Custom date:
-				<label>start</label> <input class="chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}"> |
-				<label>end</label> <input class="chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}">
-			</fieldset>
-		{{#if hasConfigurableInterval}}
+		<fieldset>
+			<legend class="o-forms-label">Timeframe: </legend>
+			<select name="timeframe" class="timeframe o-forms-select o-forms-select--small">
+				<option
+					{{#ifEquals @root.timeframe 'previous_1_days'}}selected{{/ifEquals}}
+					value="previous_1_days">Yesterday
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_1_days'}}selected{{/ifEquals}}
+					value="this_1_days">Today
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_2_days'}}selected{{/ifEquals}}
+					value="this_2_days">The last 2 days
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_7_days'}}selected{{/ifEquals}}
+					value="this_7_days">The last 7 days
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_14_days'}}selected{{/ifEquals}}
+					value="this_14_days">The last 14 days
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_30_days'}}selected{{/ifEquals}}
+					value="this_30_days">The last 30 days
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_60_days'}}selected{{/ifEquals}}
+					value="this_60_days">The last 60 days
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_90_days'}}selected{{/ifEquals}}
+					value="this_90_days">The last 90 days
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_3_months'}}selected{{/ifEquals}}
+					value="this_3_months">The last 3 months
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_6_months'}}selected{{/ifEquals}}
+					value="this_6_months">The last 6 months
+				</option>
+				<option
+					{{#ifEquals @root.timeframe 'this_12_months'}}selected{{/ifEquals}}
+					value="this_12_months">The last 12 months
+				</option>
+			</select>
+
+			<span class="chart__configurator__absolute-time">
+				<span class="absolute-time__block">
+					(<strong>Or:</strong>
+					<label>from</label> <input class="o-forms-text o-forms-text--small chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}">
+				</span>
+				<span class="absolute-time__block">
+					<label>to</label> <input class="o-forms-text o-forms-text--small chart__configurator__end" name="timeframe[end]" type="date" value="{{@root.timeframe.end}}">)
+				</span>
+			</span>
+		</fieldset>
+		<fieldset>
+			{{#if hasConfigurableInterval}}
+			<strong>Time interval:</strong>
 			<select name="interval" class="chart__configurator__interval o-forms-select o-forms-select--small">
 				<option value=""> -- choose interval -- </option>
 				<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
@@ -20,15 +70,12 @@
 				<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
 				<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
 			</select>
-		{{else}}
-		<p>Interval configuration disabled for this chart. Click 'View in query wizard' for full control</p>
-		{{/if}}
+			{{else}}
+			<p>Interval configuration disabled for this chart. Click 'View in query wizard' for full control</p>
+			{{/if}}
+		</fieldset>
 	</fieldset>
-	<fieldset class="o-forms-group">
-		<input class="o-forms-radio o-forms-radio--small" id="printer_default_{{index}}" type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}><label for="printer_default_{{index}}" class="o-forms-label">View graph</label>
-		<input class="o-forms-radio o-forms-radio--small" id="printer_table_{{index}}" type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}><label for="printer_table_{{index}}" class="o-forms-label">View data</label>
-	</fieldset>
-	<fieldset class="chart__configurator__group o-forms-group">
+	<fieldset class="chart__configurator__group">
 			<legend class="o-forms-label">Group by:</legend>
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_null_{{index}}" value=""><label for="group_null_{{index}}" class="o-forms-label">ungroup</label>
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_device.oGridLayout_{{index}}" value="device.oGridLayout"><label for="group_device.oGridLayout_{{index}}" class="o-forms-label">screen size</label>
@@ -77,6 +124,11 @@
 				<option value="occasional-skimmer">occasional skimmer</option>
 				<option value="disengaged-long-tail">disengaged long tail</option>
 			</select>
-	</fieldset>
+		</fieldset>
+		<fieldset>
+			<strong>View: </strong>
+			<input class="o-forms-radio o-forms-radio--small" id="printer_default_{{index}}" type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}><label for="printer_default_{{index}}" class="o-forms-label">Graph</label>
+			<input class="o-forms-radio o-forms-radio--small" id="printer_table_{{index}}" type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}><label for="printer_table_{{index}}" class="o-forms-label">Data table</label>
+		</fieldset>
 	</form>
 </nav>
