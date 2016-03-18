@@ -33,6 +33,7 @@ charts:
 ->cutoff(1,percent)
 ->tidy(true)"
     interval: false
+    colspan: 12 L4
     printer: BarChart
   -
     question: Are any browsers showing unusually high opt out rates (excluding browsers with <5 opt outs)?
