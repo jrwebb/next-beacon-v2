@@ -1,6 +1,6 @@
 
 function getTimeframe(form, updatedField) {
-	const relTimeEl = form.querySelector('[name="timeframe"]:checked')
+	const relTimeEl = form.querySelector('[name="timeframe"]');
 	const relTime = relTimeEl && relTimeEl.value;
 	const startEl = form.querySelector('[name="timeframe[start]"]');
 	const endEl = form.querySelector('[name="timeframe[end]"]');
@@ -11,7 +11,6 @@ function getTimeframe(form, updatedField) {
 
 	// fully set absolute time
 	if (absTime.start && absTime.end && updatedField !== 'timeframe') {
-		relTimeEl && relTimeEl.removeAttribute('checked');
 		return absTime;
 	// midway through setting absolute time
 	} else if (/^timeframe\[(start|end)\]$/.test(updatedField)) {
@@ -21,7 +20,6 @@ function getTimeframe(form, updatedField) {
 		endEl.value = '';
 		startEl.value = '';
 		if (!relTime) {
-			form.querySelector('[name="timeframe"][value="this_14_days"]').setAttribute('checked', '');
 			return 'this_14_days';
 		}
 		return relTime;

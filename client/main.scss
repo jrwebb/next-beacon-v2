@@ -55,20 +55,17 @@ body {
 	.o-techdocs-container {
 
 		[data-o-grid-colspan~=L4] {
-			h2,
-			.o-expander {
+			h2 {
 				font-size: 24px;
 			}
 		}
 		[data-o-grid-colspan~=L3] {
-			h2,
-			.o-expander {
+			h2 {
 				font-size: 20px;
 			}
 		}
 		[data-o-grid-colspan~=L2] {
-			h2,
-			.o-expander {
+			h2 {
 				font-size: 18px;
 			}
 		}
