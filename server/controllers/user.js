@@ -42,6 +42,18 @@ module.exports = function(req, res) {
   datalabel: Article views
   colspan: 12 L4
   printer: Table
+-
+  question: Which browsers does this user use
+  name: user/browsers
+  query: "page:view->count()->group(device.browserName,device.browserVersion.major)->filter(user.uuid=${uuid})"
+  colspan: 12 L4
+  printer: Table
+-
+  question: Which devices does this user use
+  name: user/devices
+  query: "page:view->count()->group(device.primaryHardwareType,device.osName)->filter(user.uuid=${uuid})"
+  colspan: 12 L4
+  printer: Table
 `).map(c => {
 			c.hasConfigurableTimeframe = c.timeframe !== false; //eslint-disable-line
 			c.hasConfigurableInterval = c.interval == null; //eslint-disable-line
