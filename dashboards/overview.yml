@@ -47,6 +47,17 @@ charts:
     printer: AreaChart
     timeframe: previous_10_weeks
     interval: w
+  -
+    question: What's the weekly NSS trend?
+    name: nss/trend
+    query: "@concat(
+ feedback:submit->avg(context.nps),
+ feedback:submit->median(context.nps),
+ feedback:submit->percentile(context.nps,90)
+)->relabel(CONCATENATION_RESULT,average,median,75th percentile)"
+    timeframe: previous_10_weeks
+    interval: w
+
   # Opt in / out
   -
     break: true
@@ -97,6 +108,32 @@ charts:
     timeframe: previous_1_week
     printer: BarChart
     colspan: 12 L4
+  -
+    question: Which browsers were most commonly used last week?
+    name: browsers
+    query: "page:view->count()->group(device.browserName)->top(10)"
+    colspan: 12 L4
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+  -
+    question: Which device types were most commonly used last week?
+    name: devices
+    query: "page:view->count()->group(device.primaryHardwareType)->top(3)"
+    colspan: 12 L4
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+  -
+    question: What was page load time like last week?
+    name: load-time
+    query: "page:load-timing->median(context.timings.offset.loadEventEnd)
+      ->group(page.location.type)
+      ->divide(1000)  "
+    colspan: 12 L4
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
 
   # Navigation: first, second, third level (weekly, bars)
   -
@@ -168,4 +205,21 @@ charts:
     timeframe: previous_1_week
     printer: BarChart
     query: "page:view->count()->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)->group(page.location.streamTaxonomy)->top(15)"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
