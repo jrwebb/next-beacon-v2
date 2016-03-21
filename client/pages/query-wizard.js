@@ -2,7 +2,7 @@
 
 import KeenQuery from 'keen-query';
 import querystring from 'querystring';
-import {renderChart} from '../components/chart-ui';
+import {renderChart} from '../components/chart';
 
 // const debounce = function(fn,delay){
 // 		let timeoutId;
