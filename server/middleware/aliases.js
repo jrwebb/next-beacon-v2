@@ -24,6 +24,12 @@ function get (name) {
 module.exports = {
 	init: (req, res, next) => {
 		res.locals.aliases = get().reduce((alias,item) => {
+
+			// Set defaults for aliases from the spreadsheet
+			item.hasConfigurableTimeframe = true;
+			item.hasConfigurableInterval = true;
+			item.colspan = '12 L6'
+
 			alias[item.name] = item;
 			return alias;
 		}, {});
