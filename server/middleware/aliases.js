@@ -27,7 +27,7 @@ module.exports = {
 
 			// Set defaults for aliases from the spreadsheet
 			item.hasConfigurableTimeframe = true;
-			item.hasConfigurableInterval = true;
+			item.hasConfigurableInterval = (item.printer && item.printer === 'PieChart') ? false : true;
 			item.colspan = '12 L6'
 
 			alias[item.name] = item;
