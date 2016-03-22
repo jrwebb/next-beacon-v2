@@ -2,8 +2,8 @@ import KeenQuery from 'keen-query';
 
 
 KeenQuery.setFetchOptions({
-	credentials: 'include',
-	redirect: 'manual'
+	// credentials: 'include',
+	// redirect: 'manual'
 });
 
 KeenQuery.setFetchHandler(res => {
