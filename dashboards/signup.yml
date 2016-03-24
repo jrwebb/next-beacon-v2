@@ -10,4 +10,4 @@ charts:
     query: page:view->count()->filter(page.location.type=signup)
     timeframe: this_14_weeks
     interval: w
-    datalabel: Anonymous visitors per week
+    datalabel: Signup visitors per week
