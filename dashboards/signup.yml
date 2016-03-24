@@ -11,3 +11,4 @@ charts:
     timeframe: this_14_weeks
     interval: w
     datalabel: Signup visitors per week
+    
