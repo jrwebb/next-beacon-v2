@@ -5,9 +5,9 @@ title: Signup
 isPrimary: true
 charts:
   -
-    question: Are weekly visitor counts increasing?
+    question: How many page views do we have?
     name: weekly
-    query: page:view->count(device.spoorId)->filter(!user.uuid)
+    query: page:view->count()->filter(page.location.type=signup)
     timeframe: this_14_weeks
     interval: w
     datalabel: Anonymous visitors per week
