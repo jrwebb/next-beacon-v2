@@ -1,0 +1,13 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: signup
+title: Signup
+isPrimary: true
+charts:
+  -
+    question: Are weekly visitor counts increasing?
+    name: weekly
+    query: page:view->count(device.spoorId)->filter(!user.uuid)
+    timeframe: this_14_weeks
+    interval: w
+    datalabel: Anonymous visitors per week
