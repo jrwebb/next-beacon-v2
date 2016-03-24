@@ -46,16 +46,29 @@ charts:
     isStacked: true
     printer: AreaChart
     timeframe: previous_10_weeks
+    colspan: 6 L4
     interval: w
   -
-    question: What's the weekly NSS trend?
+    question: How many promoters and detractors do we have each week?
+    name: users/trend
+    query: "@concat(
+feedback:submit->count()->filter(context.nps>8),
+feedback:submit->count()->filter(context.nps<7)
+)->relabel(CONCATENATION_RESULT,promoters,detractors)"
+    timeframe: previous_10_weeks
+    colspan: 6 L4
+    interval: w
+  -
+    question: What's the weekly recommendation scores trend?
     name: nss/trend
     query: "@concat(
  feedback:submit->avg(context.nps),
+ feedback:submit->percentile(context.nps,25)
  feedback:submit->median(context.nps),
- feedback:submit->percentile(context.nps,90)
-)->relabel(CONCATENATION_RESULT,average,median,75th percentile)"
+ feedback:submit->percentile(context.nps,75)
+)->relabel(CONCATENATION_RESULT,average,25th percentile,median,75th percentile)"
     timeframe: previous_10_weeks
+    colspan: 6 L4
     interval: w
 
   # Opt in / out
