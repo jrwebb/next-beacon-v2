@@ -21,7 +21,7 @@ charts:
   - 
     question: How many form visits end up subscribing successfully?
     name: compare
-    query: "@concat(page:view->count()->filter(page.location.path~next.ft.com/signup)->interval(d),page:view->count()->filter(page.location.path~next.ft.com/thank-you)->interval(d))->relabel(CONCATENATION_RESULT,Signup,Thank-you)"
+    query: "@concat(page:view->count()->filter(page.location.path~next.ft.com/signup)->interval(d),page:view->count()->filter(page.location.path~next.ft.com/thank-you)->interval(d))->relabel(CONCATENATION_RESULT,Signup Form Views,Thank You Page Views)"
     printer: ColumnChart
     interval: false
     timeframe: false
