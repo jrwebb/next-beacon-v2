@@ -5,10 +5,16 @@ title: Signup
 isPrimary: true
 charts:
   -
-    question: How many page views do we have?
+    question: How many people land on the form every day?
     name: weekly
-    query: page:view->count()->filter(page.location.type=signup)
+    query: page:view->count()->filter(page.location.path=/signup)->interval(d)
     timeframe: this_14_weeks
     interval: w
     datalabel: Signup visitors per week
-    
+  -
+    question: How many succesful registrations have we had?
+    name: weekly
+    query: page:view->count()->filter(page.location.path=/thank-you)
+    timeframe: this_14_weeks
+    interval: w
+    datalabel: Signup visitors per week
