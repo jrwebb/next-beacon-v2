@@ -19,17 +19,15 @@ charts:
     interval: w
     datalabel: Signup succesful registrations
   - 
+    question: How many form visits end up subscribing successfully?
+    name: compare
+    query: "@concat(page:view->count()->filter(page.location.path=/signup)->interval(d),page:view->count()->filter(page.location.path=/thank-you)->interval(d))->relabel(CONCATENATION_RESULT,Form views, Successful subscriptions)->print(ColumnChart)"
+    timeframe: this_14_weeks
+    interval: w
+    datalabel: Signup success rate
+  - 
     question: What are our top browsers?
     name: browsers
     query: "@pct(page:view->count()->group(device.browserName)->filter(page.location.path~signup)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false)->filter(device.browserName),page:view->count()->filter(page.location.path~signup)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false))->sortDesc()->print(BarChart)"
     interval: w
     datalabel: Signup Browsers
-  - 
-    question: How many form visits end up subscribing successfully?
-    name: compare
-    query: "@concat(page:view->count()->filter(page.location.path=/signup)->interval(d),page:view->count()->filter(page.location.path=/thank-you)->interval(d))->relabel(CONCATENATION_RESULT,Form views, Successful subscriptions)
-->print(ColumnChart)"
-    timeframe: this_14_weeks
-    interval: w
-    datalabel: Signup success rate
-    
