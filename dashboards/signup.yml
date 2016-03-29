@@ -8,29 +8,21 @@ charts:
     question: How many people land on the form every day?
     name: visitors
     query: page:view->count()->filter(page.location.path=/signup)->interval(d)
-    interval: false
-    timeframe: false
     datalabel: Signup visitors per day
   -
     question: How many succesful registrations have we had?
     name: registrations
     query: page:view->count()->filter(page.location.path=/thank-you)
-    interval: false
-    timeframe: false
     datalabel: Signup succesful registrations
   - 
     question: How many form visits end up subscribing successfully?
     name: compare
     query: "@concat(page:view->count()->filter(page.location.path~signup)->interval(d),page:view->count()->filter(page.location.path~thank-you)->interval(d))->relabel(CONCATENATION_RESULT,Signup,Thank-you)"
     printer: ColumnChart
-    interval: false
-    timeframe: false
     datalabel: Signup success rate
   - 
     question: What are our top browsers?
     name: browsers
     query: "@pct(page:view->count()->group(device.browserName)->filter(page.location.path~signup)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false)->filter(device.browserName),page:view->count()->filter(page.location.path~signup)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false))->sortDesc()"
     printer: BarChart
-    interval: false
-    timeframe: false
     datalabel: Signup Browsers
