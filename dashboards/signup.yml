@@ -27,6 +27,17 @@ charts:
   - 
     question: What are our top browsers?
     name: browsers
-    query: "@pct(page:view->count()->group(device.browserName)->filter(page.location.path~next.ft.com/signup)->filter(device.browserName)->filter(device.browserName!=false)->filter(device.browserName),page:view->count()->filter(page.location.path~next.ft.com/signup)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false))->sortDesc()"
+    query: "@pct(page:view
+                  ->count()
+                  ->group(device.browserName)
+                  ->filter(page.location.path~next.ft.com/signup)
+                  ->filter(device.browserName)
+                  ->filter(device.browserName!=false),
+                 page:view
+                  ->count()
+                  ->filter(page.location.path~next.ft.com/signup)
+                  ->filter(device.browserName)
+                  ->filter(device.browserName!=false))
+                ->sortDesc()"
     printer: BarChart
     datalabel: Signup Browsers
