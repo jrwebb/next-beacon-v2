@@ -8,16 +8,17 @@ charts:
     question: How many people land on the form every day?
     name: visitors
     query: page:view->count()->filter(page.location.path~next.ft.com/signup)->interval(d)
-    interval: false
-    timeframe: false
     datalabel: Signup visitors per day
   -
     question: How many succesful registrations have we had?
     name: registrations
     query: page:view->count()->filter(page.location.path~next.ft.com/thank-you)
-    interval: false
-    timeframe: false
     datalabel: Signup succesful registrations
+  -
+    question: Is our conversion rate increasing?
+    name: conversion
+    query: "@pct(page:view->count()->filter(page.location.path~next.ft.com/thank-you)->relTime(this_14_days)->interval(d),page:view->count()->filter(page.location.path~next.ft.com/signup)->relTime(this_14_days)->interval(d))"
+    datalabel: Conversion rate
   - 
     question: How many form visits end up subscribing successfully?
     name: compare
@@ -25,6 +26,24 @@ charts:
     printer: ColumnChart
     datalabel: Signup success rate
   - 
+    question: What's our distribution of payment methods?
+    name: payment
+    query: "@concat(
+            cta:click
+             ->count()
+             ->filter(context.domPath=page:signup | signup-form | cc-amex)
+             ->interval(d), 
+            cta:click
+             ->count()
+             ->filter(context.domPath=page:signup | signup-form | cc-master)
+             ->interval(d),
+            cta:click
+             ->count()
+             ->filter(context.domPath=page:signup | signup-form | cc-visa)
+             ->interval(d)
+            )"
+    datalabel: Payment Methods
+  -
     question: What are our top browsers?
     name: browsers
     query: "@pct(page:view
