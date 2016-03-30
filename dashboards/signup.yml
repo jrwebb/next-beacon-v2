@@ -17,12 +17,29 @@ charts:
   -
     question: Is our conversion rate increasing?
     name: conversion
-    query: "@pct(page:view->count()->filter(page.location.path~next.ft.com/thank-you)->relTime(this_14_days)->interval(d),page:view->count()->filter(page.location.path~next.ft.com/signup)->relTime(this_14_days)->interval(d))"
+    query: "@pct(
+            page:view->count()->
+             filter(page.location.path~next.ft.com/thank-you)->
+             interval(d),
+            page:view->
+             count()->
+             filter(page.location.path~next.ft.com/signup)->
+             interval(d)
+            )"
     datalabel: Conversion rate
   - 
-    question: How many form visits end up subscribing successfully?
+    question: What's our daily conversion rate?
     name: compare
-    query: "@concat(page:view->count()->filter(page.location.path~next.ft.com/signup)->interval(d),page:view->count()->filter(page.location.path~next.ft.com/thank-you)->interval(d))->relabel(CONCATENATION_RESULT,Signup Form Views,Thank You Page Views)"
+    query: "@concat(
+            page:view->
+             count()->
+             filter(page.location.path~next.ft.com/signup)->
+             interval(d),
+            page:view->
+             count()->
+             filter(page.location.path~next.ft.com/thank-you)->
+             interval(d)
+            )->relabel(CONCATENATION_RESULT,Signup Form Views,Thank You Page Views)"
     printer: ColumnChart
     datalabel: Signup success rate
   - 
@@ -41,7 +58,7 @@ charts:
              ->count()
              ->filter(context.domPath=page:signup | signup-form | cc-visa)
              ->interval(d)
-            )"
+            )->relabel(CONCATENATION_RESULT, Amex, MasterCard, Visa)"
     datalabel: Payment Methods
   -
     question: What are our top browsers?
