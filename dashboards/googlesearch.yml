@@ -31,7 +31,7 @@ charts:
     datalabel: Article views per user
     colspan: 12 L4
   -
-    question: How many articles are people readong per session?
+    question: How many articles are people reading per session?
     name: article-views/session
     query: "@ratio(page:view->count()->filter(page.location.type=article),page:view->count(spoorInfo.sessionId))"
     datalabel: Article views per session
@@ -42,13 +42,6 @@ charts:
     query: "@pct(page:view->count()->filter(page.location.type=article)->filter(page.referrer.type=article),page:view->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)"
     datalabel: Article views referred by articles %
     colspan: 12 L4
-  -
-    question: How many articles are being read by RHR MVT?
-    name: MVT-RHR-articleviews
-    query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
-    datalabel: Article views per user by More-on variants
-    break: true
-    colspan: 12
   -
     question: What's the CTR on articles by link type?
     name: article-elements/ctr
