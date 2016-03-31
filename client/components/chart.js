@@ -74,7 +74,9 @@ export function buildAndRenderChart (chartConfig, printerEl) {
 		let builtQuery = KeenQuery.buildFromAlias(chartConfig);
 
 		// todo: default to column chart if it has dimension but no interval... or something
-		builtQuery = builtQuery.setPrinter(chartConfig.printer || 'LineChart').tidy();
+		if (!builtQuery._printer) {
+			builtQuery = builtQuery.setPrinter(chartConfig.printer || 'LineChart').tidy();
+		}
 
 		if (chartConfig.hasConfigurableInterval) {
 			// avoid showing as big number when the default view could easily be converted to a line graph over time

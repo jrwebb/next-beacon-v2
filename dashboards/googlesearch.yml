@@ -31,7 +31,7 @@ charts:
     datalabel: Article views per user
     colspan: 12 L4
   -
-    question: How many articles are people readong per session?
+    question: How many articles are people reading per session?
     name: article-views/session
     query: "@ratio(page:view->count()->filter(page.location.type=article),page:view->count(spoorInfo.sessionId))"
     datalabel: Article views per session
@@ -42,13 +42,6 @@ charts:
     query: "@pct(page:view->count()->filter(page.location.type=article)->filter(page.referrer.type=article),page:view->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)"
     datalabel: Article views referred by articles %
     colspan: 12 L4
-  -
-    question: How many articles are being read by More-on MVT?
-    name: moreonMVT/articleviews
-    query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleMoreOnNumber)->tidy()"
-    datalabel: Article views per user by More-on variants
-    break: true
-    colspan: 12
   -
     question: What's the CTR on articles by link type?
     name: article-elements/ctr
@@ -81,28 +74,33 @@ charts:
     datalabel: CTR on Recommended Reads
     colspan: 12 L4
   -
-    question: What's the CTR for Recommended Reads (by Link Style)?
-    name: recommendedAB/ctr
-    query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
-    datalabel: CTR on Recommended Reads
+    question: MVT - RHR - How many articles are users reading (by Variant)?
+    name: MVT-RHR-article-views
+    query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
+    datalabel: Article views by Variants
     colspan: 12 L4
   -
-    question: How many articles are users reading (by Link Style)?
-    name: recommendedAB/articleviews
-    query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
-    datalabel: Article views per user by Link Style variants
+    question: MVT - RHR - What's the Recommended Reads CTR (by Variant)?
+    name: MVT-RHR-CTR
+    query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
+    datalabel: CTR by Variants
     colspan: 12 L4
   -
-    question: How many conversions for the Link Style A/B test?
-    name: recommendedAB/conversions
-    query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRLinkStyle)->tidy()"
-    datalabel: Conversions by Link Style variants
+    question: MVT - RHR - How many conversions for (by Variant)?
+    name: MVT-RHR-conversions
+    query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
+    datalabel: Conversions by Variants
     colspan: 12 L4
   -
     question: How many views is the fastFT Stream Page getting?
     name: fastFT/views
     query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
     datalabel: Visits to the fastFT Stream Page
+  -
+    question: How many articles are opened from FastFT per visit?
+    name: fastFT/article-opened
+    query: "@ratio(cta:click->count()->filter(context.domPath~headline)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d))"
+    datalabel: Articles opened per visit
   -
     question: How many articles are expanded on fastFT per visit?
     name: fastFT/article-expanded

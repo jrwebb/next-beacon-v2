@@ -66,6 +66,7 @@ module.exports = {
 
 		const input = document.querySelector('.query-wizard__input');
 		const output = document.querySelector('.query-wizard__output');
+		const viewButton = document.querySelector('.query-wizard__view-button');
 
 		const parameters = querystring.parse(location.search.substr(1));
 		if (parameters.query) {
@@ -113,7 +114,9 @@ module.exports = {
 			if (!kq._printer) {
 				kq = kq.setPrinter('LineChart');
 			}
-			history.pushState({}, "", `/data/query-wizard?query=${encodeURIComponent(kq.toString().replace('->print(LineChart)', ''))}`);
+			const queryAsUrl = encodeURIComponent(kq.toString().replace('->print(LineChart)', ''));
+			history.pushState({}, "", `/data/query-wizard?query=${queryAsUrl}`);
+			viewButton.href = `/chart/custom-query?query=${queryAsUrl}`;
 			return renderChart(output, kq, {})
 		}
 

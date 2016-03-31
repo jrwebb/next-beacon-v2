@@ -9,21 +9,34 @@ function getDashboardTitle (req) {
 }
 
 module.exports = function(req, res) {
-	const dashboardpath = req.params[0];
-	const dashboardname = dashboardpath.split('/')[0];
+	const dashboardPath = req.params[0];
+	const dashboardName = dashboardPath.split('/')[0];
 
-	// find dashboardname in res.locals.dashboards
+	// find dashboardName in res.locals.dashboards
 	let dashboard = res.locals.dashboards.filter(d => {
-		return d.id === dashboardname;
+		return d.id === dashboardName;
 	})[0] || {};
 
 	let charts = dashboard.charts || [];
 
+
+
 	// Only show a single chart if appropriate
 	if (req.view && req.view === 'chart') {
-		charts = charts.filter(c => {
-			return c.name === dashboardpath;
-		}) || [];
+		if (req.query.query) {
+			const query = decodeURIComponent(req.query.query);
+			charts = [{
+				question: query,
+				name: 'custom-query',
+				query: query,
+				hasConfigurableTimeframe: false,
+				hasConfigurableInterval: false
+			}]
+		} else {
+			charts = charts.filter(c => {
+				return c.name === dashboardPath;
+			}) || [];
+		}
 	} else {
 
 		// Append charts from the spreadsheet of destiny
@@ -38,7 +51,7 @@ module.exports = function(req, res) {
 
 		// Only include charts whose names include the dashboard path
 		charts = charts.reduce((charts, c) => {
-			if (c.name.indexOf(dashboardpath) !== -1) charts.push(c);
+			if (c.name.indexOf(dashboardPath) !== -1) charts.push(c);
 			return charts;
 		},[]);
 	}
@@ -51,8 +64,7 @@ module.exports = function(req, res) {
 			charts: charts,
 			isPresentation: true
 		});
-	}
-	else {
+	} else {
 		res.render('dashboard', {
 			layout: 'beacon',
 			title: dashboard.title || getDashboardTitle(req),

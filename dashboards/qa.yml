@@ -54,3 +54,24 @@ charts:
     printer: BarChart
     colspan: 12 L4
     datalabel: current opt out rate / past opt out rate
+  -
+    question: What's the count per Safari Mobile version?,
+    name: safari/mobile,
+    query: page:view->count(device.spoorId)->filter(device.browserName=Safari Mobile)->group(device.browserVersion.major)->print(Table),
+    printer: Table,
+    timeframe: false
+    interval: false
+  -
+    question: What's the count per BlackBerry Browser version?
+    name: blackberry
+    query: page:view->count(device.spoorId)->filter(device.browserName=BlackBerry Browser)->group(device.browserVersion.major)->print(Table)
+    printer: Table
+    timeframe: false
+    interval: false
+  -
+    question: What's the count per Internet Explorer version?
+    name: internet-explorer
+    query: page:view->count(device.spoorId)->filter(device.browserName=Internet Explorer)->group(device.browserVersion.major)->print(Table),
+    printer: Table
+    timeframe: false
+    interval: false
