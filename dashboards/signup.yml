@@ -38,9 +38,7 @@ charts:
                     interval(d), page:view->
                     count()->
                     filter(page.location.path~signup)->
-                    interval(d))->
-            print(StackedColumnChart)->
-            relabel(CONCATENATION_RESULT,Unique visits, Pageviews)"
+                    interval(d))->relabel(CONCATENATION_RESULT,Unique visits, Pageviews)"
     printer: StackedColumnChart
     datalabel: Signup success rate    
   - 
