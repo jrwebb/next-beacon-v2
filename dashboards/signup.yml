@@ -25,7 +25,7 @@ charts:
             signup:subscription-created->
              count()->
              interval(d)
-            )->relabel(CONCATENATION_RESULT,Signup Form Views,Subscriptions)"
+            )->relabel(CONCATENATION_RESULT,Unique Visitors,Subscriptions)"
     printer: StackedColumnChart
     datalabel: Signup success rate
   - 
