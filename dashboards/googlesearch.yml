@@ -97,6 +97,11 @@ charts:
     query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
     datalabel: Visits to the fastFT Stream Page
   -
+    question: How many articles are opened from FastFT per visit?
+    name: fastFT/article-opened
+    query: "@ratio(cta:click->count()->filter(context.domPath~headline)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d))"
+    datalabel: Articles opened per visit
+  -
     question: How many articles are expanded on fastFT per visit?
     name: fastFT/article-expanded
     query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))->relTime(previous_14_days)->interval(d)->plotThreshold(2,FT Benchmark)"
