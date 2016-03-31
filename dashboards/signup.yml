@@ -12,7 +12,7 @@ charts:
   -
     question: How many succesful registrations have we had?
     name: registrations
-    query: page:view->count()->filter(page.location.path~thank-you)
+    query: page:view->filter(page.location.path~thank-you)->count()
     datalabel: Signup succesful registrations
   -
     question: Is our conversion rate increasing?
