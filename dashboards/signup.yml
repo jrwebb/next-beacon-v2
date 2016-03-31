@@ -14,19 +14,6 @@ charts:
     name: registrations
     query: signup:subscription-created->count()
     datalabel: Signup succesful registrations
-  -
-    question: Is our conversion rate increasing?
-    name: conversion
-    query: "@pct(
-            page:view->count()->
-             filter(page.location.path~thank-you)->
-             interval(d),
-            page:view->
-             count()->
-             filter(page.location.path~signup)->
-             interval(d)
-            )"
-    datalabel: Conversion rate
   - 
     question: What's our daily conversion rate?
     name: compare
@@ -35,12 +22,11 @@ charts:
              count()->
              filter(page.location.path~signup)->
              interval(d),
-            page:view->
+            signup:subscription-created->
              count()->
-             filter(page.location.path~thank-you)->
              interval(d)
             )->relabel(CONCATENATION_RESULT,Signup Form Views,Thank You Page Views)"
-    printer: ColumnChart
+    printer: StackedColumnChart
     datalabel: Signup success rate
   - 
     question: What's our distribution of payment methods?
