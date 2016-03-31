@@ -41,24 +41,6 @@ charts:
                     interval(d))->relabel(CONCATENATION_RESULT,Unique visits, Pageviews)"
     printer: StackedColumnChart
     datalabel: Signup success rate    
-  - 
-    question: What's our distribution of payment methods?
-    name: payment
-    query: "@concat(
-            cta:click
-             ->count()
-             ->filter(context.domPath=page:signup | signup-form | cc-amex)
-             ->interval(d), 
-            cta:click
-             ->count()
-             ->filter(context.domPath=page:signup | signup-form | cc-master)
-             ->interval(d),
-            cta:click
-             ->count()
-             ->filter(context.domPath=page:signup | signup-form | cc-visa)
-             ->interval(d)
-            )->relabel(CONCATENATION_RESULT, Amex, MasterCard, Visa)"
-    datalabel: Payment Methods
   -
     question: What are our top browsers?
     name: browsers
@@ -82,3 +64,21 @@ charts:
     query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->count()->interval(d))->relabel(CONCATENATION_RESULT,Successful,Failed)->print(StackedColumnChart)"
     printer: StackedColumnChart
     datalabel: Signup Browsers
+  - 
+    question: (BETA) What's our distribution of payment methods?
+    name: payment
+    query: "@concat(
+            cta:click
+             ->count()
+             ->filter(context.domPath=page:signup | signup-form | cc-amex)
+             ->interval(d), 
+            cta:click
+             ->count()
+             ->filter(context.domPath=page:signup | signup-form | cc-master)
+             ->interval(d),
+            cta:click
+             ->count()
+             ->filter(context.domPath=page:signup | signup-form | cc-visa)
+             ->interval(d)
+            )->relabel(CONCATENATION_RESULT, Amex, MasterCard, Visa)"
+    datalabel: Payment Methods
