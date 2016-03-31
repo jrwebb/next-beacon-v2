@@ -50,7 +50,7 @@ charts:
     interval: w
   -
     question: How many promoters and detractors do we have each week?
-    name: users/trend
+    name: promoters/trend
     query: "@concat(
 feedback:submit->count()->filter(context.nps>8),
 feedback:submit->count()->filter(context.nps<7)
