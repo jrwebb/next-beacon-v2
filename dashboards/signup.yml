@@ -5,9 +5,9 @@ title: Signup
 isPrimary: true
 charts:
   -
-    question: How many people land on the form every day?
+    question: How many visits do we have on the form every day?
     name: visitors
-    query: page:view->count()->filter(page.location.path~signup)->interval(d)
+    query: page:view->count(device.spoorId)->filter(page.location.path~signup)->interval(d)
     datalabel: Signup visitors per day
   -
     question: How many succesful registrations have we had?
@@ -28,6 +28,20 @@ charts:
             )->relabel(CONCATENATION_RESULT,Signup Form Views,Subscriptions)"
     printer: StackedColumnChart
     datalabel: Signup success rate
+  - 
+    question: Pageviews vs Unique visits
+    name: compare
+    query: "@concat(page:view->
+                    count(device.spoorId)->
+                    filter(page.location.path~signup)->
+                    interval(d), page:view->
+                    count()->
+                    filter(page.location.path~signup)->
+                    interval(d))->
+            print(StackedColumnChart)->
+            relabel(CONCATENATION_RESULT,Unique visitos, Pageviews)"
+    printer: StackedColumnChart
+    datalabel: Signup success rate    
   - 
     question: What's our distribution of payment methods?
     name: payment
