@@ -39,7 +39,7 @@ charts:
                     count()->
                     filter(page.location.path~signup)->
                     interval(d))->relabel(CONCATENATION_RESULT,Unique visits, Pageviews)"
-    printer: StackedColumnChart
+    printer: StackedAreaChart
     datalabel: Signup success rate    
   -
     question: What are our top browsers?
