@@ -7,23 +7,23 @@ charts:
   -
     question: How many people land on the form every day?
     name: visitors
-    query: page:view->count()->filter(page.location.path~next.ft.com/signup)->interval(d)
+    query: page:view->count()->filter(page.location.path~signup)->interval(d)
     datalabel: Signup visitors per day
   -
     question: How many succesful registrations have we had?
     name: registrations
-    query: page:view->count()->filter(page.location.path~next.ft.com/thank-you)
+    query: page:view->count()->filter(page.location.path~thank-you)
     datalabel: Signup succesful registrations
   -
     question: Is our conversion rate increasing?
     name: conversion
     query: "@pct(
             page:view->count()->
-             filter(page.location.path~next.ft.com/thank-you)->
+             filter(page.location.path~thank-you)->
              interval(d),
             page:view->
              count()->
-             filter(page.location.path~next.ft.com/signup)->
+             filter(page.location.path~signup)->
              interval(d)
             )"
     datalabel: Conversion rate
@@ -33,11 +33,11 @@ charts:
     query: "@concat(
             page:view->
              count()->
-             filter(page.location.path~next.ft.com/signup)->
+             filter(page.location.path~signup)->
              interval(d),
             page:view->
              count()->
-             filter(page.location.path~next.ft.com/thank-you)->
+             filter(page.location.path~thank-you)->
              interval(d)
             )->relabel(CONCATENATION_RESULT,Signup Form Views,Thank You Page Views)"
     printer: ColumnChart
@@ -66,12 +66,12 @@ charts:
     query: "@pct(page:view
                   ->count()
                   ->group(device.browserName)
-                  ->filter(page.location.path~next.ft.com/signup)
+                  ->filter(page.location.path~signup)
                   ->filter(device.browserName)
                   ->filter(device.browserName!=false),
                  page:view
                   ->count()
-                  ->filter(page.location.path~next.ft.com/signup)
+                  ->filter(page.location.path~signup)
                   ->filter(device.browserName)
                   ->filter(device.browserName!=false))
                 ->sortDesc()"
