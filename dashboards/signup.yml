@@ -16,7 +16,7 @@ charts:
     datalabel: Signup succesful registrations
   - 
     question: What's our daily conversion rate?
-    name: compare
+    name: daily
     query: "@concat(
             page:view->
              count()->
@@ -79,7 +79,7 @@ charts:
     datalabel: Signup Browsers
   -
     question: (BETA) How many failed registrations do we have?
-    name: browsers
+    name: failed
     query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->count()->interval(d))->relabel(CONCATENATION_RESULT,Successful,Failed)->print(StackedColumnChart)"
     printer: StackedColumnChart
     datalabel: Signup Browsers
