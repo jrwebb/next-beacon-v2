@@ -25,7 +25,7 @@ charts:
             signup:subscription-created->
              count()->
              interval(d)
-            )->relabel(CONCATENATION_RESULT,Signup Form Views,Thank You Page Views)"
+            )->relabel(CONCATENATION_RESULT,Signup Form Views,Subscriptions)"
     printer: StackedColumnChart
     datalabel: Signup success rate
   - 
@@ -62,4 +62,10 @@ charts:
                   ->filter(device.browserName!=false))
                 ->sortDesc()"
     printer: BarChart
+    datalabel: Signup Browsers
+  -
+    question: (BETA) How many failed registrations do we have?
+    name: browsers
+    query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->count()->interval(d))->relabel(CONCATENATION_RESULT,Successful,Failed)->print(StackedColumnChart)"
+    printer: StackedColumnChart
     datalabel: Signup Browsers
