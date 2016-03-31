@@ -19,7 +19,7 @@ charts:
     name: daily
     query: "@concat(
             page:view->
-             count()->
+             count(device.spoorId)->
              filter(page.location.path~signup)->
              interval(d),
             signup:subscription-created->
@@ -39,7 +39,7 @@ charts:
                     filter(page.location.path~signup)->
                     interval(d))->
             print(StackedColumnChart)->
-            relabel(CONCATENATION_RESULT,Unique visitos, Pageviews)"
+            relabel(CONCATENATION_RESULT,Unique visits, Pageviews)"
     printer: StackedColumnChart
     datalabel: Signup success rate    
   - 
