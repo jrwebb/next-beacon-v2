@@ -7,14 +7,12 @@ charts:
   -
     question: How many Unique Visitors do we get every day?
     name: visitors
-    colspan: 8 L10
     query: page:view->count(device.spoorId)->filter(page.location.path~signup)->interval(d)
     datalabel: Signup visitors per day
   -
     question: How many succesful registrations have we had?
     name: registrations
     interval: false
-    colspan: 4 L2
     query: signup:subscription-created->count()
     datalabel: Signup succesful registrations
   - 
