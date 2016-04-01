@@ -16,17 +16,6 @@ charts:
       ->filter(page.location.path!~errors/page)"
     interval: false
   -
-    question: Which pages have bad links on them (and to where)?
-    name: 404s
-    printer: Table
-    query: "page:view->count()
-    ->filter(context.errorStatus=404)
-    ->group(page.location.path)
-    ->group(page.referrer.path)
-    ->filter(page.location.path!~errors/page)
-    ->tidy()"
-    interval: false
-  -
     question: Which browsers are visitors using
     name: browsers
     query: "page:view->count(device.spoorId)->group(device.browserName)
@@ -55,23 +44,23 @@ charts:
     colspan: 12 L4
     datalabel: current opt out rate / past opt out rate
   -
-    question: What's the count per Safari Mobile version?,
+    question: What's the count per Safari Mobile version?
     name: safari/mobile,
-    query: page:view->count(device.spoorId)->filter(device.browserName=Safari Mobile)->group(device.browserVersion.major)->print(Table),
+    query: "page:view->count(device.spoorId)->filter(device.browserName=Safari Mobile)->group(device.browserVersion.major)"
     printer: Table,
     timeframe: false
     interval: false
   -
     question: What's the count per BlackBerry Browser version?
     name: blackberry
-    query: page:view->count(device.spoorId)->filter(device.browserName=BlackBerry Browser)->group(device.browserVersion.major)->print(Table)
+    query: "page:view->count(device.spoorId)->filter(device.browserName=BlackBerry Browser)->group(device.browserVersion.major)"
     printer: Table
     timeframe: false
     interval: false
   -
     question: What's the count per Internet Explorer version?
     name: internet-explorer
-    query: page:view->count(device.spoorId)->filter(device.browserName=Internet Explorer)->group(device.browserVersion.major)->print(Table),
+    query: "page:view->count(device.spoorId)->filter(device.browserName=Internet Explorer)->group(device.browserVersion.major)"
     printer: Table
     timeframe: false
     interval: false
