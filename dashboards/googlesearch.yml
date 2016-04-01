@@ -104,7 +104,7 @@ charts:
   -
     question: How many articles are expanded on fastFT per visit?
     name: fastFT/article-expanded
-    query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))->relTime(previous_14_days)->interval(d)->plotThreshold(2,FT Benchmark)"
+    query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))->relTime(previous_14_days)->interval(d)"
     datalabel: Articles expanded per visit
   -
     question: How long are people spending on fastFT?
