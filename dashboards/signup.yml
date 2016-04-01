@@ -82,3 +82,8 @@ charts:
              ->interval(d)
             )->relabel(CONCATENATION_RESULT, Amex, MasterCard, Visa)"
     datalabel: Payment Methods
+  -
+    question: How many subscribers does light sign-up get every day?
+    name: lightsignup
+    query: light-signup:subscribed->count()->interval(d)
+    datalabel: Subscribers p/day
