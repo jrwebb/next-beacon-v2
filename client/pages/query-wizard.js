@@ -72,7 +72,18 @@ module.exports = {
 		if (parameters.query) {
 			input.value = decodeURIComponent(parameters.query);
 			run();
+		} else if (parameters.saved_query) {
+			console.log(parameters.saved_query)
+			input.value = decodeURIComponent(parameters.saved_query);
+			var savedQueries = client.savedQueries();
+
+			// savedQueries.get("saved-query-name", function(err, response) {
+			// // if (err) handle the error
+			// console.log(response);
+			// });
+			// ?saved_query=anon-landing-pages-30-days
 		}
+
 
 
 		function validate (str) {
