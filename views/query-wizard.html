@@ -3,16 +3,18 @@
 <form class="query-wizard__form" data-o-grid-colspan="12 L5">
 	<h1>Enter a keen query or use the tools on the right to build one</h1>
 	<ul>
-		<li>Whitespace, including new lines, is ok between query parts</li>
 		<li>`Shift + Enter` to start a new line</li>
-		<li>`Shift + Space` to open a property picker (not implemented yet... but will be soon)</li>
 		<li>`Enter` to submit the query and create a chart</li>
+		<li>Default timescale is the last 14 days (including today)</li>
 	</ul>
+	<div class="query-wizard__toolbar">
+		<button type="button" class="o-buttons o-buttons query-wizard__clear-output">Clear output</button>
+		<a class="o-buttons o-buttons query-wizard__view">Save/View on new page)</a>
+		<button type="button" class="o-buttons o-buttons query-wizard__copy-yaml">Add to dashboard</button>
+	</div>
 	<textarea class="query-wizard__input" id="query-wizard__input" rows="12"></textarea>
 	<div class="query-wizard__toolbar">
 		<button type="submit" class="o-buttons o-buttons--standout query-wizard__submit">Click to run</button>  (or press 'Enter')
-		<button class="o-buttons o-buttons--small query-wizard__clear-output">Clear output</button>
-		<a class="o-buttons o-buttons--small query-wizard__view-button">Save/View on new page)</a>
 	</div>
 	<div class="query-wizard__output"></div>
 </form>

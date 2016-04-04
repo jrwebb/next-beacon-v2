@@ -66,7 +66,7 @@ module.exports = {
 
 		const input = document.querySelector('.query-wizard__input');
 		const output = document.querySelector('.query-wizard__output');
-		const viewButton = document.querySelector('.query-wizard__view-button');
+		const viewButton = document.querySelector('.query-wizard__view');
 
 		const parameters = querystring.parse(location.search.substr(1));
 		if (parameters.query) {
@@ -109,6 +109,17 @@ module.exports = {
 			return q;
 		}
 
+		function dePrinteredQuery () {
+			sanitisedQuery();
+			let q = input.value.trim();
+			let printer = '';
+			q = q.replace(/\s*->print\((\w+)\)/g, function (match, p) {
+				printer = p;
+				return '';
+			});
+			return {q, printer}
+		}
+
 		function run() {
 			let kq = KeenQuery.build(sanitisedQuery())
 			if (!kq._printer) {
@@ -137,6 +148,8 @@ module.exports = {
 			run();
 		})
 
+
+
 		del.on('click', '.query-wizard__reference--starters .o-buttons, .query-wizard__reference--collections .o-buttons', ev => {
 			input.value = ev.target.getAttribute('data-str');
 			output.innerHTML = '';
@@ -147,6 +160,34 @@ module.exports = {
 			ev.preventDefault();
 			output.innerHTML = '';
 		})
+
+		del.on('click', '.query-wizard__copy-yaml', () => {
+			const queryConf = dePrinteredQuery();
+			const kq = KeenQuery.build(queryConf.q);
+			const copyTextarea = document.createElement('textarea');
+			let yaml =`
+  -
+    question: Enter a title for the chart in the form of a question
+    name: Enter a name for your chart to be used as its url e.g. "users/daily"
+    query: "${kq.toString()}"`;
+			if (queryConf.printer) {
+				yaml +=`
+    printer: ${queryConf.printer}`;
+			}
+			copyTextarea.textContent = yaml;
+			document.documentElement.appendChild(copyTextarea);
+			copyTextarea.select();
+
+			try {
+				document.execCommand('copy');
+				document.documentElement.removeChild(copyTextarea);
+				alert('Copied! Now either add to your dashboard at https://github.com/Financial-Times/next-beacon-v2/tree/master/dashboards, or ask a developer to help you do so');
+			} catch (err) {
+				document.documentElement.removeChild(copyTextarea);
+				alert('Oops, unable to copy');
+			}
+		})
+
 
 		del.on('click', '.query-wizard__reference--extractions .o-buttons', ev => {
 			validate(input.value + '->' + ev.target.getAttribute('data-str'))
