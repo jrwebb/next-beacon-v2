@@ -18,7 +18,9 @@ charts:
   -
     question: How many bounces have we had today?
     name: bounces
-    query: "signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->filter(context.message.isTestEvent=false)->interval(d)->count()"
+    interval: false,
+    timeframe: this_1_days
+    query: "signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->filter(context.message.isTestEvent=false)"
     datalabel: Bounces today
   -
     question: What's our daily conversion rate?
