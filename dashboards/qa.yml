@@ -19,8 +19,9 @@ charts:
     question: Which browsers are visitors using
     name: browsers
     query: "page:view->count(device.spoorId)->group(device.browserName)
-->cutoff(1,percent)
-->tidy(true)"
+      ->filter(device.isRobot=false)
+      ->cutoff(1,percent)
+      ->tidy(true)"
     interval: false
     colspan: 12 L4
     printer: BarChart
