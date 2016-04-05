@@ -18,7 +18,9 @@ charts:
   -
     question: How many bounces have we had today?
     name: bounces
-    query: "signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->filter(context.message.isTestEvent=false)->interval(d)->count()"
+    interval: false
+    timeframe: this_1_days
+    query: "signup:bounce->count()->filter(context.message.isTestEvent=false)"
     datalabel: Bounces today
   -
     question: What's our daily conversion rate?
@@ -29,6 +31,7 @@ charts:
              filter(page.location.path~signup)->
              interval(d),
             signup:subscription-created->
+             filter(context.isTestEvent=false)->
              count()->
              interval(d)
             )->relabel(CONCATENATION_RESULT,Unique Visitors,Subscriptions)"
@@ -66,7 +69,7 @@ charts:
   -
     question: (BETA) Failed Registrations
     name: failed
-    query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->count()->interval(d))->relabel(CONCATENATION_RESULT,Successful,Failed)->print(StackedColumnChart)"
+    query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->filter(context.isTestEvent=false)->count()->interval(d))->relabel(CONCATENATION_RESULT,Successful,Failed)->print(StackedColumnChart)"
     printer: StackedColumnChart
     datalabel: Signup Browsers
   - 
