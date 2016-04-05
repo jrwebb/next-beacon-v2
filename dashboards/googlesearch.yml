@@ -109,7 +109,7 @@ charts:
   -
     question: How long are people spending on fastFT?
     name: fastFT/dwelltime
-    query: "page:attention->avg(context.meta.attention)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d)->plotThreshold(144,FT Benchmark)"
+    query: "@sum(page:interaction->avg(context.context.attention.total),page:interaction->avg(context.attention.total))->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d)->plotThreshold(125,FT Benchmark)"
     datalabel: Seconds on page
   -
     question: What devices are fastFT readers using?
