@@ -13,7 +13,7 @@ charts:
     question: How many succesful registrations have we had?
     name: registrations
     interval: false
-    query: signup:subscription-created->filer(context.isTestEvent=false)->count()
+    query: signup:subscription-created->filter(context.isTestEvent=false)->count()
     datalabel: Signup succesful registrations
   - 
     question: What's our daily conversion rate?
@@ -90,5 +90,5 @@ charts:
   -
     question: How many bounces do we get every day?
     name: bounces
-    query: "signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->filer(context.message.isTestEvent=false)->interval(d)"
+    query: "signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->filter(context.message.isTestEvent=false)->interval(d)"
     datalabel: Bounces per day
