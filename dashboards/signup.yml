@@ -15,7 +15,12 @@ charts:
     interval: false
     query: signup:subscription-created->filter(context.isTestEvent=false)->count()
     datalabel: Signup succesful registrations
-  - 
+  -
+    question: How many bounces have we had today?
+    name: bounces
+    query: "signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->filter(context.message.isTestEvent=false)->interval(d)->count()"
+    datalabel: Bounces today
+  -
     question: What's our daily conversion rate?
     name: daily
     query: "@concat(
@@ -87,8 +92,3 @@ charts:
     name: lightsignup
     query: light-signup:subscribed->count()->interval(d)
     datalabel: "Subscribers p/day"
-  -
-    question: How many bounces do we get every day?
-    name: bounces
-    query: "signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->filter(context.message.isTestEvent=false)->interval(d)"
-    datalabel: Bounces per day
