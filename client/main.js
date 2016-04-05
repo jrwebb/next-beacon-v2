@@ -2,6 +2,7 @@
 
 'use strict';
 
+import './beacon-tracker';
 import './data/kq-extensions';
 import './printers';
 import {init as dashboard} from './pages/dashboard';
