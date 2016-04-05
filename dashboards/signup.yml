@@ -87,3 +87,9 @@ charts:
     name: lightsignup
     query: light-signup:subscribed->count()->interval(d)
     datalabel: Subscribers p/day
+  -
+    question: How many bounces do we get every day?
+    name: bounces
+    query: signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->interval(d)
+    datalabel: Bounces per day
+  -
