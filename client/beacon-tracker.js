@@ -7,14 +7,14 @@ if (!!document.querySelector("html[data-next-is-production]")) {
 	oTracking.init({
 		server: 'https://spoor-api.ft.com/ingest',
 		context: {
-			product: 'next'
+			product: 'beacon'
 		},
 		user: {}
 	});
 
 	oTracking.event({
 		detail: {
-			category: 'beacon-dashboard',
+			category: 'dashboard',
 			action: 'view'
 		}
 	});
