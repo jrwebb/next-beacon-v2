@@ -90,6 +90,6 @@ charts:
   -
     question: How many bounces do we get every day?
     name: bounces
-    query: signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->interval(d)
+    query: signup:bounce->count(device.spoorId)->filter(page.location.path~signup)->filer(context.isTestEvent=false)->interval(d)
     datalabel: Bounces per day
   -
