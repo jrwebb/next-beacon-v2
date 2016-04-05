@@ -13,7 +13,7 @@ charts:
     question: How many succesful registrations have we had?
     name: registrations
     interval: false
-    query: signup:subscription-created->count()
+    query: signup:subscription-created->filer(context.isTestEvent=false)->count()
     datalabel: Signup succesful registrations
   - 
     question: What's our daily conversion rate?
