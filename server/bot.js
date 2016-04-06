@@ -6,7 +6,7 @@ const controller = Botkit.slackbot();
 const processBotCommand = require('./lib/process-bot-command');
 
 const bot = controller.spawn({
-  token: process.env.SLACK_KEENBOT_TOKEN
+	token: process.env.SLACK_KEENBOT_TOKEN
 });
 
 KeenQuery.definePrinter('keenBot', function () {
@@ -31,30 +31,30 @@ KeenQuery.definePrinter('keenBot', function () {
 		value: data.headings.slice(1).join(' | '),
 		short: false
 	}].concat(data.rows.map(r => {
-  	return {
-  		title: r[0],
-  		value: r.slice(1).join(' | '),
-  		short: false
-  	};
+		return {
+			title: r[0],
+			value: r.slice(1).join(' | '),
+			short: false
+		};
 	}))
 })
 
 const generateResponse = (results) => {
 	return {
 		attachments: [{
-      fallback: "Complete",
-      title: results.question,
-      color: "#7CD197",
-      fields: results
-  	}]
+			fallback: "Complete",
+			title: results.question,
+			color: "#7CD197",
+			fields: results
+		}]
 	}
 };
 
 
 bot.startRTM(function(err) {
-  if (err) {
-    throw new Error('Could not connect to Slack');
-  }
+	if (err) {
+		throw new Error('Could not connect to Slack');
+	}
 });
 
 const convertToQuery = (message) => message.replace(/\&gt;/g, '>')
