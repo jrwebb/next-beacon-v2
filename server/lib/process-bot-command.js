@@ -1,6 +1,6 @@
 'use strict';
 
-const aliases = require('./middleware/aliases');
+const aliases = require('../middleware/aliases');
 const natural = require('natural');
 const classifier = new natural.LogisticRegressionClassifier();
 
