@@ -1,8 +1,8 @@
 'use strict';
 
-import KeenQuery from 'keen-query';
-import processBotCommand from './lib/process-bot-command';
-import Botkit from 'botkit';
+const KeenQuery = require('keen-query');
+const processBotCommand = require('./lib/process-bot-command');
+const Botkit = require('botkit');
 
 const controller = Botkit.slackbot();
 const bot = controller.spawn({
