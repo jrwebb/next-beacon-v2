@@ -98,21 +98,21 @@ charts:
     query: cta:click->count()->group(context.domPath)->filter(context.target=follow)->relTime(14)->top(10)
     printer: BarChart
     interval: false
-    colspan: 6 L3
+    colspan: 6 L4
   -
     question: Where are the least successful follow buttons
     name: onsite/follow/bad
     query: cta:click->count()->group(context.domPath)->filter(context.target=follow)->relTime(14)->bottom(10)
     printer: BarChart
     interval: false
-    colspan: 6 L3
+    colspan: 6 L4
   -
     question: How are save buttons performing
     name: onsite/save/good
     query: cta:click->count()->group(context.domPath)->filter(context.domPath~save-for-later)->relTime(14)->sortDesc()
     printer: BarChart
     interval: false
-    colspan: 6 L3
+    colspan: 6 L4
 
   -
     break: true
@@ -266,21 +266,41 @@ charts:
     name: onsite/collections/followsthisweek
     query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)->filter(context.domPath)->relTime(this_7_days)
     interval: false
-    colspan: 12 L3
+    colspan: 12 L4
     datalabel: Follow Alls clicks
   -
     question: "Collections: How many Follow All clicks last week"
     name: onsite/collections/followslastweek
     query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)->filter(context.domPath)->relTime(previous_7_days)
     interval: false
-    colspan: 12 L3
+    colspan: 12 L4
     datalabel: Follow All clicks
   -
-    question: "Collections: How many Follow All clicks"
+    question: "Collections: How many Follow All clicks over time"
     name: onsite/collections/followsbyday
     query: cta:click->count()->interval(d)->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)
-    colspan: 12 L3
+    colspan: 12 L4
     datalabel: Follow All clicks
+  -
+    question: "Collections: How many topic link clicks this week"
+    name: onsite/collections/topiclinksthisweek
+    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=concept)->filter(context.domPath)->relTime(this_7_days)
+    interval: false
+    colspan: 12 L4
+    datalabel: Topic link clicks
+  -
+    question: "Collections: How many topic link clicks last week"
+    name: onsite/collections/topiclinkslastweek
+    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=concept)->filter(context.domPath)->relTime(previous_7_days)
+    interval: false
+    colspan: 12 L4
+    datalabel: Topic link clicks
+  -
+    question: "Collections: How many topic link clicks over time"
+    name: onsite/collections/topiclinksbyday
+    query: cta:click->count()->interval(d)->filter(context.domPath~collection)->filter(context.target=concept)
+    colspan: 12 L4
+    datalabel: Topic link clicks
 
 
 
