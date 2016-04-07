@@ -1,4 +1,4 @@
-# Note: Any strings begining with @ or % must be wrapped in quote marks
+# Note: Any strings beginning with @ or % must be wrapped in quote marks
 ---
 id: myft
 title: <i>my</i>FT
@@ -258,48 +258,76 @@ charts:
     interval: w
     colspan: 12 L4
 
+
+
   -
+    break: true
+    question: "Collections: How many Follow All clicks this week"
+    name: onsite/collections/followsthisweek
+    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)->filter(context.domPath)->relTime(this_7_days)
+    interval: false
+    colspan: 12 L3
+    datalabel: Follow Alls clicks
+  -
+    question: "Collections: How many Follow All clicks last week"
+    name: onsite/collections/followslastweek
+    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)->filter(context.domPath)->relTime(previous_7_days)
+    interval: false
+    colspan: 12 L3
+    datalabel: Follow All clicks
+  -
+    question: "Collections: How many Follow All clicks"
+    name: onsite/collections/followsbyday
+    query: cta:click->count()->interval(d)->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)
+    colspan: 12 L3
+    datalabel: Follow All clicks
+
+
+
+  -
+    break: true
     question: "Following page: How are MVT slices performing (by follows)?"
     name: onsite/following/slices/follows
     query: cta:click->count()->filter(context.domPath~page:myft-page/following)->filter(context.domPath~recommended-slice)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)->group(context.domPath)
-    printer: PieChart
+    printer: BarChart
     interval: false
     colspan: 12 L6
   -
     question: "Following page: How are MVT slices performing (by article clicks)?"
     name: onsite/following/slices/articles
     query: cta:click->count()->filter(context.domPath~page:myft-page/following)->filter(context.domPath~recommended-slice)->filter(context.target=article)->relTime(this_7_days)->group(context.domPath)
-    printer: PieChart
+    printer: BarChart
     interval: false
     colspan: 12 L6
-
+  
+  
+  
   -
     break: true
-    question: "Explore page: How are inbound link clicks performing?"
-    name: onsite/explore/inbound
-    query: cta:click->count()->filter(context.target=my-topics)->group(context.domPath)->relTime(this_7_days)
-    printer: PieChart
-    interval: false
-    colspan: 12
-  -
     question: "Explore page: How are the recommended slices performing (by follows)?"
     name: onsite/explore/slices/follows
     query: cta:click->count()->filter(context.domPath~page:myft-page/explore)->filter(context.domPath~concept)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)->group(context.domPath)
-    printer: PieChart
+    printer: BarChart
     interval: false
     colspan: 12 L6
   -
     question: "Explore page: How are the recommended slices performing (by article clicks)?"
     name: onsite/explore/slices/articles
     query: cta:click->count()->filter(context.domPath~page:myft-page/explore)->filter(context.domPath~concept)->filter(context.target=article)->relTime(this_7_days)->group(context.domPath)
-    printer: PieChart
+    printer: BarChart
     interval: false
     colspan: 12 L6
   -
-    break: true
+    question: "Explore page: How are inbound link clicks performing?"
+    name: onsite/explore/inbound
+    query: cta:click->count()->filter(context.target=my-topics)->group(context.domPath)->relTime(this_7_days)
+    printer: BarChart
+    interval: false
+    colspan: 12 L6
+  -
     question: "Explore page: How many clicks on “Change industry” this week?"
     name: onsite/explore/change-industry
     query: cta:click->count()->filter(context.domPath~page:myft-page)->filter(context.domPath~from-your-industry)->filter(context.domPath~change-industry)->relTime(this_7_days)
     interval: false
-    colspan: 12
+    colspan: 12 L6
     datalabel: Clicks
