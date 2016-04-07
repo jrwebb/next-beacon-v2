@@ -259,14 +259,14 @@ charts:
     colspan: 12 L4
 
   -
-    question: "Following page: How are Following page AB slices performing (by follows)?"
+    question: "Following page: How are MVT slices performing (by follows)?"
     name: onsite/following/slices/follows
     query: cta:click->count()->filter(context.domPath~page:myft-page/following)->filter(context.domPath~recommended-slice)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)->group(context.domPath)
     printer: PieChart
     interval: false
     colspan: 12 L6
   -
-    question: "Following page: How are Following page AB slices performing (by article clicks)?"
+    question: "Following page: How are MVT slices performing (by article clicks)?"
     name: onsite/following/slices/articles
     query: cta:click->count()->filter(context.domPath~page:myft-page/following)->filter(context.domPath~recommended-slice)->filter(context.target=article)->relTime(this_7_days)->group(context.domPath)
     printer: PieChart
