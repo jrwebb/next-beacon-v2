@@ -297,7 +297,7 @@ charts:
     colspan: 12 L6
   -
     break: true
-    question: "Explore page: How many clicks on "Change industry" this week?"
+    question: "Explore page: How many clicks on “Change industry” this week?"
     name: onsite/explore/change-industry
     query: cta:click->count()->filter(context.domPath~page:myft-page)->filter(context.domPath~from-your-industry)->filter(context.domPath~change-industry)->relTime(this_7_days)
     interval: false
