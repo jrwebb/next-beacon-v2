@@ -1,5 +1,7 @@
 'use strict';
 
+require('./slack/beacon-babbler.js')
+
 const KeenQuery = require('keen-query');
 const processBotCommand = require('./lib/process-bot-command');
 const Botkit = require('botkit');
