@@ -5,6 +5,8 @@ const processBotCommand = require('./lib/process-bot-command');
 const Botkit = require('botkit');
 
 const controller = Botkit.slackbot();
+
+// "Keen Bot" is a slack bot (https://financialtimes.slack.com/messages/@keenbot)
 const bot = controller.spawn({
 	token: process.env.SLACK_KEENBOT_TOKEN
 });
@@ -73,12 +75,16 @@ const askQuestion = (query, bot, message) => {
 		bot.reply(message, 'There appears to be no query attached to that question...check the spreadsheet');
 		return Promise.resolve();
 	}
-	return KeenQuery.buildFromAlias(query)
-		.print('keenBot')
-		.then((res) => {
-			res.question = query.question || query.label || query.name;
-			return res;
-		});
+	try{
+		return KeenQuery.buildFromAlias(query)
+			.print('keenBot')
+			.then((res) => {
+				res.question = query.question || query.label || query.name;
+				return res;
+			});
+	} catch(err) {
+		return Promise.resolve();
+	}
 }
 
 
