@@ -43,15 +43,12 @@ charts:
     printer: BarChart
     colspan: 12 L4
   -
-    question: Which browsers have a higher opt out rate now compared to 2 weeks ago (excluding browsers with <5 opt outs)?
-    name: opt-out-rate/weekly-change-by-browser
-    query: "@ratio(
-      @pct(site:optout->count(user.uuid)->cutoff(5),page:view->count(user.uuid))->relTime(this_2_weeks),
-      @pct(site:optout->count(user.uuid),page:view->count(user.uuid))->relTime(previous_2_weeks)
-    )->group(device.browserName)->tidy(true)->cutoff(1)"
-    timeframe: false
+    question: Which links do users click in the opt-out page?
+    name: opt-out-page-links
+    query: "cta:click->count(device.spoorId)->group(context.domPath)->filter(context.domPath~looking)->sortDesc(cta:click)"
     interval: false
-    printer: BarChart
-    datalabel: current opt out rate / past opt out rate
+    printer: Table
     colspan: 12 L4
+
+
 
