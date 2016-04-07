@@ -1,5 +1,6 @@
 'use strict';
 
+const messages = require('./messages.js');
 const Botkit = require('botkit');
 const controller = Botkit.slackbot();
 
@@ -15,5 +16,14 @@ slackbot.startRTM(function(err) {
 });
 
 controller.hears(['(.*)'],["direct_message","direct_mention","mention"], (slackbot, message) => {
-	slackbot.reply(message, "Hello")
+	slackbot.reply(message,
+		{
+			"text": messages.randomMessage(),
+			"attachments": [
+				{
+					"text": "Get next ft usage data at https://beacon.ft.com"
+				}
+			]
+		}
+	);
 });
