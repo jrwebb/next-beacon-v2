@@ -1,12 +1,16 @@
 'use strict';
 
-const KeenQuery = require('keen-query');
-const Botkit = require('botkit');
-const controller = Botkit.slackbot();
-const processBotCommand = require('./lib/process-bot-command');
+require('./slack/beacon-babbler.js')
 
+const KeenQuery = require('keen-query');
+const processBotCommand = require('./lib/process-bot-command');
+const Botkit = require('botkit');
+
+const controller = Botkit.slackbot();
+
+// "Keen Bot" is a slack bot (https://financialtimes.slack.com/messages/@keenbot)
 const bot = controller.spawn({
-  token: process.env.SLACK_KEENBOT_TOKEN
+	token: process.env.SLACK_KEENBOT_TOKEN
 });
 
 KeenQuery.definePrinter('keenBot', function () {
@@ -31,30 +35,30 @@ KeenQuery.definePrinter('keenBot', function () {
 		value: data.headings.slice(1).join(' | '),
 		short: false
 	}].concat(data.rows.map(r => {
-  	return {
-  		title: r[0],
-  		value: r.slice(1).join(' | '),
-  		short: false
-  	};
+		return {
+			title: r[0],
+			value: r.slice(1).join(' | '),
+			short: false
+		};
 	}))
 })
 
 const generateResponse = (results) => {
 	return {
 		attachments: [{
-      fallback: "Complete",
-      title: results.question,
-      color: "#7CD197",
-      fields: results
-  	}]
+			fallback: "Complete",
+			title: results.question,
+			color: "#7CD197",
+			fields: results
+		}]
 	}
 };
 
 
 bot.startRTM(function(err) {
-  if (err) {
-    throw new Error('Could not connect to Slack');
-  }
+	if (err) {
+		throw new Error('Could not connect to Slack');
+	}
 });
 
 const convertToQuery = (message) => message.replace(/\&gt;/g, '>')
@@ -73,12 +77,16 @@ const askQuestion = (query, bot, message) => {
 		bot.reply(message, 'There appears to be no query attached to that question...check the spreadsheet');
 		return Promise.resolve();
 	}
-	return KeenQuery.buildFromAlias(query)
-		.print('keenBot')
-		.then((res) => {
-			res.question = query.question || query.label || query.name;
-			return res;
-		});
+	try{
+		return KeenQuery.buildFromAlias(query)
+			.print('keenBot')
+			.then((res) => {
+				res.question = query.question || query.label || query.name;
+				return res;
+			});
+	} catch(err) {
+		return Promise.resolve();
+	}
 }
 
 
