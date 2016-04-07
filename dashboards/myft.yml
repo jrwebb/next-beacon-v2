@@ -282,24 +282,31 @@ charts:
     colspan: 12 L4
     datalabel: Follow All clicks
   -
+    question: "Collections: How many “I like collections” link clicks this week"
+    name: onsite/collections/likesthisweek
+    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=more-collections)->relTime(previous_7_days)
+    interval: false
+    colspan: 12 L3
+    datalabel: Collection “like” link clicks
+  -
     question: "Collections: How many topic link clicks this week"
     name: onsite/collections/topiclinksthisweek
     query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=concept)->filter(context.domPath)->relTime(this_7_days)
     interval: false
-    colspan: 12 L4
+    colspan: 12 L3
     datalabel: Topic link clicks
   -
     question: "Collections: How many topic link clicks last week"
     name: onsite/collections/topiclinkslastweek
     query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=concept)->filter(context.domPath)->relTime(previous_7_days)
     interval: false
-    colspan: 12 L4
+    colspan: 12 L3
     datalabel: Topic link clicks
   -
     question: "Collections: How many topic link clicks over time"
     name: onsite/collections/topiclinksbyday
     query: cta:click->count()->interval(d)->filter(context.domPath~collection)->filter(context.target=concept)
-    colspan: 12 L4
+    colspan: 12 L3
     datalabel: Topic link clicks
 
 
