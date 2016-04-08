@@ -53,8 +53,9 @@ charts:
     name: promoters/trend
     query: "@concat(
 feedback:submit->count()->filter(context.nps>8),
+feedback:submit->count()->filter(context.nps?7,8),
 feedback:submit->count()->filter(context.nps<7)
-)->relabel(CONCATENATION_RESULT,promoters,detractors)"
+)->relabel(CONCATENATION_RESULT,promoters,neutral,detractors)"
     timeframe: previous_10_weeks
     colspan: 6 L4
     interval: w

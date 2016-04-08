@@ -1,5 +1,5 @@
 TEST_HOST := "ft-beacon-v2-branch-${CIRCLE_BUILD_NUM}"
-
+YAML_WARNING= \e[5mIf dashboard config fails make sure you have a newline at the end of the file and use only spaces fro indentation\e[25m
 .PHONY: test
 
 install:
@@ -9,7 +9,8 @@ clean:
 	git clean -fxd
 
 verify:
-	find ./dashboards -path '**/*.yml' -exec cat {} \;| js-yaml -t > /dev/null
+	@echo -e $(YAML_WARNING)
+	@find ./dashboards -path '**/*.yml' -exec cat {} \;| js-yaml -t > /dev/null
 	nbt verify --skip-layout-checks
 
 test: verify

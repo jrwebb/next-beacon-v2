@@ -5,7 +5,7 @@
     "o-date": "^2.1.0",
     "fetch": "^0.10.1",
     "dom-delegate": "ftdomdelegate#~2.0.3",
-    "keen-query": "2.22.1",
+    "keen-query": "^2.22.5",
     "querystring": "~3.46.1",
     "o-colors": "^3.3.1",
     "o-expander": "^2.0.1",
