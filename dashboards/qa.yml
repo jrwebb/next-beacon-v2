@@ -38,7 +38,7 @@ charts:
     query: "@ratio(
       @pct(site:optout->count(user.uuid)->cutoff(5),page:view->count(user.uuid))->relTime(this_2_weeks),
       @pct(site:optout->count(user.uuid),page:view->count(user.uuid))->relTime(previous_2_weeks)
-    )->group(device.browserName)->tidy(true)->cutoff(1)"
+    )->group(device.browserName)->tidy(true)"
     timeframe: false
     interval: false
     printer: BarChart
@@ -48,7 +48,7 @@ charts:
     question: What's the count per Safari Mobile version?
     name: safari/mobile,
     query: "page:view->count(device.spoorId)->filter(device.browserName=Safari Mobile)->group(device.browserVersion.major)"
-    printer: Table,
+    printer: Table
     timeframe: false
     interval: false
   -
