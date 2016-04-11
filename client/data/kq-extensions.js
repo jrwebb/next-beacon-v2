@@ -28,3 +28,8 @@ KeenQuery.defineQuery('subs', function () {
 	return this.filter('user.uuid');
 });
 
+
+KeenQuery.defineQuery('screenSize', function () {
+	return this.group('device.oGridLayout').sortProp('device.oGridLayout', 'default', 'XS', 'S', 'M', 'L', 'XL').setPrinter('ColumnChart');
+});
+
