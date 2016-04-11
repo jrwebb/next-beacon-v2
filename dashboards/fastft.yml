@@ -1,0 +1,40 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: fastFT
+title: FastFT
+isPrimary: true
+charts:
+  -
+    question: How many views is the fastFT Stream Page getting?
+    name: fastFT/views
+    query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
+    datalabel: Visits to the fastFT Stream Page
+  -
+    question: How many articles are opened from FastFT per visit?
+    name: fastFT/article-opened
+    query: "@ratio(cta:click->count()->filter(context.domPath~headline)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d))"
+    datalabel: Articles opened per visit
+  -
+    question: How many articles are expanded on fastFT per visit?
+    name: fastFT/article-expanded
+    query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))->relTime(previous_14_days)->interval(d)"
+    datalabel: Articles expanded per visit
+  -
+    question: How long are people spending on fastFT?
+    name: fastFT/dwelltime
+    query: "@sum(page:interaction->avg(context.context.attention.total),page:interaction->avg(context.attention.total))->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d)->plotThreshold(125,FT Benchmark)"
+    datalabel: Seconds on page
+  -
+    question: What devices are fastFT readers using?
+    name: fastFT/usersbydevice
+    query: "page:view->count(user.uuid)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->group(device.primaryHardwareType)->tidy()"
+    datalabel: Users by device
+    isStacked: true
+    printer: AreaChart
+  -
+    question: Where are fastFT readers coming from?
+    name: fastFT/internalreferrers
+    query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->group(page.referrer.type)->tidy(page.referrer.websiteType)"
+    datalabel: Number of referrals
+    isStacked: true
+    printer: AreaChart
