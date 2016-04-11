@@ -26,29 +26,31 @@ charts:
     question: What's our daily conversion rate?
     name: daily
     query: "@concat(
-            page:view->
-             count(device.spoorId)->
-             filter(page.location.path~signup)->
-             interval(d),
-            signup:subscription-created->
-             filter(context.isTestEvent=false)->
-             count()->
-             interval(d)
-            )->relabel(CONCATENATION_RESULT,Unique Visitors,Subscriptions)"
+            page:view
+              ->count(device.spoorId)
+              ->filter(page.location.path~signup)
+              ->interval(d),
+            signup:subscription-created
+              ->filter(context.isTestEvent=false)
+              ->count()
+             ->interval(d)
+            )
+          ->relabel(CONCATENATION_RESULT,Unique Visitors,Subscriptions)"
     printer: StackedColumnChart
     datalabel: Signup success rate
-  - 
+  -
     question: Pageviews vs. Unique Visitors
     name: compare
-    query: "@concat(page:view->
-                    count(device.spoorId)->
-                    filter(page.location.path~signup)->
-                    interval(d), page:view->
-                    count()->
-                    filter(page.location.path~signup)->
-                    interval(d))->relabel(CONCATENATION_RESULT,Unique visitors, Pageviews)"
+    query: "@concat(page:view
+        ->count(device.spoorId)
+        ->filter(page.location.path~signup)
+        ->interval(d),
+      page:view
+        ->count()
+        ->filter(page.location.path~signup)
+        ->interval(d))->relabel(CONCATENATION_RESULT,Unique visitors, Pageviews)"
     printer: StackedAreaChart
-    datalabel: Signup success rate    
+    datalabel: Signup success rate
   -
     question: What are our top browsers?
     name: browsers
@@ -72,14 +74,14 @@ charts:
     query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->filter(context.isTestEvent=false)->count()->interval(d))->relabel(CONCATENATION_RESULT,Successful,Failed)->print(StackedColumnChart)"
     printer: StackedColumnChart
     datalabel: Signup Browsers
-  - 
+  -
     question: (BETA) Payment Methods
     name: payment
     query: "@concat(
             cta:click
              ->count()
              ->filter(context.domPath=page:signup | signup-form | cc-amex)
-             ->interval(d), 
+             ->interval(d),
             cta:click
              ->count()
              ->filter(context.domPath=page:signup | signup-form | cc-master)
