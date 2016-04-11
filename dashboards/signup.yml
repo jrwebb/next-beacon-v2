@@ -35,7 +35,7 @@ charts:
               ->count()
              ->interval(d)
             )
-          ->relabel(CONCATENATION_RESULT,Unique Visitors,Subscriptions)"
+          ->relabel(_headings,Unique Visitors,Subscriptions)"
     printer: StackedColumnChart
     datalabel: Signup success rate
   -
@@ -48,7 +48,7 @@ charts:
       page:view
         ->count()
         ->filter(page.location.path~signup)
-        ->interval(d))->relabel(CONCATENATION_RESULT,Unique visitors, Pageviews)"
+        ->interval(d))->relabel(_headings,Unique visitors, Pageviews)"
     printer: StackedAreaChart
     datalabel: Signup success rate
   -
@@ -71,7 +71,7 @@ charts:
   -
     question: (BETA) Failed Registrations
     name: failed
-    query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->filter(context.isTestEvent=false)->count()->interval(d))->relabel(CONCATENATION_RESULT,Successful,Failed)->print(StackedColumnChart)"
+    query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->filter(context.isTestEvent=false)->count()->interval(d))->relabel(_headings,Successful,Failed)->print(StackedColumnChart)"
     printer: StackedColumnChart
     datalabel: Signup Browsers
   -
@@ -90,7 +90,7 @@ charts:
              ->count()
              ->filter(context.domPath=page:signup | signup-form | cc-visa)
              ->interval(d)
-            )->relabel(CONCATENATION_RESULT, Amex, MasterCard, Visa)"
+            )->relabel(_headings, Amex, MasterCard, Visa)"
     datalabel: Payment Methods
   -
     question: How many subscribers does light sign-up get every day?

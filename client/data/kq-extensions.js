@@ -1,23 +1,16 @@
 import KeenQuery from 'keen-query';
 
-
-KeenQuery.setFetchOptions({
-	// credentials: 'include',
-	// redirect: 'manual'
-});
-
-KeenQuery.setFetchHandler(res => {
-	if (res.type === 'opaqueredirect') {
-		location.reload();
-		throw new Error('Single sign on expiry - reloading page');
+KeenQuery.setConfig({
+	KEEN_PROJECT_ID: window.KEEN_PROJECT_ID,
+	KEEN_READ_KEY: window.KEEN_READ_KEY,
+	fetchHandler: res => {
+		if (res.type === 'opaqueredirect') {
+			location.reload();
+			throw new Error('Single sign on expiry - reloading page');
+		}
+		return res.json();
 	}
-	return res.json();
-});
-
-// exclude staff by default
-KeenQuery.forceQuery(function () {
-	return this.filter('user.isStaff=false');
-});
+})
 
 // define some shortcut queries
 KeenQuery.defineQuery('anon', function () {
@@ -27,7 +20,6 @@ KeenQuery.defineQuery('anon', function () {
 KeenQuery.defineQuery('subs', function () {
 	return this.filter('user.uuid');
 });
-
 
 KeenQuery.defineQuery('screenSize', function () {
 	return this.group('device.oGridLayout').sortProp('device.oGridLayout', 'default', 'XS', 'S', 'M', 'L', 'XL').setPrinter('ColumnChart');

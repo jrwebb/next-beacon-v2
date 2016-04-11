@@ -6,10 +6,11 @@ export function renderBigNumber (el, kq, meta) {
 
 	// Todo: Add support for percentages; i.e. format('0%')
 	let niceNumber;
-	if(kq.getTable().data >= 1000) {
-		niceNumber = numeral(kq.getTable().data).format('0.0a');
+	const val = kq.getTable().rows[0][1]
+	if(val >= 1000) {
+		niceNumber = numeral(val).format('0.0a');
 	} else {
-		niceNumber = Math.round(kq.getTable().data * 10)/10;
+		niceNumber = Math.round(val * 10)/10;
 	}
 
 	html += `<div class="o-big-number__title chart-data">${niceNumber}</div>`;

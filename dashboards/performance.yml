@@ -15,7 +15,7 @@ charts:
               page:load-timing->median(context.timings.offset.domInteractive)
             )
             ->divide(1000)
-            ->relabel(CONCATENATION_RESULT,Start,Dom complete,Content loaded,Interactive)"
+            ->relabel(_headings,Start,Dom complete,Content loaded,Interactive)"
     datalabel: Seconds
     printer: AreaChart
   -
@@ -28,7 +28,7 @@ charts:
               page:load-timing->median(context.timings.domLoadingOffset.domInteractive)
             )
             ->divide(1000)
-            ->relabel(CONCATENATION_RESULT,Start,Dom complete,Content loaded,Interactive)"
+            ->relabel(_headings,Start,Dom complete,Content loaded,Interactive)"
     datalabel: Seconds
     printer: AreaChart
   -

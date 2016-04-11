@@ -48,7 +48,7 @@ charts:
   -
     question: Average frequency of visit for a myFT user this week?
     name: onsite/myftfrequency
-    query: page:view->count(time.day)->relTime(this_7_days)->group(user.uuid)->tidy()->filter(user.myft.isMyFtUser=true)->reduce(avg,user.uuid)->filter(user.isStaff!=true)
+    query: page:view->count(time.day)->relTime(this_7_days)->group(user.uuid)->tidy()->filter(user.myft.isMyFtUser=true)->reduce(user.uuid,avg)->filter(user.isStaff!=true)
     interval: false
     colspan: 6 L3
     datalabel: / 7 days a week
@@ -143,7 +143,7 @@ charts:
     query: "@concat(
         @ratio(email:click->count(),email:delivery->count()),
         @ratio(email:open->count(),email:delivery->count())
-    )->filter(campaign.myft.emailType=daily)->relabel(CONCATENATION_RESULT,click,open)->relTime(this_10_days)->interval(d)->filter(user.isStaff!=true)"
+    )->filter(campaign.myft.emailType=daily)->relabel(_headings,click,open)->relTime(this_10_days)->interval(d)->filter(user.isStaff!=true)"
     colspan: 12 L4
 
 
@@ -191,7 +191,7 @@ charts:
     query: "@concat(
         @ratio(email:click->count(),email:delivery->count()),
         @ratio(email:open->count(),email:delivery->count())
-        )->filter(campaign.myft.emailType=weekly)->relabel(CONCATENATION_RESULT,click,open)->relTime(this_4_weeks)->filter(user.isStaff!=true)"
+        )->filter(campaign.myft.emailType=weekly)->relabel(_headings,click,open)->relTime(this_4_weeks)->filter(user.isStaff!=true)"
     interval: w
     colspan: 12 L4
 
@@ -249,9 +249,9 @@ charts:
     printer: BarChart
     interval: false
     colspan: 12 L6
-  
-  
-  
+
+
+
   -
     break: true
     question: "Explore page: How are the recommended slices performing (by follows)?"
