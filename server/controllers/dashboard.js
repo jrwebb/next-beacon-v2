@@ -26,7 +26,7 @@ module.exports = function(req, res) {
 		if (req.query.query) {
 			const query = decodeURIComponent(req.query.query);
 			charts = [{
-				question: query,
+				question: req.query.name || query,
 				name: 'custom-query',
 				query: query,
 				hasConfigurableTimeframe: false,

@@ -99,7 +99,7 @@ module.exports = {
 		}
 
 		function sanitisedQuery () {
-			let q = input.value.trim();
+			let q = KeenQuery.format(input.value, '  ');
 			let printer = '';
 			q = q.replace(/\s*->print\(\w+\)/g, function (match) {
 				printer = match;
@@ -111,7 +111,7 @@ module.exports = {
 
 		function dePrinteredQuery () {
 			sanitisedQuery();
-			let q = input.value.trim();
+			let q = KeenQuery.format(input.value, '  ');
 			let printer = '';
 			q = q.replace(/\s*->print\((\w+)\)/g, function (match, p) {
 				printer = p;
