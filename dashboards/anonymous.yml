@@ -55,7 +55,7 @@ charts:
       cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath!~subscribe)->filter(context.domPath!~sign-in),
       cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath~subscribe),
       cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath~sign-in)
-    )->relabel(CONCATENATION_RESULT,Other,Subscribe,Sign in)"
+    )->relabel(_headings,Other,Subscribe,Sign in)"
     colspan: 12 L4
   -
     question: What's the distribution of propensity scores on Next?

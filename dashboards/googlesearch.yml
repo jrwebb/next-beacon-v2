@@ -45,7 +45,7 @@ charts:
   -
     question: What's the CTR on articles by link type?
     name: article-elements/ctr
-    query: "@concat(@pct(cta:click->count()->filter(context.domPath~headline-link--topic),page:view->count()),@pct(cta:click->count()->filter(context.domPath~headline-link--topic--moreRecent),page:view->count()),@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-article-headline),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-headline),page:view->count()),)->filter(page.location.type=article)->interval(d)->relTime(previous_14_days)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Read Next,Read Latest,Recommended,More Ons,Promoboxes)"
+    query: "@concat(@pct(cta:click->count()->filter(context.domPath~headline-link--topic),page:view->count()),@pct(cta:click->count()->filter(context.domPath~headline-link--topic--moreRecent),page:view->count()),@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-article-headline),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-headline),page:view->count()),)->filter(page.location.type=article)->interval(d)->relTime(previous_14_days)->filter(page.location.type=article)->relabel(_headings,Read Next,Read Latest,Recommended,More Ons,Promoboxes)"
     datalabel: CTR by link type
     break: true
     colspan: 12
@@ -54,7 +54,7 @@ charts:
   -
     question: What's the CTR by social buttons (Top)?
     name: article-elements/socialctrtop
-    query: "@concat(cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~whatsapp),)->filter(page.location.type=article)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Facebook,LinkedIn,Twitter,WhatsApp)"
+    query: "@concat(cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~whatsapp),)->filter(page.location.type=article)->filter(page.location.type=article)->relabel(_headings,Facebook,LinkedIn,Twitter,WhatsApp)"
     datalabel: Total clicks social channel
     colspan: 12 L4
     isStacked: true
@@ -62,7 +62,7 @@ charts:
   -
     question: What's the CTR by social buttons (Bottom)?
     name: article-elements/socialctrbottom
-    query: "@concat(cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~whatsapp),)->filter(page.location.type=article)->filter(page.location.type=article)->relabel(CONCATENATION_RESULT,Facebook,LinkedIn,Twitter,WhatsApp)"
+    query: "@concat(cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~whatsapp),)->filter(page.location.type=article)->filter(page.location.type=article)->relabel(_headings,Facebook,LinkedIn,Twitter,WhatsApp)"
     datalabel: Total clicks by social channel
     colspan: 12 L4
     isStacked: true

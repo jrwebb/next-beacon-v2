@@ -7,7 +7,7 @@ import {getDefaultMeta} from './util';
 import viewport from 'o-viewport';
 
 function hasDimension (kq) {
-	return kq.getTable().dimension;
+	return kq.getData().dimension;
 }
 
 export function googleChartPrinterFactory (chartType) {
@@ -25,8 +25,8 @@ export function googleChartPrinterFactory (chartType) {
 		return new Promise((resolve, reject) => {
 
 			const expectsDateObjects = ['AreaChart','LineChart','ColumnChart'].indexOf(chartType) > -1;
-			const kqTable = kq.getTable();
-			const kqData = kqTable.humanize(expectsDateObjects ? 'dateObject' : 'human');
+			const kqTable = kq.getData();
+			const kqData = kqTable.unflatten(expectsDateObjects ? 'dateObject' : 'human');
 
 			if (meta.datalabel && kqTable.dimension === 1) {
 				kqData.headings[1] = meta.datalabel;

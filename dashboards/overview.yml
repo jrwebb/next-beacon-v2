@@ -42,7 +42,7 @@ charts:
     query: "@concat(
       page:view->count(user.uuid),
       page:view->count(device.spoorId)->filter(!user.uuid)
-    )->relabel(CONCATENATION_RESULT,Logged in, Anonymous)"
+    )->relabel(_headings,Logged in, Anonymous)"
     isStacked: true
     printer: AreaChart
     timeframe: previous_10_weeks
@@ -55,7 +55,7 @@ charts:
 feedback:submit->count()->filter(context.nps>8),
 feedback:submit->count()->filter(context.nps?7,8),
 feedback:submit->count()->filter(context.nps<7)
-)->relabel(CONCATENATION_RESULT,promoters,neutral,detractors)"
+)->relabel(_headings,promoters,neutral,detractors)"
     timeframe: previous_10_weeks
     colspan: 6 L4
     interval: w
@@ -67,7 +67,7 @@ feedback:submit->count()->filter(context.nps<7)
  feedback:submit->percentile(context.nps,25),
  feedback:submit->median(context.nps),
  feedback:submit->percentile(context.nps,75)
-)->relabel(CONCATENATION_RESULT,average,25th percentile,median,75th percentile)"
+)->relabel(_headings,average,25th percentile,median,75th percentile)"
     timeframe: previous_10_weeks
     colspan: 6 L4
     interval: w
@@ -101,7 +101,7 @@ feedback:submit->count()->filter(context.nps<7)
   -
     question: What RFV cohorts did our users come from last week?
     name: rfv
-    query: page:view->count(user.uuid)->group(user.rfv.cohort)->tidy()->sortProp(user.rfv.cohort,super-fan,fan,engaged-frequent-free,borderline-engaged,half-engaged,occasional-skimmer,disengaged-long-tail)
+    query: page:view->count(user.uuid)->group(user.rfv.cohort)->tidy()->reorder(user.rfv.cohort,super-fan,fan,engaged-frequent-free,borderline-engaged,half-engaged,occasional-skimmer,disengaged-long-tail)
     interval: false
     timeframe: previous_1_week
     printer: BarChart
@@ -117,7 +117,7 @@ feedback:submit->count()->filter(context.nps<7)
   -
     question: What screen sizes were most commonly used last week?
     name: screen-size
-    query: page:view->count(user.uuid)->group(device.oGridLayout)->tidy()->sortProp(device.oGridLayout,default,XS,S,M,L,XL,XXL)
+    query: page:view->count(user.uuid)->group(device.oGridLayout)->tidy()->reorder(device.oGridLayout,default,XS,S,M,L,XL,XXL)
     interval: false
     timeframe: previous_1_week
     printer: BarChart
@@ -159,7 +159,7 @@ feedback:submit->count()->filter(context.nps<7)
     query: "cta:click->count()
       ->filter(context.domPath~group--sections)
       ->filter(device.oGridLayout?M,L,XL,XXL)
-      ->group(context.target)->sortProp(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
+      ->group(context.target)->reorder(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
     colspan: 12 L4
   -
     question: Which secondary nav links were clicked most last week (desktop)?

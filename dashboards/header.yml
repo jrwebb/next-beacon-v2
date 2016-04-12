@@ -12,7 +12,7 @@ charts:
     query: "cta:click->count()
       ->filter(context.domPath~group--sections)
       ->filter(device.oGridLayout?M,L,XL,XXL)
-      ->group(context.target)->sortProp(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
+      ->group(context.target)->reorder(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
   -
     question: 'Excluding secondary nav, what is being clicked most in the header'
     name: clicks
