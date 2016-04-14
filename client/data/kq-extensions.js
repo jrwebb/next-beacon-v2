@@ -3,6 +3,7 @@ import KeenQuery from 'keen-query';
 KeenQuery.setConfig({
 	KEEN_PROJECT_ID: window.KEEN_PROJECT_ID,
 	KEEN_READ_KEY: window.KEEN_READ_KEY,
+	KEEN_HOST: 'https://keen-proxy.ft.com/3.0',
 	fetchHandler: res => {
 		if (res.type === 'opaqueredirect') {
 			location.reload();
