@@ -1,0 +1,21 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: Streams & Sections
+title: Streams
+isPrimary: true
+charts:
+  -
+    question: How many views are Stream pages getting?
+    name: streamviews
+    query: "page:view->count()->filter(page.location.type?stream,article,frontpage)->group(page.location.type)->relTime(previous_14_days)->interval(d)"
+    datalabel: Visits to pages by type
+  -
+    question: How many article views come form Streams?
+    name: articleviews
+    query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)->relTime(this_14_days)->interval(d)"
+    datalabel: Visits to articles by referrer
+  -
+    question: What's the CTR from streams to articles?
+    name: articleCTR
+    query: "@pct(cta:click->filter(context.domPath~headline),page:view)->filter(page.location.type=stream)->count()"
+    datalabel: CTR from stream via 'headline'
