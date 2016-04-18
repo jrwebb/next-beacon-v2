@@ -21,7 +21,7 @@ charts:
   -
     question: What % of logged-in Next users are myFT users each day?
     name: onsite/myftusersbyday
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->filter(user.isStaff!=true)"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->filter(user.isStaff!=true)->relTime(previous_14_days)->interval(d)"
     datalabel: "% myFT users"
     colspan: 12 L6
   -
@@ -35,7 +35,7 @@ charts:
   -
     question: What % of logged-in Next users are following 5 or more topics?
     name: onsite/followingbyday
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))->filter(user.isStaff!=true)"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))->filter(user.isStaff!=true)->relTime(previous_14_days)->interval(d)"
     datalabel: "% following 5 or more"
   -
     break: true
