@@ -10,20 +10,20 @@ charts:
     query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
     datalabel: Visits to the fastFT Stream Page
   -
-    question: How many articles are opened from FastFT per visit?
-    name: article-opened
-    query: "@ratio(cta:click->count()->filter(context.domPath~headline)->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d))"
-    datalabel: Articles opened per visit
-  -
-    question: How many articles are expanded on fastFT per visit?
-    name: article-expanded
-    query: "@ratio(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz))->relTime(previous_14_days)->interval(d)"
-    datalabel: Articles expanded per visit
+    question: What's the Percentage of articles expanded or opened on fastFT?
+    name: actions
+    query: "@concat(@pct(cta:click->count()->filter(context.domPath~headline),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)),@pct(cta:click->count()->filter(context.domPath~article-Show more),page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)))->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d)"
+    datalabel: % of visits that result in a...
   -
     question: How long are people spending on fastFT?
     name: dwelltime
     query: "@sum(page:interaction->avg(context.context.attention.total),page:interaction->avg(context.attention.total))->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d)->plotThreshold(125,FT Benchmark)"
     datalabel: Seconds on page
+ -
+    question: How many fastFT pageviews are filtered searches?
+    name: filters
+    query: "@pct(page:view->filter(context.url~fastft?filterBy),page:view)->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
+    datalabel: Filtered views as % of total
   -
     question: What devices are fastFT readers using?
     name: usersbydevice
