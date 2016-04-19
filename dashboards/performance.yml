@@ -33,12 +33,13 @@ charts:
     datalabel: Seconds
     printer: AreaChart
   -
-    question: timing of fontsLoaded
+    question: How long does it take to load the fonts
     name: fontsLoaded
     query: "page:load-timing
       ->median(context.timings.marks.fontsLoaded)
       ->group(device.primaryHardwareType)
-      ->filter(device.primaryHardwareType?Tablet,Desktop,Mobile Phone)"
+      ->filter(device.primaryHardwareType?Tablet,Desktop,Mobile Phone)
+      ->divide(1000)"
     datalabel: fontsLoaded
   -
     question: Which are the slowest browsers?
