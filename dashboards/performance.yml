@@ -4,43 +4,50 @@ id: performance
 title: Performance
 isPrimary: true
 charts:
-
   -
     question: How is the site's performance overall
     name: timings
-    query:  "@concat(
-              page:load-timing->median(context.timings.offset.loadEventStart),
-              page:load-timing->median(context.timings.offset.domComplete),
-              page:load-timing->median(context.timings.offset.domContentLoadedEventStart),
-              page:load-timing->median(context.timings.offset.domInteractive)
-            )
-            ->divide(1000)
-            ->relabel(_headings,Start,Dom complete,Content loaded,Interactive)"
+    query:  "
+      @concat(
+        page:load-timing->median(context.timings.offsets.navigationStart.loadEventStart),
+        page:load-timing->median(context.timings.offsets.navigationStart.domComplete),
+        page:load-timing->median(context.timings.offsets.navigationStart.domContentLoadedEventStart),
+        page:load-timing->median(context.timings.offsets.navigationStart.domInteractive)
+      )
+      ->divide(1000)
+      ->relabel(_headings,Loaded,Dom complete,Content loaded,Interactive)"
     datalabel: Seconds
     printer: AreaChart
   -
-    question: How is the site's performance overall (offset by dom loading)
+    question: How is the site's performance overall (offset from domLoading)
     name: timings-offset
-    query:  "@concat(
-              page:load-timing->median(context.timings.domLoadingOffset.loadEventStart),
-              page:load-timing->median(context.timings.domLoadingOffset.domComplete),
-              page:load-timing->median(context.timings.domLoadingOffset.domContentLoadedEventStart),
-              page:load-timing->median(context.timings.domLoadingOffset.domInteractive)
-            )
-            ->divide(1000)
-            ->relabel(_headings,Start,Dom complete,Content loaded,Interactive)"
+    query:  "
+      @concat(
+        page:load-timing->median(context.timings.offsets.domLoading.loadEventStart),
+        page:load-timing->median(context.timings.offsets.domLoading.domComplete),
+        page:load-timing->median(context.timings.offsets.domLoading.domContentLoadedEventStart),
+        page:load-timing->median(context.timings.offsets.domLoading.domInteractive)
+      )
+      ->divide(1000)
+      ->relabel(_headings,Loaded,Dom complete,Content loaded,Interactive)"
     datalabel: Seconds
     printer: AreaChart
   -
-    question: timing of fontsLoaded
+    question: How long does it take to load the fonts
     name: fontsLoaded
-    query: page:load-timing->median(context.timings.marks.fontsLoaded)->group(device.primaryHardwareType)->filter(device.primaryHardwareType?Tablet,Desktop,Mobile Phone)
+    query: "page:load-timing
+      ->median(context.timings.marks.fontsLoaded)
+      ->group(device.primaryHardwareType)
+      ->filter(device.primaryHardwareType?Tablet,Desktop,Mobile Phone)
+      ->divide(1000)"
     datalabel: fontsLoaded
   -
     question: Which are the slowest browsers?
     name: averagepageload/offset
-    query: "page:load-timing->median(context.timings.offset.loadEventEnd)
-      ->filter(device.browserName!=false)->group(device.browserName)
+    query: "page:load-timing
+      ->median(context.timings.offsets.navigationStart.loadEventEnd)
+      ->filter(device.browserName!=false)
+      ->group(device.browserName)
       ->top(15,false,device.browserName)
       ->divide(1000)"
     printer: BarChart
@@ -48,5 +55,9 @@ charts:
   -
     question: What percentage of users are on a HTTP/2 connection?
     name: http2-split
-    query: "page:view->count()->relTime(this_1_days)->group(device.h2.h2Enabled)->print(PieChart)"
+    query: "page:view
+      ->count()
+      ->relTime(this_1_days)
+      ->group(device.h2.h2Enabled)
+      ->print(PieChart)"
     printer: PieChart
