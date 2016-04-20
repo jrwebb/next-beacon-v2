@@ -42,6 +42,15 @@ charts:
       ->divide(1000)"
     datalabel: fontsLoaded
   -
+    question: How long does it take to start rendering
+    name: firstPaint
+    query: "page:load-timing
+      ->median(context.timings.custom.firstPaint)
+      ->group(device.primaryHardwareType)
+      ->filter(device.primaryHardwareType?Tablet,Desktop,Mobile Phone)
+      ->divide(1000)"
+    datalabel: firstPaint
+  -
     question: Which are the slowest browsers?
     name: averagepageload/offset
     query: "page:load-timing
