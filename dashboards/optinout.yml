@@ -57,7 +57,14 @@ charts:
     printer: Table
   -
     question: "What devices are used by people who type opt-out reasons?"
-    name: "reasons/other"
+    name: "reasons/other/devices"
     query: "site:optout->count()->group(context.other,device.primaryHardwareType)->filter(context.other)->filter(device.primaryHardwareType)->filter(device.primaryHardwareType!=false)"
     interval: false
     printer: Table
+  -
+    question: "What's the most popular opt-out reason for each browser?"
+    name: "reasons/browsers"
+    query: "site:optout->count()->group(context.reason,device.browserName)->filter(context.reason)->filter(device.browserName)->filter(device.browserName!=false)"
+    interval: false
+    printer: Table
+    colspan: 12 L12
