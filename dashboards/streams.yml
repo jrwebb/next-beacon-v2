@@ -10,10 +10,15 @@ charts:
     query: "page:view->count()->filter(page.location.type?stream,article,frontpage)->group(page.location.type)->relTime(previous_14_days)->interval(d)"
     datalabel: Visits to pages by type
   -
-    question: How many article views come form Streams?
+    question: How many article views come from Streams?
     name: articleviews
     query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)->relTime(this_14_days)->interval(d)"
     datalabel: Visits to articles by referrer
+  -
+    question: What percentage of article views come from Streams?
+    name: articleviewsperc
+    query: "@concat(@pct(page:view->filter(page.referrer.type=stream),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=frontpage),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=article),page:view)->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)->relabel(_headings,Stream,Front Page,Article)"
+    datalabel: Percentage of article views by referrer
   -
     question: What's the CTR from streams to articles?
     name: articleCTR
