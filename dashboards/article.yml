@@ -74,6 +74,18 @@ charts:
     datalabel: CTR on Recommended Reads
     colspan: 12 L4
   -
+    question: How many gifted / shared article emails have been sent?
+    name: sharing/giftandshare
+    query: "email:delivery->count()->filter(context.product?gift-article,next-send-article-by-email)->group(context.product)->relTime(previous_14_days)->interval(d)"
+    datalabel: Emails delivered
+  -
+    question: What's the open-rate for gifted / shared articles?
+    name: sharing/openrate
+    query: "@concat(@pct(email:open->count()->filter(context.product=next-send-article-by-email),email:delivery->count()->filter(context.product=next-send-article-by-email),@pct(email:open->count()->filter(context.product=gift-article),email:delivery->count()->filter(context.product=gift-article))))"
+    datalabel: Article views by referrer
+    isStacked: true
+    printer: AreaChart
+  -
     question: MVT - RHR - How many articles are users reading (by Variant)?
     name: MVT-RHR-article-views
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
