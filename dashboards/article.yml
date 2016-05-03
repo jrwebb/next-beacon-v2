@@ -78,13 +78,19 @@ charts:
     name: sharing/giftandshare
     query: "email:delivery->count()->filter(context.product?gift-article,next-send-article-by-email)->group(context.product)->relTime(previous_14_days)->interval(d)"
     datalabel: Emails delivered
+    colspan: 12 L4
   -
     question: What's the open-rate for gifted / shared articles?
     name: sharing/openrate
-    query: "@concat(@pct(email:open->count()->filter(context.product=next-send-article-by-email),email:delivery->count()->filter(context.product=next-send-article-by-email),@pct(email:open->count()->filter(context.product=gift-article),email:delivery->count()->filter(context.product=gift-article))))"
+    query: "@concat(@pct(email:open->count()->filter(context.product=next-send-article-by-email),email:delivery->count()->filter(context.product=next-send-article-by-email),@pct(email:open->count()->filter(context.product=gift-article),email:delivery->count()->filter(context.product=gift-article))))->relTime(this_14_days)->interval(d)"
     datalabel: Article views by referrer
-    isStacked: true
-    printer: AreaChart
+    colspan: 12 L4
+  -
+    question: How many article views were from gifted / shared emails?
+    name: sharing/pagereferrals
+    query: "page:interaction->count()->filter(campaign.tools.shareType)->group(campaign.tools.shareType)->relTime(this_14_days)->interval(d)"
+    datalabel: Article views by referrer
+    colspan: 12 L4
   -
     question: MVT - RHR - How many articles are users reading (by Variant)?
     name: MVT-RHR-article-views
@@ -104,7 +110,3 @@ charts:
     datalabel: Conversions by Variants
     colspan: 12 L4
   -
-    question: How many views is the fastFT Stream Page getting?
-    name: fastFT/views
-    query: "page:view->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
-    datalabel: Visits to the fastFT Stream Page
