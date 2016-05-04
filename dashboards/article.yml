@@ -82,7 +82,7 @@ charts:
   -
     question: What's the open-rate for gifted / shared articles?
     name: sharing/openrate
-    query: "@concat(@pct(email:open->count()->filter(context.product=next-send-article-by-email),email:delivery->count()->filter(context.product=next-send-article-by-email),@pct(email:open->count()->filter(context.product=gift-article),email:delivery->count()->filter(context.product=gift-article))))->relTime(this_14_days)->interval(d)"
+    query: "@concat(@pct(email:open->count()->filter(context.product=next-send-article-by-email),email:delivery->count()->filter(context.product=next-send-article-by-email)),@pct(email:open->count()->filter(context.product=gift-article),email:delivery->count()->filter(context.product=gift-article)))->relTime(this_14_days)->interval(d)"
     datalabel: Article views by referrer
     colspan: 12 L4
   -
