@@ -20,9 +20,9 @@ charts:
     query: "@sum(page:interaction->avg(context.context.attention.total),page:interaction->avg(context.attention.total))->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)->relTime(previous_14_days)->interval(d)->plotThreshold(125,FT Benchmark)"
     datalabel: Seconds on page
   -
-    question: How many fastFT pageviews are filtered searches?
+    question: How many interactions are there with filters?
     name: filters
-    query: "@pct(page:view->filter(context.url~fastft?filterBy),page:view)->count()->filter(page.location.streamId=NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz)"
+    query: "page:add-filter->group(context.type)->count()->relTime(this_14_days)->interval(d)"
     datalabel: Filtered views as % of total
   -
     question: What devices are fastFT readers using?
