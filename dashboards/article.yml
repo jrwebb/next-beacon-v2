@@ -91,21 +91,3 @@ charts:
     query: "page:interaction->count()->filter(campaign.tools.shareType)->group(campaign.tools.shareType)->relTime(this_14_days)->interval(d)"
     datalabel: Article views by referrer
     colspan: 12 L4
-  -
-    question: MVT - RHR - How many articles are users reading (by Variant)?
-    name: MVT-RHR-article-views
-    query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
-    datalabel: Article views by Variants
-    colspan: 12 L4
-  -
-    question: MVT - RHR - What's the Recommended Reads CTR (by Variant)?
-    name: MVT-RHR-CTR
-    query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
-    datalabel: CTR by Variants
-    colspan: 12 L4
-  -
-    question: MVT - RHR - How many conversions for (by Variant)?
-    name: MVT-RHR-conversions
-    query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
-    datalabel: Conversions by Variants
-    colspan: 12 L4
