@@ -1,10 +1,7 @@
+include n.Makefile
+
 TEST_HOST := "ft-beacon-v2-branch-${CIRCLE_BUILD_NUM}"
 YAML_WARNING= "Note: If the dashboard configuration files fail YAML verification, (a) make sure you have a new line at the end of the file; and (b) use only spaces (not tabs) for indentation."
-
-.PHONY: test
-
-install:
-	obt install --verbose
 
 clean:
 	git clean -fxd
