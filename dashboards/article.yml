@@ -109,4 +109,3 @@ charts:
     query: "cta:click->count()->filter(context.domPath~suggested-article)->group(user.ab.tests.articleRHRSubheadAndNumber)->tidy()"
     datalabel: Conversions by Variants
     colspan: 12 L4
-  -
