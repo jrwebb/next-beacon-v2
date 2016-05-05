@@ -281,3 +281,49 @@ charts:
     interval: false
     colspan: 12 L6
     datalabel: Clicks
+
+  -
+    question: "How many users became new myFT users from the homepage myft component"
+    name: dashboard/myft/homepage-and-article-promos/homepage-follows-new
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(context.domPressed=false)
+              ->filter(user.myft.isMyFtUser!=true)
+              ->filter(context.domPath~myft | concept | follow)"
+    colspan: 12 L4
+  -
+    question: "How many existing myFT users followed topics from the homepage myft component"
+    name: dashboard/myft/homepage-and-article-promos/homepage-follows-existing
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(context.domPressed=false)
+              ->filter(user.myft.isMyFtUser=true)
+              ->filter(context.domPath~myft | concept | follow)"
+    colspan: 12 L4
+  -
+        question: "How many article clicks happened on the homepage myFT component"
+        name: dashboard/myft/homepage-and-article-promos/article-clicks
+        query: "cta:click
+                 ->count()
+                 ->filter(context.domPath~myft | concept |)
+                 ->filter(context.domPath~ | article)"
+        colspan: 12 L4
+
+  -
+    question: "How many users became new myFT users from the article page myft header promo"
+    name: dashboard/myft/homepage-and-article-promos/article-follows-new
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(context.domPath~follow-promo-header | follow)
+              ->filter(context.domPressed=false)
+              ->filter(user.myft.isMyFtUser!=true)"
+    colspan: 12 L6
+  -
+    question: "How many existing myFT users followed topics from the article page myft header promo"
+    name: dashboard/myft/homepage-and-article-promos/article-follows-existing
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(context.domPath~follow-promo-header | follow)
+              ->filter(context.domPressed=false)
+              ->filter(user.myft.isMyFtUser=true)"
+    colspan: 12 L6
