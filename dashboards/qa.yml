@@ -18,13 +18,15 @@ charts:
   -
     question: Which browsers are visitors using
     name: browsers
-    query: "page:view->count(device.spoorId)->group(device.browserName)
+    query: "page:view
+      ->count(device.spoorId)
+      ->group(device.browserName)
       ->filter(device.isRobot=false)
-      ->cutoff(1,percent)
+      ->sortDesc()
       ->tidy(true)"
     interval: false
     colspan: 12 L4
-    printer: BarChart
+    printer: Table
   -
     question: Are any browsers showing unusually high opt out rates (excluding browsers with <5 opt outs)?
     name: opt-out-rate/by-browser
