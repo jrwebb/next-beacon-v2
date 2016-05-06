@@ -92,111 +92,6 @@ charts:
     printer: BarChart
     interval: false
     colspan: 6 L4
-
-  -
-    break: true
-    question: How many myFT email clicks in the past 7 days?
-    name: offsite/emailclicksbyweek
-    query: page:view->count(user.uuid)->relTime(this_7_days)->filter(campaign.myft.source=notification:daily-email:cta)->filter(user.isStaff!=true)
-    colspan: 12
-
-
-  -
-    question: How many of this week's logged-in Next users are opted into the daily email?
-    name: offsite/dailyemailcount
-    query: page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->relTime(this_7_days)->filter(user.isStaff!=true)
-    interval: false
-    colspan: 4 L2
-    datalabel: are opted into daily email this week
-  -
-    question: What % of this week's logged-in Next users are opted into the daily email?
-    name: offsite/dailyemail
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true),page:view->count(user.uuid))->relTime(this_7_days)->filter(user.isStaff!=true)"
-    interval: false
-    colspan: 4 L2
-    datalabel: "% are opted into daily email this week"
-  -
-    question: What % of logged-in Next users are opted into the daily email?
-    name: offsite/dailyemailbyday
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoDailyEmail=true)->interval(d),page:view->count(user.uuid)->interval(d))->filter(user.isStaff!=true)"
-    datalabel: "% opted into daily email"
-    colspan: 12 L6
-
-
-  -
-    question: Daily email open rate this week
-    name: offsite/dailyemailopenrate
-    query: "@pct(email:open->count(),email:delivery->count())->relTime(this_7_days)->filter(campaign.myft.emailType=daily)->filter(user.isStaff!=true)"
-    interval: false
-    colspan: 3 L2
-    datalabel: "% open rate"
-  -
-    question: Daily email click-through rate this week
-    name: offsite/dailyemailclickthroughrate
-    query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=daily)->relTime(this_7_days)->filter(user.isStaff!=true)"
-    interval: false
-    colspan: 3 L2
-    datalabel: "clicks per email"
-  -
-    question: Daily email open and click-through rate
-    name: offsite/dailyemailopenclickratebyday
-    query: "@concat(
-        @ratio(email:click->count(),email:delivery->count()),
-        @ratio(email:open->count(),email:delivery->count())
-    )->filter(campaign.myft.emailType=daily)->relabel(_headings,click,open)->relTime(this_10_days)->interval(d)->filter(user.isStaff!=true)"
-    colspan: 12 L4
-
-
-  -
-    break: true
-    question: How many of this week's logged-in Next users are opted into the weekly email?
-    name: offsite/weeklyemailcount
-    query: page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(this_7_days)->filter(user.isStaff!=true)
-    interval: false
-    colspan: 4 L2
-    datalabel: are opted into weekly email this week
-  -
-    question: What % of this week's logged-in Next users are opted into the weekly email?
-    name: offsite/weeklyemail
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->relTime(this_7_days),page:view->count(user.uuid)->relTime(this_7_days))->filter(user.isStaff!=true)"
-    interval: false
-    colspan: 4 L2
-    datalabel: "% are opted into weekly email this week"
-  -
-    question: What % of logged-in Next users are opted into the weekly email?
-    name: offsite/weeklyemailbyday
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.optedIntoWeeklyEmail=true)->interval(d),page:view->count(user.uuid)->interval(d))"
-    datalabel: "% opted into weekly email"
-    colspan: 12 L6
-
-
-
-  -
-    question: Weekly email open rate this week
-    name: offsite/weeklyemailopenrate
-    query: "@pct(email:open->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(this_7_days)->filter(user.isStaff!=true)"
-    interval: false
-    colspan: 3 L2
-    datalabel: "% open rate"
-  -
-    question: Weekly email click-through rate this week
-    name: offsite/weeklyemailclickthroughrate
-    query: "@ratio(email:click->count(),email:delivery->count())->filter(campaign.myft.emailType=weekly)->relTime(this_7_days)->filter(user.isStaff!=true)"
-    interval: false
-    colspan: 3 L2
-    datalabel: "clicks per email"
-  -
-    question: Weekly email open and click-through rate
-    name: offsite/weeklyemailclickthroughratebyday
-    query: "@concat(
-        @ratio(email:click->count(),email:delivery->count()),
-        @ratio(email:open->count(),email:delivery->count())
-        )->filter(campaign.myft.emailType=weekly)->relabel(_headings,click,open)->relTime(this_4_weeks)->filter(user.isStaff!=true)"
-    interval: w
-    colspan: 12 L4
-
-
-
   -
     break: true
     question: "Collections: How many Follow All clicks this week"
@@ -281,6 +176,126 @@ charts:
     interval: false
     colspan: 12 L6
     datalabel: Clicks
+
+
+# OFFSITE
+
+
+  -
+    question: What % of logged-in Next users were opted into the daily email?
+    name: offsite/opted-in-daily-percentage
+    query: "@pct(
+                page:view
+                  ->count(user.uuid)
+                  ->filter(user.myft.optedIntoDailyEmail=true),
+                page:view->count(user.uuid)
+              )
+                ->filter(user.isStaff!=true)"
+    interval: false
+    colspan: 12 M6 L3
+  -
+    question: How many logged-in Next users were opted into the daily email?
+    name: offsite/opted-in-daily-number
+    query: "page:view
+              ->count(user.uuid)
+              ->filter(user.myft.optedIntoDailyEmail=true)
+              ->filter(user.isStaff!=true)"
+    interval: false
+    colspan: 12 M6 L3
+
+  -
+    question: What % of logged-in Next users were opted into the weekly email?
+    name: offsite/opted-in-weekly-percentage
+    query: "@pct(
+                page:view
+                  ->count(user.uuid)
+                  ->filter(user.myft.optedIntoWeeklyEmail=true),
+                page:view->count(user.uuid)
+              )
+                ->filter(user.isStaff!=true)"
+    interval: false
+    colspan: 12 M6 L3
+  -
+    question: How many of logged-in Next users were opted into the weekly email?
+    name: offsite/opted-in-weekly-number
+    query: "page:view
+              ->count(user.uuid)
+              ->filter(user.myft.optedIntoWeeklyEmail=true)
+              ->filter(user.isStaff!=true)"
+    interval: false
+    colspan: 12 M6 L3
+
+
+
+  -
+    question: How many daily emails were delivered?
+    name: offsite/daily-emails-delivered
+    query: "email:delivery
+              ->count()
+              ->filter(campaign.myft.emailType=daily)
+              ->filter(user.isStaff!=true)"
+    colspan: 12 M6
+  -
+    question: What was the daily email open rate (%)
+    name: offsite/daily-email-open-rate
+    query: "@pct(
+              email:open->count(),
+              email:delivery->count()
+            )
+              ->filter(campaign.myft.emailType=daily)
+              ->filter(user.isStaff!=true)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the daily email clickthrough rate (clicks per email)
+    name: offsite/daily-email-clickthrough-rate
+    query: "@ratio(
+              email:click->count(),
+              email:delivery->count()
+            )
+              ->filter(campaign.myft.emailType=daily)
+              ->filter(user.isStaff!=true)"
+    interval: false
+    colspan: 12 M3
+
+
+  -
+    question: How many weekly emails were delivered?
+    name: offsite/weekly-emails-delivered
+    query: "email:delivery
+              ->count()
+              ->filter(campaign.myft.emailType=weekly)
+              ->filter(user.isStaff!=true)
+              ->interval(d)"
+    colspan: 12 M6
+  -
+    question: What was the weekly email open rate (%)
+    name: offsite/weekly-email-open-rate
+    query: "@pct(
+              email:open->count(),
+              email:delivery->count()
+            )->filter(campaign.myft.emailType=weekly)
+              ->filter(user.isStaff!=true)
+              ->relTime(previous_7_days)"
+    interval: false
+    colspan: 12 M3
+  -
+      question: What was the weekly email clickthrough rate (clicks per email)
+      name: offsite/weekly-email-clickthrough-rate
+      query: "@ratio(
+                email:click->count(),
+                email:delivery->count()
+              )
+                ->filter(campaign.myft.emailType=weekly)
+                ->filter(user.isStaff!=true)
+                ->relTime(previous_7_days)"
+      interval: false
+      colspan: 12 M3
+
+
+
+
+# HOMEPAGE AND ARTICLE PROMOS
 
   -
     question: "How many users became new myFT users from the homepage myft component"
