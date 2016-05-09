@@ -97,3 +97,8 @@ charts:
     name: lightsignup
     query: light-signup:subscribed->count()->interval(d)
     datalabel: "Subscribers p/day"
+  -
+    question: How many visits to the subscription funnel does light sign-up generate?
+    name: lightsignup-funnel
+    query: email:click->count(context.deviceId)->filter(context.product="light-signup")->filter(context.targetLinkUrl~"801043")
+    datalabel: "Funnel clicks p/day"
