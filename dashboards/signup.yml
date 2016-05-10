@@ -102,3 +102,8 @@ charts:
     name: lightsignup-funnel
     query: email:click->count(context.deviceId)->filter(context.product="light-signup")->filter(context.targetLinkUrl~"801043")
     datalabel: "Funnel clicks p/day"
+  -
+    question: How many anonymous people viewed an article in each light signup AB test group
+    name: lightsignup-views
+    query: page:view->count(device.spoorId)->filter(page.location.type="article")->filter(!user.uuid)->filter(user.ab.tests.lightSignUp)->group(user.ab.tests.lightSignUp)->interval(d)->print(StackedColumnChart)
+    datalabel: "Page views"
