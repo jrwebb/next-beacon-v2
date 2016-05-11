@@ -11,7 +11,7 @@
     "fetchres": "^1.5.1",
     "flat": "^1.6.0",
     "forever": "^0.11.1",
-    "ft-next-express": "^15.0.0",
+    "@financial-times/n-express": "^16.0.0",
     "ft-next-logger": "^4.2.2",
     "ft-poller": "^2.6.0",
     "isomorphic-fetch": "^2.2.1",
