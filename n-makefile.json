@@ -1,0 +1,9 @@
+{
+  "assets": {
+    "entry": {
+      "./public/main.js": "./client/main.js",
+      "./public/worker.js": "./client/worker.js",
+      "./public/main.css": "./client/main.scss"
+    }
+  }
+}

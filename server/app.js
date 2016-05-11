@@ -7,15 +7,15 @@ const auth = require('./middleware/auth');
 const window = require('./middleware/window');
 const aliases = require('./middleware/aliases');
 const dashboards = require('./lib/dashboards');
-
+const express = require('@financial-times/n-express');
 const cookieParser	= require('cookie-parser');
-const app = module.exports = require('@financial-times/n-express')({
+
+const app = module.exports = express({
 	layoutsDir: __dirname + '/../views/layouts',
 	withBackendAuthentication: false,
-	withFlags: false
+	withFlags: false,
+	withHandlebars: true
 });
-
-
 
 // Indicates the app is behind a front-facing proxy, and to use the X-Forwarded-* headers to determine the connection and the IP address of the client. NOTE: X-Forwarded-* headers are easily spoofed and the detected IP addresses are unreliable.
 // See: http://expressjs.com/api.html
