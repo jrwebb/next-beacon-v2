@@ -9,7 +9,7 @@ const aliases = require('./middleware/aliases');
 const dashboards = require('./lib/dashboards');
 
 const cookieParser	= require('cookie-parser');
-const app = module.exports = require('ft-next-express')({
+const app = module.exports = require('@financial-times/n-express')({
 	layoutsDir: __dirname + '/../views/layouts',
 	withBackendAuthentication: false,
 	withFlags: false
