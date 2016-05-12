@@ -24,3 +24,4 @@ charts:
     name: lightsignup-by-test-group
     query: light-signup:subscribed->count()->group(user.ab.tests.lightSignUp)->interval(d)->print(LineChart)
     datalabel: "Subscribers p/day"
+

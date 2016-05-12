@@ -92,3 +92,4 @@ charts:
              ->interval(d)
             )->relabel(_headings, Amex, MasterCard, Visa)"
     datalabel: Payment Methods
+
