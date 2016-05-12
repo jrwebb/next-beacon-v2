@@ -1,0 +1,26 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: lightsignup
+title: Light Signup
+isPrimary: true
+charts:
+  -
+    question: How many subscribers does light sign-up get every day?
+    name: lightsignup
+    query: light-signup:subscribed->count()->interval(d)
+    datalabel: "Subscribers p/day"
+  -
+    question: How many visits to the subscription funnel does light sign-up generate?
+    name: lightsignup-funnel
+    query: email:click->count(context.deviceId)->filter(context.product="light-signup")->filter(context.targetLinkUrl~"801043")
+    datalabel: "Funnel clicks p/day"
+  -
+    question: How many anonymous people viewed an article in each light signup AB test group
+    name: lightsignup-views
+    query: page:view->count(device.spoorId)->filter(page.location.type="article")->filter(!user.uuid)->filter(user.ab.tests.lightSignUp)->group(user.ab.tests.lightSignUp)->interval(d)->print(StackedColumnChart)
+    datalabel: "Page views"
+  -
+    question: How many people signed up in each light signup AB test group
+    name: lightsignup-by-test-group
+    query: light-signup:subscribed->count()->group(user.ab.tests.lightSignUp)->interval(d)->print(LineChart)
+    datalabel: "Subscribers p/day"
