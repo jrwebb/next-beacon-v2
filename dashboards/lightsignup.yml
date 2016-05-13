@@ -5,12 +5,24 @@ title: Light Signup
 isPrimary: true
 charts:
   -
-    question: How many subscribers does light sign-up get every day?
+    question: How many subscribers does light signup get every day?
     name: lightsignup
-    query: light-signup:subscribed->count()->interval(d)
+    query: light-signup:subscribed->count()->filter(context.isTestEvent=false)->interval(d)
     datalabel: "Subscribers p/day"
   -
-    question: How many visits to the subscription funnel does light sign-up generate?
+    question: "When served the light signup form, how many users subscribe?"
+    name: views-to-subscriptions
+    query: "@concat(page:view->count(device.spoorId)->filter(user.ab.tests.lightSignUp)->filter(page.location.type=article)->filter(user.ab.tests.lightSignUp!=control),light-signup:subscribed->count()->filter(context.isTestEvent=false))"
+    printer: StackedLineChart
+    datalabel: "Subscribers p/day"
+  -
+    question: "How many (trackable) light signup subscribers go on to purchase a subscription?"
+    name: lightsignup-conversion
+    query: "@funnel(light-signup:subscribed->count(device.spoorId)->filter(context.isTestEvent=false),signup:subscription-created->count(device.spoorId)->filter(context.isTestEvent=false))->with(device.spoorId)"
+    printer: Table
+    datalabel: "Conversion all-time"
+  -
+    question: How many visits to the subscription funnel does light signup generate?
     name: lightsignup-funnel
     query: email:click->count(context.deviceId)->filter(context.product="light-signup")->filter(context.targetLinkUrl~"801043")
     datalabel: "Funnel clicks p/day"
