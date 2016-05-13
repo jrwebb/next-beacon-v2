@@ -54,7 +54,7 @@ charts:
   -
     question: What's the CTR by social buttons (Top)?
     name: article-elements/socialctrtop
-    query: "@concat(cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~whatsapp))->filter(page.location.type=article)->filter(page.location.type=article)->relabel(_headings,Facebook,LinkedIn,Twitter,WhatsApp)"
+    query: "@concat(cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~email),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~whatsapp))->filter(page.location.type=article)->filter(page.location.type=article)->relabel(_headings,Email,Facebook,LinkedIn,Twitter,WhatsApp)"
     datalabel: Total clicks social channel
     colspan: 12 L4
     isStacked: true
@@ -62,7 +62,7 @@ charts:
   -
     question: What's the CTR by social buttons (Bottom)?
     name: article-elements/socialctrbottom
-    query: "@concat(cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~whatsapp))->filter(page.location.type=article)->filter(page.location.type=article)->relabel(_headings,Facebook,LinkedIn,Twitter,WhatsApp)"
+    query: "@concat(cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~email),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~whatsapp))->filter(page.location.type=article)->filter(page.location.type=article)->relabel(_headings,Email,Facebook,LinkedIn,Twitter,WhatsApp)"
     datalabel: Total clicks by social channel
     colspan: 12 L4
     isStacked: true
@@ -90,4 +90,16 @@ charts:
     name: sharing/pagereferrals
     query: "page:interaction->count()->filter(campaign.tools.shareType)->group(campaign.tools.shareType)->relTime(this_14_days)->interval(d)"
     datalabel: Article views by referrer
+    colspan: 12 L4
+  -
+    question: How many tried to email article?
+    name: sharing/sendstatus
+    query: "@concat(email-article:SEND,email-article:SEND_SUCCESS,email-article:SEND_FAILURE)->count()->interval(d)->relabel(_headings,Send,Success,Failure)"
+    datalabel: Count
+    colspan: 12 L4
+  -
+    question: How many times has the email article been open?
+    name: sharing/emailarticleopen
+    query: "@concat(email-article:TOGGLE_OPEN_TOP,email-article:TOGGLE_OPEN_BOTTOM)->count()->interval(d)->relabel(_headings,Top,Bottom)"
+    datalabel: Count
     colspan: 12 L4
