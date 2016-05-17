@@ -99,13 +99,13 @@ charts:
     colspan: 12 L4
   -
     question: How many gift/share successes from the frontend?
-    name: sharing/giftsharefrontend
+    name: sharing/giftsharesuccesses
     query: "@concat(email-article:SEND_SUCCESS->filter(context.state.isGift?false),email-article:SEND_SUCCESS->filter(context.state.isGift?true))->count()->relabel(_headings,Shared,Gifted)"
     datalabel: Count
     colspan: 12 L4
   -
     question: How many gift/share failures from the frontend?
-    name: sharing/giftsharefrontend
+    name: sharing/giftsharefailures
     query: "@concat(email-article:SEND_FAILURE->filter(context.state.isGift?false),email-article:SEND_FAILURE->filter(context.state.isGift?true))->count()->relabel(_headings,Failed share,Failed gift)"
     datalabel: Count
     colspan: 12 L4
