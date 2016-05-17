@@ -1,0 +1,42 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: giftandemail
+title: Gift and Share
+isPrimary: true
+charts:
+  -
+    question: How many gifted/shared emails has the backend sent?
+    name: sharing/giftandshare
+    query: "email:delivery->count()->filter(context.product?gift-article,next-send-article-by-email)->group(context.product)->relTime(previous_14_days)->interval(d)"
+    datalabel: Emails delivered
+    colspan: 12 L4
+  -
+    question: What's the open-rate for gifted/shared articles?
+    name: sharing/openrate
+    query: "@concat(@pct(email:open->count()->filter(context.product=next-send-article-by-email),email:delivery->count()->filter(context.product=next-send-article-by-email)),@pct(email:open->count()->filter(context.product=gift-article),email:delivery->count()->filter(context.product=gift-article)))->relTime(this_14_days)->interval(d)"
+    datalabel: Article views by referrer
+    colspan: 12 L4
+  -
+    question: How many article views were from gifted/shared emails?
+    name: sharing/pagereferrals
+    query: "page:interaction->count()->filter(campaign.tools.shareType)->group(campaign.tools.shareType)->relTime(this_14_days)->interval(d)"
+    datalabel: Article views by referrer
+    colspan: 12 L4
+  -
+    question: How many times has the email article UI view been expanded?
+    name: sharing/emailarticleopen
+    query: "@concat(email-article:TOGGLE_OPEN_TOP,email-article:TOGGLE_OPEN_BOTTOM)->count()->relabel(_headings,Top,Bottom)"
+    datalabel: Count
+    colspan: 12 L4
+  -
+    question: How many gift/share successes from the frontend?
+    name: sharing/giftsharesuccesses
+    query: "@concat(email-article:SEND_SUCCESS->filter(context.state.isGift?false),email-article:SEND_SUCCESS->filter(context.state.isGift?true))->count()->relabel(_headings,Shared,Gifted)"
+    datalabel: Count
+    colspan: 12 L4
+  -
+    question: How many gift/share failures from the frontend?
+    name: sharing/giftsharefailures
+    query: "@concat(email-article:SEND_FAILURE->filter(context.state.isGift?false),email-article:SEND_FAILURE->filter(context.state.isGift?true))->count()->relabel(_headings,Failed share,Failed gift)"
+    datalabel: Count
+    colspan: 12 L4
