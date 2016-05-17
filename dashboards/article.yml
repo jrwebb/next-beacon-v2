@@ -92,20 +92,20 @@ charts:
     datalabel: Article views by referrer
     colspan: 12 L4
   -
-    question: How many tried to email article from the frontend?
-    name: sharing/sendstatus
-    query: "@concat(email-article:SEND,email-article:SEND_SUCCESS,email-article:SEND_FAILURE)->count()->relabel(_headings,Send,Success,Failure)"
-    datalabel: Count
-    colspan: 12 L4
-  -
     question: How many times has the email article UI view been expanded?
     name: sharing/emailarticleopen
     query: "@concat(email-article:TOGGLE_OPEN_TOP,email-article:TOGGLE_OPEN_BOTTOM)->count()->relabel(_headings,Top,Bottom)"
     datalabel: Count
     colspan: 12 L4
   -
-    question: How many successful gift/share from the frontend?
+    question: How many gift/share successes from the frontend?
     name: sharing/giftsharefrontend
-    query: "@concat(email-article:SEND_SUCCESS->filter(context.state.isGift?false),email-article:SEND_SUCCESS->filter(context.state.isGift?true),email-article:SEND_FAILURE->filter(context.state.isGift?false),email-article:SEND_FAILURE->filter(context.state.isGift?true))->count()->interval(h)->relabel(_headings,Shared,Failed share,Gifted,Failed gift)"
+    query: "@concat(email-article:SEND_SUCCESS->filter(context.state.isGift?false),email-article:SEND_SUCCESS->filter(context.state.isGift?true))->count()->relabel(_headings,Shared,Gifted)"
+    datalabel: Count
+    colspan: 12 L4
+  -
+    question: How many gift/share failures from the frontend?
+    name: sharing/giftsharefrontend
+    query: "@concat(email-article:SEND_FAILURE->filter(context.state.isGift?false),email-article:SEND_FAILURE->filter(context.state.isGift?true))->count()->relabel(_headings,Failed share,Failed gift)"
     datalabel: Count
     colspan: 12 L4
