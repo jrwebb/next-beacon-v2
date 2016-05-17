@@ -20,7 +20,12 @@ charts:
     query: "@concat(@pct(page:view->filter(page.referrer.type=stream),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=frontpage),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=article),page:view)->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)->relabel(_headings,Stream,Front Page,Article)"
     datalabel: Percentage of article views by referrer
   -
-    question: What's the CTR from streams to articles?
+    question: What's the CTR from Streams to articles?
     name: articleCTR
     query: "@pct(cta:click->filter(context.domPath~headline),page:view)->filter(page.location.type=stream)->count()"
-    datalabel: CTR from stream via 'headline'
+    datalabel: CTR from stream via headline
+  -
+    question: What's the CTR of  related topics and in the news in Streams?
+    name: relatedCTR
+    query: "@pct(cta:click->count(device.spoorId)->filter(context.domPath~link)->group(context.domPath)->filter(context.domPath~sub-header),page:view->count()->filter(page.location.type=stream))->relTime(this_14_days)->interval(d)"
+    datalabel: CTR from stream via related
