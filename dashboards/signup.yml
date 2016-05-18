@@ -7,81 +7,90 @@ charts:
   -
     question: How many Unique Visitors do we get every day?
     name: visitors
-    query: page:view->count(device.spoorId)->filter(page.location.path~signup)->interval(d)
+    query: page:view
+            ->count(device.spoorId)
+            ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+            ->filter(page.location.host=next.ft.com)
+            ->interval(d)
     datalabel: Signup visitors per day
   -
-    question: How many succesful registrations have we had?
+    question: How many succesful registrations have we had? (Spoor Event)
     name: registrations
     interval: false
-    query: signup:subscription-created->filter(context.isTestEvent=false)->count()
+    query: signup:subscription-created->count()
     datalabel: Signup succesful registrations
   -
-    question: How many bounces have we had today?
-    name: bounces
+    question: How many succesful registrations have we had? (Thank You page)
+    name: registrations
     interval: false
-    timeframe: this_1_days
-    query: "signup:bounce->count()->filter(context.message.isTestEvent=false)"
-    datalabel: Bounces today
-  -
+    query: page:view
+            ->count(device.spoorId)
+            ->filter(page.location.normalizedPath=/thank-you)
+            ->filter(page.location.host=next.ft.com)
+            ->interval(d)
+    datalabel: Signup succesful registrations
+  - 
     question: What's our daily conversion rate?
     name: daily
-    query: "@concat(
+    query: "@pct(
             page:view
               ->count(device.spoorId)
-              ->filter(page.location.path~signup)
+              ->filter(page.location.normalizedPath=/thank-you)
+              ->filter(page.location.host=next.ft.com)
               ->interval(d),
-            signup:subscription-created
-              ->filter(context.isTestEvent=false)
-              ->count()
-             ->interval(d)
-            )
-          ->relabel(_headings,Unique Visitors,Subscriptions)"
+            page:view
+              ->count(device.spoorId)
+              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.host=next.ft.com)
+              ->interval(d)
+          )"
     printer: StackedColumnChart
     datalabel: Signup success rate
-  -
+  - 
     question: Pageviews vs. Unique Visitors
     name: compare
-    query: "@concat(page:view
-        ->count(device.spoorId)
-        ->filter(page.location.path~signup)
-        ->interval(d),
-      page:view
-        ->count()
-        ->filter(page.location.path~signup)
-        ->interval(d))->relabel(_headings,Unique visitors, Pageviews)"
+    query: "@concat(
+              page:view
+              ->count(device.spoorId)
+              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.host=next.ft.com)
+              ->interval(d),
+
+              page:view
+              ->count()
+              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.host=next.ft.com)
+              ->interval(d)
+            )
+          ->relabel(_headings,Unique visitors,Pageviews)"
     printer: StackedAreaChart
-    datalabel: Signup success rate
+    datalabel: Signup success rate    
   -
     question: What are our top browsers?
     name: browsers
-    query: "@pct(page:view
-                  ->count()
-                  ->group(device.browserName)
-                  ->filter(page.location.path~signup)
-                  ->filter(device.browserName)
-                  ->filter(device.browserName!=false),
-                 page:view
-                  ->count()
-                  ->filter(page.location.path~signup)
-                  ->filter(device.browserName)
-                  ->filter(device.browserName!=false))
-                ->sortDesc()"
-    printer: BarChart
+    query: page:view
+            ->count()
+            ->group(device.browserName)
+            ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+            ->filter(device.browserName)
+            ->filter(device.browserName!=false)
+            ->sortDesc()
+    printer: PieChart
     datalabel: Signup Browsers
   -
     question: (BETA) Failed Registrations
     name: failed
-    query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->filter(context.isTestEvent=false)->count()->interval(d))->relabel(_headings,Successful,Failed)->print(StackedColumnChart)"
+    query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->count()->interval(d))->relabel(CONCATENATION_RESULT,Successful,Failed)->print(StackedColumnChart)"
     printer: StackedColumnChart
     datalabel: Signup Browsers
-  -
+  - 
     question: (BETA) Payment Methods
     name: payment
     query: "@concat(
             cta:click
              ->count()
              ->filter(context.domPath=page:signup | signup-form | cc-amex)
-             ->interval(d),
+             ->interval(d), 
             cta:click
              ->count()
              ->filter(context.domPath=page:signup | signup-form | cc-master)
@@ -90,6 +99,5 @@ charts:
              ->count()
              ->filter(context.domPath=page:signup | signup-form | cc-visa)
              ->interval(d)
-            )->relabel(_headings, Amex, MasterCard, Visa)"
+            )->relabel(CONCATENATION_RESULT, Amex, MasterCard, Visa)"
     datalabel: Payment Methods
-
