@@ -56,12 +56,21 @@ charts:
     colspan: 4
     datalabel: weekly conversion rate 
   -
-    question: How many succesful registrations have we had?
+    question: How many successful registrations have we had?
     name: registrations spoor
     interval: false
     query: signup:subscription-created->count()->interval(d)
+    colspan: 5
     printer: ColumnChart
     datalabel: spoor
+  -
+    question: How many bounces have we had today?
+    name: bounces
+    interval: false
+    timeframe: this_1_days
+    query: "signup:bounce->count()->filter(context.message.isTestEvent=false)"
+    colspan: 3
+    datalabel: Bounces today
   -
     question: What are our top browsers?
     name: browsers
@@ -79,6 +88,7 @@ charts:
             ->filter(device.browserName!=false)
             ->sortDesc()
     printer: PieChart
+    colspan: 4
     datalabel: Signup Browsers
   -
     question: (BETA) Failed Registrations
