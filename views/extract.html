@@ -1,0 +1,40 @@
+{{> header}}
+
+<div class="extract o-techdocs-content">
+	<form class="extract__form" data-o-grid-colspan="12">
+		<div data-o-grid-colspan="2">
+			<h4>Select an event collection</h4>
+			<nav>
+				<ul>
+					{{#each collections}}
+					{{#each this}}
+					<li>
+						<a class="{{class}}" href="/data/extract/{{category}}:{{action}}" tabindex="0">{{category}}: {{action}}</a>
+					</li>
+					{{/each}}
+					{{/each}}
+				</ul>
+			</nav>
+		</div>
+		<div data-o-grid-colspan="2">
+			<h4>Select some properties</h4>
+			<ul>
+				{{#each properties}}
+				<li>
+					<label class=""><input type="checkbox"> {{this.name}}</label>
+				</li>
+				{{/each}}
+			</ul>
+		</div>
+		<div data-o-grid-colspan="8">
+			<h4>
+				<label>
+					Extract <input id="extract__numberOfEvents-range" type="range" min="10" max="10000" value="10" step="10" oninput="outputUpdate(value)"> <output for="extract__numberOfEvents-range" class="extract__numberOfEvents">10</output> events.
+				</label>
+				<button type="button" class="o-buttons extract__submit">Punch it Chewie</button>
+			</h4>
+		</div>
+	</div>
+</form>
+
+	<!-- {{#ifEquals @root.timeframe 'previous_1_days'}}selected{{/ifEquals}} -->

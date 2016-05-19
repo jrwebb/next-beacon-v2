@@ -24,7 +24,9 @@ window.timer = {
 	}
 }
 
-if (document.querySelector('.query-wizard')) {
+if (isExtraction) {
+	require('./pages/extract').init();
+} else if (document.querySelector('.query-wizard')) {
 	require('./pages/query-wizard').init();
 } else {
 	dashboard();

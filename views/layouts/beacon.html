@@ -19,6 +19,9 @@
 			{{#if isPresentation}}
 			window.view = 'presentation';
 			{{/if}}
+			{{#if isExtraction}}
+			window.isExtraction = true;
+			{{/if}}
 		</script>
 		<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js" defer></script>
 		<script src="https://www.gstatic.com/charts/loader.js" defer></script>

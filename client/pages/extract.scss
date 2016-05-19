@@ -1,0 +1,43 @@
+.extract {
+	[data-o-grid-colspan] {
+		padding-left: 10px;
+	}
+	h4 {
+		margin: 10px 0px;
+	}
+	ul {
+		margin: 0px;
+		padding: 0px;
+		list-style: none;
+		border: 1px solid #eee;
+		border-bottom: 0px;
+		li {
+			margin: 0px;
+			padding: 0px;
+			label,a {
+				font-size: 14px;
+				display: block;
+				padding: 1em;
+				border-bottom: 1px solid #eee;
+				cursor: pointer;
+				line-height: 1.5;
+				text-decoration: none;
+				overflow: scroll;
+				white-space: nowrap;
+				&:hover {
+					background: aliceblue;
+				}
+			}
+			label {
+				border-left: 4px solid gold;
+				margin-left: -4px;
+			}
+			a.active {
+				margin-right: -10px;
+				background: gold;
+				color: black;
+				font-weight: bolder;
+			}
+		}
+	}
+}
