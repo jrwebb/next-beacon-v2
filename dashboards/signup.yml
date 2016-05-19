@@ -63,7 +63,17 @@ charts:
     interval: false
     query: signup:subscription-created->count()->interval(d)
     printer: ColumnChart
+    colspan: 4
     datalabel: spoor
+  -
+    question: How many Failed Registration events?
+    name: failed
+    query: signup:subscription-creation-failed
+              ->count()
+              ->interval(d)
+    printer: StackedColumnChart
+    colspan: 4
+    datalabel: Signup Browsers
   -
     question: How many clicks on the Submit button?
     name: registrations submit
@@ -77,19 +87,11 @@ charts:
       ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
       ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
       ->filter(page.referrer.host=next.ft.com)
-      ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
       ->filter(context.domPath~signup-form | submit)
       ->interval(d)
     printer: ColumnChart
+    colspan: 4
     datalabel: submit clicks
-  -
-    question: How many Failed Registration events?
-    name: failed
-    query: signup:subscription-creation-failed
-              ->count()
-              ->interval(d)
-    printer: StackedColumnChart
-    datalabel: Signup Browsers
   -
     question: How many bounces have we had today?
     name: bounces
@@ -97,6 +99,7 @@ charts:
     timeframe: this_1_days
     query: "signup:bounce->count()->filter(context.message.isTestEvent=false)"
     datalabel: Bounces today
+    colspan: 3
   -
     question: What are our top browsers?
     name: browsers
@@ -116,3 +119,23 @@ charts:
             ->sortDesc()
     printer: PieChart
     datalabel: Signup Browsers
+    colspan: 5
+  - 
+    question: Existing users trying to subscribe?
+    name: exists
+    query: signup:notification
+            ->count(device.spoorId)
+            ->filter(context.message.state=displayed)
+            ->filter(context.message.isTestEvent=false)
+            ->filter(context.message.type=known subscriber login prompt)
+            ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+            ->filter(page.location.host=next.ft.com)
+            ->filter(page.location.path!~backend)
+            ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
+            ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
+            ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
+            ->relTime(this_14_days)
+            ->interval(d)
+    datalabel: exists
+    printer: ColumnChart
+    colspan: 4
