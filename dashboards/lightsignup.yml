@@ -36,4 +36,8 @@ charts:
     name: lightsignup-by-test-group
     query: light-signup:subscribed->count()->group(user.ab.tests.lightSignUp)->interval(d)->print(LineChart)
     datalabel: "Subscribers p/day"
-
+  -
+    question: What's the daily click-through rate on the light signup email
+    name: lightsignup-daily
+    query: email:click->count(context.deviceId)->filter(context.product="light-signup")->group(context.daysSinceSignup)
+    datalabel: "Clicks p/day"
