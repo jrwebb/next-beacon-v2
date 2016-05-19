@@ -4,92 +4,110 @@ id: signup
 title: Signup
 isPrimary: true
 charts:
-  -
-    question: How many Unique Visitors do we get every day?
-    name: visitors
-    query: page:view->count(device.spoorId)->filter(page.location.path~signup)->interval(d)
-    datalabel: Signup visitors per day
-  -
-    question: How many succesful registrations have we had?
-    name: registrations
+  - 
+    question: How many visitors do we get every day?
+    name: compare
+    query: "@concat(
+              page:view
+              ->count(device.spoorId)
+              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.host=next.ft.com)
+              ->filter(page.location.path!~backend)
+              ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
+              ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
+              ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
+              ->filter(page.referrer.host=next.ft.com)
+              ->interval(d),
+
+              page:view
+              ->count()
+              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.host=next.ft.com)
+              ->filter(page.location.path!~backend)
+              ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
+              ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
+              ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
+              ->filter(page.referrer.host=next.ft.com)
+              ->interval(d)
+            )
+          ->relabel(_headings,Unique visitors,Pageviews)"
+    colspan: 8
+    datalabel: Signup success rate  
+  - 
+    question: What's our conversion rate this week? (%)
+    name: this week's conversion rate
+    query: "@pct(
+            page:view
+              ->count(device.spoorId)
+              ->filter(page.location.normalizedPath=/thank-you)
+              ->filter(page.location.host=next.ft.com)
+              ->relTime(this_7_days),
+            page:view
+              ->count(device.spoorId)
+              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.host=next.ft.com)
+              ->filter(page.location.path!~backend)
+              ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
+              ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
+              ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
+              ->filter(page.referrer.host=next.ft.com)->relTime(this_7_days)
+          )"
     interval: false
-    query: signup:subscription-created->filter(context.isTestEvent=false)->count()
-    datalabel: Signup succesful registrations
+    colspan: 4
+    datalabel: weekly conversion rate 
+  -
+    question: How many successful registrations have we had?
+    name: registrations spoor
+    interval: false
+    query: signup:subscription-created->count()->interval(d)
+    colspan: 5
+    printer: ColumnChart
+    datalabel: spoor
   -
     question: How many bounces have we had today?
     name: bounces
     interval: false
     timeframe: this_1_days
     query: "signup:bounce->count()->filter(context.message.isTestEvent=false)"
+    colspan: 3
     datalabel: Bounces today
-  -
-    question: What's our daily conversion rate?
-    name: daily
-    query: "@concat(
-            page:view
-              ->count(device.spoorId)
-              ->filter(page.location.path~signup)
-              ->interval(d),
-            signup:subscription-created
-              ->filter(context.isTestEvent=false)
-              ->count()
-             ->interval(d)
-            )
-          ->relabel(_headings,Unique Visitors,Subscriptions)"
-    printer: StackedColumnChart
-    datalabel: Signup success rate
-  -
-    question: Pageviews vs. Unique Visitors
-    name: compare
-    query: "@concat(page:view
-        ->count(device.spoorId)
-        ->filter(page.location.path~signup)
-        ->interval(d),
-      page:view
-        ->count()
-        ->filter(page.location.path~signup)
-        ->interval(d))->relabel(_headings,Unique visitors, Pageviews)"
-    printer: StackedAreaChart
-    datalabel: Signup success rate
   -
     question: What are our top browsers?
     name: browsers
-    query: "@pct(page:view
-                  ->count()
-                  ->group(device.browserName)
-                  ->filter(page.location.path~signup)
-                  ->filter(device.browserName)
-                  ->filter(device.browserName!=false),
-                 page:view
-                  ->count()
-                  ->filter(page.location.path~signup)
-                  ->filter(device.browserName)
-                  ->filter(device.browserName!=false))
-                ->sortDesc()"
-    printer: BarChart
+    query: page:view
+            ->count()
+            ->group(device.browserName)
+            ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+            ->filter(page.location.host=next.ft.com)
+            ->filter(page.location.path!~backend)
+            ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
+            ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
+            ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
+            ->filter(page.referrer.host=next.ft.com)
+            ->filter(device.browserName)
+            ->filter(device.browserName!=false)
+            ->sortDesc()
+    printer: PieChart
+    colspan: 4
     datalabel: Signup Browsers
   -
     question: (BETA) Failed Registrations
     name: failed
-    query: "@concat(signup:subscription-created->count()->interval(d),signup:subscription-creation-failed->filter(context.isTestEvent=false)->count()->interval(d))->relabel(_headings,Successful,Failed)->print(StackedColumnChart)"
+    query: signup:subscription-creation-failed
+              ->count()
+              ->interval(d)
     printer: StackedColumnChart
     datalabel: Signup Browsers
-  -
-    question: (BETA) Payment Methods
-    name: payment
-    query: "@concat(
-            cta:click
-             ->count()
-             ->filter(context.domPath=page:signup | signup-form | cc-amex)
-             ->interval(d),
-            cta:click
-             ->count()
-             ->filter(context.domPath=page:signup | signup-form | cc-master)
-             ->interval(d),
-            cta:click
-             ->count()
-             ->filter(context.domPath=page:signup | signup-form | cc-visa)
-             ->interval(d)
-            )->relabel(_headings, Amex, MasterCard, Visa)"
-    datalabel: Payment Methods
 
+  -
+    question: (BETA) Spoor Event vs Thank You Page
+    name: thank you vs spoor
+    interval: false
+    query: "@concat(
+              signup:subscription-created->count()->interval(d),
+              page:view
+                ->count(device.spoorId)
+                ->filter(page.location.normalizedPath=/thank-you)
+                ->interval(d))
+              ->relabel(_headings,Subscription Event,Thank You Page)"
+    datalabel: spoor
