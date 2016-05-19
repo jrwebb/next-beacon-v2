@@ -77,7 +77,6 @@ charts:
       ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
       ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
       ->filter(page.referrer.host=next.ft.com)
-      ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
       ->filter(context.domPath~signup-form | submit)
       ->interval(d)
     printer: ColumnChart
