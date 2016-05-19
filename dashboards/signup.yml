@@ -62,16 +62,40 @@ charts:
     name: registrations spoor
     interval: false
     query: signup:subscription-created->count()->interval(d)
-    colspan: 5
     printer: ColumnChart
     datalabel: spoor
+  -
+    question: How many clicks on the Submit button?
+    name: registrations submit
+    interval: false
+    query: cta:click
+      ->count(device.spoorId)
+      ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+      ->filter(page.location.host=next.ft.com)
+      ->filter(page.location.path!~backend)
+      ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
+      ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
+      ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
+      ->filter(page.referrer.host=next.ft.com)
+      ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
+      ->filter(context.domPath~signup-form | submit)
+      ->interval(d)
+    printer: ColumnChart
+    datalabel: submit clicks
+  -
+    question: How many Failed Registration events?
+    name: failed
+    query: signup:subscription-creation-failed
+              ->count()
+              ->interval(d)
+    printer: StackedColumnChart
+    datalabel: Signup Browsers
   -
     question: How many bounces have we had today?
     name: bounces
     interval: false
     timeframe: this_1_days
     query: "signup:bounce->count()->filter(context.message.isTestEvent=false)"
-    colspan: 3
     datalabel: Bounces today
   -
     question: What are our top browsers?
@@ -91,13 +115,4 @@ charts:
             ->filter(device.browserName!=false)
             ->sortDesc()
     printer: PieChart
-    colspan: 4
-    datalabel: Signup Browsers
-  -
-    question: (BETA) Failed Registrations
-    name: failed
-    query: signup:subscription-creation-failed
-              ->count()
-              ->interval(d)
-    printer: StackedColumnChart
     datalabel: Signup Browsers
