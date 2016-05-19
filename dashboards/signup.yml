@@ -17,6 +17,7 @@ charts:
               ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
               ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
               ->filter(page.referrer.host=next.ft.com)
+              ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
               ->interval(d),
 
               page:view
@@ -28,6 +29,7 @@ charts:
               ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
               ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
               ->filter(page.referrer.host=next.ft.com)
+              ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
               ->interval(d)
             )
           ->relabel(_headings,Unique visitors,Pageviews)"
@@ -37,10 +39,8 @@ charts:
     question: What's our conversion rate this week? (%)
     name: this week's conversion rate
     query: "@pct(
-            page:view
-              ->count(device.spoorId)
-              ->filter(page.location.normalizedPath=/thank-you)
-              ->filter(page.location.host=next.ft.com)
+            signup:subscription-created
+              ->count()
               ->relTime(this_7_days),
             page:view
               ->count(device.spoorId)
@@ -50,7 +50,9 @@ charts:
               ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
               ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
               ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
-              ->filter(page.referrer.host=next.ft.com)->relTime(this_7_days)
+              ->filter(page.referrer.host=next.ft.com)
+              ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
+              ->relTime(this_7_days)
           )"
     interval: false
     colspan: 4
@@ -84,6 +86,7 @@ charts:
             ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
             ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
             ->filter(page.referrer.host=next.ft.com)
+            ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
             ->filter(device.browserName)
             ->filter(device.browserName!=false)
             ->sortDesc()
@@ -98,16 +101,3 @@ charts:
               ->interval(d)
     printer: StackedColumnChart
     datalabel: Signup Browsers
-
-  -
-    question: (BETA) Spoor Event vs Thank You Page
-    name: thank you vs spoor
-    interval: false
-    query: "@concat(
-              signup:subscription-created->count()->interval(d),
-              page:view
-                ->count(device.spoorId)
-                ->filter(page.location.normalizedPath=/thank-you)
-                ->interval(d))
-              ->relabel(_headings,Subscription Event,Thank You Page)"
-    datalabel: spoor
