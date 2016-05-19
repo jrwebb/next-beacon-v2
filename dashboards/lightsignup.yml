@@ -39,5 +39,5 @@ charts:
   -
     question: What's the daily click-through rate on the light signup email
     name: lightsignup-daily
-    query: email:click->count(context.deviceId)->filter(context.product="light-signup")->group(context.daysSinceSignup)
+    query: email:click->count(context.deviceId)->filter(context.product="light-signup")->group(context.daysSinceSignup)->print(ColumnChart)
     datalabel: "Clicks p/day"
