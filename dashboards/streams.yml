@@ -7,12 +7,12 @@ charts:
   -
     question: How many views are Stream pages getting?
     name: streamviews
-    query: "page:view->count()->filter(page.location.type?stream,article,frontpage)->group(page.location.type)->relTime(previous_14_days)->interval(d)"
+    query: "page:view->count()->filter(page.location.type?stream,article,frontpage)->group(page.location.type)"
     datalabel: Visits to pages by type
   -
     question: How many article views come from Streams?
     name: articleviews
-    query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)->relTime(this_14_days)->interval(d)"
+    query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)"
     datalabel: Visits to articles by referrer
   -
     question: What percentage of article views come from Streams?
@@ -27,5 +27,5 @@ charts:
   -
     question: What's the CTR of  related topics and in the news in Streams?
     name: relatedCTR
-    query: "@pct(cta:click->count(device.spoorId)->filter(context.domPath~link)->group(context.domPath)->filter(context.domPath~sub-header),page:view->count()->filter(page.location.type=stream))->relTime(this_14_days)->interval(d)"
+    query: "@pct(cta:click->count(device.spoorId)->filter(context.domPath~link)->group(context.domPath)->filter(context.domPath~sub-header),page:view->count()->filter(page.location.type=stream))"
     datalabel: CTR from stream via related
