@@ -1,4 +1,4 @@
-/* global google */
+/* global google, isExtraction */
 
 'use strict';
 
@@ -24,7 +24,7 @@ window.timer = {
 	}
 }
 
-if (isExtraction) {
+if (typeof isExtraction !== 'undefined' && isExtraction) {
 	require('./pages/extract').init();
 } else if (document.querySelector('.query-wizard')) {
 	require('./pages/query-wizard').init();

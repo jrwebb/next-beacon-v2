@@ -1,24 +1,29 @@
 .extract {
+	.extract__output {
+		min-height: 200px;
+		margin-right: 10px;
+	}
 	[data-o-grid-colspan] {
 		padding-left: 10px;
 	}
-	h4 {
+	h5 {
 		margin: 10px 0px;
 	}
 	ul {
 		margin: 0px;
 		padding: 0px;
 		list-style: none;
-		border: 1px solid #eee;
+		border: 1px solid #eeeeee;
 		border-bottom: 0px;
 		li {
 			margin: 0px;
 			padding: 0px;
-			label,a {
+			label,
+			a {
 				font-size: 14px;
 				display: block;
 				padding: 1em;
-				border-bottom: 1px solid #eee;
+				border-bottom: 1px solid #eeeeee;
 				cursor: pointer;
 				line-height: 1.5;
 				text-decoration: none;
@@ -32,7 +37,8 @@
 				border-left: 4px solid gold;
 				margin-left: -4px;
 			}
-			a.active {
+			:active,
+			.active {
 				margin-right: -10px;
 				background: gold;
 				color: black;
