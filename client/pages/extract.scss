@@ -6,7 +6,7 @@
 	[data-o-grid-colspan] {
 		padding-left: 10px;
 	}
-	h5 {
+	h4 {
 		margin: 10px 0px;
 	}
 	ul {
@@ -27,8 +27,9 @@
 				cursor: pointer;
 				line-height: 1.5;
 				text-decoration: none;
-				overflow: scroll;
+				overflow: hidden;
 				white-space: nowrap;
+				&.checked,
 				&:hover {
 					background: aliceblue;
 				}
@@ -37,13 +38,17 @@
 				border-left: 4px solid gold;
 				margin-left: -4px;
 			}
-			:active,
-			.active {
-				margin-right: -10px;
-				background: gold;
-				color: black;
-				font-weight: bolder;
-			}
+		}
+	}
+	.extract__collections a {
+		&:active,
+		&.active {
+			margin-right: -10px;
+			background: gold;
+			color: black;
+			font-weight: bolder;
 		}
 	}
 }
+
+

@@ -14,7 +14,7 @@ const tableBody = outputElement.querySelector('tbody');
 window.outputUpdate = function(value) {
 	document.querySelector('.extract__numberOfEvents').value = value;
 	if (value < 1000) {
-		document.querySelector('.extract__submit').innerHTML = "Punch it Chewie"
+		document.querySelector('.extract__submit').innerHTML = "Click here to extract data"
 	} else if (value < 3000) {
 		document.querySelector('.extract__submit').innerHTML = "This'll take a while"
 	} else if (value < 6000) {
@@ -22,12 +22,12 @@ window.outputUpdate = function(value) {
 	} else if (value < 10000) {
 		document.querySelector('.extract__submit').innerHTML = "It should be done by Christmas"
 	} else {
-		document.querySelector('.extract__submit').innerHTML = "Let's crash the browser"
+		document.querySelector('.extract__submit').innerHTML = "Warning: This may crash your browser"
 	}
 }
 
 function getSelectedProperties(){
-	let selectedProperties = [].filter.call(document.querySelectorAll('.extract__properties input'), input_element => {
+	let selectedProperties = [].filter.call(document.querySelectorAll('.extract__properties input[type=checkbox]'), input_element => {
 		return input_element.checked === true;
 	}).map(input_element => {
 		return encodeURIComponent(input_element.value);
@@ -113,7 +113,7 @@ function punchItChewie() {
 	}
 	let selectedProperties = getSelectedProperties();
 	if (!selectedProperties || selectedProperties.length < 1) {
-		document.querySelector('.extract__submit').innerHTML = "⬅ Select some properties plz";
+		document.querySelector('.extract__submit').innerHTML = "⬅ Select some properties please";
 		return false;
 	}
 	tableHead.innerHTML = '';
@@ -132,7 +132,14 @@ function punchItChewie() {
 }
 
 function init() {
+	window.outputUpdate(document.querySelector('.extract__numberOfEvents').value);
 	document.querySelector('.extract__submit').onclick = punchItChewie;
+	[].forEach.call(document.querySelectorAll('.extract__properties input[type=checkbox]'), input_element => {
+		input_element.onclick = event => {
+			event.srcElement.parentElement.classList.toggle('checked');
+			window.outputUpdate(document.querySelector('.extract__numberOfEvents').value);
+		}
+	});
 }
 
 module.exports = {
