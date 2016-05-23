@@ -3,36 +3,34 @@
 <div class="extract o-techdocs-content">
 	<form class="extract__form" data-o-grid-colspan="12">
 		<div class="extract__collections" data-o-grid-colspan="2">
-			<h5>Select an event collection</h5>
+			<h4>Select an event collection</h4>
 			<nav>
 				<ul>
 					{{#each collections}}
-					{{#each this}}
 					<li>
-						<a class="{{class}}" href="/data/extract/{{category}}:{{action}}" tabindex="0">{{category}}: {{action}}</a>
+						<a class="{{class}}" href="/data/extract/{{name}}" tabindex="0">{{name}}</a>
 					</li>
-					{{/each}}
 					{{/each}}
 				</ul>
 			</nav>
 		</div>
 		<div class="extract__properties" data-o-grid-colspan="2">
-			<h5>Select some properties</h5>
+			<h4>Select some properties</h4>
 			<ul>
 				{{#each properties}}
 				<li>
-					<label><input type="checkbox" {{this.selected}} value="{{this.name}}"> {{this.name}}</label>
+					<label class="{{this.checked}}"><input type="checkbox" {{this.checked}} value="{{this.name}}"> {{this.name}}</label>
 				</li>
 				{{/each}}
 			</ul>
 		</div>
 		<div data-o-grid-colspan="8">
-			<h5>
+			<h4>
 				<label>
 					Extract <input id="extract__numberOfEvents-range" type="range" min="100" max="10000" value="100" step="100" oninput="outputUpdate(value)"> <output for="extract__numberOfEvents-range" class="extract__numberOfEvents">100</output> events.
 				</label>
-				<button type="button" class="o-buttons extract__submit">Punch it Chewie</button>
-			</h5>
+				<button type="button" class="o-buttons extract__submit">Loading ...</button>
+			</h4>
 			<div class="extract__output">
 				<table class="o-table o-table--row-stripes o-table--compact" data-o-component="o-table">
 					<thead><tr></tr></thead>
