@@ -38,6 +38,17 @@ module.exports = (req, res) => {
 	// E.g. /data/extract/site:optin/user.uuid,user.rfv.score,user.isStaff,user.geo.continent,time.timestamp
 	const selectedEventProperties = (req.params.event_properties && req.params.event_properties.split(',')) || [];
 	let properties = keenProperties.get(activeEventCollection);
+
+	// Make sure properties are sorted alphabetically
+	properties.sort(function(a, b) {
+		if (a.lowerCase < b.lowerCase) {
+			return -1;
+		}
+		if (a.lowerCase > b.lowerCase) {
+			return 1;
+		}
+		return 0;
+	});
 	properties = properties.reduce((result, row) => {
 		row.checked = (selectedEventProperties.indexOf(row.name) > -1) ? "checked" : "";
 		return result.concat(row);
