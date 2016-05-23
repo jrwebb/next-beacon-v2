@@ -1,6 +1,5 @@
 'use strict';
 
-const flat = require('flat');
 const keenCollections = require('../../jobs/keen-collections');
 const keenProperties = require('../../jobs/keen-properties');
 
@@ -8,6 +7,7 @@ module.exports = (req, res) => {
 	let collections = keenCollections.getData();
 
 	// Flatten the collections and sort alphabetically
+	/* eslint-disable no-loop-func */
 	let flattenedCollections = [];
 	for (var collection in collections) {
 		if (Array.isArray(collections[collection])) {
@@ -23,6 +23,7 @@ module.exports = (req, res) => {
 				name:row
 			})
 		},[]);
+	/* eslint-enable no-loop-func */
 
 	// Move the active event collection to the top of the list
 	let activeEventCollection = req.params.event_collection || collections[0].name;
