@@ -8,7 +8,7 @@ module.exports = {
 	update: list => {
 
 		list.forEach(eventName => {
-			fetch(`https://api.keen.io/3.0/projects/${process.env.KEEN_PROJECT_ID}/events/${eventName}?api_key=${process.env.KEEN_MASTER_KEY}`)
+			fetch(`https://keen-proxy.ft.com/3.0/projects/${process.env.KEEN_PROJECT_ID}/events/${eventName}?api_key=${process.env.KEEN_MASTER_KEY}`)
 				.then(res => {
 					if (!res.ok) {
 						throw 'keen response not ok';
