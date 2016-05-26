@@ -5,6 +5,12 @@ title: Gift and Share
 isPrimary: true
 charts:
   -
+    question: What's the conversion on Gift article from expand to send to open?
+    name: sharing/giftflow
+    query: "@concat(@sum(email-article:TOGGLE_OPEN_TOP,email-article:TOGGLE_OPEN_BOTTOM),email-article:SEND_SUCCESS->filter(context.state.isGift?true),page:interaction->filter(campaign.tools.shareType=gift))->count()->relTime(previous_14_days)->interval(d)->relabel(_headings,Expanded UI,Sent Gift,Opened Article on Next)"
+    datalabel: Gift Article conversion
+    colspan: 12
+  -
     question: How many gifted/shared emails has the backend sent?
     name: sharing/giftandshare
     query: "email:delivery->count()->filter(context.product?gift-article,next-send-article-by-email)->group(context.product)->relTime(previous_14_days)->interval(d)"
