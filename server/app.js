@@ -70,13 +70,11 @@ app.get('/data/explorer', function(req, res) {
 	});
 });
 
-const keenCollections = require('./jobs/keen-collections');
-
 app.get('/data/query-wizard', function(req, res) {
 	res.render('query-wizard', {
 		layout: 'beacon',
 		title: 'Query wizard',
-		collections: keenCollections.getData()
+		collections: {}
 	});
 });
 
