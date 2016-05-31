@@ -58,15 +58,15 @@ charts:
     colspan: 4
     datalabel: weekly conversion rate 
   -
-    question: How many successful registrations have we had?
-    name: registrations spoor
+    question: How many successful subscriptions have we had?
+    name: subscriptions spoor
     interval: false
     query: signup:subscription-created->count()->interval(d)
     printer: ColumnChart
     colspan: 4
     datalabel: spoor
   -
-    question: How many Failed Registration events?
+    question: How many Failed subscription events?
     name: failed
     query: signup:subscription-creation-failed
               ->count()
@@ -76,7 +76,7 @@ charts:
     datalabel: Signup Browsers
   -
     question: How many clicks on the Submit button?
-    name: registrations submit
+    name: submit
     interval: false
     query: cta:click
       ->count(device.spoorId)
