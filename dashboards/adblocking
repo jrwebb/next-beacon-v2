@@ -7,16 +7,27 @@ charts:
   -
     question: How many page views are adblocked (as detected by sourcepoint)
     name: sourcepoint-pvs
-    query: "@pct(ads:blocked->count()->group(device.browserName)->filter(device.spoorId>0)->filter(device.spoorId<1),page:view->count()->filter(device.spoorId>0)->filter(device.spoorId<1))"
+    query: "@pct(ads:blocked->count()->filter(device.spoorId>0)->filter(device.spoorId<1),page:view->count()->filter(device.spoorId>0)->filter(device.spoorId<1))"
     timeframe: this_14_days
     datalabel: Desktop PVs adblocked
   -
     question: How many Desktop page views are adblocked (as detected by IAB/blockAdBlock)
     name: blockAdBlock-pvs
+    query: "@pct(ads:blocked->count()->filter(device.spoorId>1)->filter(device.spoorId<2),page:view->count()->filter(device.spoorId>1)->filter(device.spoorId<2))"
+    timeframe: this_14_days
+    datalabel: Desktop PVs adblocked
+  -
+    question: How many page views are adblocked (as detected by sourcepoint) by browser
+    name: sourcepoint-pvs-browser
+    query: "@pct(ads:blocked->count()->group(device.browserName)->filter(device.spoorId>0)->filter(device.spoorId<1),page:view->count()->filter(device.spoorId>0)->filter(device.spoorId<1))"
+    timeframe: this_14_days
+    datalabel: Desktop PVs adblocked
+  -
+    question: How many Desktop page views are adblocked (as detected by IAB/blockAdBlock) by browser
+    name: blockAdBlock-pvs-browser
     query: "@pct(ads:blocked->count()->group(device.browserName)->filter(device.spoorId>1)->filter(device.spoorId<2),page:view->count()->filter(device.spoorId>1)->filter(device.spoorId<2))"
     timeframe: this_14_days
     datalabel: Desktop PVs adblocked
-
   -
     question: What percentage of users are adblocking (Sourcepoint)
     name: sourcepoint-users
