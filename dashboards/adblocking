@@ -23,5 +23,5 @@ charts:
     query: "@pct(ads:blocked->count(device.spoorId)->filter(device.spoorId>0)->filter(device.spoorId<1),page:view->count(device.spoorId)->filter(device.spoorId>0)->filter(device.spoorId<1))"
   -
     question: What percentage of users are adblocking (blockAdBlock)
-    name: sourcepoint-users
+    name: blockAdBlock-users
     query: "@pct(ads:blocked->count(device.spoorId)->filter(device.spoorId>1)->filter(device.spoorId<2),page:view->count(device.spoorId)->filter(device.spoorId>1)->filter(device.spoorId<2))"
