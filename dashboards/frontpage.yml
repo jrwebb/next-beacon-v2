@@ -569,3 +569,10 @@ charts:
     query: page:view->count()->filter(page.location.type=frontpage)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false)->group(device.browserName)->sortDesc()
     printer: BarChart
     datalabel: Number of frontpage visits
+    
+  # BREXIT --------------------------------------------------
+  -
+    question: How many users click on links in the brexit secondary component?
+    name: brexit/secondary
+    query: cta:click->count(device.spoorId)->filter(context.domPath~"page:front-page | brexit-secondary")->group(context.domPath)
+  
