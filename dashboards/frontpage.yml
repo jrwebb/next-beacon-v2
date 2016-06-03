@@ -572,7 +572,16 @@ charts:
     
   # BREXIT --------------------------------------------------
   -
-    question: How many users click on links in the brexit secondary component?
+    question: What percentage of frontpage users are using the Brexit primary component?
+    name: brexit/primary
+    query: '@pct(
+              cta:click->count(device.spoorId)->filter(context.domPath~"page:front-page | brexit-primary"),
+              page:view->count(device.spoorId)->filter(page.location.type=frontpage)
+            )->interval(d)'
+  -
+    question: What percentage of frontpage users are using the Brexit secondary component?
     name: brexit/secondary
-    query: cta:click->count(device.spoorId)->filter(context.domPath~"page:front-page | brexit-secondary")->group(context.domPath)
-  
+    query: '@pct(
+              cta:click->count(device.spoorId)->filter(context.domPath~"page:front-page | brexit-secondary"),
+              page:view->count(device.spoorId)->filter(page.location.type=frontpage)
+            )->interval(d)'
