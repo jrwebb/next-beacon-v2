@@ -3,7 +3,7 @@
 const Poller = require('ft-poller');
 const properties = require('./keen-properties')
 module.exports = new Poller({
-	url: `https://keen-proxy.ft.com/3.0/projects/${process.env.KEEN_PROJECT_ID}?api_key=${process.env.KEEN_MASTER_KEY}`,
+	url: `https://keen-proxy.ft.com/3.0/projects/${process.env.KEEN_PROJECT_ID}?api_key=${process.env.KEEN_MASTER}`,
 	defaultData: [],
 	autostart: true,
 	interval: 15 * 60 * 1000,
