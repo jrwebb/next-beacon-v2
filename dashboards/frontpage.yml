@@ -569,19 +569,33 @@ charts:
     query: page:view->count()->filter(page.location.type=frontpage)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false)->group(device.browserName)->sortDesc()
     printer: BarChart
     datalabel: Number of frontpage visits
-    
+
   # BREXIT --------------------------------------------------
   -
     question: What percentage of frontpage users are using the Brexit primary component?
-    name: brexit/primary
+    name: brexit/primary/percentage
     query: '@pct(
-              cta:click->count(device.spoorId)->filter(context.domPath~"page:front-page | brexit-primary"),
-              page:view->count(device.spoorId)->filter(page.location.type=frontpage)
-            )->interval(d)'
+              cta:click->count(device.spoorId)->filter(context.domPath~brexit-primary),
+              page:view->count(device.spoorId)
+            )->filter(page.location.type=frontpage)->interval(d)'
   -
     question: What percentage of frontpage users are using the Brexit secondary component?
-    name: brexit/secondary
+    name: brexit/secondary/percentage
     query: '@pct(
-              cta:click->count(device.spoorId)->filter(context.domPath~"page:front-page | brexit-secondary"),
-              page:view->count(device.spoorId)->filter(page.location.type=frontpage)
-            )->interval(d)'
+              cta:click->count(device.spoorId)->filter(context.domPath~brexit-secondary),
+              page:view->count(device.spoorId)
+            )->filter(page.location.type=frontpage)->interval(d)'
+  -
+    question: What's the average number of clicks within the component per Brexit primary component user?
+    name: brexit/primary/averageclicks
+    query: '@ratio(
+              cta:click->count(),
+              cta:click->count(device.spoorId)
+            )->filter(context.domPath~brexit-primary)->filter(page.location.type=frontpage)->interval(d)'
+  -
+    question: What's the average number of clicks within the component per Brexit secondary component user?
+    name: brexit/secondary/averageclicks
+    query: '@ratio(
+              cta:click->count(),
+              cta:click->count(device.spoorId)
+            )->filter(context.domPath~brexit-secondary)->filter(page.location.type=frontpage)->interval(d)'
