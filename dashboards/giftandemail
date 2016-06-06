@@ -9,7 +9,14 @@ charts:
     name: sharing/giftflow
     query: "@concat(@sum(email-article:TOGGLE_OPEN_TOP,email-article:TOGGLE_OPEN_BOTTOM),email-article:SEND_SUCCESS->filter(context.state.isGift?true),page:interaction->filter(campaign.tools.shareType=gift))->count()->relTime(previous_14_days)->interval(d)->relabel(_headings,Expanded UI,Sent Gift,Opened Article on Next)"
     datalabel: Gift Article conversion
-    colspan: 12
+    colspan: 8
+  -
+    question: What's the percentage of users sending Gift Articles?
+    name: sharing/giftusers
+    query: "@pct(email-article:SEND_SUCCESS->filter(context.state.isGift?true),page:view)->filter(page.location.type=article)->count(user.uuid)->filter(user.uuid)"
+    datalabel: Gift Article Users
+    interval: false
+    colspan: 4
   -
     question: How many gifted/shared emails has the backend sent?
     name: sharing/giftandshare
