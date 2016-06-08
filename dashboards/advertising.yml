@@ -1,0 +1,33 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: adblocking
+title: Ad Blocking
+isPrimary: true
+charts:
+  -
+    question: How many page views are adblocked
+    name: sourcepoint-pvs
+    query: "@pct(ads:blocked->count()->group(context.context.provider)->relTime(this_14_days)->interval(d),page:view->count()->filter(device.spoorId>0)->filter(device.spoorId<1)->relTime(this_14_days)->interval(d))"
+    timeframe: this_14_days
+    datalabel: Desktop PVs adblocked
+  -
+    question: How many page views are adblocked by browser
+    name: sourcepoint-pvs-browser
+    query: "@pct(ads:blocked->count()->group(device.browserName)->filter(context.context.provider=sourcepoint),page:view->count()->filter(device.spoorId>0)->filter(device.spoorId<1))"
+    printer: ColumnChart
+    timeframe: this_14_days
+    datalabel: Desktop PVs adblocked by Browser
+  -
+    question: What percentage of users are adblocking
+    name: sourcepoint-users
+    query: "@pct(ads:blocked->count(device.spoorId)->group(context.context.provider),page:view->count(device.spoorId)->filter(device.spoorId>0)->filter(device.spoorId<1))"
+  -
+    question: How long before the first ad call is complete
+    name: first-ad-load
+    query: "page:load-timing->median(context.timings.marks.firstAdLoaded)->relTime(this_14_days)->interval(d)->divide(1000)"
+    printer: LineChart
+  -
+    question: How long before the first ad call is complete by Browser
+    name: first-ad-load-browser
+    query: "page:load-timing->median(context.timings.marks.firstAdLoaded)->group(device.browserName)->filter(context.timings.marks.firstAdLoaded)->relTime(this_14_days)->divide(1000)"
+    printer: Table
