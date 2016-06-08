@@ -1,7 +1,7 @@
 # Note: Any strings begining with @ or % must be wrapped in quote marks
 ---
-id: adblocking
-title: Ad Blocking
+id: advertising
+title: Advertising
 isPrimary: true
 charts:
   -
