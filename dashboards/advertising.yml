@@ -31,3 +31,23 @@ charts:
     name: first-ad-load-browser
     query: "page:load-timing->median(context.timings.marks.firstAdLoaded)->group(device.browserName)->filter(context.timings.marks.firstAdLoaded)->relTime(this_14_days)->divide(1000)"
     printer: Table
+
+  -
+    question: How long does the first ad take to load on Desktops?
+    name: first-ad-load-desktop
+    query: "ads:first-load->median(context.timings.marks.firstAdLoaded)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(h)->divide(1000)"
+
+  -
+    question: After the DOM content is loaded, how long does the first ad take to load on Desktops?
+    name: first-ad-load-after-dom-desktop
+    query: "ads:first-load->median(context.timings.offsets.domContentLoadedEventEnd.firstAdLoaded)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(h)->divide(1000)"
+    
+  -
+    question: How long does the first ad load take on different desktop browsers?
+    name: first-ad-load-desktop-browsers
+    query: "ads:first-load->median(context.timings.marks.firstAdLoaded)->group(device.browserName)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(h)->divide(1000)"
+
+  -
+    question: How long does the first ad load take on non-desktop devices?
+    name: first-ad-load-other-devices
+    query: "ads:first-load->median(context.timings.marks.firstAdLoaded)->group(device.primaryHardwareType)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType!=Desktop)->relTime(this_14_days)->interval(h)->divide(1000)"
