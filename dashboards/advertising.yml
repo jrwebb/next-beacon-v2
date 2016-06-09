@@ -21,15 +21,11 @@ charts:
     question: What percentage of users are adblocking
     name: sourcepoint-users
     query: "@pct(ads:blocked->count(device.spoorId)->group(context.context.provider),page:view->count(device.spoorId)->filter(device.spoorId>0)->filter(device.spoorId<1))"
-  -
-    question: How long before the first ad call is complete
-    name: first-ad-load
-    query: "page:load-timing->median(context.timings.marks.firstAdLoaded)->relTime(this_14_days)->interval(d)->divide(1000)"
-    printer: LineChart
+
   -
     question: How long before the first ad call is complete by Browser
     name: first-ad-load-browser
-    query: "page:load-timing->median(context.timings.marks.firstAdLoaded)->group(device.browserName)->filter(context.timings.marks.firstAdLoaded)->relTime(this_14_days)->divide(1000)"
+    query: "ads:first-load->median(context.timings.marks.firstAdLoaded)->group(device.browserName)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->filter(device.browserName)->relTime(this_14_days)->divide(1000)"
     printer: Table
 
   -
@@ -38,10 +34,9 @@ charts:
     query: "ads:first-load->median(context.timings.marks.firstAdLoaded)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(h)->divide(1000)"
 
   -
-    question: After the DOM content is loaded, how long does the first ad take to load on Desktops?
+    question: How long does the DOM and the first ad take to load on Desktops?
     name: first-ad-load-after-dom-desktop
-    query: "ads:first-load->median(context.timings.offsets.domContentLoadedEventEnd.firstAdLoaded)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(h)->divide(1000)"
-    
+    query: "@concat(ads:first-load->median(context.timings.offsets.domContentLoadedEventEnd.firstAdLoaded),ads:first-load->median(context.timings.marks.firstAdLoaded))->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->interval(d)->divide(1000)->relabel(_headings,DomLoaded,FirstAdLoaded)" 
   -
     question: How long does the first ad load take on different desktop browsers?
     name: first-ad-load-desktop-browsers
