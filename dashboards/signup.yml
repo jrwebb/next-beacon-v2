@@ -10,26 +10,26 @@ charts:
     query: "@concat(
               page:view
               ->count(device.spoorId)
-              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.normalizedPath~/signup)
               ->filter(page.location.host=next.ft.com)
               ->filter(page.location.path!~backend)
               ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
               ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
               ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
               ->filter(page.referrer.host=next.ft.com)
-              ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
+              ->filter(page.referrer.normalizedPath!~/signup)
               ->interval(d),
 
               page:view
               ->count()
-              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.normalizedPath~/signup)
               ->filter(page.location.host=next.ft.com)
               ->filter(page.location.path!~backend)
               ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
               ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
               ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
               ->filter(page.referrer.host=next.ft.com)
-              ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
+              ->filter(page.referrer.normalizedPath!~/signup)
               ->interval(d)
             )
           ->relabel(_headings,Unique visitors,Pageviews)"
@@ -44,14 +44,14 @@ charts:
               ->relTime(this_7_days),
             page:view
               ->count(device.spoorId)
-              ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+              ->filter(page.location.normalizedPath~/signup)
               ->filter(page.location.host=next.ft.com)
               ->filter(page.location.path!~backend)
               ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
               ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
               ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
               ->filter(page.referrer.host=next.ft.com)
-              ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
+              ->filter(page.referrer.normalizedPath!~/signup)
               ->relTime(this_7_days)
           )"
     interval: false
@@ -80,7 +80,7 @@ charts:
     interval: false
     query: cta:click
       ->count(device.spoorId)
-      ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+      ->filter(page.location.normalizedPath~/signup)
       ->filter(page.location.host=next.ft.com)
       ->filter(page.location.path!~backend)
       ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
@@ -106,14 +106,14 @@ charts:
     query: page:view
             ->count()
             ->group(device.browserName)
-            ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+            ->filter(page.location.normalizedPath~/signup)
             ->filter(page.location.host=next.ft.com)
             ->filter(page.location.path!~backend)
             ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
             ->filter(page.location.path!~6c7b7f36-0b91-b33b-2257-71d09919ddc4)
             ->filter(page.location.path!~f5203c83-e824-523d-5ef2-766c162f8eba)
             ->filter(page.referrer.host=next.ft.com)
-            ->filter(page.referrer.normalizedPath!~/signup/?offerId={uuid})
+            ->filter(page.referrer.normalizedPath!~/signup)
             ->filter(device.browserName)
             ->filter(device.browserName!=false)
             ->sortDesc()
@@ -128,7 +128,7 @@ charts:
             ->filter(context.message.state=displayed)
             ->filter(context.message.isTestEvent=false)
             ->filter(context.message.type=known subscriber login prompt)
-            ->filter(page.location.normalizedPath~/signup/?offerId={uuid})
+            ->filter(page.location.normalizedPath~/signup)
             ->filter(page.location.host=next.ft.com)
             ->filter(page.location.path!~backend)
             ->filter(page.location.path!~607d2649-3dab-9ef9-8bdd-b0963715890a)
