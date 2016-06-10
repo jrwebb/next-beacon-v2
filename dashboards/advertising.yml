@@ -36,8 +36,7 @@ charts:
   -
     question: How long does the DOM and the first ad call take to complete on Desktops?
     name: first-ad-load-after-dom-desktop
-    query: "@concat(ads:first-load->median(context.timings.offsets.domContentLoadedEventEnd.firstAdLoaded),ads:first-load->median(context.timings.marks.firstAdLoaded))->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->interval(d)->divide(1000)->relabel(_headings,DomLoaded,FirstAdLoaded)" 
-
+    query: "@concat(ads:first-load->median(context.timings.offsets.domContentLoadedEventEnd.firstAdLoaded),ads:first-load->median(context.timings.marks.firstAdLoaded))->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->interval(d)->divide(1000)->relabel(_headings,DomLoaded,FirstAdLoaded)"
   -
     question: After the DOM is loaded, how long before the first ad call is complete by the Browser?
     name: Enter a name for your chart to be used as its url e.g. "users/daily"
