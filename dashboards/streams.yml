@@ -15,6 +15,11 @@ charts:
     query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)"
     datalabel: Visits to articles by referrer
   -
+    question: How many people are clicking on Most Read?
+    name: mostreadclicks
+    query: "cta:click->filter(context.domPath~most-popular)->group(page.location.type)->count()->tidy()->relTime(previous_14_days)->interval(d)"
+    datalabel: Most Read clicks
+  -
     question: What percentage of article views come from Streams?
     name: articleviewsperc
     query: "@concat(@pct(page:view->filter(page.referrer.type=stream),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=frontpage),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=article),page:view)->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)->relabel(_headings,Stream,Front Page,Article)"
