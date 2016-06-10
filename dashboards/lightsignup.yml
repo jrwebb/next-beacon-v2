@@ -10,16 +10,26 @@ charts:
     query: light-signup:subscribed->count()->filter(context.isTestEvent=false)->interval(d)
     datalabel: "Subscribers p/day"
   -
-    question: "When served the light signup form, how many users subscribe?"
+    question: Subscriber rate compared to anonymous article traffic served the LSU form?
     name: views-to-subscriptions
-    query: "@concat(page:view->count(device.spoorId)->filter(user.ab.tests.lightSignUp)->filter(page.location.type=article)->filter(user.ab.tests.lightSignUp!=control),light-signup:subscribed->count()->filter(context.isTestEvent=false))->relTime(this_14_days)->interval(d)"
+    query: "@concat(page:view->count(device.spoorId)->filter(!uuid)->filter(page.location.type=article)->filter(context.url!~utm_term=lightsignup),light-signup:subscribed->count()->filter(context.isTestEvent=false))->relTime(this_14_days)->interval(d)"
     printer: StackedLineChart
     datalabel: "Subscribers p/day"
   -
     question: What percentage of users close the light signup form?
     name: lighsignup-close
-    query: "@pct(cta:click->count(device.spoorId)->filter(context.app=article)->filter(context.domPath~light-signup)->filter(context.target=close),page:view->count(device.spoorId)->filter(user.ab.tests.lightSignUp)->filter(page.location.type=article)->filter(user.ab.tests.lightSignUp!=control))->relTime(this_14_days)->interval(d)"
+    query: "@pct(cta:click->count(device.spoorId)->filter(context.app=article)->filter(context.domPath~light-signup)->filter(context.target=close),page:view->count(device.spoorId)->filter(!uuid)->filter(page.location.type=article)->filter(context.url!~utm_term=lightsignup))->relTime(this_14_days)->interval(d)"
     printer: PercentLineChart
+  -
+    question: What product are people joining light signup via?
+    name: lighsignup-product
+    query: "light-signup:subscribed->count(device.spoorId)->group(context.product)->filter(context.isTestEvent=false)->relTime(this_14_days)->interval(d)"
+    printer: StackedColumnChart
+  -
+    question: What topic is the most popular?
+    name: lightsignup-topic
+    query: "light-signup:subscribed->count(device.spoorId)->group(context.topics)->filter(user.ab.tests.lightSignupTopics)->filter(context.isTestEvent=false)->filter(context.topics)->relTime(this_60_days)"
+    printer: PieChart
   -
     question: "How many (trackable) light signup subscribers go on to purchase a subscription?"
     name: lightsignup-conversion
@@ -32,14 +42,14 @@ charts:
     query: email:click->count(context.deviceId)->filter(context.product="light-signup")->filter(context.targetLinkUrl~"801043")
     datalabel: "Funnel clicks p/day"
   -
-    question: How many anonymous people viewed an article in each light signup AB test group
+    question: How many anonymous people viewed an article in each light signup topics AB test group
     name: lightsignup-views
-    query: page:view->count(device.spoorId)->filter(page.location.type="article")->filter(!user.uuid)->filter(user.ab.tests.lightSignUp)->group(user.ab.tests.lightSignUp)->interval(d)->print(StackedColumnChart)
+    query: page:view->count(device.spoorId)->filter(page.location.type="article")->filter(!user.uuid)->filter(user.ab.tests.lightSignupTopics)->group(user.ab.tests.lightSignupTopics)->interval(d)->print(StackedColumnChart)
     datalabel: "Page views"
   -
-    question: How many people signed up in each light signup AB test group
+    question: How many people signed up in each light signup topics AB test group
     name: lightsignup-by-test-group
-    query: light-signup:subscribed->count()->group(user.ab.tests.lightSignUp)->interval(d)->print(LineChart)
+    query: light-signup:subscribed->count()->group(user.ab.tests.lightSignupTopics)->interval(d)->print(LineChart)
     datalabel: "Subscribers p/day"
   -
     question: What's the daily click-through rate on the light signup email
