@@ -4,175 +4,167 @@ id: myft
 title: <i>my</i>FT
 isPrimary: false
 charts:
+
+# myFT engagement
   -
-    question: How many logged in myFT users came to Next this week?
+    question: How many logged in myFT users came to Next?
     name: onsite/myftusercount
-    query: "page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true)->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)"
+    query: "page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true)->filter(user.subscriptions.isStaff!=true)"
     interval: false
-    colspan: 4 L2
+    colspan: 12 M4 L2
     datalabel: "Logged-in myFT users"
   -
-    question: What % of this week's logged-in Next users are myFT users?
+    question: What % of logged-in Next users are myFT users?
     name: onsite/myftusers
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->filter(user.subscriptions.isStaff!=true)"
     interval: false
-    colspan: 4 L2
-    datalabel: "% are myFT users this week"
+    colspan: 12 M4 L2
+    datalabel: "% are myFT users"
+  -
+    question: What was the average number of days visited for a myFT user?
+    name: onsite/myftfrequency
+    query: page:view->count(time.day)->group(user.uuid)->tidy()->filter(user.myft.isMyFtUser=true)->reduce(user.uuid,avg)->filter(user.subscriptions.isStaff!=true)
+    interval: false
+    colspan: 12 M4 L2
   -
     question: What % of logged-in Next users are myFT users each day?
     name: onsite/myftusersbyday
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->filter(user.subscriptions.isStaff!=true)->relTime(previous_14_days)->interval(d)"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.isMyFtUser=true),page:view->count(user.uuid))->filter(user.subscriptions.isStaff!=true)->interval(d)"
     datalabel: "% myFT users"
     colspan: 12 L6
+
+# Follow counts
   -
     break: true
-    question: What % of this week's logged-in Next users are following 5 or more topics?
+    question: What % of logged-in Next users are following 5 or more topics?
     name: onsite/following
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))->filter(user.subscriptions.isStaff!=true)"
     interval: false
-    colspan: 6 L3
-    datalabel: "% are following 5 or more this week"
+    colspan: 12 M4
+    datalabel: "% are following 5 or more"
   -
     question: What % of logged-in Next users are following 5 or more topics?
     name: onsite/followingbyday
-    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))->filter(user.subscriptions.isStaff!=true)->relTime(previous_14_days)->interval(d)"
+    query: "@pct(page:view->count(user.uuid)->filter(user.myft.following>4),page:view->count(user.uuid))->filter(user.subscriptions.isStaff!=true)->interval(d)"
     datalabel: "% following 5 or more"
+    colspan: 12 M8
+
+    # linebreak
   -
     break: true
-    question: What % of this week's article views were from a myFT source?
-    name: onsite/articleviews
-    query: "@pct(page:view->count(user.uuid)->filter(campaign.myft.source),page:view->count(user.uuid))->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)"
+    question: How many follow clicks were there?
+    name: onsite/followclicks
+    query: cta:click->count()->filter(context.target=follow)->filter(context.domPressed=false)->filter(user.subscriptions.isStaff!=true)
     interval: false
-    colspan: 6 L3
-    datalabel: "% are from myFT"
+    colspan: 12 M4 L3
+    datalabel: follow clicks
   -
-    question: Average frequency of visit for a myFT user this week?
-    name: onsite/myftfrequency
-    query: page:view->count(time.day)->relTime(this_7_days)->group(user.uuid)->tidy()->filter(user.myft.isMyFtUser=true)->reduce(user.uuid,avg)->filter(user.subscriptions.isStaff!=true)
+    question: How many follow clicks were there each day?
+    name: onsite/followclicksbyday
+    query: cta:click->count()->interval(d)->filter(context.target=follow)->filter(context.domPressed=false)->filter(user.subscriptions.isStaff!=true)
+    datalabel: follow clicks
+    colspan: 12 M8 L3
+  -
+    question: Where are the most successful follow buttons?
+    name: onsite/follow/good
+    query: cta:click->count()->group(context.domPath)->filter(context.target=follow)->top(10)->filter(user.subscriptions.isStaff!=true)
+    printer: BarChart
     interval: false
-    colspan: 6 L3
-    datalabel: / 7 days a week
+    colspan: 12 M6 L3
+  -
+    question: Where are the least successful follow buttons?
+    name: onsite/follow/bad
+    query: cta:click->count()->group(context.domPath)->filter(context.target=follow)->bottom(10)->filter(user.subscriptions.isStaff!=true)
+    printer: BarChart
+    interval: false
+    colspan: 12 M6 L3
+
+  # Misc
+
+  -
+    question: How are save buttons performing?
+    name: onsite/save/good
+    query: cta:click->count()->group(context.domPath)->filter(context.domPath~save-for-later)->sortDesc()->filter(user.subscriptions.isStaff!=true)
+    printer: BarChart
+    interval: false
+    colspan: 12 M6 L4
+  -
+    question: What % of article views were from a myFT source?
+    name: onsite/articleviews
+    query: "@pct(page:view->count(user.uuid)->filter(campaign.myft.source),page:view->count(user.uuid))->filter(user.subscriptions.isStaff!=true)"
+    interval: false
+    colspan: 12 M6 L4
+    datalabel: "% are from myFT"
   -
     question: Which myFT features drive the most traffic?
     name: onsite/articleviewsbysource
     query: page:view->count(user.uuid)->interval(d)->filter(campaign.myft.source)->group(campaign.myft.source)->filter(user.subscriptions.isStaff!=true)
-    colspan: 12 L6
-  -
-    break: true
-    question: How many follow clicks were there this week
-    name: onsite/followclicks
-    query: cta:click->count()->relTime(this_7_days)->filter(context.target=follow)->filter(context.domPressed=false)->filter(user.subscriptions.isStaff!=true)
-    interval: false
-    colspan: 6 L3
-    datalabel: follow clicks
-  -
-    question: How many follow clicks
-    name: onsite/followclicksbyday
-    query: cta:click->count()->interval(d)->filter(context.target=follow)->filter(context.domPressed=false)->filter(user.subscriptions.isStaff!=true)
-    datalabel: follow clicks
-    colspan: 12 L6
-  -
-    question: Where are the most successful follow buttons
-    name: onsite/follow/good
-    query: cta:click->count()->group(context.domPath)->filter(context.target=follow)->relTime(14)->top(10)->filter(user.subscriptions.isStaff!=true)
-    printer: BarChart
-    interval: false
-    colspan: 6 L4
-  -
-    question: Where are the least successful follow buttons
-    name: onsite/follow/bad
-    query: cta:click->count()->group(context.domPath)->filter(context.target=follow)->relTime(14)->bottom(10)->filter(user.subscriptions.isStaff!=true)
-    printer: BarChart
-    interval: false
-    colspan: 6 L4
-  -
-    question: How are save buttons performing
-    name: onsite/save/good
-    query: cta:click->count()->group(context.domPath)->filter(context.domPath~save-for-later)->relTime(14)->sortDesc()->filter(user.subscriptions.isStaff!=true)
-    printer: BarChart
-    interval: false
-    colspan: 6 L4
-  -
-    break: true
-    question: "Collections: How many Follow All clicks this week"
-    name: onsite/collections/followsthisweek
-    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)->filter(context.domPath)->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)
-    interval: false
     colspan: 12 L4
+  -
+
+# Collections
+
+    break: true
+    question: "Collections: How many Follow All clicks were there?"
+    name: onsite/collections/followsthisweek
+    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)->filter(context.domPath)->filter(user.subscriptions.isStaff!=true)
+    interval: false
+    colspan: 12 M4
     datalabel: Follow Alls clicks
   -
-    question: "Collections: How many Follow All clicks over time"
+    question: "Collections: How many Follow All clicks over time?"
     name: onsite/collections/followsbyday
     query: cta:click->count()->interval(d)->filter(context.domPath~collection)->filter(context.target=follow)->filter(context.domPressed=false)->filter(user.subscriptions.isStaff!=true)
-    colspan: 12 L4
+    colspan: 12 M8
     datalabel: Follow All clicks
   -
-    question: "Collections: How many “I like collections” link clicks this week"
-    name: onsite/collections/likesthisweek
-    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=more-collections)->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)
-    interval: false
-    colspan: 12 L3
-    datalabel: Collection “like” link clicks
-  -
-    question: "Collections: How many topic link clicks this week"
+    question: "Collections: How many topic link clicks?"
     name: onsite/collections/topiclinksthisweek
-    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=concept)->filter(context.domPath)->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)
+    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=concept)->filter(context.domPath)->filter(user.subscriptions.isStaff!=true)
     interval: false
-    colspan: 12 L3
+    colspan: 12 M3
     datalabel: Topic link clicks
   -
-    question: "Collections: How many topic link clicks over time"
+    question: "Collections: How many topic link clicks over time?"
     name: onsite/collections/topiclinksbyday
     query: cta:click->count()->interval(d)->filter(context.domPath~collection)->filter(context.target=concept)->filter(user.subscriptions.isStaff!=true)
-    colspan: 12 L3
+    colspan: 12 M6
     datalabel: Topic link clicks
-
-
-
   -
-    break: true
-    question: "Following page: How are MVT slices performing (by follows)?"
-    name: onsite/following/slices/follows
-    query: cta:click->count()->filter(context.domPath~page:myft-page/following)->filter(context.domPath~recommended-slice)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
-    printer: BarChart
+    question: "Collections: How many “I like collections” link clicks?"
+    name: onsite/collections/likesthisweek
+    query: cta:click->count()->filter(context.domPath~collection)->filter(context.target=more-collections)->filter(user.subscriptions.isStaff!=true)
     interval: false
-    colspan: 12 L6
+    colspan: 12 M3
   -
-    question: "Following page: How are MVT slices performing (by article clicks)?"
-    name: onsite/following/slices/articles
-    query: cta:click->count()->filter(context.domPath~page:myft-page/following)->filter(context.domPath~recommended-slice)->filter(context.target=article)->relTime(this_7_days)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
-    printer: BarChart
-    interval: false
-    colspan: 12 L6
 
+# Explore page
 
-
-  -
     break: true
     question: "Explore page: How are the recommended slices performing (by follows)?"
     name: onsite/explore/slices/follows
-    query: cta:click->count()->filter(context.domPath~page:myft-page/explore)->filter(context.domPath~recommended-slice)->filter(context.target=follow)->filter(context.domPressed=false)->relTime(this_7_days)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
+    query: cta:click->count()->filter(context.domPath~page:myft-page/explore)->filter(context.domPath~recommended-slice)->filter(context.target=follow)->filter(context.domPressed=false)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
     printer: BarChart
     interval: false
     colspan: 12 L6
   -
     question: "Explore page: How are the recommended slices performing (by article clicks)?"
     name: onsite/explore/slices/articles
-    query: cta:click->count()->filter(context.domPath~page:myft-page/explore)->filter(context.domPath~recommended-slice)->filter(context.target=article)->relTime(this_7_days)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
+    query: cta:click->count()->filter(context.domPath~page:myft-page/explore)->filter(context.domPath~recommended-slice)->filter(context.target=article)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
     printer: BarChart
     interval: false
     colspan: 12 L6
   -
     question: "Explore page: How are inbound link clicks performing?"
     name: onsite/explore/inbound
-    query: cta:click->count()->filter(context.target=my-topics)->group(context.domPath)->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)
+    query: cta:click->count()->filter(context.target=my-topics)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
     printer: BarChart
     interval: false
     colspan: 12 L6
   -
-    question: "Explore page: How many clicks on “Change industry” this week?"
+    question: "Explore page: How many clicks on “Change industry”?"
     name: onsite/explore/change-industry
-    query: cta:click->count()->filter(context.domPath~page:myft-page)->filter(context.domPath~from-your-industry)->filter(context.domPath~change-industry)->relTime(this_7_days)->filter(user.subscriptions.isStaff!=true)
+    query: cta:click->count()->filter(context.domPath~page:myft-page)->filter(context.domPath~from-your-industry)->filter(context.domPath~change-industry)->filter(user.subscriptions.isStaff!=true)
     interval: false
     colspan: 12 L6
     datalabel: Clicks
@@ -277,7 +269,7 @@ charts:
               email:delivery->count()
             )->filter(campaign.myft.emailType=weekly)
               ->filter(user.subscriptions.isStaff!=true)
-              ->relTime(previous_7_days)"
+              "
     interval: false
     colspan: 12 M3
   -
@@ -286,9 +278,10 @@ charts:
       query: "@pct(
                 email:click->count(),
                 email:delivery->count()
-              )->filter(campaign.myft.emailType=weekly)
+              )
+                ->filter(campaign.myft.emailType=weekly)
                 ->filter(user.subscriptions.isStaff!=true)
-                ->relTime(previous_7_days)"
+                "
       interval: false
       colspan: 12 M3
 
