@@ -39,9 +39,8 @@ charts:
     query: "@concat(ads:first-load->median(context.timings.offsets.domContentLoadedEventEnd.firstAdLoaded),ads:first-load->median(context.timings.marks.firstAdLoaded))->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->interval(d)->divide(1000)->relabel(_headings,DomLoaded,FirstAdLoaded)"
   -
     question: After the DOM is loaded, how long before the first ad call is complete by the Browser?
-    name: Enter a name for your chart to be used as its url e.g. "users/daily"
-    query: "ads:first-load->median(context.timings.offsets.domContentLoadedEventEnd.firstAdLoaded)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType=Desktop)->interval(h)->divide(1000)"
-
+    name: Efirst-ad-load-and-dom
+    query: "@concat(page:load-timing->median(context.timings.offsets.navigationStart.domContentLoadedEventStart)->relTime(this_14_days)->interval(d),ads:first-load->median(context.timings.marks.firstAdLoaded)->filter(context.timings.marks.firstAdLoaded<100000)->relTime(this_14_days)->interval(d))->filter(device.primaryHardwareType=Desktop)->interval(d)->divide(1000)->relabel(_headings,DOM Loaded,firstAdLoaded)"
   -
     question: How long does the first ad load take on different desktop browsers?
     name: first-ad-load-desktop-browsers
