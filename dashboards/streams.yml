@@ -15,6 +15,11 @@ charts:
     query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)"
     datalabel: Visits to articles by referrer
   -
+    question: What's the CTR from Sections to Articles by AB Cohorts?
+    name: abtestarticlereferral
+    query: "@pct(page:view->count()->filter(page.location.type=article)->filter(page.referrer.type=stream)->filter(page.referrer.streamId~U2VjdGlvbnM),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.streamNewPages)->tidy()"
+    datalabel: CTR to articles from Sections
+  -
     question: How many people are clicking on Most Read?
     name: mostreadclicks
     query: "cta:click->filter(context.domPath~most-popular)->group(page.location.type)->count()->tidy()->relTime(previous_14_days)->interval(d)"
