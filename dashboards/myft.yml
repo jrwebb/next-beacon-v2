@@ -87,14 +87,29 @@ charts:
     query: cta:click->count()->group(context.domPath)->filter(context.domPath~save-for-later)->sortDesc()->filter(user.subscriptions.isStaff!=true)
     printer: BarChart
     interval: false
-    colspan: 12 M6 L4
+    colspan: 12 M6 L3
   -
     question: What % of article views were from a myFT source?
     name: onsite/articleviews
-    query: "@pct(page:view->count(user.uuid)->filter(campaign.myft.source),page:view->count(user.uuid))->filter(user.subscriptions.isStaff!=true)"
+    query: "@pct(
+              page:view->count()->filter(campaign.myft.source),
+              page:view->count()
+            )
+              ->filter(page.location.type=article)
+              ->filter(user.subscriptions.isStaff!=true)"
     interval: false
-    colspan: 12 M6 L4
-    datalabel: "% are from myFT"
+    colspan: 12 M6 L2
+  -
+    question: What % of article views were from a myFT source over time?
+    name: onsite/articleviews
+    query: "@pct(
+              page:view->count()->filter(campaign.myft.source),
+              page:view->count()
+            )
+              ->filter(page.location.type=article)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->interval(d)"
+    colspan: 12 L3
   -
     question: Which myFT features drive the most traffic?
     name: onsite/articleviewsbysource
