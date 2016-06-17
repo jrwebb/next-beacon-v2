@@ -89,6 +89,7 @@ charts:
               page:view->count()
             )
               ->filter(page.location.type=article)
+              ->filter(user.uuid)
               ->filter(user.subscriptions.isStaff!=true)"
     interval: false
     colspan: 12 M6 L2
