@@ -45,7 +45,7 @@ const getProperties = (req, collection) => {
 	return properties;
 }
 
-module.exports = (req, res) => {
+module.exports = (req, res, next) => {
 	fetchKeenCollections().then(response => {
 		const collections = getCollections(req, response);
 		const properties = getProperties(req, collections[0]);
