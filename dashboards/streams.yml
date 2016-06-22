@@ -22,18 +22,23 @@ charts:
   -
     question: How many people are clicking on Most Read?
     name: mostreadclicks
-    query: "cta:click->filter(context.domPath~most-popular)->group(page.location.type)->count()->tidy()->relTime(previous_14_days)->interval(d)"
+    query: "cta:click->filter(context.domPath~most-popular)->group(page.location.type)->count()->tidy()"
     datalabel: Most Read clicks
   -
     question: What percentage of article views come from Streams?
     name: articleviewsperc
-    query: "@concat(@pct(page:view->filter(page.referrer.type=stream),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=frontpage),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=article),page:view)->count()->filter(page.location.type=article))->relTime(previous_14_days)->interval(d)->relabel(_headings,Stream,Front Page,Article)"
+    query: "@concat(@pct(page:view->filter(page.referrer.type=stream),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=frontpage),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=article),page:view)->count()->filter(page.location.type=article))->relabel(_headings,Stream,Front Page,Article)"
     datalabel: Percentage of article views by referrer
   -
     question: What's the CTR from Streams to articles?
     name: articleCTR
     query: "@pct(cta:click->filter(context.domPath~headline),page:view)->filter(page.location.type=stream)->count()"
     datalabel: CTR from stream via headline
+  -
+    question: What's the CTR from Photo Diary on World?
+    name: photoCTR
+    query: "@pct(cta:click->filter(context.domPath~photo-diary),page:view)->count()->filter(page.location.streamId?MQ==-U2VjdGlvbnM=)"
+    datalabel: CTR on Photo Diary
   -
     question: What's the CTR of  related topics and in the news in Streams?
     name: relatedCTR
