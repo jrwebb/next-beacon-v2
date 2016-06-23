@@ -28,7 +28,7 @@ charts:
   -
     question: What topic is the most popular?
     name: lightsignup-topic
-    query: "light-signup:subscribed->count(device.spoorId)->group(context.topics)->filter(user.ab.tests.lightSignupTopics)->filter(context.isTestEvent=false)->filter(context.topics)->relTime(this_60_days)"
+    query: "light-signup:subscribed->count(device.spoorId)->group(context.topics)->filter(user.ab.tests.lightSignupTopics=topics)->filter(context.isTestEvent=false)->filter(context.topics)->relTime(this_60_days)"
     printer: PieChart
   -
     question: "How many (trackable) light signup subscribers go on to purchase a subscription?"
