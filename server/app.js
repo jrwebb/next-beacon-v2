@@ -58,7 +58,7 @@ try {
 
 app.get(/^\/data\/keen-proxy\/(.*)/, require('./controllers/data/keen-proxy'));
 app.get('/data/export/:limit', require('./controllers/data/export'));
-//app.get('/data/extract/:event_collection?/:event_properties?', require('./controllers/data/extract'));
+app.get('/data/extract/:event_collection?/:event_properties?', require('./controllers/data/extract'));
 
 app.get('/data/explorer', function(req, res) {
 	res.render('keen', {

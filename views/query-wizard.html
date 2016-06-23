@@ -199,25 +199,6 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="query-wizard__box">
-		<h3>Metadata picker</h3>
-		<p>Each event stored in keen has lots of <b>metadata</b> attached, which can be referenced in order to <b>filter</b> or <b>group</b> the data. (click to insert in last set of parentheses)</p>
-		<p><strong>Back soon in an improved form :-)</strong>. In the meantime click the links below to see rudimentary representations of what's available for each event type</p>
-
-		<ul class="query-wizard__reference">
-			{{#each collections}}
-			<li>
-					{{#each this}}
-						<a target="_blank" class="o-buttons o-buttons--small" href="/data/keen-properties/{{category}}:{{action}}">{{category}}: {{action}}</a>
-					{{/each}}
-			</li>
-			{{/each}}
-		</ul>
-		<!-- <input type="text" class="query-wizard__properties-filter" placeholder="Search for a metadata property">
-		<ul class="query-wizard__reference query-wizard__reference--properties">
-		{{#each properties}}<li class="o-buttons o-buttons--small" data-str="{{lowerCase}}">{{name}}</li>{{/each}}
-		</ul> -->
-	</div>
 </div>
 
 
