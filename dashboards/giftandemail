@@ -11,9 +11,9 @@ charts:
     datalabel: Gift Article conversion
     colspan: 8
   -
-    question: What's the percentage of users sending Gift Articles?
+    question: What's the monthly percentage of users sending Gift Articles?
     name: sharing/giftusers
-    query: "@pct(email-article:SEND_SUCCESS->filter(context.state.isGift?true),page:view)->filter(page.location.type=article)->count(user.uuid)->filter(user.uuid)"
+    query: "@pct(email-article:SEND_SUCCESS->filter(context.state.isGift?true),page:view)->filter(page.location.type=article)->count(user.uuid)->filter(user.uuid)->relTime(previous_30_days)"
     datalabel: Gift Article Users
     interval: false
     colspan: 4
