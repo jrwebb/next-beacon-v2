@@ -15,11 +15,6 @@ charts:
     query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)"
     datalabel: Visits to articles by referrer
   -
-    question: What's the CTR from Sections to Articles by AB Cohorts?
-    name: abtestarticlereferral
-    query: "@pct(page:view->count()->filter(page.location.type=article)->filter(page.referrer.type=stream)->filter(page.referrer.streamId~U2VjdGlvbnM),page:view->count()->filter(page.location.type=article))->group(user.ab.tests.streamNewPages)->tidy()"
-    datalabel: CTR to articles from Sections
-  -
     question: How many people are clicking on Most Read?
     name: mostreadclicks
     query: "cta:click->filter(context.domPath~most-popular)->group(page.location.type)->count()->tidy()"
@@ -40,7 +35,12 @@ charts:
     query: "@pct(cta:click->filter(context.domPath~photo-diary),page:view)->count()->filter(page.location.streamId?MQ==-U2VjdGlvbnM=)"
     datalabel: CTR on Photo Diary
   -
-    question: What's the CTR of  related topics and in the news in Streams?
+    question: What's the CTR from the Video Component on Streams?
+    name: videoCTR
+    query: "@sum(cta:click->filter(context.domPath~video-highlights),cta:click->filter(context.domPath~related item))->count()->filter(page.location.type=stream)->relTime(previous_14_days)->interval(d)->print(LineChart)"
+    datalabel: CTR on Video
+  -
+    question: What's the CTR of related topics and in the news in Streams?
     name: relatedCTR
     query: "@pct(cta:click->count(device.spoorId)->filter(context.domPath~link)->group(context.domPath)->filter(context.domPath~sub-header),page:view->count()->filter(page.location.type=stream))"
     datalabel: CTR from stream via related
