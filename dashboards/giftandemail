@@ -18,6 +18,12 @@ charts:
     interval: false
     colspan: 4
   -
+    question: What's the percentage of users expanding Gift Article interface?
+    name: sharing/giftexpands
+    query: "@pct(@sum(email-article:TOGGLE_OPEN_TOP,email-article:TOGGLE_OPEN_BOTTOM)->count(),page:view->count(user.uuid)->filter(user.uuid))"
+    datalabel: Gift Expands per Users
+    colspan: 12 L4
+  -
     question: How many gifted/shared emails has the backend sent?
     name: sharing/giftandshare
     query: "email:delivery->count()->filter(context.product?gift-article,next-send-article-by-email)->group(context.product)->relTime(previous_14_days)->interval(d)"
