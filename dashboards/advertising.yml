@@ -50,3 +50,8 @@ charts:
     question: How long does the first ad load take on non-desktop devices?
     name: first-ad-load-other-devices
     query: "ads:first-load->median(context.timings.marks.firstAdLoaded)->group(device.primaryHardwareType)->filter(context.timings.marks.firstAdLoaded<100000)->filter(device.primaryHardwareType!=Desktop)->interval(d)->divide(1000)"
+    
+  -
+    question: How long does the first ad iframe take to load compared to the first successful ad call?
+    name: ad-iframe-load-time
+    query: "@concat(ads:first-load->median(context.timings.marks.adIframeLoaded)->relTime(this_14_days)->interval(d),ads:first-load->median(context.timings.marks.firstAdLoaded)->filter(context.timings.marks.firstAdLoaded<100000)->relTime(this_14_days)->interval(d))->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(d)->divide(1000)->relabel(_headings,adIframeLoaded,firstAdLoaded)"
