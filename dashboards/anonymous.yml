@@ -31,6 +31,12 @@ charts:
     printer: BarChart
     datalabel: "% of anons visting the page"
   -
+    question: What page type are anon users landing on?
+    name: landing 
+    query: "page:view->count(device.spoorId)->group(page.location.type)->filter(!user.uuid)->print(PieChart)"
+    printer: PieChart
+    datalabel: "% of traffic by page Type"
+  -
     question: Which barriers are anons being presented with?
     name: barriers/type
     query: barrier:view->count()->group(context.type)
