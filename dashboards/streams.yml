@@ -15,6 +15,16 @@ charts:
     query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)"
     datalabel: Visits to articles by referrer
   -
+    question: How many clicks are Top Stories getting by position?
+    name: topstoriesposition
+    query: "@concat(cta:click->filter(context.domPath~top-stories-column-one),cta:click->filter(context.domPath~top-stories-column-two),cta:click->filter(context.domPath~opinion-and-analysis))->count()->filter(page.location.type=stream)->group(context.position)->tidy()->relabel(_headings,TopStoriesLeft,TopStoriesRight,Opinion)->print(ColumnChart)"
+    datalabel: Top Stories Position
+  -
+    question: How many clicks is Most Read getting by position?
+    name: mostreadposition
+    query: "cta:click->filter(context.domPath~most-popular)->count()->filter(page.location.type=stream)->group(context.position)->tidy()->print(ColumnChart)"
+    datalabel: Most Read Position
+  -
     question: How many people are clicking on Most Read?
     name: mostreadclicks
     query: "cta:click->filter(context.domPath~most-popular)->group(page.location.type)->count()->tidy()"
