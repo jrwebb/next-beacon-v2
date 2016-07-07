@@ -19,11 +19,13 @@ charts:
     name: topstoriesposition
     query: "@concat(cta:click->filter(context.domPath~top-stories-column-one),cta:click->filter(context.domPath~top-stories-column-two),cta:click->filter(context.domPath~opinion-and-analysis))->count()->filter(page.location.type=stream)->group(context.position)->tidy()->relabel(_headings,TopStoriesLeft,TopStoriesRight,Opinion)->print(ColumnChart)"
     datalabel: Top Stories Position
+    interval: false
   -
     question: How many clicks is Most Read getting by position?
     name: mostreadposition
     query: "cta:click->filter(context.domPath~most-popular)->count()->filter(page.location.type=stream)->group(context.position)->tidy()->print(ColumnChart)"
     datalabel: Most Read Position
+    interval: false
   -
     question: How many people are clicking on Most Read?
     name: mostreadclicks
