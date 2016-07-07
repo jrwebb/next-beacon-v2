@@ -41,7 +41,7 @@ charts:
   -
     question: After the DOM is loaded, how long before the first ad call is complete by the Browser?
     name: first-ad-load-and-dom
-    query: "ads:first-load->median(context.timings.offsets.domContentLoadedEventEnd.firstAdLoaded)->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(d)->divide(1000)"
+    query: "ads:first-load->median(context.timings.offsets.firstAdLoaded.domContentLoadedEventEnd)->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(d)->divide(1000)"
 
   -
     question: After the first ad call is complete, how long does it take for the ad iframe to load?
