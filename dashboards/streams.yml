@@ -37,7 +37,7 @@ charts:
   -
     question: What's the CTR from the Video Component on Streams?
     name: videoCTR
-    query: "@sum(cta:click->filter(context.domPath~video-highlights),cta:click->filter(context.domPath~related item))->count()->filter(page.location.type=stream)->relTime(previous_14_days)->interval(d)->print(LineChart)"
+    query: "@sum(cta:click->filter(context.domPath~video-highlights),cta:click->filter(context.domPath~related item))->count()->filter(page.location.type=stream)->print(LineChart)"
     datalabel: CTR on Video
   -
     question: What's the CTR of related topics and in the news in Streams?
