@@ -6,7 +6,15 @@ isPrimary: true
 description: How do users navigate around the site?
 charts:
   -
-    question: What is the CTR for top-level navigation sections?
-    name: navigation/sectionctr
-    query: "@concat(@pct(cta:click->count()->filter(context.domPath~Home)->filter(context.domPath~group--sections),page:view->count()),@pct(cta:click->count()->filter(context.domPath~World)->filter(context.domPath~group--sections),page:view->count()),@pct(cta:click->count()->filter(context.domPath~US)->filter(context.domPath~group--sections),page:view->count()),@pct(cta:click->count()->filter(context.domPath~Companies)->filter(context.domPath~group--sections),page:view->count()),@pct(cta:click->count()->filter(context.domPath~Markets)->filter(context.domPath~group--sections),page:view->count()),@pct(cta:click->count()->filter(context.domPath~Opinion)->filter(context.domPath~group--sections),page:view->count()),@pct(cta:click->count()->filter(context.domPath~Life & Arts)->filter(context.domPath~group--sections),page:view->count()),@pct(cta:click->count()->filter(context.domPath~Work & Careers)->filter(context.domPath~group--sections),page:view->count()))->tidy()->relabel(_headings,Home,World,US,Companies,Markets,Opinion,Life & Arts, Work & Careers)->interval(d)->relTime(previous_14_days)"
-    datalabel: CTR
+    question: How many people use the search functionality for each device type?
+    name: search/users/devices
+    query: "page:view->count(device.spoorId)->group(device.primaryHardwareType)->filter(page.location.search)->tidy(true)"
+ -
+    question: How many searches were made for each device type?
+    name: search/devices
+    query: "page:view->count()->group(device.primaryHardwareType)->filter(page.location.search)->tidy(true)"
+ -
+    question: What's the ratio of users who clicked the menu drawer to users who clicked on a section link?
+    name: drawer/ratio/section-link
+    query: "@ratio(cta:click->filter(context.domPath~section-title),cta:click->filter(context.domPath~drawer-toggle))->count(device.spoorId)"
+    
