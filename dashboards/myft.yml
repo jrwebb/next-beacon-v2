@@ -244,7 +244,7 @@ charts:
     colspan: 12 M3
   -
     question: What was the daily email open rate (%)
-    name: offsite/daily-email-open-rate
+    name: offsite/daily-email-open-rate-by-day
     query: "@pct(
               email:open->count(),
               email:delivery->count()
@@ -257,7 +257,7 @@ charts:
     colspan: 12 M3
   -
     question: What was the daily email clickthrough rate (%)
-    name: offsite/daily-email-clickthrough-rate
+    name: offsite/daily-email-clickthrough-rate-by-day
     query: "@pct(
               email:click->count(),
               email:delivery->count()
