@@ -14,7 +14,6 @@ charts:
             ->filter(user.geo.isFinancialTimesOffice=false)
             ->filter(page.referrer.host=next.ft.com)
             ->filter(page.referrer.normalizedPath!~/signup)
-            ->interval(d)
   -
     question: Visitors clicking on 'Buy' button
     name: submit
@@ -25,14 +24,12 @@ charts:
       ->filter(user.geo.isFinancialTimesOffice=false)
       ->filter(page.referrer.host=next.ft.com)
       ->filter(context.domPath~signup-form | submit)
-      ->interval(d)
   -
     question: Barrier visitors
     name: barriers
     query: barrier:view
               ->count(device.spoorId)
               ->filter(user.geo.isFinancialTimesOffice=false)
-              ->interval(d)
   -
     question: Light signup subscribers
     name: lightsignup
@@ -40,7 +37,6 @@ charts:
             ->count(device.spoorId)
             ->filter(context.isTestEvent=false)
             ->filter(user.geo.isFinancialTimesOffice=false)
-            ->interval(d)
   -
     question: Visitor clicks on header MyFT
     name: myft
@@ -48,7 +44,6 @@ charts:
             ->count(device.spoorId)
             ->filter(context.domPath~header-top | my-ft)
             ->filter(user.geo.isFinancialTimesOffice=false)
-            ->interval(d)
   -
     question: Visitor clicks on Search
     name: search
@@ -56,7 +51,6 @@ charts:
             ->count(device.spoorId)
             ->filter(context.domPath~header-top | search-toggle)
             ->filter(user.geo.isFinancialTimesOffice=false)
-            ->interval(d)
   -
     question: Visitor clicks on Menu
     name: menu
@@ -64,4 +58,3 @@ charts:
             ->count(device.spoorId)
             ->filter(context.domPath~header-top | drawer-toggle)
             ->filter(user.geo.isFinancialTimesOffice=false)
-            ->interval(d)
