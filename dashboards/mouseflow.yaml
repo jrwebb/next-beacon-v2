@@ -1,0 +1,67 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: mouseflow
+title: Mouseflow
+isPrimary: true
+charts:
+  -
+    question: Signup form visitors
+    name: signup
+    query: page:view
+            ->count(device.spoorId)
+            ->filter(page.location.normalizedPath~/signup)
+            ->filter(page.location.host=next.ft.com)
+            ->filter(user.geo.isFinancialTimesOffice=false)
+            ->filter(page.referrer.host=next.ft.com)
+            ->filter(page.referrer.normalizedPath!~/signup)
+            ->interval(d)
+  -
+    question: Visitors clicking on 'Buy' button
+    name: submit
+    query: cta:click
+      ->count(device.spoorId)
+      ->filter(page.location.normalizedPath~/signup)
+      ->filter(page.location.host=next.ft.com)
+      ->filter(user.geo.isFinancialTimesOffice=false)
+      ->filter(page.referrer.host=next.ft.com)
+      ->filter(context.domPath~signup-form | submit)
+      ->interval(d)
+  -
+    question: Barrier visitors
+    name: barriers
+    query: barrier:view
+              ->count(device.spoorId)
+              ->filter(user.geo.isFinancialTimesOffice=false)
+              ->interval(d)
+  -
+    question: Light signup subscribers
+    name: lightsignup
+    query: light-signup:subscribed
+            ->count(device.spoorId)
+            ->filter(context.isTestEvent=false)
+            ->filter(user.geo.isFinancialTimesOffice=false)
+            ->interval(d)
+  -
+    question: Visitor clicks on header MyFT
+    name: myft
+    query: cta:click
+            ->count(device.spoorId)
+            ->filter(context.domPath~header-top | my-ft)
+            ->filter(user.geo.isFinancialTimesOffice=false)
+            ->interval(d)
+  -
+    question: Visitor clicks on Search
+    name: search
+    query: cta:click
+            ->count(device.spoorId)
+            ->filter(context.domPath~header-top | search-toggle)
+            ->filter(user.geo.isFinancialTimesOffice=false)
+            ->interval(d)
+  -
+    question: Visitor clicks on Menu
+    name: menu
+    query: cta:click
+            ->count(device.spoorId)
+            ->filter(context.domPath~header-top | drawer-toggle)
+            ->filter(user.geo.isFinancialTimesOffice=false)
+            ->interval(d)

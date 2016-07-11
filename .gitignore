@@ -8,3 +8,4 @@
 .env
 .idea
 /old-beacon-dashboard/
+.eslintrc.js
