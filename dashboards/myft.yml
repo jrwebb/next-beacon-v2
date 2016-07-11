@@ -232,7 +232,7 @@ charts:
               "
     colspan: 12 M6
   -
-      question: What was the daily email open rate (%)
+    question: What was the daily email open rate (%)
     name: offsite/daily-email-open-rate
     query: "@pct(
               email:open->count(),
