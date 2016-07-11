@@ -3,18 +3,18 @@
 id: navigation
 title: Navigation
 isPrimary: true
-description: How do users navigate around the site?
+description: "How do users navigate around the site?"
 charts:
   -
-    question: How many people use the search functionality for each device type?
+    question: "How many people use the search functionality for each device type?"
     name: search/users/devices
     query: "page:view->count(device.spoorId)->group(device.primaryHardwareType)->filter(page.location.search)->tidy(true)"
  -
-    question: How many searches were made for each device type?
+    question: "How many searches were made for each device type?"
     name: search/devices
     query: "page:view->count()->group(device.primaryHardwareType)->filter(page.location.search)->tidy(true)"
  -
-    question: What's the ratio of users who clicked the menu drawer to users who clicked on a section link?
+    question: "What's the ratio of users who clicked the menu drawer to users who clicked on a section link?"
     name: drawer/ratio/section-link
     query: "@ratio(cta:click->filter(context.domPath~section-title),cta:click->filter(context.domPath~drawer-toggle))->count(device.spoorId)"
-    
+
