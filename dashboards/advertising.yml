@@ -48,6 +48,8 @@ charts:
     name: ad-iframe-load-speed
     query: "@sum(ads:first-load->median(context.timings.marks.adIframeLoaded),ads:first-load->median(context.timings.marks.firstAdLoaded)->multiply(-1))->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(d)->divide(1000)"
 
-
-
+  -
+    question: How do the different size ads perform?
+    name: ad-iframe-load-by-size
+    query: "@sum(ads:first-load->median(context.timings.marks.adIframeLoaded)->group(context.creative.size),ads:first-load->median(context.timings.marks.firstAdLoaded)->group(context.creative.size)->multiply(-1))->filter(device.primaryHardwareType=Desktop)->filter(context.creative.size)->relTime(this_14_days)->interval(d)->divide(1000)"
     
