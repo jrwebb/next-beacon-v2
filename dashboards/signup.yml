@@ -116,7 +116,6 @@ charts:
             ->filter(page.location.normalizedPath~/signup)
             ->filter(page.location.host=next.ft.com)
             ->filter(user.geo.isFinancialTimesOffice=false)
-            ->relTime(this_14_days)
             ->interval(d)
     datalabel: exists
     printer: ColumnChart
