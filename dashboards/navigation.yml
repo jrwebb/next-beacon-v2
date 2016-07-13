@@ -15,7 +15,7 @@ charts:
     query: "page:view->count()->group(device.primaryHardwareType)->filter(page.location.search)->tidy(true)"
   -
     question: "(Click through rate) What's the ratio of people who clicked the menu drawer to people who clicked on any link inside the drawer?"
-    name: drawer/ratio/section-link
+    name: drawer/ratio/ctr
     query: "@ratio(
       cta:click->filter(context.domPath~drawer |),
       cta:click->filter(context.domPath~drawer-toggle)
@@ -23,7 +23,7 @@ charts:
     ->count(device.spoorId)"
   -
     question: "(Bounce rate) What percentage of people opened the menu drawer and *did not* click on any link inside it?"
-    name: drawer/ratio/section-link
+    name: drawer/ratio/bounce
     query: "@pct(
               @sum(
                 cta:click->filter(context.domPath~drawer-toggle),
