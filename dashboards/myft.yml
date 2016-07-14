@@ -257,6 +257,17 @@ charts:
     colspan: 12 M3
   -
     question: What was the daily email clickthrough rate (%)
+    name: offsite/daily-email-clickthrough-rate
+    query: "@pct(
+              email:click->count(),
+              email:delivery->count()
+            )
+              ->filter(campaign.myft.emailType=daily)
+              ->filter(user.subscriptions.isStaff!=true)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the daily email clickthrough rate (%)
     name: offsite/daily-email-clickthrough-rate-by-day
     query: "@pct(
               email:click->count(),
@@ -266,17 +277,6 @@ charts:
               ->filter(user.subscriptions.isStaff!=true)
               ->filter(time.day!=2016-06-25T00:00:00Z)
               ->interval(d)"
-    interval: false
-    colspan: 12 M3
-  -
-    question: What was the daily email clickthrough rate (%)
-    name: offsite/daily-email-clickthrough-rate
-    query: "@pct(
-              email:click->count(),
-              email:delivery->count()
-            )
-              ->filter(campaign.myft.emailType=daily)
-              ->filter(user.subscriptions.isStaff!=true)"
     interval: false
     colspan: 12 M3
   -
