@@ -243,7 +243,7 @@ charts:
     interval: false
     colspan: 12 M3
   -
-    question: What was the daily email open rate (%)
+    question: What was the daily email open rate by day (%)
     name: offsite/daily-email-open-rate-by-day
     query: "@pct(
               email:open->count(),
@@ -256,7 +256,20 @@ charts:
     interval: false
     colspan: 12 M3
   -
-    question: What was the daily email clickthrough rate (%)
+    question: What was the daily email open rate by week (%)
+    name: offsite/daily-email-open-rate-by-week
+    query: "@pct(
+            email:open->count(),
+            email:delivery->count()
+          )
+          ->filter(campaign.myft.emailType=daily)
+          ->filter(user.subscriptions.isStaff!=true)
+          ->filter(time.day!=2016-06-25T00:00:00Z)
+          ->interval(w)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the daily email clickthrough rate by day (%)
     name: offsite/daily-email-clickthrough-rate-by-day
     query: "@pct(
               email:click->count(),
@@ -266,6 +279,19 @@ charts:
               ->filter(user.subscriptions.isStaff!=true)
               ->filter(time.day!=2016-06-25T00:00:00Z)
               ->interval(d)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the daily email clickthrough rate by week (%)
+    name: offsite/daily-email-clickthrough-rate-by-week
+    query: "@pct(
+              email:click->count(),
+              email:delivery->count()
+            )
+              ->filter(campaign.myft.emailType=daily)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->filter(time.day!=2016-06-25T00:00:00Z)
+              ->interval(w)"
     interval: false
     colspan: 12 M3
   -
