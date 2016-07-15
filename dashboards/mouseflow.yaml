@@ -58,3 +58,15 @@ charts:
             ->count(device.spoorId)
             ->filter(context.domPath~header-top | drawer-toggle)
             ->filter(user.geo.isFinancialTimesOffice=false)
+  -
+    question: Visitor clicks on a Subscribe link
+    name: subscribe
+    query: cta:click
+            ->count(device.spoorId)
+            ->filter(context.domPath~Subscribe)
+  -
+    question: Visitors interacting with the header
+    name: header
+    query: cta:click
+            ->count(device.spoorId)
+            ->filter(context.domPath~header)

@@ -1,4 +1,4 @@
-<div class="chart" data-chart-name="{{name}}" data-o-grid-colspan="{{colspan}}">
+<div class="chart" data-chart-name="{{name}}" data-o-grid-colspan="{{#if @root.isStandaloneChart}}5{{else}}{{colspan}}{{/if}}">
 
 	{{#unless @root.isStandaloneChart}}
 	<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper" data-o-expander-shrink-to="hidden" data-o-expander-expanded-toggle-text="✖" data-o-expander-collapsed-toggle-text="☰">
@@ -16,15 +16,21 @@
 	<div class="chart__printer core-chart"></div>
 
 	<nav class="chart__ui__links">
-		<button class="chart__ui__copy-data o-buttons o-buttons--small">Copy data to clipboard</button>
+		<!--button class="chart__ui__copy-data o-buttons o-buttons--small">Copy data to clipboard</button-->
 		<a class="o-buttons o-buttons--small" href="/chart/{{name}}">View chart</a>
 		<a target="_blank" class="external o-buttons o-buttons--small" href="/presentation/{{name}}">Present chart <i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i></a>
-		<a class="o-buttons o-buttons--small chart__ui__explorer-link">View in keen explorer</a>
+		<a class="o-buttons o-buttons--small chart__ui__explorer-link">View in Keen</a>
 		<a class="o-buttons o-buttons--small chart__ui__wizard-link">View in query wizard</a>
+		<a class="o-buttons o-buttons--small chart__ui__recordings-link" href="/chart/{{name}}?recordings=true">Recordings</a>
 	</nav>
-
-	{{#if @root.isStandaloneChart}}
-		{{>chart-configurator index=@index}}
-	{{/if}}
-
 </div>
+
+
+{{#if @root.isStandaloneChart}}
+	{{>chart-configurator index=@index}}
+	<div data-o-grid-colspan="12">
+		<aside class="chart__ui__messages hidden"></aside>
+		<div class="chart__ui__recordings"></div>
+	</div>
+{{/if}}
+

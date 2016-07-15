@@ -46,8 +46,11 @@
 }
 
 
-.chart__ui__links a {
-	margin-right: 5px;
+.chart__ui__links {
+	text-align: center;
+	a {
+		margin-right: 5px;
+	}
 }
 
 .chart__configurator__form {
@@ -57,11 +60,12 @@
 	> fieldset {
 		border-bottom: 1px solid oColorsGetPaletteColor('pink-tint2');
 	}
+
 	.o-forms-select,
 	.o-forms-text--small {
 		display: inline-block;
 		width: auto;
-		margin: 5px;
+		margin: 3px;
 	}
 	.chart__configurator__absolute-time {
 		float: right;

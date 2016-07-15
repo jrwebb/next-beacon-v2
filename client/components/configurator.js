@@ -1,7 +1,7 @@
 import querystring from 'querystring';
 import {getFormState} from './read-configurator-form';
 
-function composeKqModifiers(functions) {
+function composeKqModifiers (functions) {
 	const composed = (kq, skip) => {
 		kq = kq.clone(true);
 		let func;
@@ -33,7 +33,7 @@ function timeframeModifier (timeframe) {
 	return func;
 }
 
-function simpleKqModifier(method, value) {
+function simpleKqModifier (method, value) {
 	let func;
 	if (value) {
 		func = kq => kq[method](value);

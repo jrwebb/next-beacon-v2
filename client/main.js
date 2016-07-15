@@ -36,6 +36,11 @@ if (document.querySelector('.feature-search')) {
 	require('./components/feature-search');
 }
 
+if (document.querySelector('.extract__numberOfEvents-range')) {
+	const range = require('./components/range');
+	range.init();
+}
+
 google.charts.load('43', { // version 44 is VERY broken
 	packages: ['corechart', 'table']
 });

@@ -19,10 +19,9 @@ module.exports = function(req, res) {
 
 	let charts = dashboard.charts || [];
 
-
-
 	// Only show a single chart if appropriate
 	if (req.view && req.view === 'chart') {
+
 		if (req.query.query) {
 			const query = decodeURIComponent(req.query.query);
 			charts = [{

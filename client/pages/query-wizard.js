@@ -1,8 +1,7 @@
-'use strict';
-
 import KeenQuery from 'keen-query';
 import querystring from 'querystring';
 import {renderChart} from '../components/chart';
+import {getRecordings} from '../components/recordings';
 
 // const debounce = function(fn,delay){
 // 		let timeoutId;
@@ -66,6 +65,7 @@ module.exports = {
 
 		const input = document.querySelector('.query-wizard__input');
 		const output = document.querySelector('.query-wizard__output');
+		const recordings = document.querySelector('.query-wizard__recording-output');
 		const viewButton = document.querySelector('.query-wizard__view');
 
 		const parameters = querystring.parse(location.search.substr(1));
@@ -126,7 +126,7 @@ module.exports = {
 				kq = kq.setPrinter('LineChart');
 			}
 			const queryAsUrl = encodeURIComponent(kq.toString().replace('->print(LineChart)', ''));
-			history.pushState({}, "", `/data/query-wizard?query=${queryAsUrl}`);
+			history.pushState({}, '', `/data/query-wizard?query=${queryAsUrl}`);
 			viewButton.href = `/chart/custom-query?query=${queryAsUrl}`;
 			return renderChart(output, kq, {})
 		}
@@ -148,8 +148,6 @@ module.exports = {
 			run();
 		})
 
-
-
 		del.on('click', '.query-wizard__reference--starters .o-buttons, .query-wizard__reference--collections .o-buttons', ev => {
 			input.value = ev.target.getAttribute('data-str');
 			output.innerHTML = '';
@@ -161,18 +159,30 @@ module.exports = {
 			output.innerHTML = '';
 		})
 
+		del.on('click', '.query-wizard__recordings', ev => {
+			ev.preventDefault();
+
+			getRecordings({
+				el: recordings,
+				queryStr: sanitisedQuery(),
+				eventLimit: 100, // TODO
+			});
+
+			run();
+		})
+
 		del.on('click', '.query-wizard__copy-yaml', () => {
 			const queryConf = dePrinteredQuery();
 			const kq = KeenQuery.build(queryConf.q);
 			const copyTextarea = document.createElement('textarea');
 			let yaml =`
   -
-    question: Enter a title for the chart in the form of a question
-    name: Enter a name for your chart to be used as its url e.g. "users/daily"
-    query: "${kq.toString()}"`;
+	question: Enter a title for the chart in the form of a question
+	name: Enter a name for your chart to be used as its url e.g. "users/daily"
+	query: "${kq.toString()}"`;
 			if (queryConf.printer) {
 				yaml +=`
-    printer: ${queryConf.printer}`;
+	printer: ${queryConf.printer}`;
 			}
 			copyTextarea.textContent = yaml;
 			document.documentElement.appendChild(copyTextarea);

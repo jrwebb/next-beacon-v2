@@ -11,6 +11,10 @@ body {
 	margin: 0;
 }
 
+.hidden {
+	display: none;
+}
+
 .beacon-container {
 	max-width: 100%;
 }
@@ -117,7 +121,10 @@ body {
 	}
 }
 
+
 @import 'pages/extract';
 @import 'pages/query-wizard';
 @import 'components/chart-ui';
+@import 'components/recordings';
 @import 'components/dashboard-ui';
+@import 'components/configurator';

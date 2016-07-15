@@ -6,7 +6,7 @@ import oExpander from 'o-expander';
 
 function copyData (ev) {
 	ev.preventDefault();
-	const container = getChartContainer(ev.target);
+	const container = getChartContainer();
 	const chartName = container.dataset.chartName;
 	const kq = retrieveKq(`${chartName}:printed`);
 
@@ -30,17 +30,14 @@ function copyData (ev) {
 	}
 }
 
-function getChartContainer (el) {
-	while (!el.classList.contains('chart')) {
-		el = el.parentNode;
-	}
-	return el;
+function getChartContainer () {
+	return document.querySelector('.chart');
 }
 
 function reprint (ev) {
 	ev.preventDefault();
-	const container = getChartContainer(ev.target);
-	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target.name);
+	const container = getChartContainer();
+	const configure = getConfigurator(document.querySelector('.chart__configurator'), ev.target.name);
 	if (!configure) {
 		return;
 	}

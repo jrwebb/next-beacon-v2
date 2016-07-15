@@ -1,0 +1,30 @@
+<table class="o-table o-table--compact recordings" data-o-component="o-table">
+	<thead>
+		<th data-sort="string">Location</th>
+		<th data-sort="int">Duration (min)</th>
+		<th data-sort="int">Pages</th>
+		<!--th data-sort="int">Last Seen</th-->
+		<th data-sort="string">Entry Page</th>
+		<th data-sort="string">Referrer</th>
+		<th data-sort="string">SpoorId</th>
+	</thead>
+	<tbody>
+		{{#each .}}
+		{{#if spoorId}}
+		<tr>
+			<td>
+				<a href="{{url}}" target="_blank">
+					<span class="recordings--flag">{{flag}}</span>{{#if city}}{{city}}{{else}}{{country}}{{/if}}
+				</a>
+			</td>
+			<td>{{duration}}</td>
+			<td>{{pages}}</td>
+			<!-- {{lastSeen}} -->
+			<td><a href="{{entry}}">{{entry}}</a></td>
+			<td><a href="{{referrer}}">{{referrer}}</a></td>
+			<td>{{spoorId}}</td>
+		</tr>
+		{{/if}}
+		{{/each}}
+	</tbody>
+</table>

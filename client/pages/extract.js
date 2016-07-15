@@ -13,16 +13,22 @@ const tableBody = outputElement.querySelector('tbody');
 
 window.outputUpdate = function(value) {
 	document.querySelector('.extract__numberOfEvents').value = value;
+	const submitBtn = document.querySelector('.extract__submit');
+
+	if (!submitBtn) {
+		return;
+	}
+
 	if (value < 1000) {
-		document.querySelector('.extract__submit').innerHTML = "Click here to extract data"
+		submitBtn.innerHTML = "Click here to extract data"
 	} else if (value < 3000) {
-		document.querySelector('.extract__submit').innerHTML = "This'll take a while"
+		submitBtn.innerHTML = "This'll take a while"
 	} else if (value < 6000) {
-		document.querySelector('.extract__submit').innerHTML = "Might as well go put the kettle on"
+		submitBtn.innerHTML = "Might as well go put the kettle on"
 	} else if (value < 10000) {
-		document.querySelector('.extract__submit').innerHTML = "It should be done by Christmas"
+		submitBtn.innerHTML = "It should be done by Christmas"
 	} else {
-		document.querySelector('.extract__submit').innerHTML = "Warning: This may crash your browser"
+		submitBtn.innerHTML = "Warning: This may crash your browser"
 	}
 }
 

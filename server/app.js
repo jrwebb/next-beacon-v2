@@ -9,6 +9,8 @@ const aliases = require('./middleware/aliases');
 const dashboards = require('./lib/dashboards');
 const express = require('@financial-times/n-express');
 const cookieParser	= require('cookie-parser');
+const mouseflow = require('./api/mouseflow');
+const bodyParser = require('body-parser');
 
 const app = module.exports = express({
 	layoutsDir: __dirname + '/../views/layouts',
@@ -41,7 +43,7 @@ app.get('/hashed-assets/:path*', function(req, res) {
 
 app.use(cookieParser());
 
-app.use(auth);
+app.get(auth);
 app.use(window);
 app.use(aliases.init);
 app.use(dashboards.middleware);
@@ -112,6 +114,9 @@ app.get('/', function (req, res, next) {
   req.params[0] = 'overview';
   next();
 }, require('./controllers/dashboard'));
+
+app.use(bodyParser.json());
+app.post('/api/mouseflow', mouseflow);
 
 aliases.poll()
 app.listen(process.env.PORT);

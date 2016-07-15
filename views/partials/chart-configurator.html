@@ -1,7 +1,7 @@
-<nav class="chart__configurator">
+<nav class="chart__configurator o-forms-text--small" data-o-grid-colspan="7">
 	<form action="" method="get" style="display: inline" class="chart__configurator__form o-forms">
 		<fieldset>
-			<legend class="o-forms-label">Timeframe: </legend>
+			<label class="o-forms-label">Timeframe: </label>
 			<select name="timeframe" class="timeframe o-forms-select o-forms-select--small">
 				<option
 					{{#ifEquals @root.timeframe 'previous_1_days'}}selected{{/ifEquals}}
@@ -51,7 +51,7 @@
 
 			<span class="chart__configurator__absolute-time">
 				<span class="absolute-time__block">
-					(<strong>Or:</strong>
+					(Or:
 					<label>from</label> <input class="o-forms-text o-forms-text--small chart__configurator__start" name="timeframe[start]" type="date" value="{{@root.timeframe.start}}">
 				</span>
 				<span class="absolute-time__block">
@@ -61,9 +61,9 @@
 		</fieldset>
 		<fieldset>
 			{{#if hasConfigurableInterval}}
-			<strong>Time interval:</strong>
+			<label class="o-forms-label">Time interval:</label>
 			<select name="interval" class="chart__configurator__interval o-forms-select o-forms-select--small">
-				<option value=""> -- choose interval -- </option>
+				<option value="">-choose interval-</option>
 				<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
 				<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>hour</option>
 				<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>day</option>
@@ -76,8 +76,17 @@
 		</fieldset>
 	</fieldset>
 	<fieldset class="chart__configurator__group">
-			<legend class="o-forms-label">Group by:</legend>
-			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_null_{{index}}" value=""><label for="group_null_{{index}}" class="o-forms-label">ungroup</label>
+			<label class="o-forms-label">Group by:</label>
+			<!-- TODO move to select from radios -->
+			<!--<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="device.oGridLayout">
+				<option value="">-group by-</option>
+				<option value="">screen size</option>
+				<option value="">device type</option>
+				<option value="">page type</option>
+				<option value="">subs</option>
+				<option value="">rfv</option>
+			</select> -->
+ 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_null_{{index}}" value=""><label for="group_null_{{index}}" class="o-forms-label">ungroup</label>
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_device.oGridLayout_{{index}}" value="device.oGridLayout"><label for="group_device.oGridLayout_{{index}}" class="o-forms-label">screen size</label>
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_device.primaryHardwareType_{{index}}" value="device.primaryHardwareType"><label for="group_device.primaryHardwareType_{{index}}" class="o-forms-label">device type</label>
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_page.location.type_{{index}}" value="page.location.type"><label for="group_page.location.type_{{index}}" class="o-forms-label">page type</label>
@@ -85,9 +94,9 @@
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_rfv.cohort_{{index}}" value="rfv.cohort"><label for="group_rfv.cohort_{{index}}" class="o-forms-label">rfv</label>
 	</fieldset>
 	<fieldset class="chart__configurator__filters">
-			<legend class="o-forms-label">Filter:</legend>
+			<label class="o-forms-label">Filter:</label>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="device.oGridLayout">
-				<option value=""> -- screen size -- </option>
+				<option value="">-screen size-</option>
 				<option value="default">default</option>
 				<option value="S">S</option>
 				<option value="M">M</option>
@@ -95,13 +104,13 @@
 				<option value="XL">XL</option>
 			</select>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="device.primaryHardwareType">
-				<option value=""> -- device type -- </option>
+				<option value="">-device type-</option>
 				<option value="Desktop">Desktop</option>
 				<option value="Mobile Phone">Phone</option>
 				<option value="Tablet">Tablet</option>
 			</select>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="page.location.type">
-				<option value=""> -- page -- </option>
+				<option value="">-page-</option>
 				<option value="article">article</option>
 				<option value="frontpage">frontpage</option>
 				<option value="my">my</option>
@@ -110,12 +119,12 @@
 				<option value="curated">curated</option>
 			</select>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="user.subscription">
-				<option value=""> -- subs -- </option>
+				<option value="">-subs-</option>
 				<option value="subscriber">subscriber</option>
 				<option value="anon">anon</option>
 			</select>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="rfv.cohort">
-				<option value=""> -- rfv -- </option>
+				<option value="">-rfv-</option>
 				<option value="super-fan">super fan</option>
 				<option value="fan">fan</option>
 				<option value="engaged-frequent-free">engaged frequent free</option>
@@ -126,9 +135,13 @@
 			</select>
 		</fieldset>
 		<fieldset>
-			<strong>View: </strong>
+			<label class="o-forms-label">View:</label>
 			<input class="o-forms-radio o-forms-radio--small" id="printer_default_{{index}}" type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}><label for="printer_default_{{index}}" class="o-forms-label">Graph</label>
 			<input class="o-forms-radio o-forms-radio--small" id="printer_table_{{index}}" type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}><label for="printer_table_{{index}}" class="o-forms-label">Data table</label>
+		</fieldset>
+		<fieldset id="chart__configurator__range" class="hidden">
+			<label class="o-forms-label">Limit: </label>
+			{{>range}}
 		</fieldset>
 	</form>
 </nav>

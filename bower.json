@@ -11,7 +11,8 @@
     "o-expander": "^2.0.1",
     "o-viewport": "^2.0.0",
     "o-grid": "^4.0.7",
-    "o-tracking": "^1.1.8"
+    "o-tracking": "^1.1.8",
+    "jquery-stupid-table": "^1.0.1"
   },
   "authors": [
     "Rhys Evans <rhys.evans@ft.com>"

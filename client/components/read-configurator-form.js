@@ -1,5 +1,4 @@
-
-function getTimeframe(form, updatedField) {
+function getTimeframe (form, updatedField) {
 	const relTimeEl = form.querySelector('[name="timeframe"]');
 	const relTime = relTimeEl && relTimeEl.value;
 	const startEl = form.querySelector('[name="timeframe[start]"]');
