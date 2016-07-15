@@ -32,4 +32,11 @@ charts:
               cta:click->filter(context.domPath~drawer-toggle)
             )
               ->count(device.spoorId)"
+  -
+    question: "How many people clicked on the menu button?"
+    name: drawer/users
+    query: "cta:click
+  ->count(device.spoorId)
+  ->filter(context.domPath~drawer |)"
+
 
