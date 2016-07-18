@@ -48,8 +48,18 @@ charts:
     name: ad-iframe-load-speed
     query: "@sum(ads:first-load->median(context.timings.marks.adIframeLoaded),ads:first-load->median(context.timings.marks.firstAdLoaded)->multiply(-1))->filter(device.primaryHardwareType=Desktop)->relTime(this_14_days)->interval(d)->divide(1000)"
 
+
   -
-    question: How do the different size ads perform?
-    name: ad-iframe-load-by-size
-    query: "@sum(ads:first-load->median(context.timings.marks.adIframeLoaded)->group(context.creative.size),ads:first-load->median(context.timings.marks.firstAdLoaded)->group(context.creative.size)->multiply(-1))->filter(device.primaryHardwareType=Desktop)->filter(context.creative.size)->relTime(this_14_days)->interval(d)->divide(1000)"
+    question: How long do the different ad sizes take to load?
+    name: ad-iframe-load-sizes
+    query: "@sum(ads:first-load->median(context.timings.marks.adIframeLoaded)->group(context.creative.size)->filter(context.creative.size)->relTime(this_14_days),ads:first-load->median(context.timings.marks.firstAdLoaded)->group(context.creative.size)->relTime(this_14_days)->multiply(-1))->filter(device.primaryHardwareType=Desktop)->filter(context.creative.size!="false")->relTime(this_14_days)->divide(1000)->tidy()"
+    printer: BarChart
+  -
+    question: How long do the different ad sizes take to load? (by day)
+    name: ad-iframe-load-by-size-daily
+    query: "@sum(ads:first-load->median(context.timings.marks.adIframeLoaded)->group(context.creative.size)->filter(context.creative.size)->relTime(this_14_days)->interval(d),ads:first-load->median(context.timings.marks.firstAdLoaded)->group(context.creative.size)->relTime(this_14_days)->interval(d)->multiply(-1))->filter(device.primaryHardwareType=Desktop)->filter(context.creative.size!="false")->relTime(this_14_days)->interval(d)->divide(1000)->tidy()"
     
+  -
+    question: How long does the ad iframe take to load by device
+    name: ad-iframe-load-by-device
+    query: "@sum(ads:first-load->median(context.timings.marks.adIframeLoaded)->relTime(this_14_days)->interval(d),ads:first-load->median(context.timings.marks.firstAdLoaded)->relTime(this_14_days)->interval(d)->multiply(-1))->group(device.primaryHardwareType)->filter(context.creative.size!="false")->relTime(this_14_days)->interval(d)->divide(1000)->tidy()"
