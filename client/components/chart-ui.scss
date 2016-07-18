@@ -100,6 +100,7 @@
 	}
 	.o-expander__content[aria-hidden="false"] {
 		display: inherit;
+		min-height: 350px;
 	}
 	.o-expander__toggle {
 		position: absolute;
