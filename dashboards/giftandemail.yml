@@ -24,6 +24,12 @@ charts:
     datalabel: Gift Expands per Users
     colspan: 12 L4
   -
+    question: What's the percentage of Gift / Email shares failing to send?
+    name: sharing/giftfail
+    query: "@concat(@pct(email-article:SEND_FAILURE->filter(context.state.isGift?false),email-article:SEND_SUCCESS->filter(context.state.isGift?false)),@pct(email-article:SEND_FAILURE->filter(context.state.isGift?true),email-article:SEND_SUCCESS->filter(context.state.isGift?true)))->count()->relabel(_headings,Failedshare,Failedgift)"
+    datalabel: Gift Failure Percentage
+    colspan: 12
+  -
     question: How many gifted/shared emails has the backend sent?
     name: sharing/giftandshare
     query: "email:delivery->count()->filter(context.product?gift-article,next-send-article-by-email)->group(context.product)"
