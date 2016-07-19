@@ -4,7 +4,7 @@
 
 import keenIO from 'keen.io';
 import flat from 'flat';
-// import csv from 'csv';
+import csv from 'csv';
 import csvUtils from '../../server/lib/csv-utils';
 
 const outputElement = document.querySelector('.extract__output');
@@ -113,6 +113,30 @@ function renderToDom(response){
 	});
 }
 
+function prepareDownloadCSV(response){
+	const date = new Date;
+	const filename = `${activeEventCollection}-${date.toISOString()}.csv`;
+	const flattened = response.result.map(event => flat(event));
+	const columns = csvUtils.columns(flattened);
+	const headings = Object.keys(columns).join(',');
+
+	// Output data
+	csv.stringify(flattened, (err, data) => {
+		if (err) {
+			res.status(503).body(err);
+			return;
+		}
+
+		const csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(`${headings}\n${data}`);
+		$(".extract__download")
+			.removeClass("hidden")
+			.attr({
+				'download': filename,
+				'href': csvData
+			});
+	});
+}
+
 function punchItChewie() {
 	if (outputElement.classList.contains('chart--loading')) {
 		return false;
@@ -130,9 +154,8 @@ function punchItChewie() {
 	if (query) {
 		runExtractionQuery(query)
 			.then(response => {
-
-				// Todo: Render differently depending on if CSV format's required ..?
 				renderToDom(response);
+				prepareDownloadCSV(response);
 			});
 	}
 }
