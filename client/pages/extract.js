@@ -1,4 +1,4 @@
-/* global activeEventCollection, KEEN_PROJECT_ID, KEEN_READ_KEY */
+/* global $, activeEventCollection, KEEN_PROJECT_ID, KEEN_READ_KEY */
 
 'use strict';
 
@@ -123,7 +123,6 @@ function prepareDownloadCSV(response){
 	// Output data
 	csv.stringify(flattened, (err, data) => {
 		if (err) {
-			res.status(503).body(err);
 			return;
 		}
 
