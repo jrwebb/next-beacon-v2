@@ -30,7 +30,7 @@ charts:
     datalabel: Gift Failure Percentage
     colspan: 12
   -
-  question: How many gifted/shared emails has the backend sent?
+    question: How many gifted/shared emails has the backend sent?
     name: sharing/giftandshare
     query: "email:delivery->count()->filter(context.product?gift-article,next-send-article-by-email)->group(context.product)"
     datalabel: Emails delivered
