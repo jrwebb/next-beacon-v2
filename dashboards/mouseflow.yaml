@@ -7,6 +7,7 @@ charts:
   -
     question: Signup form visitors
     name: signup
+    timeframe: this_7_days
     query: page:view
             ->count(device.spoorId)
             ->filter(page.location.normalizedPath~/signup)
@@ -17,6 +18,7 @@ charts:
   -
     question: Visitors clicking on 'Buy' button
     name: submit
+    timeframe: this_7_days
     query: cta:click
       ->count(device.spoorId)
       ->filter(page.location.normalizedPath~/signup)
@@ -27,12 +29,14 @@ charts:
   -
     question: Barrier visitors
     name: barriers
+    timeframe: this_7_days
     query: barrier:view
               ->count(device.spoorId)
               ->filter(user.geo.isFinancialTimesOffice=false)
   -
     question: Light signup subscribers
     name: lightsignup
+    timeframe: this_7_days
     query: light-signup:subscribed
             ->count(device.spoorId)
             ->filter(context.isTestEvent=false)
@@ -40,6 +44,7 @@ charts:
   -
     question: Visitor clicks on header MyFT
     name: myft
+    timeframe: this_7_days
     query: cta:click
             ->count(device.spoorId)
             ->filter(context.domPath~header-top | my-ft)
@@ -47,6 +52,7 @@ charts:
   -
     question: Visitor clicks on Search
     name: search
+    timeframe: this_7_days
     query: cta:click
             ->count(device.spoorId)
             ->filter(context.domPath~header-top | search-toggle)
@@ -54,6 +60,7 @@ charts:
   -
     question: Visitor clicks on Menu
     name: menu
+    timeframe: this_7_days
     query: cta:click
             ->count(device.spoorId)
             ->filter(context.domPath~header-top | drawer-toggle)
@@ -61,12 +68,14 @@ charts:
   -
     question: Visitor clicks on a Subscribe link
     name: subscribe
+    timeframe: this_7_days
     query: cta:click
             ->count(device.spoorId)
             ->filter(context.domPath~Subscribe)
   -
     question: Visitors interacting with the header
     name: header
+    timeframe: this_7_days
     query: cta:click
             ->count(device.spoorId)
             ->filter(context.domPath~header)

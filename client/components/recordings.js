@@ -68,7 +68,9 @@ function predictSluggishness (period, latest, messagesEl) {
 	messagesEl.innerHTML = message;
 }
 
-export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimeframe, configuration, chartName}={}) {
+export function getRecordings ({el, queryStr, eventLimit, messagesEl, configuration, chartName}={}) {
+
+	console.log('\n\nGetting recordings');
 
 	const start = (new Date()).getTime();
 
@@ -92,9 +94,38 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 			reject('Sorry! Cannot fetch recordings for complex queries just yet (i.e. @concat, @pct)')
 		})
 	}
+	console.log('kq', kq)
+
+	console.log('timeframe', kq.timeframe);
+
+	let timeframe;
+	let period;
+	let fromdate;
+	let todate;
+
+	try {
+		timeframe = kq.timeframe || 'this_14_days';
+
+		if (timeframe.indexOf('start') !== -1 && timeframe.indexOf('end') !== -1) {
+			const timeframeObj = JSON.parse(timeframe);
+			fromdate = timeframeObj.start;
+			todate = timeframeObj.end;
+		}
+		else {
+			period = parseInt(timeframe.match(/\d+/)[0]);
+		}
+	}
+	catch (e) {
+		// TODO hadle nicely
+		throw e;
+	}
+
+	console.log('period', period)
+	console.log('from, to', fromdate, todate)
+	console.log('latest', latest)
 
 	const query = new keenIO.Query('extraction', {
-		timeframe: kq.timeframe,
+		timeframe: timeframe,
 		event_collection: kq.query.event_collection,
 		target_property: kq.query.target_property,
 		filters: kq.filters,
@@ -103,16 +134,8 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 		group_by: kq.groupedBy
 	});
 
-	let period;
 
-	try {
-		const timeframe = userTimeframe || kq.timeframe || 'this_7_days';
-		period = parseInt(timeframe.match(/\d+/)[0]);
-	}
-	catch (e) {
-		// TODO hadle nicely
-		throw e;
-	}
+	console.log('running query', query)
 
 	predictSluggishness(period, latest, messagesEl);
 
@@ -152,7 +175,8 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 		// FROM THE MOUSEFLOW DOCS
 		// fromdate: The start date of the query. The actual start time is midnight on the selected date, according to the user’s selected time zone.
 		const fromtime = new Date(now - period * day - day);
-		const fromdate = formatDate(fromtime);
+
+		fromdate = fromdate || formatDate(fromtime);
 
 		let entry;
 
@@ -163,19 +187,21 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 		}
 
 		const body = {
-			'spoorIds': spoorIds,
+			'spoorIds': spoorIds, //['ciq0ydlwu00003j5giv9zzfji'],//
 			'params' : {
-				'fromdate': fromdate,
+				'fromdate': fromdate, //'2016-06-17',//
 
 				// FROM THE MOUSEFLOW DOCS
 				// todate: The end date of the query. This date is not included in the query.
-				'todate': kq.timeframe && kq.timeframe.indexOf('this') === 0 ? tomorrow : today
+				'todate': todate || (timeframe && timeframe.indexOf('this') === 0 ? tomorrow : today) //'2016-07-18'//
 			}
 		}
 
 		if (entry) {
 			body.entry = entry;
 		}
+
+		console.log('Calling mouseflow with:', body)
 
 		return fetch(`${window.location.protocol}//${window.location.host}/api/mouseflow`, {
 				method: 'POST',
@@ -188,6 +214,10 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 				return response.text()
 			})
 			.then((tableMarkup) => {
+
+				// console.log('tableMarkup')
+				// console.log(tableMarkup)
+
 				doneLoading(el);
 
 				el.innerHTML = tableMarkup;

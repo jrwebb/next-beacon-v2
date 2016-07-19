@@ -44,15 +44,16 @@ export function renderRecordings (configuration) {
 
 // Render all charts and initialize chart UI
 export function init () {
-	renderAllCharts();
 
-	if (window.location.search.indexOf('recordings') !== -1) {
-		renderRecordings();
-	}
+	renderAllCharts();
 
 	// Init UI for all charts
 	chartUi(document.querySelector('.charts'));
 
 	// Init dashboard UI
 	dashboardUi();
+
+	if (window.location.search.indexOf('recordings') !== -1) {
+		renderRecordings();
+	}
 }

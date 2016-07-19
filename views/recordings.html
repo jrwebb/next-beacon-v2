@@ -10,7 +10,6 @@
 	</thead>
 	<tbody>
 		{{#each .}}
-		{{#if spoorId}}
 		<tr>
 			<td>
 				<a href="{{url}}" target="_blank">
@@ -24,7 +23,6 @@
 			<td><a href="{{referrer}}">{{referrer}}</a></td>
 			<td>{{spoorId}}</td>
 		</tr>
-		{{/if}}
 		{{/each}}
 	</tbody>
 </table>
