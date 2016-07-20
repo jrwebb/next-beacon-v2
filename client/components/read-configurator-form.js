@@ -33,7 +33,7 @@ function getFilters (form) {
 		}
 	})
 		.filter(o => o.value);
-}
+};
 
 export function getFormState (form, updatedField) {
 	return {
