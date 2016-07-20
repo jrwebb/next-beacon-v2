@@ -84,6 +84,7 @@
 	left: 0;
 	right: 0;
 	z-index: 5;
+	height: 100%;
 
 	.o-expander__content {
 		max-height: none;
@@ -100,7 +101,7 @@
 	}
 	.o-expander__content[aria-hidden="false"] {
 		display: inherit;
-		min-height: 350px;
+		height: 100%;
 	}
 	.o-expander__toggle {
 		position: absolute;
