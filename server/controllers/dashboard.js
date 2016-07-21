@@ -69,6 +69,7 @@ module.exports = function(req, res) {
 			title: dashboard.title || getDashboardTitle(req),
 			description: dashboard.description || undefined,
 			charts: charts,
+			showConfigurator: charts && charts.length > 1,
 			timeframe: req.query.timeframe || 'this_14_days',
 			pagetype: req.query.pagetype || '',
 			interval: req.query.interval,

@@ -6,7 +6,7 @@ import oExpander from 'o-expander';
 
 function copyData (ev) {
 	ev.preventDefault();
-	const container = getChartContainer();
+	const container = getChartContainer(ev.target);
 	const chartName = container.dataset.chartName;
 	const kq = retrieveKq(`${chartName}:printed`);
 
@@ -30,18 +30,23 @@ function copyData (ev) {
 	}
 }
 
-function getChartContainer () {
-	return document.querySelector('.chart');
+function getChartContainer (el) {
+
+	while (!el.classList.contains('chart-wrap')) {
+		el = el.parentNode;
+	}
+
+	return el;
 }
 
 function reprint (ev) {
 	ev.preventDefault();
-	const container = getChartContainer();
-	const configure = getConfigurator(document.querySelector('.chart__configurator'), ev.target.name);
+	const container = getChartContainer(ev.target);
+	const configure = getConfigurator(container.querySelector('.chart__configurator'), ev.target.name);
 	if (!configure) {
 		return;
 	}
-	const chartName = container.dataset.chartName;
+	const chartName = container.querySelector('.chart').dataset.chartName;
 	const kq = configure(retrieveKq(chartName));
 	buildChartLinks(kq, container);
 

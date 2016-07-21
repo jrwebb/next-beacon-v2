@@ -1,4 +1,5 @@
-<div class="chart" data-chart-name="{{name}}" data-o-grid-colspan="{{#if @root.isStandaloneChart}}5{{else}}{{colspan}}{{/if}}">
+<div class="chart-wrap" data-o-grid-colspan="{{#if @root.isStandaloneChart}}12{{else}}{{colspan}}{{/if}}">
+<div class="chart" data-chart-name="{{name}}" data-o-grid-colspan="{{#if @root.isStandaloneChart}}{{colspan}}{{else}}12{{/if}}">
 
 	{{#unless @root.isStandaloneChart}}
 	<div data-o-component="o-expander" class="o-expander chart__ui__configurator-wrapper" data-o-expander-shrink-to="hidden" data-o-expander-expanded-toggle-text="✖" data-o-expander-collapsed-toggle-text="☰">
@@ -34,3 +35,4 @@
 	</div>
 {{/if}}
 
+</div>

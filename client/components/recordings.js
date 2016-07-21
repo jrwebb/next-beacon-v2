@@ -99,8 +99,7 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 		target_property: kq.query.target_property,
 		filters: kq.filters,
 		latest: latest,
-		property_names: ['device.spoorId'],
-		group_by: kq.groupedBy
+		property_names: ['device.spoorId']
 	});
 
 	let period;
