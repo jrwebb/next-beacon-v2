@@ -45,7 +45,7 @@ charts:
   -
     question: What's the CTR on articles by link type?
     name: article-elements/ctr
-    query: "@concat(@pct(cta:click->count()->filter(context.domPath~headline-link--topic),page:view->count()),@pct(cta:click->count()->filter(context.domPath~headline-link--topic--moreRecent),page:view->count()),@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-article-headline),page:view->count()),@pct(cta:click->count()->filter(context.domPath~link-headline),page:view->count()))->filter(page.location.type=article)->relabel(_headings,Read Next,Read Latest,Recommended,More Ons,Promoboxes)"
+    query: "@concat(@pct(cta:click->count()->filter(context.domPath~next-up)->filter(context.domPath~headline)->relTime(this_14_days)->interval(d),page:view->count()->relTime(this_14_days)->interval(d)),@pct(@sum(cta:click->count()->filter(context.domPath~next-up)->filter(context.domPath~headline | more-recent)->relTime(this_14_days)->interval(d),cta:click->count()->filter(context.domPath~headline-link--topic--moreRecent)->relTime(this_14_days)->interval(d)),page:view->count()->relTime(this_14_days)->interval(d)),@pct(@sum(cta:click->count()->filter(context.domPath~suggested-article)->relTime(this_14_days)->interval(d),cta:click->count()->filter(context.domPath~suggested-read)->relTime(this_14_days)->interval(d)),page:view->count()->relTime(this_14_days)->interval(d)),@pct(cta:click->count()->filter(context.domPath~pod)->relTime(this_14_days)->interval(d),page:view->count()->relTime(this_14_days)->interval(d)),@pct(cta:click->count()->filter(context.domPath~link-headline)->relTime(this_14_days)->interval(d),page:view->count()->relTime(this_14_days)->interval(d)))->filter(page.location.type=article)->relabel(_headings,Read Next,Read Latest,Recommended,More Ons,Promoboxes)"
     datalabel: CTR by link type
     break: true
     colspan: 12
@@ -54,7 +54,7 @@ charts:
   -
     question: What's the CTR by social buttons (Top)?
     name: article-elements/socialctrtop
-    query: "@concat(cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~email),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~whatsapp),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~print),cta:click->count()->filter(context.domPath~share-top)->filter(context.domPath~save))->filter(page.location.type=article)->relabel(_headings,Email,Facebook,LinkedIn,Twitter,WhatsApp,Print,Save)"
+    query: "@concat(cta:click->count()->filter(context.domPath~share)->filter(context.domPath~top)->filter(context.domPath~email),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~top)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~top)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~top)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~top)->filter(context.domPath~whatsapp),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~top)->filter(context.domPath~print),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~top)->filter(context.domPath~save))->filter(page.location.type=article)->relabel(_headings,Email,Facebook,LinkedIn,Twitter,WhatsApp,Print,Save)"
     datalabel: Total clicks social channel
     colspan: 12 L4
     isStacked: true
@@ -62,7 +62,7 @@ charts:
   -
     question: What's the CTR by social buttons (Bottom)?
     name: article-elements/socialctrbottom
-    query: "@concat(cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~email),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~whatsapp),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~print),cta:click->count()->filter(context.domPath~share-bottom)->filter(context.domPath~save))->filter(page.location.type=article)->relabel(_headings,Email,Facebook,LinkedIn,Twitter,WhatsApp,Print,Save)"
+    query: "@concat(cta:click->count()->filter(context.domPath~share)->filter(context.domPath~bottom)->filter(context.domPath~email),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~bottom)->filter(context.domPath~facebook),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~bottom)->filter(context.domPath~linkedin),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~bottom)->filter(context.domPath~twitter),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~bottom)->filter(context.domPath~whatsapp),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~bottom)->filter(context.domPath~print),cta:click->count()->filter(context.domPath~share)->filter(context.domPath~bottom)->filter(context.domPath~save))->filter(page.location.type=article)->relabel(_headings,Email,Facebook,LinkedIn,Twitter,WhatsApp,Print,Save)"
     datalabel: Total clicks by social channel
     colspan: 12 L4
     isStacked: true
@@ -70,6 +70,6 @@ charts:
   -
     question: What's the CTR for Recommended Reads?
     name: article-elements/recommended
-    query: "@pct(cta:click->count()->filter(context.domPath~suggested-article),page:view->count()->filter(page.location.type=article))"
+    query: "@pct(@sum(cta:click->count()->filter(context.domPath~suggested-article),cta:click->count()->filter(context.domPath~suggested-read)),page:view->count()->filter(page.location.type=article))"
     datalabel: CTR on Recommended Reads
     colspan: 12 L4
