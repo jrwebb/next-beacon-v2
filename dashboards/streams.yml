@@ -56,3 +56,13 @@ charts:
     name: relatedCTR
     query: "@pct(cta:click->count(device.spoorId)->filter(context.domPath~link)->group(context.domPath)->filter(context.domPath~sub-header),page:view->count()->filter(page.location.type=stream))"
     datalabel: CTR from stream via related
+  -
+    question: What's the CTR to stories on Life and Arts?
+    name: lifeandartsCTR
+    query: "@pct(cta:click->count()->filter(context.domPath~main-link),page:view->count())->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)"
+    datalabel: CTR from Life and Arts
+  -
+    question: How many articles are being referred from Life and Arts?
+    name: lifeandartsReferral
+    query: "page:view->count()->filter(page.referrer.path~life-arts)->filter(page.location.type=article)"
+    datalabel: Articles read from Life and Arts
