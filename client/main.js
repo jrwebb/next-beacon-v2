@@ -7,14 +7,6 @@ import './data/kq-extensions';
 import './printers';
 import {init as dashboard} from './pages/dashboard';
 
-if ('serviceWorker' in navigator) {
-		navigator.serviceWorker
-			.register('/worker.js')
-			.catch(function(err) {
-				throw err;
-			});
-}
-
 window.timer = {
 	start: function () {
 		this.startDate = new Date();

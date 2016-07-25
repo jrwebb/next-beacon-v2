@@ -20,10 +20,10 @@ run-bot:
 	nbt run --procfile
 
 build:
-	nbt build --dev --worker
+	nbt build --dev
 
 build-production:
-	nbt build --worker
+	nbt build
 
 watch:
 	nbt build --dev --watch
