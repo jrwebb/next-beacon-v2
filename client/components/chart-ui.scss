@@ -1,14 +1,8 @@
-@import 'o-colors/main';
-@import 'o-grid/main';
-
 .beacon__printer,
 .chart {
 	position: relative;
 	margin: 15px 0px;
 
-	@include oGridRespondTo(L) {
-		margin-bottom: 60px;
-	}
 	h2 {
 		border: 0px;
 		padding: 0px;
@@ -58,7 +52,7 @@
 		border: 0;
 	}
 	> fieldset {
-		border-bottom: 1px solid oColorsGetPaletteColor('pink-tint2');
+		padding: 8px 0px;
 	}
 
 	.o-forms-select,
@@ -88,10 +82,9 @@
 	.o-expander__content {
 		max-height: none;
 		margin: 30px 20px;
-		background: oColorsGetPaletteColor('pink-tint1');
 		opacity: 0.9;
-		padding: 20px 5px 5px;
-		border: 1px solid oColorsGetPaletteColor('grey-tint1');
+		padding: 20px 5px 5px 0px;
+		border: 1px solid gray;
 		max-width: 710px;
 		position: absolute;
 		right: 0;
@@ -101,7 +94,7 @@
 	.o-expander__content[aria-hidden="false"] {
 		display: inherit;
 		min-width: 400px;
-		height: 400px;
+		height: 320px;
 	}
 	.o-expander__toggle {
 		position: absolute;
@@ -109,7 +102,7 @@
 		left: 20px;
 		width: 26px;
 		font-size: 26px;
-		color: oColorsGetPaletteColor('grey-tint2');
+		color: black;
 		line-height: 1.2;
 		background: transparent;
 		i {
