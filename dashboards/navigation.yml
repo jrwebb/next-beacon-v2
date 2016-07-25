@@ -76,6 +76,74 @@ charts:
     question: "(Click count) How many people clicked on the menu button?"
     name: drawer/users
     query: "cta:click->count(device.spoorId)->filter(context.domPath~drawer |)"
-
-
+  # Navigation: first, second, third level (weekly, bars)
+  -
+    question: Which top level nav links were being clicked most last week (desktop)?
+    name: header/primary
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    query: "cta:click->count()
+      ->filter(context.domPath~group--sections)
+      ->filter(device.oGridLayout?M,L,XL,XXL)
+      ->group(context.target)->reorder(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
+    colspan: 12 L4
+  -
+    question: Which secondary nav links were clicked most last week (desktop)?
+    name: header/secondary-most
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
+    colspan: 12 L4
+  -
+    question: Which secondary nav links were clicked least last week (desktop)?
+    name: header/secondary-least
+    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    colspan: 12 L4
+  -
+    question: Which nav links were clicked most last week(mobile)?
+    name: header/mobile-most
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    query: "cta:click->count()
+       ->filter(device.oGridLayout?default,XS,S)
+       ->filter(context.domPath~secondary-navigation)
+       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
+       ->group(context.target)->top(10)"
+    colspan: 12 L6
+  -
+    question: Which nav links were clicked least last week (mobile)?
+    name: header/mobile-least
+    query: "cta:click->count()
+       ->filter(device.oGridLayout?default,XS,S)
+       ->filter(context.domPath~secondary-navigation)
+       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
+       ->group(context.target)->bottom(10)"
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    colspan: 12 L6
+  -
+    question: Which were the most popular streams last week (excluding top level nav links)?
+    name: most-popular-sreams
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    query: "page:view->count()
+     ->group(page.location.path)
+     ->filter(page.location.type=stream)
+     ->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)
+     ->top(10)"
+  -
+    question: Which were the most popular stream taxonomies last week (excluding top level nav links)?
+    name: most-popular-taxonomies
+    interval: false
+    timeframe: previous_1_week
+    printer: BarChart
+    query: "page:view->count()->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)->group(page.location.streamTaxonomy)->top(15)"
 

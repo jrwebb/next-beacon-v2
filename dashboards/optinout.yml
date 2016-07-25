@@ -5,38 +5,38 @@ title: Opt in/out
 isPrimary: true
 charts:
   -
-    question: What percentage of users opt out
+    question: What percentage of users opt out?
     name: opt-out-rate
     query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))"
   -
-    question: What percentage of users opt in
+    question: What percentage of users opt in?
     name: opt-in-rate
     query: "@pct(site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in),page:view->count(user.uuid))"
   -
-    question: Number of users who opted out
+    question: How many users opted out?
     name: total-optouts
     query: site:optout->count(user.uuid)
     printer: ColumnChart
     colspan: 12 L4
   -
-    question: Number of users who opted in
+    question: How many users opted in?
     name: total-optins
     query: site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in)
     printer: ColumnChart
     colspan: 12 L4
   -
-    question: Number of users who used the site
-    name: total-users
-    query: page:view->count(user.uuid)
+    question: How many signed in users do we have?
+    name: users/signed-in
+    query: "page:view->count(user.uuid)"
     printer: ColumnChart
     colspan: 12 L4
   -
-    question: What's the ratio of optouts to opt out form views
+    question: What's the ratio of optouts to opt out form views?
     name: form-completion
     query: "@pct(site:optout->count(),page:view->count()->filter(page.location.path~opt-out-confirm))"
     colspan: 12 L4
   -
-    question: Are any browsers showing unusually high opt out rates (excluding browsers with <5 opt outs)?
+    question: Are any browsers showing unusually high opt out rates (excluding browsers with < 5 opt outs)?
     name: opt-out-rate/by-browser
     query: "@pct(site:optout->count(user.uuid)->cutoff(5),page:view->count(user.uuid))->group(device.browserName)->tidy(true)->top(10)->print(BarChart)"
     interval: false

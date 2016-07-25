@@ -4,7 +4,6 @@ id: overview
 title: nextFT overview
 isPrimary: false
 charts:
-  # User numbers
   -
     question: How many users do we have overall?
     name: users
@@ -22,6 +21,14 @@ charts:
     colspan: 12 L4
   -
     break: true
+    question: What's the weekly trend of user numbers?
+    name: users/trend
+    query: "@concat(
+      page:view->count(user.uuid),
+      page:view->count(device.spoorId)->filter(!user.uuid)
+    )->relabel(_headings,Logged in, Anonymous)"
+  -
+    break: true
     question: How many pages are being viewed overall?
     name: views
     query: "page:view->count()"
@@ -36,204 +43,3 @@ charts:
     name: views/anonymous
     query: "page:view->count()->filter(!user.uuid)"
     colspan: 12 L4
-  -
-    question: What's the weekly trend of user numbers?
-    name: users/trend
-    query: "@concat(
-      page:view->count(user.uuid),
-      page:view->count(device.spoorId)->filter(!user.uuid)
-    )->relabel(_headings,Logged in, Anonymous)"
-    isStacked: true
-    printer: AreaChart
-    timeframe: previous_10_weeks
-    colspan: 6 L4
-    interval: w
-  -
-    question: How many promoters and detractors do we have each week?
-    name: promoters/trend
-    query: "@concat(
-feedback:submit->count()->filter(context.nps>8),
-feedback:submit->count()->filter(context.nps?7,8),
-feedback:submit->count()->filter(context.nps<7)
-)->relabel(_headings,promoters,neutral,detractors)"
-    timeframe: previous_10_weeks
-    colspan: 6 L4
-    interval: w
-  -
-    question: What's the weekly recommendation scores trend?
-    name: nss/trend
-    query: "@concat(
- feedback:submit->avg(context.nps),
- feedback:submit->percentile(context.nps,25),
- feedback:submit->median(context.nps),
- feedback:submit->percentile(context.nps,75)
-)->relabel(_headings,average,25th percentile,median,75th percentile)"
-    timeframe: previous_10_weeks
-    colspan: 6 L4
-    interval: w
-
-  # Opt in / out
-  -
-    break: true
-    question: What percentage of users opt out
-    name: opt-out-rate
-    query: "@pct(site:optout->count(user.uuid),page:view->count(user.uuid))"
-    colspan: 12 L3
-  -
-    question: What percentage of users opt in
-    name: opt-in-rate
-    query: "@pct(site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in),page:view->count(user.uuid))"
-    colspan: 12 L3
-  -
-    question: Number of users who opted out
-    name: total-optouts
-    query: site:optout->count(user.uuid)
-    printer: ColumnChart
-    colspan: 12 L3
-  -
-    question: Number of users who opted in
-    name: total-optins
-    query: site:optin->count(user.uuid)->filter(context.optedVia!=__anon-opt-in)->filter(context.optedVia!=__m-dot-opt-in)
-    printer: ColumnChart
-    colspan: 12 L3
-
-  # Last week's usage
-  -
-    question: What RFV cohorts did our users come from last week?
-    name: rfv
-    query: page:view->count(user.uuid)->group(user.rfv.cohort)->tidy()->reorder(user.rfv.cohort,super-fan,fan,engaged-frequent-free,borderline-engaged,half-engaged,occasional-skimmer,disengaged-long-tail)
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    colspan: 12 L4
-  -
-    question: What types of page got the most traffic last week?
-    name: page-types
-    query: page:view->count()->group(page.location.type)->tidy()
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    colspan: 12 L4
-  -
-    question: What screen sizes were most commonly used last week?
-    name: screen-size
-    query: page:view->count(user.uuid)->group(device.oGridLayout)->tidy()->reorder(device.oGridLayout,default,XS,S,M,L,XL,XXL)
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    colspan: 12 L4
-  -
-    question: Which browsers were most commonly used last week?
-    name: browsers
-    query: "page:view->count()->group(device.browserName)->top(10)"
-    colspan: 12 L4
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-  -
-    question: Which device types were most commonly used last week?
-    name: devices
-    query: "page:view->count()->group(device.primaryHardwareType)->top(3)"
-    colspan: 12 L4
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-  -
-    question: What was page load time like last week?
-    name: load-time
-    query: "page:load-timing->median(context.timings.offset.loadEventEnd)
-      ->group(page.location.type)
-      ->divide(1000)  "
-    colspan: 12 L4
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-
-  # Navigation: first, second, third level (weekly, bars)
-  -
-    question: Which top level nav links were being clicked most last week (desktop)?
-    name: header/primary
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    query: "cta:click->count()
-      ->filter(context.domPath~group--sections)
-      ->filter(device.oGridLayout?M,L,XL,XXL)
-      ->group(context.target)->reorder(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
-    colspan: 12 L4
-  -
-    question: Which secondary nav links were clicked most last week (desktop)?
-    name: header/secondary-most
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
-    colspan: 12 L4
-  -
-    question: Which secondary nav links were clicked least last week (desktop)?
-    name: header/secondary-least
-    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    colspan: 12 L4
-  -
-    question: Which nav links were clicked most last week(mobile)?
-    name: header/mobile-most
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    query: "cta:click->count()
-       ->filter(device.oGridLayout?default,XS,S)
-       ->filter(context.domPath~secondary-navigation)
-       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
-       ->group(context.target)->top(10)"
-    colspan: 12 L6
-  -
-    question: Which nav links were clicked least last week (mobile)?
-    name: header/mobile-least
-    query: "cta:click->count()
-       ->filter(device.oGridLayout?default,XS,S)
-       ->filter(context.domPath~secondary-navigation)
-       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
-       ->group(context.target)->bottom(10)"
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    colspan: 12 L6
-  -
-    question: Which were the most popular streams last week (excluding top level nav links)?
-    name: most-popular-sreams
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    query: "page:view->count()
-     ->group(page.location.path)
-     ->filter(page.location.type=stream)
-     ->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)
-     ->top(10)"
-  -
-    question: Which were the most popular stream taxonomies last week (excluding top level nav links)?
-    name: most-popular-taxonomies
-    interval: false
-    timeframe: previous_1_week
-    printer: BarChart
-    query: "page:view->count()->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)->group(page.location.streamTaxonomy)->top(15)"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
