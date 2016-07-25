@@ -11,7 +11,7 @@ charts:
     colspan: 12 L4
   -
     question: How many signed in users do we have?
-    name: users/logged-in
+    name: users/signed-in
     query: "page:view->count(user.uuid)"
     colspan: 12 L4
   -
@@ -21,21 +21,13 @@ charts:
     colspan: 12 L4
   -
     break: true
-    question: What's the weekly trend of user numbers?
-    name: users/trend
-    query: "@concat(
-      page:view->count(user.uuid),
-      page:view->count(device.spoorId)->filter(!user.uuid)
-    )->relabel(_headings,Logged in, Anonymous)"
-  -
-    break: true
     question: How many pages are being viewed overall?
     name: views
     query: "page:view->count()"
     colspan: 12 L4
   -
     question: How many pages are being viewed by signed in users?
-    name: views/logged-in
+    name: views/signed-in
     query: "page:view->count()->filter(user.uuid)"
     colspan: 12 L4
   -
@@ -43,3 +35,12 @@ charts:
     name: views/anonymous
     query: "page:view->count()->filter(!user.uuid)"
     colspan: 12 L4
+  -
+    break: true
+    question: What's the weekly trend of user numbers?
+    name: users/trend
+    query: "@concat(
+      page:view->count(user.uuid),
+      page:view->count(device.spoorId)->filter(!user.uuid)
+    )->relabel(_headings,Signed in, Anonymous)"
+    colspan: 18
