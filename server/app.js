@@ -48,16 +48,6 @@ app.use(window);
 app.use(aliases.init);
 app.use(dashboards.middleware);
 
-try {
-	const worker = require('fs').readFileSync(require('path').join(process.cwd(), 'public/worker.js'), 'utf8');
-	app.get('/worker.js', function (req, res) {
-		res.set('Content-Type', 'text/javascript')
-		res.send(worker);
-	})
-} catch (err) {
-	console.log('Error. Did you forget to run `Make build`?\n', err)
-}
-
 app.get(/^\/data\/keen-proxy\/(.*)/, require('./controllers/data/keen-proxy'));
 app.get('/data/export/:limit', require('./controllers/data/export'));
 app.get('/data/extract/:event_collection?/:event_properties?', require('./controllers/data/extract'));

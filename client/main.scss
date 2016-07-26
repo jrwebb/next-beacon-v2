@@ -1,9 +1,6 @@
 /* Hide any enhanced experience content when in core mode, and vice versa. */
 .o--if-no-js { display: none !important; }
 
-@import 'o-expander/main';
-@import 'o-grid/main';
-
 html,
 body {
 	font-family: BentonSans, sans-serif;
@@ -20,14 +17,9 @@ body {
 }
 .o-techdocs {
 	.o-header {
+		background-image: none;
 		margin-bottom: 10px;
-		@include oGridRespondTo(M) {
-			margin-bottom: 16px;
-		}
 		width: 100%;
-		.o-header__sitename {
-			color: oColorsGetPaletteColor('grey-tint2');
-		}
 		.o-header__primary {
 			height: 45px;
 			padding-top: 5px;
@@ -40,6 +32,7 @@ body {
 			}
 		}
 		.o-header__secondary {
+			background-color: inherit;
 			padding: 2px 0px;
 			nav {
 				float: left;
@@ -55,23 +48,21 @@ body {
 
 }
 
-@include oGridRespondTo(L) {
-	.o-techdocs-container {
+.o-techdocs-container {
 
-		[data-o-grid-colspan~=L4] {
-			h2 {
-				font-size: 24px;
-			}
+	[data-o-grid-colspan~=L4] {
+		h2 {
+			font-size: 24px;
 		}
-		[data-o-grid-colspan~=L3] {
-			h2 {
-				font-size: 20px;
-			}
+	}
+	[data-o-grid-colspan~=L3] {
+		h2 {
+			font-size: 20px;
 		}
-		[data-o-grid-colspan~=L2] {
-			h2 {
-				font-size: 18px;
-			}
+	}
+	[data-o-grid-colspan~=L2] {
+		h2 {
+			font-size: 18px;
 		}
 	}
 }
@@ -111,13 +102,6 @@ body {
 .o-header__nav--secondary-theme {
 	[data-o-grid-colspan] {
 		padding-left: 0px;
-	}
-}
-
-@include oGridRespondTo(L) {
-	.o-big-number__title {
-		font-size: 200px;
-		line-height: 200px;
 	}
 }
 

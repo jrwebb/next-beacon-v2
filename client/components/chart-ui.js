@@ -2,7 +2,6 @@ import Delegate from 'dom-delegate';
 import {retrieveKq} from '../data/kq-cache';
 import {fromForm as getConfigurator} from './configurator';
 import {renderChart} from './chart';
-import oExpander from 'o-expander';
 
 function copyData (ev) {
 	ev.preventDefault();
@@ -82,12 +81,9 @@ function buildAllChartLinks () {
 }
 
 export function init (container) {
-	oExpander.init(container);
-
 	const del = new Delegate(container);
 	del.on('change', '.chart__configurator [name]', reprint);
 	del.on('click', '.chart__ui__copy-data', copyData);
-
 	buildAllChartLinks();
 }
 

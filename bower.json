@@ -8,9 +8,7 @@
     "keen-query": "^3.1.0",
     "querystring": "^3.46.1",
     "o-colors": "^3.3.1",
-    "o-expander": "^2.0.1",
     "o-viewport": "^2.0.0",
-    "o-grid": "^4.0.7",
     "o-tracking": "^1.1.8",
     "jquery-stupid-table": "^1.0.1"
   },
@@ -28,8 +26,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "resolutions": {
-    "keen-query": "^2.10.3"
-  }
+  ]
 }
