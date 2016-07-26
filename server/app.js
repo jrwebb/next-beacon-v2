@@ -43,7 +43,7 @@ app.get('/hashed-assets/:path*', function(req, res) {
 
 app.use(cookieParser());
 
-app.get(auth);
+app.use(auth);
 app.use(window);
 app.use(aliases.init);
 app.use(dashboards.middleware);
