@@ -1,0 +1,105 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: b2b
+title: B2B
+isPrimary: true
+charts:
+  -
+    question: "How many users do we have overall?"
+    name: overview
+    query: "@concat(
+      page:view->count(device.spoorId),
+      page:view->count(device.spoorId)->filter(!user.uuid),
+      page:view->count(device.spoorId)->filter(user.subscriptions.isB2C!=true)->filter(user.subscriptions.isB2B!=true),
+      page:view->count(device.spoorId)->filter(user.subscriptions.isB2C=true),
+      page:view->count(device.spoorId)->filter(user.subscriptions.isB2B=true)
+    )
+      ->relabel(_headings,All,Anons,Neither isB2C nor isB2B,isB2C = true,isB2B = true)"
+  -
+    question: "How many B2C and B2B users do we have?"
+    name: focus
+    query: "@concat(
+      page:view->count(device.spoorId)->filter(user.subscriptions.isB2C=true),
+      page:view->count(device.spoorId)->filter(user.subscriptions.isB2B=true)
+    )
+      ->filter(user.uuid)
+      ->relabel(_headings,isB2C = true,isB2B = true)"
+  -
+    colspan: 18
+    question: "How many BBP, Clifford Chance and Withers users?"
+    name: clients
+    query: "@concat(
+      page:view->count(device.spoorId)->filter(user.subscriptions.b2b.activeLicences=51a072a6-e3df-4255-a1ae-04d3a810d610),
+      page:view->count(device.spoorId)->filter(user.subscriptions.b2b.activeLicences=96d960af-29ba-4aea-88e9-c86e03c3e5f2),
+      page:view->count(device.spoorId)->filter(user.subscriptions.b2b.activeLicences=9ca1a60b-c54e-46e0-bc6d-4a8d68a9eba7)
+    )
+      ->filter(user.uuid)
+      ->filter(user.subscriptions.isB2B=true)
+      ->relabel(_headings,BBP,Clifford Chance,Withers)"
+  -
+    break: true
+    colspan: 12 L4
+    question: "BBP: How many <i>my</i>FT users?"
+    name: bbp
+    query: "@concat(
+      page:view->count(device.spoorId),
+      page:view->count(device.spoorId)->filter(user.myft.isMyFtUser=true)
+    )
+      ->filter(user.uuid)
+      ->filter(user.subscriptions.isB2B=true)
+      ->filter(user.subscriptions.b2b.activeLicences=51a072a6-e3df-4255-a1ae-04d3a810d610)
+      ->relabel(_headings,BBP all,BBP myFT)"
+  -
+    colspan: 12 L4
+    question: "Clifford Chance: How many <i>my</i>FT users?"
+    name: cliffordchance
+    query: "@concat(
+      page:view->count(device.spoorId),
+      page:view->count(device.spoorId)->filter(user.myft.isMyFtUser=true)
+    )
+      ->filter(user.uuid)
+      ->filter(user.subscriptions.isB2B=true)
+      ->filter(user.subscriptions.b2b.activeLicences=96d960af-29ba-4aea-88e9-c86e03c3e5f2)
+      ->relabel(_headings,Clifford Chance all,Clifford Chance myFT)"
+  -
+    colspan: 12 L4
+    question: "Withers: How many <i>my</i>FT users?"
+    name: withers
+    query: "@concat(
+      page:view->count(device.spoorId),
+      page:view->count(device.spoorId)->filter(user.myft.isMyFtUser=true)
+    )
+      ->filter(user.uuid)
+      ->filter(user.subscriptions.isB2B=true)
+      ->filter(user.subscriptions.b2b.activeLicences=9ca1a60b-c54e-46e0-bc6d-4a8d68a9eba7)
+      ->relabel(_headings,Withers all,Withers myFT)"
+  -
+    question: "What's the pageview rate for B2B users?"
+    name: pageview-rate
+    query: "@concat(
+      @ratio(page:view->count(),page:view->count(device.spoorId))->filter(user.subscriptions.b2b.activeLicences=51a072a6-e3df-4255-a1ae-04d3a810d610),
+      @ratio(page:view->count(),page:view->count(device.spoorId))->filter(user.subscriptions.b2b.activeLicences=96d960af-29ba-4aea-88e9-c86e03c3e5f2),
+      @ratio(page:view->count(),page:view->count(device.spoorId))->filter(user.subscriptions.b2b.activeLicences=9ca1a60b-c54e-46e0-bc6d-4a8d68a9eba7)
+    )
+      ->filter(user.uuid)
+      ->filter(user.subscriptions.isB2B=true)
+      ->relabel(_headings,BBP,Clifford Chance,Withers)"
+  -
+    question: "What's the pageview rate for B2B *<i>my</i>FT* users?"
+    name: pageview-myft
+    query: "@concat(
+      @ratio(page:view->count(),page:view->count(device.spoorId))->filter(user.subscriptions.b2b.activeLicences=51a072a6-e3df-4255-a1ae-04d3a810d610),
+      @ratio(page:view->count(),page:view->count(device.spoorId))->filter(user.subscriptions.b2b.activeLicences=96d960af-29ba-4aea-88e9-c86e03c3e5f2),
+      @ratio(page:view->count(),page:view->count(device.spoorId))->filter(user.subscriptions.b2b.activeLicences=9ca1a60b-c54e-46e0-bc6d-4a8d68a9eba7)
+    )
+      ->filter(user.myft.isMyFtUser=true)
+      ->filter(user.uuid)
+      ->filter(user.subscriptions.isB2B=true)
+      ->relabel(_headings,BBP,Clifford Chance,Withers)"
+
+
+
+
+
+
+
