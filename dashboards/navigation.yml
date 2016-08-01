@@ -146,4 +146,18 @@ charts:
     timeframe: previous_1_week
     printer: BarChart
     query: "page:view->count()->filter(page.location.streamId!?MQ==-U2VjdGlvbnM=,Ng==-U2VjdGlvbnM=,Mjk=-U2VjdGlvbnM=,NzE=-U2VjdGlvbnM=,MTE2-U2VjdGlvbnM=,MTQ4-U2VjdGlvbnM=)->group(page.location.streamTaxonomy)->top(15)"
+  -
+    question: "(Click through rate) What percent of people who visited the site also clicked on any section link?"
+    name: headernav/ctr/section
+    query: "@pct(
+      cta:click->filter(context.domPath~header-nav:desktop | primary-nav)->filter(context.domPath!~meganav),
+      page:view
+    )->count(device.spoorId)"
+  -
+    question: "(Click through rate) What percent of people who visited the site also clicked on any sub section link?"
+    name: headernav/ctr/subsection
+    query: "@pct(
+      cta:click->filter(context.domPath~meganav),
+      page:view
+    )->count(device.spoorId)"
 
