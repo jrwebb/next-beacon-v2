@@ -92,7 +92,7 @@ module.exports = {
 		})
 
 		del.on('click', '.query-wizard__reference--starters .o-buttons, .query-wizard__reference--collections .o-buttons', ev => {
-			input.value = ev.target.getAttribute('data-str');
+			input.value = ev.target.getAttribute('data-str').replace(/->/g,'\n  ->');
 			output.innerHTML = '';
 			input.focus();
 		});
@@ -142,7 +142,7 @@ module.exports = {
 		})
 
 		del.on('click', '.query-wizard__reference--extractions .o-buttons', ev => {
-			validate(input.value + '->' + ev.target.getAttribute('data-str'))
+			validate(`${input.value}\n  ->${ev.target.getAttribute('data-str')}`)
 				.then(str => {
 					input.value = str;
 					input.focus();
@@ -155,7 +155,16 @@ module.exports = {
 		del.on('click', '.query-wizard__reference--methods .o-buttons', ev => {
 			validate()
 				.then(() => {
-					input.value += '\n->' + ev.target.getAttribute('data-str');
+					if (ev.target.getAttribute('data-str').substr(0,7) === "absTime") {
+						let date = new Date();
+						let absTimeString = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+						date.setDate(date.getDate()-14);
+						absTimeString = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()},${absTimeString}`;
+						input.value += `\n  ->absTime(${absTimeString})`;
+					}
+					else {
+						input.value += `\n  ->${ev.target.getAttribute('data-str')}`;
+					}
 					input.focus();
 				}, e => {
 					outputError(e);
