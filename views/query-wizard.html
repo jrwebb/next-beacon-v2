@@ -29,10 +29,6 @@
 	<div id="step1" class="query-wizard__box">
 		<h2>Step 1: Begin a query by choosing the data set to look at.</h2>
 		<p><strong>Warning: will wipe anything you've already entered!</strong></p>
-		<ul data-o-component="o-tabs" class="o-tabs o-tabs--buttontabs" role="tablist">
-			<li role="tab"><a href="#commonQueryStarters">Common starter queries</a></li>
-			<li role="tab"><a href="#customQueryStarters">Full event and analysis options</a></li>
-		</ul>
 		<div id="commonQueryStarters" class="o-tabs__tabpanel">
 			<table class="o-table query-wizard__reference query-wizard__reference--starters">
 				<thead>
@@ -64,37 +60,6 @@
 				</tr>
 				</tbody>
 			</table>
-		</div>
-		<div id="customQueryStarters" class="o-tabs__tabpanel">
-			<div class="o-grid-row">
-				<div data-o-grid-colspan="8">
-					<h3>Choose a type of <b>event</b> to look at...</h3>
-					<ul class="query-wizard__reference query-wizard__reference--collections">
-						{{#each collections}}
-						<li>
-								{{#each this}}
-									<button class="o-buttons o-buttons--small" data-str="{{category}}:{{action}}">{{category}}: {{action}}</button>
-								{{/each}}
-						</li>
-						{{/each}}
-					</ul>
-				</div>
-				<div data-o-grid-colspan="4">
-						<h3>...and pick an analysis method (or <b>extraction</b> in keen parlance)</h3>
-						<div class="query-wizard__reference--extractions">
-							<p><span class="o-buttons o-buttons--small" data-str="count()">Count</span> or <span class="o-buttons o-buttons--small" data-str="count({property})">Count unique</span> are what you'll normally want, but also available are:
-							<ul class="query-wizard__reference">
-								<li class="o-buttons o-buttons--small" data-str="min({property})">Minimum value</li>
-								<li class="o-buttons o-buttons--small" data-str="max({property})">Maximum value</li>
-								<li class="o-buttons o-buttons--small" data-str="sum({property})">Sum of values</li>
-								<li class="o-buttons o-buttons--small" data-str="avg({property})">Average value</li>
-								<li class="o-buttons o-buttons--small" data-str="med({property})">Median value</li>
-								<li class="o-buttons o-buttons--small" data-str="pct({property},{percentile})">Percentile value</li>
-								<li class="o-buttons o-buttons--small" data-str="select({property})">List all unique values</li>
-							</ul>
-						</div>
-				</div>
-			</div>
 		</div>
 	</div>
 
