@@ -2,67 +2,11 @@ import KeenQuery from 'keen-query';
 import querystring from 'querystring';
 import {renderChart} from '../components/chart';
 import {getRecordings} from '../components/recordings';
-
-// const debounce = function(fn,delay){
-// 		let timeoutId;
-// 		return function debounced(){
-// 				if(timeoutId){
-// 						clearTimeout(timeoutId);
-// 				}
-// 				const args = arguments;
-// 				timeoutId = setTimeout(function() {
-// 						fn.apply(this, args);
-// 				}.bind(this), delay);
-// 		};
-// };
-
-// class PropertySearch {
-
-// 	constructor () {
-// 		this.searchEl = document.querySelector('.query-wizard__properties-filter');
-// 		this.items = [].slice.call(document.querySelectorAll('.query-wizard__reference--properties .o-buttons'))
-// 			.map(el => {
-// 				return {
-// 					el,
-// 					property: el.getAttribute('data-str')
-// 				}
-// 			});
-// 	}
-// 	init () {
-// 		const self = this;
-
-// 		this.onType = debounce(this.onType, 150).bind(this);
-
-// 		this.searchEl.addEventListener('keyup', function(ev) {
-// 			switch(ev.which) {
-// 				case 13 : return; // enter
-// 				case 9 : return; // tab
-// 				case 40 : return;
-// 				default :
-// 					self.onType(ev);
-// 				break;
-// 			}
-// 		});
-// 	}
-
-// 	onType () {
-// 		const str = this.searchEl.value.toLowerCase();
-// 		this.items.forEach(item => {
-// 			if (item.property.indexOf(str) === -1) {
-// 				item.el.classList.add('hidden');
-// 			} else {
-// 				item.el.classList.remove('hidden');
-// 			}
-// 		})
-// 	}
-// }
 const Delegate = require('dom-delegate');
 
 module.exports = {
 	init: () => {
 		const del = new Delegate(document.querySelector('.query-wizard'));
-		// new PropertySearch().init();
-
 		const input = document.querySelector('.query-wizard__input');
 		const output = document.querySelector('.query-wizard__output');
 		const recordings = document.querySelector('.query-wizard__recording-output');
@@ -73,7 +17,6 @@ module.exports = {
 			input.value = decodeURIComponent(parameters.query);
 			run();
 		}
-
 
 		function validate (str) {
 			return new Promise((res, rej) => {
@@ -198,7 +141,6 @@ module.exports = {
 			}
 		})
 
-
 		del.on('click', '.query-wizard__reference--extractions .o-buttons', ev => {
 			validate(input.value + '->' + ev.target.getAttribute('data-str'))
 				.then(str => {
@@ -219,15 +161,6 @@ module.exports = {
 					outputError(e);
 					input.focus();
 				})
-
 		});
-
-		// del.on('click', '.query-wizard__reference--properties', ev => {
-		// 	if (/\)$/.test(input.value)) {
-		// 		input.value = input.value.replace(/\{use the metadata picker\}/, `{${ev.target.textContent}}`).replace(/\([^\)]*\)$/, `(${ev.target.textContent})`);
-		// 		input.focus();
-		// 	}
-		// })
-
 	}
 }
