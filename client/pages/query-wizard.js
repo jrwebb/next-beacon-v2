@@ -155,6 +155,18 @@ module.exports = {
 		del.on('click', '.query-wizard__reference--methods .o-buttons', ev => {
 			validate()
 				.then(() => {
+
+					// When adding timeframes or intervals, clear any existing ones first.
+					let method = ev.target.getAttribute('data-str').substr(0,7);
+					if (method === "absTime" || method === "relTime") {
+						input.value = input.value.replace(/->absTime\(.*?\)/ig,'');
+						input.value = input.value.replace(/->relTime\(.*?\)/ig,'');
+					}
+					else if (method === "interva") {
+						input.value = input.value.replace(/->interval\(.*?\)/ig,'');
+					}
+
+					// When adding absolute time, default to today minus 14 days.
 					if (ev.target.getAttribute('data-str').substr(0,7) === "absTime") {
 						let date = new Date();
 						let absTimeString = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
@@ -165,6 +177,7 @@ module.exports = {
 					else {
 						input.value += `\n  ->${ev.target.getAttribute('data-str')}`;
 					}
+					sanitisedQuery();
 					input.focus();
 				}, e => {
 					outputError(e);
