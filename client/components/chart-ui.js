@@ -62,7 +62,14 @@ function buildChartLinks (kq, chartEl) {
 	}
 
 	if (wizardLink) {
-		wizardLink.href = `/data/query-wizard?query=${encodeURIComponent(kq.toString().replace('->print(LineChart)', ''))}`
+
+		// Strip out default values
+		const newHref = kq.toString()
+			.replace(/->print\(LineChart\)/g, '')
+			.replace(/->relTime\(this_14_days\)/g, '')
+			.replace(/->interval\(d\)/g, '');
+
+		wizardLink.href = `/data/query-wizard?query=${encodeURIComponent(newHref)}`
 	}
 }
 
