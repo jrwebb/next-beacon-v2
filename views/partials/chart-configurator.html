@@ -64,12 +64,12 @@
 			{{#if hasConfigurableInterval}}
 			<label class="o-forms-label">Time interval:</label>
 			<select name="interval" class="chart__configurator__interval o-forms-select o-forms-select--small">
-				<option value="">-choose interval-</option>
-				<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>minute</option>
-				<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>hour</option>
-				<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>day</option>
-				<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>week</option>
-				<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>month</option>
+				<option value="">No interval</option>
+				<option value="minute" {{#ifEquals @root.interval 'minute'}}selected{{/ifEquals}}>Minute</option>
+				<option value="hour" {{#ifEquals @root.interval 'hour'}}selected{{/ifEquals}}>Hour</option>
+				<option value="day" {{#ifEquals @root.interval 'day'}}selected{{/ifEquals}}>Day</option>
+				<option value="week" {{#ifEquals @root.interval 'week'}}selected{{/ifEquals}}>Week</option>
+				<option value="month" {{#ifEquals @root.interval 'month'}}selected{{/ifEquals}}>Month</option>
 			</select>
 			{{else}}
 			<small>Interval configuration disabled for this chart. Click 'View in query wizard' for full control</small>
@@ -78,15 +78,6 @@
 	</fieldset>
 	<fieldset class="chart__configurator__group">
 			<label class="o-forms-label">Group by:</label>
-			<!-- TODO move to select from radios -->
-			<!--<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="device.oGridLayout">
-				<option value="">-group by-</option>
-				<option value="">screen size</option>
-				<option value="">device type</option>
-				<option value="">page type</option>
-				<option value="">subs</option>
-				<option value="">rfv</option>
-			</select> -->
  			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_null_{{index}}" value=""><label for="group_null_{{index}}" class="o-forms-label">ungroup</label>
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_device.oGridLayout_{{index}}" value="device.oGridLayout"><label for="group_device.oGridLayout_{{index}}" class="o-forms-label">screen size</label>
 			<input class="o-forms-radio o-forms-radio--small" type="radio" name="group" id="group_device.primaryHardwareType_{{index}}" value="device.primaryHardwareType"><label for="group_device.primaryHardwareType_{{index}}" class="o-forms-label">device type</label>
@@ -97,7 +88,7 @@
 	<fieldset class="chart__configurator__filters">
 			<label class="o-forms-label">Filter:</label>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="device.oGridLayout">
-				<option value="">-screen size-</option>
+				<option value="">Screen size</option>
 				<option value="default">default</option>
 				<option value="S">S</option>
 				<option value="M">M</option>
@@ -105,13 +96,13 @@
 				<option value="XL">XL</option>
 			</select>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="device.primaryHardwareType">
-				<option value="">-device type-</option>
+				<option value="">Device type</option>
 				<option value="Desktop">Desktop</option>
 				<option value="Mobile Phone">Phone</option>
 				<option value="Tablet">Tablet</option>
 			</select>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="page.location.type">
-				<option value="">-page-</option>
+				<option value="">Page</option>
 				<option value="article">article</option>
 				<option value="frontpage">frontpage</option>
 				<option value="my">my</option>
@@ -120,12 +111,12 @@
 				<option value="curated">curated</option>
 			</select>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="user.subscription">
-				<option value="">-subs-</option>
+				<option value="">Subs</option>
 				<option value="subscriber">subscriber</option>
 				<option value="anon">anon</option>
 			</select>
 			<select class="o-forms-select o-forms-select--small chart__configurator__filter" name="rfv.cohort">
-				<option value="">-rfv-</option>
+				<option value="">RFV</option>
 				<option value="super-fan">super fan</option>
 				<option value="fan">fan</option>
 				<option value="engaged-frequent-free">engaged frequent free</option>
@@ -136,7 +127,7 @@
 			</select>
 		</fieldset>
 		<fieldset>
-			<label class="o-forms-label">View:</label>
+			<label class="o-forms-label">View: </label>
 			<input class="o-forms-radio o-forms-radio--small" id="printer_default_{{index}}" type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}><label for="printer_default_{{index}}" class="o-forms-label">Graph</label>
 			<input class="o-forms-radio o-forms-radio--small" id="printer_table_{{index}}" type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}><label for="printer_table_{{index}}" class="o-forms-label">Data table</label>
 		</fieldset>
