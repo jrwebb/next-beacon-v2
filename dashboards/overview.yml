@@ -35,12 +35,3 @@ charts:
     name: views/anonymous
     query: "page:view->count()->filter(!user.uuid)"
     colspan: 12 L4
-  -
-    break: true
-    question: What's the weekly trend of user numbers?
-    name: users/trend
-    query: "@concat(
-      page:view->count(user.uuid),
-      page:view->count(device.spoorId)->filter(!user.uuid)
-    )->relabel(_headings,Signed in, Anonymous)"
-    colspan: 18

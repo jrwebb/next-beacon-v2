@@ -31,6 +31,7 @@ export function googleChartPrinterFactory (chartType) {
 			if (meta.datalabel && kqTable.dimension === 1) {
 				kqData.headings[1] = meta.datalabel;
 			}
+			kqData.headings = kqData.headings.map(r => r === undefined ? "" : r);
 
 			const vizData = google.visualization.arrayToDataTable([kqData.headings].concat(kqData.rows)); // eslint-disable-line new-cap
 			const chart = new google.visualization[chartType](el);

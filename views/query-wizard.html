@@ -29,10 +29,6 @@
 	<div id="step1" class="query-wizard__box">
 		<h2>Step 1: Begin a query by choosing the data set to look at.</h2>
 		<p><strong>Warning: will wipe anything you've already entered!</strong></p>
-		<ul data-o-component="o-tabs" class="o-tabs o-tabs--buttontabs" role="tablist">
-			<li role="tab"><a href="#commonQueryStarters">Common starter queries</a></li>
-			<li role="tab"><a href="#customQueryStarters">Full event and analysis options</a></li>
-		</ul>
 		<div id="commonQueryStarters" class="o-tabs__tabpanel">
 			<table class="o-table query-wizard__reference query-wizard__reference--starters">
 				<thead>
@@ -64,37 +60,6 @@
 				</tr>
 				</tbody>
 			</table>
-		</div>
-		<div id="customQueryStarters" class="o-tabs__tabpanel">
-			<div class="o-grid-row">
-				<div data-o-grid-colspan="8">
-					<h3>Choose a type of <b>event</b> to look at...</h3>
-					<ul class="query-wizard__reference query-wizard__reference--collections">
-						{{#each collections}}
-						<li>
-								{{#each this}}
-									<button class="o-buttons o-buttons--small" data-str="{{category}}:{{action}}">{{category}}: {{action}}</button>
-								{{/each}}
-						</li>
-						{{/each}}
-					</ul>
-				</div>
-				<div data-o-grid-colspan="4">
-						<h3>...and pick an analysis method (or <b>extraction</b> in keen parlance)</h3>
-						<div class="query-wizard__reference--extractions">
-							<p><span class="o-buttons o-buttons--small" data-str="count()">Count</span> or <span class="o-buttons o-buttons--small" data-str="count({property})">Count unique</span> are what you'll normally want, but also available are:
-							<ul class="query-wizard__reference">
-								<li class="o-buttons o-buttons--small" data-str="min({property})">Minimum value</li>
-								<li class="o-buttons o-buttons--small" data-str="max({property})">Maximum value</li>
-								<li class="o-buttons o-buttons--small" data-str="sum({property})">Sum of values</li>
-								<li class="o-buttons o-buttons--small" data-str="avg({property})">Average value</li>
-								<li class="o-buttons o-buttons--small" data-str="med({property})">Median value</li>
-								<li class="o-buttons o-buttons--small" data-str="pct({property},{percentile})">Percentile value</li>
-								<li class="o-buttons o-buttons--small" data-str="select({property})">List all unique values</li>
-							</ul>
-						</div>
-				</div>
-			</div>
 		</div>
 	</div>
 
@@ -133,12 +98,12 @@
 		<p>There are two things to set (Note - the default is to total all data from the last 2 weeks)</p>
 		<h3>The <b>timeframe</b> - when to collect data from and until</h3>
 		<ul class="query-wizard__reference">
-			<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">last 14 days including today</li>
-			<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">last 14 days excluding today</li>
-			<li class="o-buttons o-buttons--small" data-str="relTime(this_10_weeks)">last 10 weeks including this week</li>
-			<li class="o-buttons o-buttons--small" data-str="relTime(this_6_months)">last 6 months including this month</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(this_14_days)">Last 14 days including today</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(previous_14_days)">Last 14 days excluding today</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(this_10_weeks)">Last 10 weeks including this week</li>
+			<li class="o-buttons o-buttons--small" data-str="relTime(this_6_months)">Last 6 months including this month</li>
 			<li class="o-buttons o-buttons--small" data-str="relTime(this_1_days)">Today so far</li>
-			<li class="o-buttons o-buttons--small" data-str="absTime(2016-02-12,2016-02-20)">custom time range</li>
+			<li class="o-buttons o-buttons--small" data-str="absTime(2016-02-12,2016-02-20)">Custom time range</li>
 		</ul>
 		<h3>The <b>interval</b> (optional) - how to split up this time range e.g. daily, hourly</h3>
 		<ul class="query-wizard__reference">
@@ -146,17 +111,11 @@
 			<li class="o-buttons o-buttons--small" data-str="interval(h)">Set the interval to hourly</li>
 			<li class="o-buttons o-buttons--small" data-str="interval(d)">Set the interval to daily</li>
 			<li class="o-buttons o-buttons--small" data-str="interval(w)">Set the interval to weekly</li>
+			<li class="o-buttons o-buttons--small" data-str="interval(month)">Set the interval to monthly</li>
 		</ul>
 	</div>
 	<div id="step4" class="query-wizard__box query-wizard__reference--methods">
 		<h2>Step 4: Choose how to present the data</h2>
-		<p>Note, the default is a line chart</p>
-		<ul class="query-wizard__reference ">
-			<li class="o-buttons o-buttons--small" data-str="print(Table)">Data table</li>
-			<li class="o-buttons o-buttons--small" data-str="print(PieChart)">Pie chart</li>
-			<li class="o-buttons o-buttons--small" data-str="print(TSV)">Tabbed data (to copy to spreadsheet)</li>
-			<li class="o-buttons o-buttons--small" data-str="print(YML)">YAML (to copy to dashboard config)</li>
-		</ul>
 		<table class="o-table o-table--compact">
 			<thead>
 			<tr>
