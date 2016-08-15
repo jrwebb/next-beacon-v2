@@ -11,18 +11,18 @@ charts:
               page:view
               ->count(device.spoorId)
               ->filter(page.location.normalizedPath~/signup)
-              ->filter(page.location.host=next.ft.com)
+              ->filter(page.location.host=www.ft.com)
               ->filter(user.geo.isFinancialTimesOffice=false)
-              ->filter(page.referrer.host=next.ft.com)
+              ->filter(page.referrer.host=www.ft.com)
               ->filter(page.referrer.normalizedPath!~/signup)
               ->interval(d),
 
               page:view
               ->count()
               ->filter(page.location.normalizedPath~/signup)
-              ->filter(page.location.host=next.ft.com)
+              ->filter(page.location.host=www.ft.com)
               ->filter(user.geo.isFinancialTimesOffice=false)
-              ->filter(page.referrer.host=next.ft.com)
+              ->filter(page.referrer.host=www.ft.com)
               ->filter(page.referrer.normalizedPath!~/signup)
               ->interval(d)
             )
@@ -39,9 +39,9 @@ charts:
             page:view
               ->count(device.spoorId)
               ->filter(page.location.normalizedPath~/signup)
-              ->filter(page.location.host=next.ft.com)
+              ->filter(page.location.host=www.ft.com)
               ->filter(user.geo.isFinancialTimesOffice=false)
-              ->filter(page.referrer.host=next.ft.com)
+              ->filter(page.referrer.host=www.ft.com)
               ->filter(page.referrer.normalizedPath!~/signup)
               ->relTime(this_7_days)
           )"
@@ -72,9 +72,9 @@ charts:
     query: cta:click
       ->count(device.spoorId)
       ->filter(page.location.normalizedPath~/signup)
-      ->filter(page.location.host=next.ft.com)
+      ->filter(page.location.host=www.ft.com)
       ->filter(user.geo.isFinancialTimesOffice=false)
-      ->filter(page.referrer.host=next.ft.com)
+      ->filter(page.referrer.host=www.ft.com)
       ->filter(context.domPath~signup-form | submit)
       ->interval(d)
     printer: ColumnChart
@@ -95,9 +95,9 @@ charts:
             ->count()
             ->group(device.browserName)
             ->filter(page.location.normalizedPath~/signup)
-            ->filter(page.location.host=next.ft.com)
+            ->filter(page.location.host=www.ft.com)
             ->filter(user.geo.isFinancialTimesOffice=false)
-            ->filter(page.referrer.host=next.ft.com)
+            ->filter(page.referrer.host=www.ft.com)
             ->filter(page.referrer.normalizedPath!~/signup)
             ->filter(device.browserName)
             ->filter(device.browserName!=false)
@@ -114,7 +114,7 @@ charts:
             ->filter(context.message.isTestEvent=false)
             ->filter(context.message.type=known subscriber login prompt)
             ->filter(page.location.normalizedPath~/signup)
-            ->filter(page.location.host=next.ft.com)
+            ->filter(page.location.host=www.ft.com)
             ->filter(user.geo.isFinancialTimesOffice=false)
             ->interval(d)
     datalabel: exists
