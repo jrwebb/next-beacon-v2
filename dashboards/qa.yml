@@ -74,3 +74,10 @@ charts:
     printer: Table
     timeframe: false
     interval: false
+  -
+    question: What's the count per Opera version?
+    name: opera
+    query: "page:view->count(device.spoorId)->filter(device.browserName=Opera)->group(device.browserVersion.major)"
+    printer: Table
+    timeframe: false
+    interval: false
