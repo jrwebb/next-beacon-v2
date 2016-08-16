@@ -67,7 +67,7 @@ charts:
     printer: Table
     timeframe: false
     interval: false
-    -
+  -
     question: What's the count per Amazon Silk version?
     name: amazon-silk
     query: "page:view->count(device.spoorId)->filter(device.browserName=Amazon Silk)->group(device.browserVersion.major)"
