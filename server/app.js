@@ -43,6 +43,9 @@ app.get('/hashed-assets/:path*', function(req, res) {
 
 app.use(cookieParser());
 
+app.use(bodyParser.json());
+app.post('/api/mouseflow', mouseflow);
+
 app.use(auth);
 app.use(window);
 app.use(aliases.init);
@@ -104,9 +107,6 @@ app.get('/', function (req, res, next) {
   req.params[0] = 'overview';
   next();
 }, require('./controllers/dashboard'));
-
-app.use(bodyParser.json());
-app.post('/api/mouseflow', mouseflow);
 
 aliases.poll()
 app.listen(process.env.PORT);
