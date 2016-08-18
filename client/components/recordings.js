@@ -27,7 +27,7 @@ function boredYet (messagesEl) {
 		const idx = Math.round(Math.random() * (messages.length - 1));
 		const message = messages[idx];
 		messagesEl.innerHTML = message;
-	}, 10000);
+	}, 20000);
 }
 
 function clearMessages (messagesEl) {
@@ -122,15 +122,19 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 
 	return new Promise((resolve, reject) => {
 		try {
+			console.log('run query');
+			console.log(query);
 			boredYet(messagesEl);
 			keen.run(query, function (err, response){
 				clearMessages(messagesEl);
 				if (err) {
+					console.log('error from keen');
 					reject(err);
 				}
 				resolve(response.result)
 			});
 		} catch (error) {
+			console.log('error running query');
 			reject(error);
 			clearMessages(messagesEl);
 		}
@@ -160,6 +164,7 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 				entry = filter.property_value;
 			}
 		}
+		console.log(spoorIds)
 
 		const body = {
 			'spoorIds': spoorIds,
@@ -176,6 +181,9 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 			body.entry = entry;
 		}
 
+		console.log('calling that api!')
+		console.log(body)
+
 		return fetch(`${window.location.protocol}//${window.location.host}/api/mouseflow`, {
 				method: 'POST',
 				headers: {
@@ -184,9 +192,11 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 				body: JSON.stringify(body)
 			})
 			.then((response) => {
+				console.log('got response')
 				return response.text()
 			})
 			.then((tableMarkup) => {
+				console.log('it\'s a table!')
 				doneLoading(el);
 
 				el.innerHTML = tableMarkup;
@@ -197,6 +207,7 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 				return true;
 			})
 			.catch((error) => {
+				console.log('it\'s an error!')
 				doneLoading(el);
 				el.innerHTML = error;
 				return;

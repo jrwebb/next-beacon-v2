@@ -22,7 +22,9 @@
 		<a target="_blank" class="external o-buttons o-buttons--small" href="/presentation/{{name}}">Present chart <i class="o-ft-icons-icon o-ft-icons-icon--sign-out"></i></a>
 		<a class="o-buttons o-buttons--small chart__ui__explorer-link">View in Keen</a>
 		<a class="o-buttons o-buttons--small chart__ui__wizard-link">View in query wizard</a>
+		{{#ifEquals @root.title 'Mouseflow'}}
 		<a class="o-buttons o-buttons--small chart__ui__recordings-link" href="/chart/{{name}}?recordings=true">Recordings</a>
+		{{/ifEquals}}
 	</nav>
 </div>
 
