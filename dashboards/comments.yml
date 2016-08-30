@@ -1,0 +1,93 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: comments
+title: Comments
+isPrimary: true
+charts:
+  -
+    question: What is the success rate for comment loading on mobile
+    name: comments/mobile
+    query: "@pct(
+  @concat(
+    comments:view
+      ->filter(context.context.uiIsDelayed=false),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=100)
+      ->filter(context.context.timeUserWaitedToView>0)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=500)
+      ->filter(context.context.timeUserWaitedToView>100)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=2000)
+      ->filter(context.context.timeUserWaitedToView>500)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView>=2000)
+  ),
+  comments:view
+)
+  ->count()
+  ->filter(device.primaryHardwareType=Mobile Phone)
+  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)"
+    interval: d
+    printer: StackedAreaChart
+  -
+    question: What is the success rate for comment loading on tablet
+    name: comments/tablet
+    query: "@pct(
+  @concat(
+    comments:view
+      ->filter(context.context.uiIsDelayed=false),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=100)
+      ->filter(context.context.timeUserWaitedToView>0)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=500)
+      ->filter(context.context.timeUserWaitedToView>100)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=2000)
+      ->filter(context.context.timeUserWaitedToView>500)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView>=2000)
+  ),
+  comments:view
+)
+  ->count()
+  ->filter(device.primaryHardwareType=Tablet)
+  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)"
+    interval: d
+    printer: StackedAreaChart
+  -
+    question: What is the success rate for comment loading on desktop
+    name: comments/desktop
+    query: "@pct(
+  @concat(
+    comments:view
+      ->filter(context.context.uiIsDelayed=false),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=100)
+      ->filter(context.context.timeUserWaitedToView>0)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=500)
+      ->filter(context.context.timeUserWaitedToView>100)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView<=2000)
+      ->filter(context.context.timeUserWaitedToView>500)
+      ->filter(context.context.userIsViewing),
+    comments:ready
+      ->filter(context.context.timeUserWaitedToView>=2000)
+  ),
+  comments:view
+)
+  ->count()
+  ->filter(device.primaryHardwareType=Desktop)
+  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)"
+    interval: d
+    printer: StackedAreaChart
