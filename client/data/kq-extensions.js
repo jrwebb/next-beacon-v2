@@ -25,3 +25,7 @@ KeenQuery.defineQuery('subs', function () {
 KeenQuery.defineQuery('screenSize', function () {
 	return this.group('device.oGridLayout').reorder('device.oGridLayout', 'default', 'XS', 'S', 'M', 'L', 'XL').setPrinter('ColumnChart');
 });
+
+KeenQuery.defineQuery('byDevice', function () {
+	return this.group('device.primaryHardwareType').filter('device.primaryHardwareType?Desktop,Mobile Phone,Tablet');
+});

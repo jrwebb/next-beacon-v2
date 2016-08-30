@@ -10,6 +10,7 @@
 /public/main.js.map
 /public/main.css.map
 /public/worker.js.map
+/public/__about.json
 *.env*
 .idea
 /old-beacon-dashboard/
