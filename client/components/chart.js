@@ -104,4 +104,3 @@ export function buildAndRenderChart (chartConfig, printerEl) {
 		displayError(printerEl, err, null, chartConfig);
 	}
 }
-

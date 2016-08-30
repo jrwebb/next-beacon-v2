@@ -17,12 +17,12 @@ provision:
 	nht provision ${TEST_HOST}
 	nht configure ft-next-beacon-v2 ${TEST_HOST} --overrides "NODE_ENV=branch"
 	nht deploy-hashed-assets
-	nht deploy ${TEST_HOST} --skip-enable-preboot --skip-logging
+	nht deploy ${TEST_HOST}
 
 deploy:
 	nht configure
 	nht deploy-hashed-assets
-	nht deploy --skip-logging
+	nht deploy
 	nht scale
 
 tidy:

@@ -45,5 +45,3 @@ KeenQuery.definePrinter('YML', function () {
 		el.innerHTML = `<pre>You ask too much! YAML printer will be ready soon :-)</pre>`;
 	}
 });
-
-

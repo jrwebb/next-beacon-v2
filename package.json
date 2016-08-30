@@ -38,6 +38,7 @@
     "bower": "^1.7.9",
     "css-loader": "^0.24.0",
     "eslint": "^3.4.0",
+    "haikro": "^2.3.3",
     "lintspaces-cli": "^0.4.0",
     "node-sass": "^3.8.0",
     "nodemon": "^1.3.7",

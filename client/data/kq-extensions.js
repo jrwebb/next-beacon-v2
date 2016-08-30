@@ -25,4 +25,3 @@ KeenQuery.defineQuery('subs', function () {
 KeenQuery.defineQuery('screenSize', function () {
 	return this.group('device.oGridLayout').reorder('device.oGridLayout', 'default', 'XS', 'S', 'M', 'L', 'XL').setPrinter('ColumnChart');
 });
-
