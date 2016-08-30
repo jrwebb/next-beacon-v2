@@ -5,6 +5,15 @@ title: Comments
 isPrimary: true
 charts:
   -
+    question: What % of users see the comments section
+    name: comments/views
+    query: "@pct(
+    comments:view,
+    page:view->filter(page.location.type=article)->filter(content.features.hasComments=true)
+)
+  ->count()
+  ->byDevice()"
+  -
     question: What is the success rate for comment loading on mobile
     name: comments/mobile
     query: "@pct(
