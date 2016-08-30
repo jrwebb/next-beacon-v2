@@ -119,7 +119,7 @@ module.exports = {
 			const kq = KeenQuery.build(queryConf.q);
 			const copyTextarea = document.createElement('textarea');
 			let yaml =`
-  -
+	-
 	question: Enter a title for the chart in the form of a question
 	name: Enter a name for your chart to be used as its url e.g. "users/daily"
 	query: "${kq.toString()}"`;

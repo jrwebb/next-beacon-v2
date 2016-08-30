@@ -93,4 +93,3 @@ export function init (container) {
 	del.on('click', '.chart__ui__copy-data', copyData);
 	buildAllChartLinks();
 }
-

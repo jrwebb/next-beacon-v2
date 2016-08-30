@@ -36,5 +36,3 @@ if (document.querySelector('.extract__numberOfEvents-range')) {
 google.charts.load('43', { // version 44 is VERY broken
 	packages: ['corechart', 'table']
 });
-
-

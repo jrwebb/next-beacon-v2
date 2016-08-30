@@ -3,42 +3,27 @@ include n.Makefile
 TEST_HOST := "ft-beacon-v2-branch-${CIRCLE_BUILD_NUM}"
 YAML_WARNING= "Note: If the dashboard configuration files fail YAML verification, (a) make sure you have a new line at the end of the file; and (b) use only spaces (not tabs) for indentation."
 
-clean:
-	git clean -fxd
-
-verify:
+test: verify
 	@echo $(YAML_WARNING)
 	@find ./dashboards -path '**/*.yml' -exec cat {} \;| js-yaml -t > /dev/null
-	nbt verify --skip-layout-checks
-
-test: verify
 
 run:
-	nbt run --local
+	nht run --local
 
 run-bot:
-	nbt run --procfile
-
-build:
-	nbt build --dev
-
-build-production:
-	nbt build
-
-watch:
-	nbt build --dev --watch
-
-tidy:
-	nbt destroy ${TEST_HOST}
+	nht run --procfile
 
 provision:
-	nbt provision ${TEST_HOST}
-	nbt configure ft-next-beacon-v2 ${TEST_HOST} --overrides "NODE_ENV=branch"
-	nbt deploy-hashed-assets
-	nbt deploy ${TEST_HOST} --skip-enable-preboot --skip-logging
+	nht provision ${TEST_HOST}
+	nht configure ft-next-beacon-v2 ${TEST_HOST} --overrides "NODE_ENV=branch"
+	nht deploy-hashed-assets
+	nht deploy ${TEST_HOST}
 
 deploy:
-	nbt configure
-	nbt deploy-hashed-assets
-	nbt deploy --skip-logging
-	nbt scale
+	nht configure
+	nht deploy-hashed-assets
+	nht deploy
+	nht scale
+
+tidy:
+	nht destroy ${TEST_HOST}

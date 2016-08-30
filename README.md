@@ -1,2 +1,1 @@
-# Next beacon dashboards 
-
+# Next beacon dashboards

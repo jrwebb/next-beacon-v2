@@ -94,18 +94,18 @@ app.get('/user', require('./controllers/user'));
 app.get(/^\/dashboard\/(.*)/, require('./controllers/dashboard'));
 
 app.get(/^\/chart\/(.*)/, function (req, res, next) {
-  req.view = 'chart';
-  next();
+	req.view = 'chart';
+	next();
 }, require('./controllers/dashboard'));
 
 app.get(/^\/presentation\/(.*)/, function (req, res, next) {
-  req.view = 'presentation';
-  next();
+	req.view = 'presentation';
+	next();
 }, require('./controllers/dashboard'));
 
 app.get('/', function (req, res, next) {
-  req.params[0] = 'overview';
-  next();
+	req.params[0] = 'overview';
+	next();
 }, require('./controllers/dashboard'));
 
 aliases.poll()
