@@ -39,7 +39,7 @@ charts:
 )
   ->count()
   ->filter(device.primaryHardwareType=Mobile Phone)
-  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)"
+  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)->interval(d)"
     printer: StackedAreaChart
   -
     question: What is the success rate for comment loading on tablet
@@ -67,7 +67,7 @@ charts:
 )
   ->count()
   ->filter(device.primaryHardwareType=Tablet)
-  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)"
+  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)->interval(d)"
     printer: StackedAreaChart
   -
     question: What is the success rate for comment loading on desktop
@@ -95,5 +95,13 @@ charts:
 )
   ->count()
   ->filter(device.primaryHardwareType=Desktop)
-  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)"
+  ->relabel(_headings,No delay,less than 100ms,less than 500ms,less than 2s,success)->interval(d)"
     printer: StackedAreaChart
+  -
+    question: What's the median comment load time
+    name: comments/median-load
+    query: comments:ready->median(context.context.timeToLoad)->byDevice()->divide(1000)
+  -
+    question: What's the 95th percentile comment load time
+    name: comments/95th-load
+    query: comments:ready->percentile(context.context.timeToLoad,95)->byDevice()->divide(1000)
