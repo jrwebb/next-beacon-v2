@@ -21,8 +21,7 @@ module.exports = function(req, res) {
 		isUserDashboard: true,
 		uuid: uuid,
 		title: 'User data',
-		charts: yaml.load(`
--
+		charts: yaml.load(`-
 	question: When has this user visited next?
 	name: user/usage
 	query: "page:view->count()->group(page.location.type)->filter(user.uuid=${uuid})"
@@ -54,7 +53,7 @@ module.exports = function(req, res) {
 	query: "page:view->count()->group(device.primaryHardwareType,device.osName)->filter(user.uuid=${uuid})"
 	colspan: 12 L4
 	printer: Table
-`).map(c => {
+`.replace(/^\t/gm, '  ')).map(c => {
 			c.hasConfigurableTimeframe = c.timeframe !== false; //eslint-disable-line
 			c.hasConfigurableInterval = c.interval == null; //eslint-disable-line
 			c.colspan = c.colspan || '12 L6'
