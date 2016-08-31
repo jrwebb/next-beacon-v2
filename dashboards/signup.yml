@@ -71,22 +71,7 @@ charts:
     printer: StackedColumnChart
     colspan: 4
     datalabel: Signup Browsers
-  -
-    question: How many clicks on the Submit button?
-    name: submit
-    interval: false
-    query: cta:click
-      ->count(device.spoorId)
-      ->filter(page.location.normalizedPath~/signup)
-      ->filter(page.location.host~ft.com)
-      ->filter(user.geo.isFinancialTimesOffice=false)
-      ->filter(page.referrer.host~ft.com)
-      ->filter(context.domPath~signup-form | submit)
-      ->interval(d)
-    printer: ColumnChart
-    colspan: 4
-    datalabel: submit clicks
-  -
+   -
     question: How many bounces have we had today?
     name: bounces
     interval: false
