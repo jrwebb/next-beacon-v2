@@ -58,7 +58,7 @@ charts:
           ->filter(context.isTestEvent=false)
           ->filter(user.geo.isFinancialTimesOffice=false)
           ->print(ColumnChart)
-  
+
     printer: ColumnChart
     colspan: 4
     datalabel: spoor
@@ -71,7 +71,7 @@ charts:
     printer: StackedColumnChart
     colspan: 4
     datalabel: Signup Browsers
-   -
+  -
     question: How many bounces have we had today?
     name: bounces
     interval: false
