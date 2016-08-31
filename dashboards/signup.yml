@@ -52,7 +52,13 @@ charts:
     question: How many successful subscriptions have we had?
     name: subscriptions spoor
     interval: false
-    query: signup:subscription-created->count()->interval(d)
+    query: signup:subscription-created
+          ->count()
+          ->relTime(this_6_weeks)
+          ->filter(context.isTestEvent=false)
+          ->filter(user.geo.isFinancialTimesOffice=false)
+          ->print(ColumnChart)
+  
     printer: ColumnChart
     colspan: 4
     datalabel: spoor
