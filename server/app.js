@@ -15,7 +15,7 @@ const bodyParser = require('body-parser');
 const app = module.exports = express({
 	layoutsDir: __dirname + '/../views/layouts',
 	withBackendAuthentication: false,
-	withFlags: false,
+	withFlags: true,
 	withHandlebars: true
 });
 
