@@ -52,7 +52,13 @@ charts:
     question: How many successful subscriptions have we had?
     name: subscriptions spoor
     interval: false
-    query: signup:subscription-created->count()->interval(d)
+    query: signup:subscription-created
+          ->count()
+          ->relTime(this_6_weeks)
+          ->filter(context.isTestEvent=false)
+          ->filter(user.geo.isFinancialTimesOffice=false)
+          ->print(ColumnChart)
+
     printer: ColumnChart
     colspan: 4
     datalabel: spoor
@@ -65,21 +71,6 @@ charts:
     printer: StackedColumnChart
     colspan: 4
     datalabel: Signup Browsers
-  -
-    question: How many clicks on the Submit button?
-    name: submit
-    interval: false
-    query: cta:click
-      ->count(device.spoorId)
-      ->filter(page.location.normalizedPath~/signup)
-      ->filter(page.location.host~ft.com)
-      ->filter(user.geo.isFinancialTimesOffice=false)
-      ->filter(page.referrer.host~ft.com)
-      ->filter(context.domPath~signup-form | submit)
-      ->interval(d)
-    printer: ColumnChart
-    colspan: 4
-    datalabel: submit clicks
   -
     question: How many bounces have we had today?
     name: bounces
