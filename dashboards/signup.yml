@@ -5,7 +5,7 @@ title: Signup
 isPrimary: true
 charts:
   -
-    question: How many visitors do we get every day?
+    question: How many visitors do the form get every day?
     name: compare
     query: "@concat(
               page:view
