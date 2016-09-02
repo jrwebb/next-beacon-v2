@@ -113,7 +113,7 @@ charts:
     printer: StackedAreaChart
   -
     question: Success rate for different types of comment user on mobile
-    name: comments/mobile-engagement
+    name: comments/mobile-engagement-success
     colspan: 12 M4
     query: "@pct(
   @sum(
@@ -129,12 +129,12 @@ charts:
   ->count()
   ->filter(device.primaryHardwareType=Mobile Phone)
   ->group(context.context.userEngagement)
-  ->reorder(context.context.userEngagement,none,passive,active)
+  ->reorder(context.context.userEngagement,none,passive,active,previous)
   ->tidy()"
     printer: AreaChart
   -
     question: Success rate for different types of comment user on tablet
-    name: comments/tablet-engagement
+    name: comments/tablet-engagement-success
     colspan: 12 M4
     query: "@pct(
   @sum(
@@ -150,12 +150,12 @@ charts:
   ->count()
   ->filter(device.primaryHardwareType=Tablet)
   ->group(context.context.userEngagement)
-  ->reorder(context.context.userEngagement,none,passive,active)
+  ->reorder(context.context.userEngagement,none,passive,active,previous)
   ->tidy()"
     printer: AreaChart
   -
     question: Success rate for different types of comment user on desktop
-    name: comments/desktop-engagement
+    name: comments/desktop-engagement-success
     colspan: 12 M4
     query: "@pct(
   @sum(
@@ -171,6 +171,39 @@ charts:
   ->count()
   ->filter(device.primaryHardwareType=Desktop)
   ->group(context.context.userEngagement)
-  ->reorder(context.context.userEngagement,none,passive,active)
+  ->reorder(context.context.userEngagement,none,passive,active,previous)
   ->tidy()"
     printer: AreaChart
+  -
+    question: Proportion of different types of user on mobile
+    name: comments/mobile-engagement
+    colspan: 12 M4
+    query: "comments:view
+  ->count()
+  ->filter(device.primaryHardwareType=Mobile Phone)
+  ->group(context.context.userEngagement)
+  ->reorder(context.context.userEngagement,none,passive,active,previous)
+  ->tidy()"
+    printer: LineChart
+  -
+    question: Proportion of different types of user on tablet
+    name: comments/tablet-engagement
+    colspan: 12 M4
+    query: "comments:view
+  ->count()
+  ->filter(device.primaryHardwareType=Tablet)
+  ->group(context.context.userEngagement)
+  ->reorder(context.context.userEngagement,none,passive,active,previous)
+  ->tidy()"
+    printer: LineChart
+  -
+    question: Proportion of different types of user on desktop
+    name: comments/desktop-engagement
+    colspan: 12 M4
+    query: "comments:view
+  ->count()
+  ->filter(device.primaryHardwareType=Desktop)
+  ->group(context.context.userEngagement)
+  ->reorder(context.context.userEngagement,none,passive,active,previous)
+  ->tidy()"
+    printer: LineChart
