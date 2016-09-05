@@ -80,7 +80,7 @@ export function buildAndRenderChart (chartConfig, printerEl) {
 
 		if (chartConfig.hasConfigurableInterval) {
 			// avoid showing as big number when the default view could easily be converted to a line graph over time
-			if (builtQuery.dimension < 2 && (['AreaChart','LineChart','ColumnChart'].indexOf(chartConfig.printer) > -1 || !chartConfig.printer)) {
+			if (builtQuery.dimension < 2 && (/AreaChart|LineChart|ColumnChart/.test(chartConfig.printer) || !chartConfig.printer)) {
 				builtQuery = builtQuery.interval('d')
 			}
 		}
