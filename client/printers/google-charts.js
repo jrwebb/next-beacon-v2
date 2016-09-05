@@ -43,8 +43,8 @@ export function googleChartPrinterFactory (chartType) {
 			const labelAxis = Object.assign({}, options.hAxis, {
 				title: kqTable.axes[0].property === 'timeframe' ? undefined : kqTable.axes[0].property,
 				format: kqTable.axes[0].property !== 'timeframe' ? undefined :
-					kq.intervalUnit === 'minute' ? 'h:mma' :
-					kq.intervalUnit === 'hour' ? 'd/M ha' : 'd/M'
+					kqTable.interval === 'minute' ? 'h:mma' :
+					kqTable.interval === 'hour' ? 'd/M ha' : 'd/M'
 			});
 
 			const valueAxis = Object.assign({}, options.vAxis, {
