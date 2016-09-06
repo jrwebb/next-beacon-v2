@@ -39,7 +39,7 @@ charts:
   -
     break: true
     colspan: 12 L4
-    question: "BBP: How many <i>my</i>FT users?"
+    question: "BBP: How many myFT users?"
     name: bbp
     query: "@concat(
       page:view->count(device.spoorId),
@@ -51,7 +51,7 @@ charts:
       ->relabel(_headings,BBP all,BBP myFT)"
   -
     colspan: 12 L4
-    question: "Clifford Chance: How many <i>my</i>FT users?"
+    question: "Clifford Chance: How many myFT users?"
     name: cliffordchance
     query: "@concat(
       page:view->count(device.spoorId),
@@ -63,7 +63,7 @@ charts:
       ->relabel(_headings,Clifford Chance all,Clifford Chance myFT)"
   -
     colspan: 12 L4
-    question: "Withers: How many <i>my</i>FT users?"
+    question: "Withers: How many myFT users?"
     name: withers
     query: "@concat(
       page:view->count(device.spoorId),
@@ -85,7 +85,7 @@ charts:
       ->filter(user.subscriptions.isB2B=true)
       ->relabel(_headings,BBP,Clifford Chance,Withers)"
   -
-    question: "What's the pageview rate for B2B *<i>my</i>FT* users?"
+    question: "What's the pageview rate for B2B *myFT* users?"
     name: pageview-myft
     query: "@concat(
       @ratio(page:view->count(),page:view->count(device.spoorId))->filter(user.subscriptions.b2b.activeLicences=51a072a6-e3df-4255-a1ae-04d3a810d610),
