@@ -61,5 +61,4 @@ charts:
     name: auddev-interactions 
     query: cta:click->count(device.spoorId)->filter(!user.uuid)->group(context.domPath)->filter(context.domPath~sample-articles)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(Table)
     datalabel: "Total interactions"
-  -
 
