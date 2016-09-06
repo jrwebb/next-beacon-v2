@@ -157,7 +157,7 @@ charts:
   ->tidy()"
     printer: StackedAreaChart
   -
-    question: Success rate for different types of comment user on mobile
+    question: Loading within 2s for different types of comment user on mobile
     name: comments/mobile-engagement-success
     colspan: 12 M4
     query: "@pct(
@@ -166,6 +166,7 @@ charts:
       ->filter(context.context.uiIsDelayed=false),
     comments:ready
       ->filter(context.context.timeUserWaitedToView>0)
+      ->filter(context.context.timeUserWaitedToView<=2000)
       ->filter(context.context.userIsViewing)
   ),
   comments:view
@@ -178,7 +179,7 @@ charts:
   ->tidy()"
     printer: AreaChart
   -
-    question: Success rate for different types of comment user on tablet
+    question: Loading within 2s for different types of comment user on tablet
     name: comments/tablet-engagement-success
     colspan: 12 M4
     query: "@pct(
@@ -187,6 +188,7 @@ charts:
       ->filter(context.context.uiIsDelayed=false),
     comments:ready
       ->filter(context.context.timeUserWaitedToView>0)
+      ->filter(context.context.timeUserWaitedToView<=2000)
       ->filter(context.context.userIsViewing)
   ),
   comments:view
@@ -199,7 +201,7 @@ charts:
   ->tidy()"
     printer: AreaChart
   -
-    question: Success rate for different types of comment user on desktop
+    question: Loading within 2s for different types of comment user on desktop
     name: comments/desktop-engagement-success
     colspan: 12 M4
     query: "@pct(
@@ -208,6 +210,7 @@ charts:
       ->filter(context.context.uiIsDelayed=false),
     comments:ready
       ->filter(context.context.timeUserWaitedToView>0)
+      ->filter(context.context.timeUserWaitedToView<=2000)
       ->filter(context.context.userIsViewing)
   ),
   comments:view
