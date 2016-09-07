@@ -220,6 +220,27 @@ charts:
     interval: false
     colspan: 12 M6 L3
 
+  -
+    question: What % of logged-in Next users were opted into instant alerts?
+    name: offsite/opted-in-instant-percentage
+    query: "@pct(
+                page:view
+                  ->count(user.uuid)
+                  ->filter(user.myft.optedIntoInstantAlert=true),
+                page:view->count(user.uuid)
+              )
+                ->filter(user.subscriptions.isStaff!=true)"
+    interval: false
+    colspan: 12 M6 L3
+  -
+    question: How many of logged-in Next users were opted into instant alerts?
+    name: offsite/opted-in-instant-number
+    query: "page:view
+              ->count(user.uuid)
+              ->filter(user.myft.optedIntoInstantAlert=true)
+              ->filter(user.subscriptions.isStaff!=true)"
+    interval: false
+    colspan: 12 M6 L3
 
 
   -
@@ -338,6 +359,85 @@ charts:
       interval: false
       colspan: 12 M3
 
+  -
+    question: How many instant alerts were delivered?
+    name: offsite/instant-alerts-delivered
+    query: "email:delivery
+              ->count()
+              ->filter(campaign.myft.emailType=instant)
+              ->filter(user.subscriptions.isStaff!=true)
+              "
+    colspan: 12 M6
+  -
+    question: What was the instant alerts open rate (%)
+    name: offsite/instant-alerts-open-rate
+    query: "@pct(
+              email:open->count(),
+              email:delivery->count()
+            )
+              ->filter(campaign.myft.emailType=instant)
+              ->filter(user.subscriptions.isStaff!=true)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the instant alerts open rate by day (%)
+    name: offsite/instant-alerts-open-rate-by-day
+    query: "@pct(
+              email:open->count(),
+              email:delivery->count()
+            )
+            ->filter(campaign.myft.emailType=instant)
+            ->filter(user.subscriptions.isStaff!=true)
+            ->interval(d)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the instant alerts open rate by week (%)
+    name: offsite/instant-alerts-open-rate-by-week
+    query: "@pct(
+            email:open->count(),
+            email:delivery->count()
+          )
+          ->filter(campaign.myft.emailType=instant)
+          ->filter(user.subscriptions.isStaff!=true)
+          ->interval(w)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the instant alerts clickthrough rate by day (%)
+    name: offsite/instant-alerts-clickthrough-rate-by-day
+    query: "@pct(
+              email:click->count(),
+              email:delivery->count()
+            )
+              ->filter(campaign.myft.emailType=instant)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->interval(d)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the instant alerts clickthrough rate by week (%)
+    name: offsite/instant-alerts-clickthrough-rate-by-week
+    query: "@pct(
+              email:click->count(),
+              email:delivery->count()
+            )
+              ->filter(campaign.myft.emailType=instant)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->interval(w)"
+    interval: false
+    colspan: 12 M3
+  -
+    question: What was the instant alerts clickthrough rate (%)
+    name: offsite/instant-alerts-clickthrough-rate
+    query: "@pct(
+              email:click->count(),
+              email:delivery->count()
+            )
+              ->filter(campaign.myft.emailType=instant)
+              ->filter(user.subscriptions.isStaff!=true)"
+    interval: false
+    colspan: 12 M3
 
 
 
