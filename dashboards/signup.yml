@@ -49,19 +49,19 @@ charts:
     colspan: 4
     datalabel: weekly conversion rate
   -
- 	question: What's our weekly conversion rate trend?  
-	name: weekly conversion rate
-	query: "@pct(
-		signup:subscription-created->count()->relTime(this_6_weeks),
-		page:view->count(device.spoorId)
-		->filter(page.location.normalizedPath~/signup)
-		->filter(page.location.host~ft.com)
-		->filter(user.geo.isFinancialTimesOffice=false)
-		->filter(page.referrer.host~ft.com)
-		->filter(page.referrer.normalizedPath!~/signup)
-		->relTime(this_6_weeks))"
-		->tidy()->interval(w)
-	printer: LineChart
+    question: What's our weekly conversion rate trend?
+    name: weekly conversion rate
+    query: "@pct(
+        signup:subscription-created->count()->relTime(this_6_weeks),
+        page:view->count(device.spoorId)
+        ->filter(page.location.normalizedPath~/signup)
+        ->filter(page.location.host~ft.com)
+        ->filter(user.geo.isFinancialTimesOffice=false)
+        ->filter(page.referrer.host~ft.com)
+        ->filter(page.referrer.normalizedPath!~/signup)
+        ->relTime(this_6_weeks))
+        ->tidy()->interval(w)"
+    printer: LineChart
   -
     question: How many successful subscriptions have we had?
     name: subscriptions spoor
