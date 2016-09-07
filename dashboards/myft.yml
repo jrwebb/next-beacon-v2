@@ -361,7 +361,7 @@ charts:
 
   -
     question: How many instant alerts were delivered?
-	name: offsite/instant-alerts-delivered
+    name: offsite/instant-alerts-delivered
     query: "email:delivery
               ->count()
               ->filter(campaign.myft.emailType=instant)
@@ -370,7 +370,7 @@ charts:
     colspan: 12 M6
   -
     question: What was the instant alerts open rate (%)
-	name: offsite/instant-alerts-open-rate
+    name: offsite/instant-alerts-open-rate
     query: "@pct(
               email:open->count(),
               email:delivery->count()
@@ -381,7 +381,7 @@ charts:
     colspan: 12 M3
   -
     question: What was the instant alerts open rate by day (%)
-	name: offsite/instant-alerts-open-rate-by-day
+    name: offsite/instant-alerts-open-rate-by-day
     query: "@pct(
               email:open->count(),
               email:delivery->count()
@@ -393,7 +393,7 @@ charts:
     colspan: 12 M3
   -
     question: What was the instant alerts open rate by week (%)
-	name: offsite/instant-alerts-open-rate-by-week
+    name: offsite/instant-alerts-open-rate-by-week
     query: "@pct(
             email:open->count(),
             email:delivery->count()
@@ -405,7 +405,7 @@ charts:
     colspan: 12 M3
   -
     question: What was the instant alerts clickthrough rate by day (%)
-	name: offsite/instant-alerts-clickthrough-rate-by-day
+    name: offsite/instant-alerts-clickthrough-rate-by-day
     query: "@pct(
               email:click->count(),
               email:delivery->count()
@@ -417,7 +417,7 @@ charts:
     colspan: 12 M3
   -
     question: What was the instant alerts clickthrough rate by week (%)
-	name: offsite/instant-alerts-clickthrough-rate-by-week
+    name: offsite/instant-alerts-clickthrough-rate-by-week
     query: "@pct(
               email:click->count(),
               email:delivery->count()
@@ -429,7 +429,7 @@ charts:
     colspan: 12 M3
   -
     question: What was the instant alerts clickthrough rate (%)
-	name: offsite/instant-alerts-clickthrough-rate
+    name: offsite/instant-alerts-clickthrough-rate
     query: "@pct(
               email:click->count(),
               email:delivery->count()
