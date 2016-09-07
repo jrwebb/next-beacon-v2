@@ -69,3 +69,8 @@ charts:
     query: page:view->count(device.spoorId)->filter(!user.uuid)->group(user.propensity.any.cohort)
     printer: PieChart
     interval: false
+-
+    question: Interactions on LSU firstFT (live 3rd Sep) 
+    name: LSU-firstFT
+    query: cta:click->count(device.spoorId)->group(context.domPath)->filter(context.domPath~light-signup | firstft)->filter(user.geo.isFinancialTimesOffice=false)->print(Table)
+    
