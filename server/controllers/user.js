@@ -62,11 +62,12 @@ module.exports = function(req, res) {
 		timeframe: req.query.timeframe || 'this_14_days',
 		interval: req.query.interval,
 		printer: req.query.printer === 'Table' ? 'Table' : undefined
-	});
+	}
 -
 	question: Which barriers have the user seen?
 	name: user/barriers-viewed
 	query: "barrier:view->count()->group(context.type)->filter(context.type)->filter(user.uuid=${uuid})"
 	colspan: 12 L4
 	printer: Table
+	);
 }
