@@ -42,13 +42,19 @@ module.exports = function(req, res) {
 	colspan: 12 L4
 	printer: Table
 -
-	question: Which browsers does this user use
+	question: Which barriers have the user seen?
+	name: user/barriers-viewed
+	query: "barrier:view->count()->group(context.type)->filter(context.type)->filter(user.uuid=${uuid})"
+	colspan: 12 L4
+	printer: Table
+-
+	question: Which browsers does this user use?
 	name: user/browsers
 	query: "page:view->count()->group(device.browserName,device.browserVersion.major)->filter(user.uuid=${uuid})"
 	colspan: 12 L4
 	printer: Table
 -
-	question: Which devices does this user use
+	question: Which devices does this user use?
 	name: user/devices
 	query: "page:view->count()->group(device.primaryHardwareType,device.osName)->filter(user.uuid=${uuid})"
 	colspan: 12 L4
