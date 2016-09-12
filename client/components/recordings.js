@@ -6,32 +6,23 @@ function formatDate (timestamp) {
 	return timestamp.getUTCFullYear() +'-'+ (timestamp.getUTCMonth() + 1) +'-'+ timestamp.getUTCDate();
 }
 
-let randomMessageGenerator;
+let progressGenerator;
 
-function boredYet (messagesEl) {
-
+function updateMessages (messagesEl, source) {
 	if (!messagesEl) {
 		return;
 	}
 
 	messagesEl.classList.remove('hidden');
+	messagesEl.innerHTML = `Fetching <b>3 days</b> of data from ${source}...`;
 
-	const messages = [
-		'We are processing loads of events to match your query 🐝',
-		'Crunching data...',
-		'KeenIO is working on your query 🐌...',
-		'Working on it...',
-		'That is one complex query! Almost there...'
-	]
-	randomMessageGenerator = setInterval(function () {
-		const idx = Math.round(Math.random() * (messages.length - 1));
-		const message = messages[idx];
-		messagesEl.innerHTML = message;
-	}, 20000);
+	progressGenerator = setInterval(function () {
+		messagesEl.innerHTML += '.';
+	}, 5000);
 }
 
 function clearMessages (messagesEl) {
-	clearInterval(randomMessageGenerator);
+	clearInterval(progressGenerator);
 	if (!messagesEl) {
 		return;
 	}
@@ -47,35 +38,12 @@ function doneLoading (el) {
 	el.classList.remove('chart--loading');
 }
 
-function predictSluggishness (period, latest, messagesEl) {
-
-	if (!messagesEl) {
-		return;
-	}
-
-	let message;
-
-	if (latest <= 200 || period <= 2) {
-		message = 'This query will take a few seconds to complete ⏱';
-	}
-	else if (period > 14 || latest > 1000) {
-		message = 'This query will be very slow 🐌 Please consider adjusting your timeframe and range';
-	}
-	else if (period <= 14 & latest <= 1000) {
-		message = 'This query will take a few minutes to complete ⌛ (Try a smaller timeframe for faster results)';
-	}
-
-	messagesEl.innerHTML = message;
-}
-
-export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimeframe, configuration, chartName}={}) {
+export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configuration, chartName}={}) {
 
 	const start = (new Date()).getTime();
 
 	el.innerHtml = '';
 	startLoading(el);
-
-	const latest = eventLimit || 1;
 
 	let kq;
 
@@ -94,11 +62,10 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 	}
 
 	const query = new keenIO.Query('extraction', {
-		timeframe: kq.timeframe,
+		timeframe: 'this_3_days',
 		event_collection: kq.query.event_collection,
 		target_property: kq.query.target_property,
 		filters: kq.filters,
-		latest: latest,
 		property_names: ['device.spoorId']
 	});
 
@@ -113,8 +80,6 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 		throw e;
 	}
 
-	predictSluggishness(period, latest, messagesEl);
-
 	const keen = keenIO.configure({
 		projectId: window.KEEN_PROJECT_ID,
 		readKey: window.KEEN_READ_KEY
@@ -124,19 +89,17 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 		try {
 			console.log('run query');
 			console.log(query);
-			boredYet(messagesEl);
+			updateMessages(messagesEl, 'Keen IO');
 			keen.run(query, function (err, response){
-				clearMessages(messagesEl);
 				if (err) {
 					console.log('error from keen');
-					reject(err);
+					throw err;
 				}
 				resolve(response.result)
 			});
 		} catch (error) {
 			console.log('error running query');
 			reject(error);
-			clearMessages(messagesEl);
 		}
 	})
 	.then((result) => {
@@ -164,7 +127,7 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 				entry = filter.property_value;
 			}
 		}
-		console.log(spoorIds)
+		console.log(spoorIds);
 
 		const body = {
 			'spoorIds': spoorIds,
@@ -184,6 +147,8 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 		console.log('calling that api!')
 		console.log(body)
 
+		clearMessages(messagesEl);
+		updateMessages(messagesEl, 'Mouseflow');
 		return fetch(`${window.location.protocol}//${window.location.host}/api/mouseflow`, {
 				method: 'POST',
 				headers: {
@@ -192,10 +157,12 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 				body: JSON.stringify(body)
 			})
 			.then((response) => {
+				clearMessages(messagesEl);
 				console.log('got response')
 				return response.text()
 			})
 			.then((tableMarkup) => {
+				clearMessages(messagesEl);
 				console.log('it\'s a table!')
 				doneLoading(el);
 
@@ -207,6 +174,7 @@ export function getRecordings ({el, queryStr, eventLimit, messagesEl, userTimefr
 				return true;
 			})
 			.catch((error) => {
+				clearMessages(messagesEl);
 				console.log('it\'s an error!')
 				doneLoading(el);
 				el.innerHTML = error;

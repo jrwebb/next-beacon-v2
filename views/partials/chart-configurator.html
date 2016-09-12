@@ -131,9 +131,5 @@
 			<input class="o-forms-radio o-forms-radio--small" id="printer_default_{{index}}" type="radio" name="printer" value="" {{#unless @root.printer}}checked{{/unless}}><label for="printer_default_{{index}}" class="o-forms-label">Graph</label>
 			<input class="o-forms-radio o-forms-radio--small" id="printer_table_{{index}}" type="radio" name="printer" value="Table" {{#ifEquals @root.printer 'Table'}}checked{{/ifEquals}}><label for="printer_table_{{index}}" class="o-forms-label">Data table</label>
 		</fieldset>
-		<fieldset id="chart__configurator__range" class="hidden">
-			<label class="o-forms-label">Limit: </label>
-			{{>range}}
-		</fieldset>
 	</form>
 </nav>

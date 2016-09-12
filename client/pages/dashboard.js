@@ -27,15 +27,10 @@ export function renderRecordings (configuration) {
 
 	const recordingsEl = document.querySelector('.chart__ui__recordings');
 	const messagesEl = document.querySelector('.chart__ui__messages');
-	const rangeEl = document.querySelector('#chart__configurator__range');
-	const limit = rangeEl.querySelector('input').value;
-
-	rangeEl.classList.remove('hidden');
 
 	getRecordings({
 		el: recordingsEl,
 		queryStr: window.charts[0].query,
-		eventLimit: parseInt(limit),
 		messagesEl: messagesEl,
 		configuration: configuration,
 		chartName: window.charts[0].name

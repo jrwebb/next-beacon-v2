@@ -10,9 +10,9 @@ charts:
     query: page:view
             ->count(device.spoorId)
             ->filter(page.location.normalizedPath~/signup)
-            ->filter(page.location.host=next.ft.com)
+            ->filter(page.location.host=www.ft.com)
             ->filter(user.geo.isFinancialTimesOffice=false)
-            ->filter(page.referrer.host=next.ft.com)
+            ->filter(page.referrer.host=www.ft.com)
             ->filter(page.referrer.normalizedPath!~/signup)
   -
     question: Visitors clicking on 'Buy' button
@@ -20,9 +20,9 @@ charts:
     query: cta:click
       ->count(device.spoorId)
       ->filter(page.location.normalizedPath~/signup)
-      ->filter(page.location.host=next.ft.com)
+      ->filter(page.location.host=www.ft.com)
       ->filter(user.geo.isFinancialTimesOffice=false)
-      ->filter(page.referrer.host=next.ft.com)
+      ->filter(page.referrer.host=www.ft.com)
       ->filter(context.domPath~signup-form | submit)
   -
     question: Barrier visitors
