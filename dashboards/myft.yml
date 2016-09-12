@@ -19,7 +19,7 @@ charts:
     interval: false
     colspan: 12 M4 L2
   -
-    question: What was the average number of days visited for a myFT user? (WARNING: When run on a period of more than one week, gives the average days visted within that period, NOT the average visits per week over time)
+    question: What was the average number of days visited for a myFT user (WARNING When run on a period of more than one week, gives the average days visted within that period, NOT the average visits per week over time)
     name: onsite/myftfrequency
     query: page:view->count(time.day)->group(user.uuid)->tidy()->filter(user.myft.isMyFtUser=true)->reduce(user.uuid,avg)->filter(user.subscriptions.isStaff!=true)
     interval: false
