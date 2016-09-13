@@ -14,20 +14,26 @@ function updateMessages (messagesEl, source) {
 	}
 
 	messagesEl.classList.remove('hidden');
-	messagesEl.innerHTML = `Fetching <b>3 days</b> of data from ${source}...`;
+
+	const target = source === 'mouseflow' ? '<b>5,000 recordings</b>' : '<b>50,000 events</b>'
+
+	messagesEl.innerHTML = `Fetching the latest ${target} over the past <b>3 days</b> from <b>${source}</b>...`;
 
 	progressGenerator = setInterval(function () {
 		messagesEl.innerHTML += '.';
 	}, 5000);
 }
 
-function clearMessages (messagesEl) {
+function clearMessages (messagesEl, errorMsg) {
 	clearInterval(progressGenerator);
 	if (!messagesEl) {
 		return;
 	}
-	messagesEl.innerHTML = '';
-	messagesEl.classList.add('hidden');
+	messagesEl.innerHTML = errorMsg ? errorMsg : '';
+
+	if (!errorMsg) {
+		messagesEl.classList.add('hidden');
+	}
 }
 
 function startLoading (el) {
@@ -66,6 +72,7 @@ export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configu
 		event_collection: kq.query.event_collection,
 		target_property: kq.query.target_property,
 		filters: kq.filters,
+		limit: 50000,
 		property_names: ['device.spoorId']
 	});
 
@@ -87,18 +94,19 @@ export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configu
 
 	return new Promise((resolve, reject) => {
 		try {
-			console.log('run query');
+			console.log('running query:');
+
 			console.log(query);
 			updateMessages(messagesEl, 'Keen IO');
 			keen.run(query, function (err, response){
 				if (err) {
-					console.log('error from keen');
-					throw err;
+					reject(`keen error: ${err}`);
 				}
-				resolve(response.result)
+				else {
+					resolve(response.result)
+				}
 			});
 		} catch (error) {
-			console.log('error running query');
 			reject(error);
 		}
 	})
@@ -127,7 +135,6 @@ export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configu
 				entry = filter.property_value;
 			}
 		}
-		console.log(spoorIds);
 
 		const body = {
 			'spoorIds': spoorIds,
@@ -144,7 +151,7 @@ export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configu
 			body.entry = entry;
 		}
 
-		console.log('calling that api!')
+		console.log('calling mouseflow api with:')
 		console.log(body)
 
 		clearMessages(messagesEl);
@@ -158,12 +165,10 @@ export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configu
 			})
 			.then((response) => {
 				clearMessages(messagesEl);
-				console.log('got response')
 				return response.text()
 			})
 			.then((tableMarkup) => {
 				clearMessages(messagesEl);
-				console.log('it\'s a table!')
 				doneLoading(el);
 
 				el.innerHTML = tableMarkup;
@@ -173,12 +178,10 @@ export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configu
 
 				return true;
 			})
-			.catch((error) => {
-				clearMessages(messagesEl);
-				console.log('it\'s an error!')
-				doneLoading(el);
-				el.innerHTML = error;
-				return;
-			});
+	})
+	.catch(error => {
+		clearMessages(messagesEl, error);
+		doneLoading(el);
+		return;
 	});
 }
