@@ -1,0 +1,43 @@
+# Note: Any strings begining with @ or % must be wrapped in quote marks
+---
+id: video
+title: Video
+isPrimary: false
+charts:
+  -
+    question: How many videos are started
+    name: start
+    query: video:playing->count()->filter(video.start)
+    interval: d
+    datalabel: Videos started per day
+  -
+    question: How many videos are watched in full
+    name: full
+    query: video:ended->count()
+    interval: d
+    datalabel: Videos in full per day
+  -
+    question: How many people views are through to the end (3d)
+    name: new
+    query: "@concat(
+              video:playing->count()->filter(video.start),
+              video:ended->count()
+              )->relabel(_headings, Video Started, Video Ended)"
+    datalabel: new
+    timeframe: this_3_days
+    printer: BarChart
+    interval: false
+  -
+    question: Where are we losing people (3d)
+    name: drop
+    query: video:progress->count()->group(context.progress)
+    interval: false
+    datalabel: Drops
+    timeframe: this_3_days
+    printer: BarChart
+  -
+    question: How many videos are watched beyond 25% (trueview)
+    name: trueview
+    query: video:progress->count()->filter(context.progress=25)
+    interval: d
+    datalabel: Trueview per day
