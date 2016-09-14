@@ -45,6 +45,7 @@ charts:
               ->filter(page.referrer.normalizedPath!~/signup)
               ->filter(!user.uuid)
               ->relTime(this_7_days)
+              ->filter(!user.uuid)
           )"
     interval: false
     colspan: 4
