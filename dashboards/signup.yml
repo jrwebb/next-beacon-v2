@@ -37,13 +37,14 @@ charts:
               ->count()
               ->relTime(this_7_days),
             page:view
-              ->count(device.spoorId)->filter(!user.uuid)
+              ->count(device.spoorId)
               ->filter(page.location.normalizedPath~/signup)
               ->filter(page.location.host~ft.com)
               ->filter(user.geo.isFinancialTimesOffice=false)
               ->filter(page.referrer.host~ft.com)
               ->filter(page.referrer.normalizedPath!~/signup)
               ->relTime(this_7_days)
+              ->filter(!user.uuid)
           )"
     interval: false
     colspan: 4
