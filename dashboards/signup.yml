@@ -43,6 +43,7 @@ charts:
               ->filter(user.geo.isFinancialTimesOffice=false)
               ->filter(page.referrer.host~ft.com)
               ->filter(page.referrer.normalizedPath!~/signup)
+              ->filter(!user.uuid)
               ->relTime(this_7_days)
               ->filter(!user.uuid)
           )"
