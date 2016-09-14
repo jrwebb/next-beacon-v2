@@ -37,7 +37,8 @@ charts:
               ->count()
               ->relTime(this_7_days),
             page:view
-              ->count(device.spoorId)->filter(!user.uuid)
+              ->count(device.spoorId)
+              ->filter(!user.uuid)
               ->filter(page.location.normalizedPath~/signup)
               ->filter(page.location.host~ft.com)
               ->filter(user.geo.isFinancialTimesOffice=false)
@@ -52,7 +53,8 @@ charts:
     question: What's our weekly conversion rate trend?
     name: weekly conversion rate
     query: "@pct(
-        signup:subscription-created->count()->relTime(this_6_weeks),
+        signup:subscription-created->count()
+        ->relTime(this_6_weeks),
         page:view->count(device.spoorId)
         ->filter(page.location.normalizedPath~/signup)
         ->filter(page.location.host~ft.com)
@@ -113,15 +115,7 @@ charts:
   -
     question: Existing users trying to subscribe?
     name: exists
-    query: signup:notification
-            ->count(device.spoorId)
-            ->filter(context.message.state=displayed)
-            ->filter(context.message.isTestEvent=false)
-            ->filter(context.message.type=known subscriber login prompt)
-            ->filter(page.location.normalizedPath~/signup)
-            ->filter(page.location.host~ft.com)
-            ->filter(user.geo.isFinancialTimesOffice=false)
-            ->interval(d)
+    query: signup:notification->count(device.spoorId)->filter(context.message.state=displayed)->filter(context.message.isTestEvent=false)->filter(context.message.type=known subscriber login prompt)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->interval(d)
     datalabel: exists
     printer: ColumnChart
     colspan: 4
