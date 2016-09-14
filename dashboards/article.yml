@@ -9,13 +9,7 @@ charts:
     name: article-views/total
     query: "page:view->count()->filter(page.location.type=article)"
     datalabel: Article views
-    colspan: 6
-  -
-    question: What type of articles are user types reading?
-    name: article-views/type
-    query: "page:view->count()->filter(context.app=article)->filter(user.uuid)->group(user.cohort.productNames)->tidy()->group(content.classification)->relabel(content.classification,Free,Other,Subscriber,Premium,Blogs)->relabel(user.cohort.productNames,RegisteredUser,PremiumUser,StandardUser)->print(Table)"
-    datalabel: Article view by type
-    colspan: 6
+    colspan: 12
   -
     question: Where are article readers coming from outside Next?
     name: article-views/allreferrals
