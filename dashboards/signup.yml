@@ -37,7 +37,7 @@ charts:
               ->count()
               ->relTime(this_7_days),
             page:view
-              ->count(device.spoorId)
+              ->count(device.spoorId)->filter(!user.uuid)
               ->filter(page.location.normalizedPath~/signup)
               ->filter(page.location.host~ft.com)
               ->filter(user.geo.isFinancialTimesOffice=false)
