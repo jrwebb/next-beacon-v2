@@ -53,7 +53,7 @@ charts:
     name: weekly conversion rate
     query: "@pct(
         signup:subscription-created->count()->relTime(this_6_weeks),
-        page:view->count(device.spoorId)
+        page:view->count(device.spoorId)->filter(!user.uuid)
         ->filter(page.location.normalizedPath~/signup)
         ->filter(page.location.host~ft.com)
         ->filter(user.geo.isFinancialTimesOffice=false)
@@ -81,7 +81,9 @@ charts:
     name: failed
     query: signup:subscription-creation-failed
               ->count()
-              ->interval(d)
+          ->relTime(this_6_weeks)
+          ->filter(context.isTestEvent=false)
+          ->filter(user.geo.isFinancialTimesOffice=false)
     printer: StackedColumnChart
     colspan: 4
     datalabel: Signup Browsers
@@ -90,26 +92,9 @@ charts:
     name: bounces
     interval: false
     timeframe: this_1_days
-    query: "signup:bounce->count()->filter(context.message.isTestEvent=false)"
+    query: "signup:bounce->count()->filter(!user.uuid)->filter(context.message.isTestEvent=false)"
     datalabel: Bounces today
     colspan: 3
-  -
-    question: What are our top browsers?
-    name: browsers
-    query: page:view
-            ->count()
-            ->group(device.browserName)
-            ->filter(page.location.normalizedPath~/signup)
-            ->filter(page.location.host~ft.com)
-            ->filter(user.geo.isFinancialTimesOffice=false)
-            ->filter(page.referrer.host~ft.com)
-            ->filter(page.referrer.normalizedPath!~/signup)
-            ->filter(device.browserName)
-            ->filter(device.browserName!=false)
-            ->sortDesc()
-    printer: PieChart
-    datalabel: Signup Browsers
-    colspan: 5
   -
     question: Existing users trying to subscribe?
     name: exists
@@ -125,3 +110,13 @@ charts:
     datalabel: exists
     printer: ColumnChart
     colspan: 4
+  -
+    question: Which payment methods are being used to purchase subs?
+    name: weekly conversion rate
+    query: signup:subscription-created
+  ->count()
+  ->group(context.paymentMethod)
+  ->filter(context.isTestEvent=false)
+  ->filter(user.geo.isFinancialTimesOffice=false)
+  ->relTime(this_6_weeks)
+  ->print(ColumnChart)
