@@ -7,6 +7,6 @@ charts:
   -
     question: What sort of articles are different subscribers reading?
     name: articles/bysub
-    query: "@pct(page:view->group(user.cohort.productNames)->group(content.classification),page:view->group(user.cohort.productNames))->filter(user.uuid)->count()->filter(context.app=article)->tidy()->relabel(content.classification,Free,Other,Subscriber,Premium,Blogs)->relabel(user.cohort.productNames,RegisteredUser,PremiumUser,StandardUser,,,,)->print(Table)"
+    query: "@pct(page:view->group(user.cohort.productNames)->group(content.classification),page:view->group(user.cohort.productNames))->filter(user.uuid)->count()->filter(context.app=article)->tidy()->relabel(content.classification,Subscriber,Other,Free,Premium,Blogs)->relabel(user.cohort.productNames,Registered User,Premium User,Standard User,,,,)->print(Table)"
     datalabel: Article views by subscriber
     colspan: 12
