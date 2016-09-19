@@ -52,17 +52,16 @@ charts:
   -
     question: How many Failed subscription events?
     name: failed
-    query: "signup:subscription-creation-failed->count()->filter(!user.uuid)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)->print(StackedColumnChart)"
-    printer: StackedColumnChart
+    query: "signup:subscription-creation-failed->count()->filter(!user.uuid)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)"
+    printer: ColumnChart
     colspan: 4
     datalabel: Failed
   -
     question: What's our weekly bounce rate trend?
-    name: bounces
-    interval: false
+    name: bounces trend
     timeframe: this_6_weeks
-    query: "signup:bounce->count()->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)"
-    datalabel: Bounces today
+    query: "@pct(signup:bounce->count()->filter(!user.uuid)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup))->interval(w)"
+    datalabel: Bounces trend
     colspan: 3
     printer: LineChart
   -
