@@ -60,7 +60,7 @@ charts:
     question: What's our weekly bounce rate trend?
     name: bounces trend
     timeframe: this_6_weeks
-    query: "@pct(signup:bounce->count()->filter(!user.uuid)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup))->interval(w)"
+    query: "@pct(signup:bounce->count(),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.referrer.normalizedPath!~/signup)->filter(page.location.host~ft.com)->filter(page.referrer.host~ft.com))->filter(user.geo.isFinancialTimesOffice=false)->filter(!user.uuid)->relTime(this_6_weeks)->interval(w)"
     datalabel: Bounces trend
     colspan: 3
     printer: LineChart
