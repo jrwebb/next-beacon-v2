@@ -39,7 +39,7 @@ charts:
   -
     question: What's our weekly conversion rate trend?
     name: weekly conversion rate
-    query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_7_days),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup)->filter(!user.uuid)->relTime(this_7_days))->tidy()"
+    query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup)->relTime(this_6_weeks))->tidy()->interval(w)"
     printer: LineChart
   -
     question: How many successful subscriptions have we had?
