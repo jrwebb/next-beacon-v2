@@ -42,10 +42,10 @@ charts:
     query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup)->relTime(this_6_weeks))->interval(w)"
     printer: LineChart
   -
-    question: How many successful subscriptions have we had?
+    question: How many successful subscriptions have we had (this 4 weeks)?
     name: subscriptions spoor
     interval: false
-    query: "signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(ColumnChart)"
+    query: "signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_4_weeks)->print(ColumnChart)"
     printer: ColumnChart
     colspan: 4
     datalabel: spoor
@@ -60,7 +60,7 @@ charts:
     question: What's our weekly bounce rate trend?
     name: bounces
     interval: false
-    timeframe: this_1_days
+    timeframe: this_6_weeks
     query: "signup:bounce->count()->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)"
     datalabel: Bounces today
     colspan: 3
