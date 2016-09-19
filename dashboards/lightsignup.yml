@@ -7,13 +7,7 @@ charts:
   -
     question: How many subscribers does light signup get every day?
     name: lightsignup
-    query: light-signup:subscribed
-  ->count()
-  ->filter(context.isTestEvent=false)
-  ->filter(user.geo.isFinancialTimesOffice=false)
-  ->interval(d)
-  ->relTime(this_6_weeks)
-  ->print(LineChart)
+    query: light-signup:subscribed->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->interval(d)->relTime(this_6_weeks)->print(LineChart)
     datalabel: "Subscribers p/day"
   -
     question: Subscriber rate compared to anonymous article traffic served the LSU form?
