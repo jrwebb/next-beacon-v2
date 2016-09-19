@@ -65,23 +65,6 @@ charts:
     datalabel: Bounces today
     colspan: 3
   -
-    question: What are our top browsers?
-    name: browsers
-    query: page:view
-            ->count()
-            ->group(device.browserName)
-            ->filter(page.location.normalizedPath~/signup)
-            ->filter(page.location.host~ft.com)
-            ->filter(user.geo.isFinancialTimesOffice=false)
-            ->filter(page.referrer.host~ft.com)
-            ->filter(page.referrer.normalizedPath!~/signup)
-            ->filter(device.browserName)
-            ->filter(device.browserName!=false)
-            ->sortDesc()
-    printer: PieChart
-    datalabel: Signup Browsers
-    colspan: 5
-  -
     question: Existing users trying to subscribe?
     name: exists
     query: signup:notification
@@ -96,3 +79,8 @@ charts:
     datalabel: exists
     printer: ColumnChart
     colspan: 4
+  -
+    question: Which payment methods are being used to purchse subscriptions?
+    name: Payment Method
+    query: "signup:subscription-created->count()->group(context.paymentMethod)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(ColumnChart)"
+    
