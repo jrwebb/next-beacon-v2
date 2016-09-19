@@ -55,7 +55,7 @@ charts:
     query: "signup:subscription-creation-failed->count()->filter(!user.uuid)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)->print(StackedColumnChart)"
     printer: StackedColumnChart
     colspan: 4
-    datalabel: Signup Browsers
+    datalabel: Failed
   -
     question: What's our weekly bounce rate trend?
     name: bounces
@@ -83,10 +83,10 @@ charts:
   -
     question: Which payment methods are being used to purchse subscriptions?
     name: Payment Method
-    query: "signup:subscription-created->count()->group(context.paymentMethod)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)"
-    printer: ColumnChart
+    query: "signup:subscription-created->count()->group(context.paymentMethod)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_4_weeks)"
+    printer: PieChart
   -
     question: What is the split of subscriptions per product type?
-    name: Payment Method
-    query: "signup:subscription-created->count()->group(context.offer.name)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)"
-    printer: ColumnChart
+    name: Product Type
+    query: "signup:subscription-created->count()->group(context.offer.name)->filter(context.offer.name)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_4_weeks)"
+    printer: PieChart
