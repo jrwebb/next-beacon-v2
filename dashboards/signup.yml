@@ -64,6 +64,7 @@ charts:
     query: "signup:bounce->count()->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)"
     datalabel: Bounces today
     colspan: 3
+    printer: LineChart
   -
     question: Existing users trying to subscribe?
     name: exists
@@ -83,4 +84,8 @@ charts:
     question: Which payment methods are being used to purchse subscriptions?
     name: Payment Method
     query: "signup:subscription-created->count()->group(context.paymentMethod)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(ColumnChart)"
+    -
+    question: What is the split of subscriptions per product type?
+    name: Payment Method
+    query: "signup:subscription-created->count()->group(context.offer.name)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(ColumnChart)"
     
