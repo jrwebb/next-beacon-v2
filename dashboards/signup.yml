@@ -32,20 +32,7 @@ charts:
   -
     question: What's our conversion rate this week? (%)
     name: this week's conversion rate
-    query: "@pct(
-            signup:subscription-created
-              ->count()
-              ->relTime(this_7_days),
-            page:view
-              ->count(device.spoorId)
-              ->filter(page.location.normalizedPath~/signup)
-              ->filter(page.location.host~ft.com)
-              ->filter(user.geo.isFinancialTimesOffice=false)
-              ->filter(page.referrer.host~ft.com)
-              ->filter(page.referrer.normalizedPath!~/signup)
-              ->relTime(this_7_days)
-              ->filter(!user.uuid)
-          )"
+    query: @pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_7_days),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup)->filter(!user.uuid)->relTime(this_7_days))->tidy()
     interval: false
     colspan: 4
     datalabel: weekly conversion rate
