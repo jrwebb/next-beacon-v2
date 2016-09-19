@@ -45,31 +45,23 @@ charts:
     question: How many successful subscriptions have we had?
     name: subscriptions spoor
     interval: false
-    query: signup:subscription-created
-          ->count()
-          ->relTime(this_6_weeks)
-          ->filter(context.isTestEvent=false)
-          ->filter(user.geo.isFinancialTimesOffice=false)
-          ->print(ColumnChart)
-
+    query: "signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(ColumnChart)"
     printer: ColumnChart
     colspan: 4
     datalabel: spoor
   -
     question: How many Failed subscription events?
     name: failed
-    query: signup:subscription-creation-failed
-              ->count()
-              ->interval(d)
+    query: "signup:subscription-creation-failed->count()->filter(!user.uuid)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)->print(StackedColumnChart)"
     printer: StackedColumnChart
     colspan: 4
     datalabel: Signup Browsers
   -
-    question: How many bounces have we had today?
+    question: What's our weekly bounce rate trend?
     name: bounces
     interval: false
     timeframe: this_1_days
-    query: "signup:bounce->count()->filter(context.message.isTestEvent=false)"
+    query: "signup:bounce->count()->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)"
     datalabel: Bounces today
     colspan: 3
   -
