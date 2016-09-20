@@ -7,12 +7,12 @@ charts:
   -
     question: How many subscribers does light signup get every day?
     name: lightsignup
-    query: light-signup:subscribed->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->interval(d)->relTime(this_6_weeks)->print(LineChart)
+    query: "light-signup:subscribed->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->interval(d)->relTime(this_6_weeks)->print(LineChart)"
     datalabel: "Subscribers p/day"
   -
     question: Subscriber rate compared to anonymous article traffic served the LSU form?
     name: views-to-subscriptions
-    query: "@concat(page:view->count(device.spoorId)->filter(!user.uuid)->filter(page.location.type=article)->filter(context.url!~utm_term=lightsignup),light-signup:subscribed->count()->filter(context.isTestEvent=false))->relTime(this_14_days)->interval(d)"
+    query: "@concat(page:view->count(device.spoorId)->filter(!user.uuid)->filter(page.location.type=article)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.url!~utm_term=lightsignup),light-signup:subscribed->count()->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false))"
     printer: StackedLineChart
     datalabel: "Subscribers p/day"
   -
