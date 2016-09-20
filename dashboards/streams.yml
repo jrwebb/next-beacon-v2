@@ -10,7 +10,6 @@ charts:
     query: "@pct(page:view->count()->group(context.pageAttributes.hasTopSection.config),page:view->count())->filter(page.location.type=stream)->tidy()->print(Table)"
     datalabel: Percentage of Stream views by section type
     interval: false
-    
   -
     question: What are the most visited streams?
     name: streamvisits
