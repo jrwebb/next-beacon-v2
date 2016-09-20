@@ -5,6 +5,19 @@ title: Streams
 isPrimary: true
 charts:
   -
+    question: What percentage of Stream views are Sections?
+    name: sectionviews
+    query: "@pct(page:view->count()->group(context.pageAttributes.hasTopSection.config),page:view->count())->filter(page.location.type=stream)->tidy()->print(Table)"
+    datalabel: Percentage of Stream views by section type
+    interval: false
+    
+  -
+    question: What are the most visited streams?
+    name: streamvisits
+    query: "page:view->count()->group(page.location.path)->filter(page.location.type=stream)->sortDesc()->print(Table)"
+    datalabel: Visits by stream
+    interval: false
+  -
     question: How many views are Stream pages getting?
     name: streamviews
     query: "page:view->count()->filter(page.location.type?stream,article,frontpage)->group(page.location.type)"
@@ -71,4 +84,10 @@ charts:
     name: lifeandartsscrolldepth
     query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-main))->filter(page.location.type=stream)->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)->filter(context.componentId)->sortDesc()->print(BarChart)"
     datalabel: Scroll depth on Life and Arts
+    interval: false
+  -
+    question: How many views are stream pages getting by page number?
+    name: streampagedepth
+    query: "page:view->count()->group(context.pageAttributes.isPage)->filter(page.location.type=stream)->tidy()->sortDesc()->print(Table)"
+    datalabel: Views of stream pages by page number
     interval: false
