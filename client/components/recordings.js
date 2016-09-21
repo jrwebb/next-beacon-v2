@@ -76,16 +76,16 @@ export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configu
 		property_names: ['device.spoorId']
 	});
 
-	let period;
+	let period = 3;
 
-	try {
-		const timeframe = userTimeframe || kq.timeframe || 'this_7_days';
-		period = parseInt(timeframe.match(/\d+/)[0]);
-	}
-	catch (e) {
-		// TODO hadle nicely
-		throw e;
-	}
+	// try {
+	// 	const timeframe = userTimeframe || kq.timeframe || 'this_3_days';
+	// 	period = parseInt(timeframe.match(/\d+/)[0]);
+	// }
+	// catch (e) {
+	// 	// TODO hadle nicely
+	// 	throw e;
+	// }
 
 	const keen = keenIO.configure({
 		projectId: window.KEEN_PROJECT_ID,
