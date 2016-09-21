@@ -43,7 +43,7 @@ app.get('/hashed-assets/:path*', function(req, res) {
 
 app.use(cookieParser());
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.post('/api/mouseflow', mouseflow);
 
 app.use(auth);
