@@ -87,7 +87,7 @@ export function getRecordings ({el, queryStr, messagesEl, userTimeframe, configu
 		throw e;
 	}
 
-	period = 3;
+	// period = 3;
 
 	const keen = keenIO.configure({
 		projectId: window.KEEN_PROJECT_ID,
