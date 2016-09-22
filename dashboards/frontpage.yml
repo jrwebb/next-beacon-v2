@@ -44,7 +44,7 @@ charts:
     name: scrolldepth
     query: "@pct(
               page:scrolldepth->count()->group(context.componentId),
-              page:scrolldepth->count()->filter(context.componentId=top-stories)
+              page:scrolldepth->count()->filter(context.componentId=headlines)
             )->filter(page.location.type=frontpage)->filter(context.componentId)->sortDesc()"
     printer: BarChart
     datalabel: Scroll depth
