@@ -37,10 +37,11 @@ charts:
     query: email:click->count(context.deviceId)->filter(context.product="light-signup")->filter(context.targetLinkUrl~"801043")
     datalabel: "Funnel clicks p/day"
   -
-    question: What's the daily click-through rate on the light signup email
-    name: lightsignup-daily
-    query: email:click->count(context.deviceId)->filter(context.product="light-signup")->group(context.daysSinceSignup)->print(PieChart)
-    datalabel: "Clicks p/day"
+    question: LSU subscription by Device
+    name: lightsignup-device
+    query: "light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)"
+    printer: PieChart
+    datalabel: "Device Share"
   -
     question: Are Audience Dev users interacting with the sampling components?
     name: auddev-interactions
