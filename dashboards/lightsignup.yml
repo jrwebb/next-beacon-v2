@@ -39,7 +39,8 @@ charts:
   -
     question: LSU subscription by Device
     name: lightsignup-device
-    query: light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)->print(PieChart)
+    query: "light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)"
+    printer: PieChart
     datalabel: "Device Share"
   -
     question: Are Audience Dev users interacting with the sampling components?
