@@ -26,6 +26,10 @@ charts:
     query: "light-signup:subscribed->count(device.spoorId)->group(context.topics)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.topics)->relTime(this_60_days)"
     printer: PieChart
   -
+    question: How many anon users are sent the light signup email?
+    name: lightsignup-sent
+    query: "email:delivery->count()->group(context.product)->filter(context.product?light-signup)->filter(context.product)->interval(d)->print(LineChart)"
+-
     question: "How many (trackable) light signup subscribers go on to purchase a subscription?"
     name: lightsignup-conversion
     query: "@funnel(light-signup:subscribed->count(device.spoorId)->filter(context.isTestEvent=false),signup:subscription-created->count(device.spoorId)->filter(context.isTestEvent=false))->with(device.spoorId)"
