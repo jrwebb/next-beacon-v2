@@ -42,6 +42,11 @@ charts:
     query: email:click->count(context.deviceId)->filter(context.product="light-signup")->group(context.daysSinceSignup)->print(PieChart)
     datalabel: "Clicks p/day"
   -
+    question: LSU subscription by Device
+    name: lightsignup-device
+    query: light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)->print(PieChart)
+    datalabel: "Device Share"
+  -
     question: Are Audience Dev users interacting with the sampling components?
     name: auddev-interactions
     query: cta:click->count(device.spoorId)->filter(!user.uuid)->group(context.domPath)->filter(context.domPath~sample-articles)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(Table)
