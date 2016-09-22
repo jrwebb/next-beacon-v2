@@ -37,7 +37,7 @@ charts:
     query: email:click->count(context.deviceId)->filter(context.product="light-signup")->filter(context.targetLinkUrl~"801043")
     datalabel: "Funnel clicks p/day"
   -
-    question: LSU subscription by Device
+    question: LSU subscription share by Device
     name: lightsignup-device
     query: "light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)"
     printer: PieChart
