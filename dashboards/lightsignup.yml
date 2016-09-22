@@ -26,6 +26,11 @@ charts:
     query: "light-signup:subscribed->count(device.spoorId)->group(context.topics)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.topics)->relTime(this_60_days)"
     printer: PieChart
   -
+    question: "How many anon users are sent the light signup email?"
+    name: lightsignup-sent
+    query: "email:delivery->count()->group(context.product)->filter(context.product=light-signup)->filter(context.product)->interval(d)
+    datalabel: "Sent p/day"
+  -
     question: "How many (trackable) light signup subscribers go on to purchase a subscription?"
     name: lightsignup-conversion
     query: "@funnel(light-signup:subscribed->count(device.spoorId)->filter(context.isTestEvent=false),signup:subscription-created->count(device.spoorId)->filter(context.isTestEvent=false))->with(device.spoorId)"
@@ -39,7 +44,8 @@ charts:
   -
     question: LSU subscription by Device
     name: lightsignup-device
-    query: light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)->print(PieChart)
+    query: "light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)"
+    printer: PieChart
     datalabel: "Device Share"
   -
     question: Are Audience Dev users interacting with the sampling components?
