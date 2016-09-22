@@ -38,10 +38,10 @@ charts:
             )"
     datalabel: Member share
     
-	-
-	  question: What % of users start a session on the front page?
-	  name: visitors/landing-proportion
-	  query: "@pct(page:view->count()->group(page.referrer.websiteType!=internal)->filter(page.location.type=frontpage),page:view->count()->group(page.referrer.websiteType!=internal))->relTime(this_14_days)->interval(d)"
+  -
+    question: What % of users start a session on the front page?
+    name: visitors/landing-proportion
+    query: "@pct(page:view->count()->group(page.referrer.websiteType!=internal)->filter(page.location.type=frontpage),page:view->count()->group(page.referrer.websiteType!=internal))->relTime(this_14_days)->interval(d)"
 
   # SCROLL DEPTH --------------------------------------------------
   -
