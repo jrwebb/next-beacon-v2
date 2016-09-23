@@ -64,7 +64,6 @@ charts:
     name: trendingtopics
     query: "@pct(cta:click->count()->filter(context.domPath~trending-topics),page:view->count())->filter(page.location.type=stream)->filter(context.pageAttributes.hasTrendingTopics=true)"
     datalabel: CTR of Trending Topics when shown
-    interval: false
     colspan: 6
   -
     question: What's the CTR from Streams to articles?
