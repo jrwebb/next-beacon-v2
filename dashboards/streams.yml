@@ -44,6 +44,7 @@ charts:
     query: "@pct(cta:click->filter(context.domPath~most-popular)->group(context.position),page:view)->count()->filter(page.location.type=stream)->tidy()->filter(page.location.type=stream)->filter(context.pageAttributes.hasMostRead=true)->print(ColumnChart)"
     datalabel: Most Read Position
     colspan: 6
+    interval: false
   -
     question: What's the CTR for Most Read?
     name: mostreadctr
@@ -67,11 +68,6 @@ charts:
     name: photoCTR
     query: "@pct(cta:click->filter(context.domPath~photo-diary),page:view)->count()->filter(page.location.streamId?MQ==-U2VjdGlvbnM=)"
     datalabel: CTR on Photo Diary
-  -
-    question: What's the CTR from the Video Component on Streams?
-    name: videoCTR
-    query: "@sum(cta:click->filter(context.domPath~video-highlights),cta:click->filter(context.domPath~related item))->count()->filter(page.location.type=stream)->print(LineChart)"
-    datalabel: CTR on Video
   -
     question: What's the CTR to stories on Life and Arts?
     name: lifeandartsCTR
