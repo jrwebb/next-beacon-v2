@@ -27,15 +27,23 @@ charts:
     name: articleviews
     query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)"
     datalabel: Visits to articles by referrer
+    colspan: 6
   -
     question: What percentage of article views come from Streams?
     name: articleviewsperc
     query: "@concat(@pct(page:view->filter(page.referrer.type=stream),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=frontpage),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=article),page:view)->count()->filter(page.location.type=article))->relabel(_headings,Stream,Front Page,Article)"
     datalabel: Percentage of article views by referrer
+    colspan: 6
   -
-    question: What's the CTR of Top Stories by position?
-    name: topstoriesctrposition
-    query: "@concat(@pct(cta:click->filter(context.domPath~top-stories-column-one)->group(context.position),page:view)->count(),@pct(cta:click->filter(context.domPath~top-stories-column-two)->group(context.position),page:view)->count(),@pct(cta:click->filter(context.domPath~opinion-and-analysis)->group(context.position),page:view)->count())->filter(page.location.type=stream)->relabel(_headings,TopStoriesLeft,TopStoriesRight,Opinion)->filter(context.pageAttributes.hasTopSection.config=default)->tidy()->print(ColumnChart)"
+    question: What's the CTR of Top Stories by position with Opinion?
+    name: topstoriesctrpositionopinion
+    query: "@concat(@pct(cta:click->filter(context.domPath~top-stories-column-one)->group(context.position),page:view)->count(),@pct(cta:click->filter(context.domPath~opinion-and-analysis)->group(context.position),page:view)->count())->filter(page.location.type=stream)->relabel(_headings,TopStoriesLeft,Opinion)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.pageAttributes.hasTopSection.hasOpinionAndAnalysis=true)->tidy()->print(ColumnChart)"
+    datalabel: Top Stories CTR by Position
+    colspan: 6
+  -
+    question: What's the CTR of Top Stories by position without Opinion?
+    name: topstoriesctrpositionnoopinion
+    query: "@concat(@pct(cta:click->filter(context.domPath~top-stories-column-one)->group(context.position),page:view)->count(),@pct(cta:click->filter(context.domPath~top-stories-column-two)->group(context.position),page:view)->count())->filter(page.location.type=stream)->relabel(_headings,TopStoriesLeft,TopStoriesRight)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.pageAttributes.hasTopSection.hasOpinionAndAnalysis!=true)->tidy()->print(ColumnChart)"
     datalabel: Top Stories CTR by Position
     colspan: 6
   -
@@ -74,13 +82,19 @@ charts:
     query: "@pct(cta:click->count()->filter(context.domPath~main-link),page:view->count())->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)"
     datalabel: CTR from Life and Arts
   -
-    question: What's the scroll-depth on Section Pages?
-    name: sectionsscrolldepth
-    query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-story))->filter(page.location.type=stream)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.componentId)->sortDesc()->print(BarChart)"
-    datalabel: Scroll depth on Section Pages
+    question: What's the scroll-depth on Section Pages with Opinion?
+    name: sectionsscrolldepthopinion
+    query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-story))->filter(page.location.type=stream)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.pageAttributes.hasTopSection.hasOpinionAndAnalysis=true)->filter(context.componentId)->sortDesc()->print(BarChart)"
+    datalabel: Scroll depth on Section Pages with Opinion
     interval: false
   -
-    question: What's the scroll-depth on Life and Arts?
+    question: What's the scroll-depth on Section Pages without Opinion?
+    name: sectionsscrolldepth
+    query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-story))->filter(page.location.type=stream)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.pageAttributes.hasTopSection.hasOpinionAndAnalysis!=true)->filter(context.componentId)->sortDesc()->print(BarChart)"
+    datalabel: Scroll depth on Section Pages without Opinion
+    interval: false
+  -
+  question: What's the scroll-depth on Life and Arts?
     name: lifeandartsscrolldepth
     query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-main))->filter(page.location.type=stream)->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)->filter(context.componentId)->sortDesc()->print(BarChart)"
     datalabel: Scroll depth on Life and Arts
