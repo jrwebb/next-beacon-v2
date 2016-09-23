@@ -47,6 +47,12 @@ charts:
     question: How many times does a user visit the front page in one session?
     name: frontpage-views/session
     query: "@ratio(page:view->count()->filter(page.location.type=frontpage),page:view->count(spoorInfo.sessionId))->relTime(this_14_days)->interval(d)"
+
+  -
+    question: What % of counted content viewed is visited from the front page?
+    name: content-views/referrer-frontpage
+    query: "@pct(page:view->count()->filter(content.isCountedContent)->filter(page.referrer.type=frontpage),page:view->count()->filter(content.isCountedContent))->relTime(this_14_days)->interval(d)"
+
   # SCROLL DEPTH --------------------------------------------------
   -
     question: What percentage of frontpage users are scrolling to each section?
