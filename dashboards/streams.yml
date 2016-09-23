@@ -21,7 +21,7 @@ charts:
     name: streamviews
     query: "page:view->count()->filter(page.location.type?stream,article,frontpage)->group(page.location.type)"
     datalabel: Visits to pages by type
-    colspan: 12
+    colspan: 6
   -
     question: How many article views come from Streams?
     name: articleviews
@@ -33,6 +33,12 @@ charts:
     name: articleviewsperc
     query: "@concat(@pct(page:view->filter(page.referrer.type=stream),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=frontpage),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=article),page:view)->count()->filter(page.location.type=article))->relabel(_headings,Stream,Front Page,Article)"
     datalabel: Percentage of article views by referrer
+    colspan: 6
+  -
+    question: What's the CTR of the lead story on Sections?
+    name: sectionleadCTR
+    query: "@concat(@pct(cta:click->count()->filter(context.domPath~main-link)->filter(context.domPath~lead-story),page:view->count()),@pct(cta:click->count()->filter(context.domPath~lead-story)->filter(context.domPath~related),page:view->count()))->filter(page.location.type=stream)->filter(context.pageAttributes.hasTopSection.config=default)->relabel(_headings,LeadStory,RelatedLinks)"
+    datalabel: Visits to pages by type
     colspan: 6
   -
     question: What's the CTR of Top Stories by position with Opinion?
@@ -64,7 +70,6 @@ charts:
     name: trendingtopics
     query: "@pct(cta:click->count()->filter(context.domPath~trending-topics),page:view->count())->filter(page.location.type=stream)->filter(context.pageAttributes.hasTrendingTopics=true)"
     datalabel: CTR of Trending Topics when shown
-    interval: false
     colspan: 6
   -
     question: What's the CTR from Streams to articles?
