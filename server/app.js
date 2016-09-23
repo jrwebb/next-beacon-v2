@@ -16,8 +16,7 @@ const app = module.exports = express({
 	layoutsDir: __dirname + '/../views/layouts',
 	withBackendAuthentication: false,
 	withFlags: true,
-	withHandlebars: true,
-	hasNUiBundle: false
+	withHandlebars: true
 });
 
 // Indicates the app is behind a front-facing proxy, and to use the X-Forwarded-* headers to determine the connection and the IP address of the client. NOTE: X-Forwarded-* headers are easily spoofed and the detected IP addresses are unreliable.
