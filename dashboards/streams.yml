@@ -94,7 +94,7 @@ charts:
     datalabel: Scroll depth on Section Pages without Opinion
     interval: false
   -
-  question: What's the scroll-depth on Life and Arts?
+    question: What's the scroll-depth on Life and Arts?
     name: lifeandartsscrolldepth
     query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-main))->filter(page.location.type=stream)->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)->filter(context.componentId)->sortDesc()->print(BarChart)"
     datalabel: Scroll depth on Life and Arts
