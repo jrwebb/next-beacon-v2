@@ -7,12 +7,6 @@
 /public/main.js
 /public/main.css
 /public/worker.js
-/public/main.js.map
-/public/main.css.map
-/public/worker.js.map
-/public/__about.json
 *.env*
-.idea
-/old-beacon-dashboard/
 .eslintrc.js
 .editorconfig
