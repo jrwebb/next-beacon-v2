@@ -12,18 +12,16 @@ charts:
     query: page:view->count(user.uuid)->filter(page.location.type=frontpage)
     datalabel: Members
   -
-    question: Total frontpage page views
+    question: How many views does the front page recieve?
     name: views
-    query: page:view->count()->filter(page.location.type=frontpage)
+    query: "@concat(page:view->count()->filter(device.spoorId)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)->filter(user.uuid)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)->filter(!user.uuid)->filter(page.location.type=frontpage))->relTime(previous_14_days)->interval(d)->relabel(_headings,All,Logged In,Anonymous)"
     datalabel: Total
   -
     question: What percentage of total page views are of the frontpage?
     name: views/proportion
-    query: "@pct(
-              page:view->count()->filter(page.location.type=frontpage),
-              page:view->count()
-            )"
+    query: "@concat(@pct(page:view->count()->filter(device.spoorId)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)),@pct(page:view->count()->filter(device.spoorId)->filter(user.uuid)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)->filter(user.uuid)),@pct(page:view->count()->filter(device.spoorId)->filter(!user.uuid)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)->filter(!user.uuid)))->relTime(previous_14_days)->interval(d)->relabel(_headings,All,Logged In,Anonymous)"
     datalabel: View share
+
   -
     question: What percentage of members visited the frontpage?
     name: visitors/proportion
