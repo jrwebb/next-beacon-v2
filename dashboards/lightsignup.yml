@@ -45,7 +45,7 @@ charts:
   -
     question: Are Audience Dev users interacting with the sampling components?
     name: auddev-interactions
-    query: cta:click->count(device.spoorId)->filter(!user.uuid)->group(context.domPath)->filter(context.domPath~sample-articles)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(Table)
+    query: cta:click->count(device.spoorId)->filter(!user.uuid)->group(click.dataTrackablePath)->filter(click.dataTrackablePath~sample-articles)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(Table)
     datalabel: "Total interactions"
     interval: false
     printer: Table

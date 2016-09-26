@@ -54,17 +54,17 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (breakdown by section)?
     name: ctr/average/percentage/sectionbreakdown
     query: "@concat(
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~header),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~top-stories),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~fastft),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~editors-picks),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~opinion),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~myft),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~most-popular),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~markets),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~technology),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~video),page:view->count(user.uuid))
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~header),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~top-stories),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~fastft),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~editors-picks),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~opinion),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~myft),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~most-popular),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~life-and-arts),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~markets),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~technology),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~video),page:view->count(user.uuid))
             )->filter(page.location.type=frontpage)
             ->relabel(_headings,header,top stories,fastft,editors picks,opinion,myFT,most popular,life & arts,markets,technology,video)->interval(d)->reduce(timeframe,avg)"
     printer: BarChart
@@ -73,17 +73,17 @@ charts:
     question: How many clicks (average) are users making on the frontpage (breakdown by section)?
     name: ctr/average/clicks/sectionbreakdown
     query: "@concat(
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~header),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~top-stories),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~fastft),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~editors-picks),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~opinion),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~myft),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~most-popular),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~markets),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~technology),page:view->count(user.uuid)),
-              @ratio(cta:click->count(user.uuid)->filter(context.domPath~video),page:view->count(user.uuid))
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~header),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~top-stories),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~fastft),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~editors-picks),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~opinion),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~myft),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~most-popular),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~life-and-arts),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~markets),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~technology),page:view->count(user.uuid)),
+              @ratio(cta:click->count(user.uuid)->filter(click.dataTrackablePath~video),page:view->count(user.uuid))
             )->filter(page.location.type=frontpage)
             ->relabel(_headings,header,top stories,fastft,editors picks,opinion,myFT,most popular,life & arts,markets,technology,video)->interval(d)->reduce(timeframe,avg)"
     printer: BarChart
@@ -92,17 +92,17 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (breakdown by section)?
     name: ctr/percentage/sectionbreakdown
     query: "@concat(
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~header),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~top-stories),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~fastft),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~editors-picks),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~opinion),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~myft),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~most-popular),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~markets),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~technology),page:view->count(user.uuid)),
-              @pct(cta:click->count(user.uuid)->filter(context.domPath~video),page:view->count(user.uuid))
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~header),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~top-stories),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~fastft),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~editors-picks),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~opinion),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~myft),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~most-popular),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~life-and-arts),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~markets),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~technology),page:view->count(user.uuid)),
+              @pct(cta:click->count(user.uuid)->filter(click.dataTrackablePath~video),page:view->count(user.uuid))
             )->filter(page.location.type=frontpage)
             ->relabel(_headings,header,top stories,fastft,editors picks,opinion,myFT,most popular,life & arts,markets,technology,video)"
     printer: BarChart
@@ -140,7 +140,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Header)?
     name: ctr/average/percentage/header
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~header),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~header),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Header)
@@ -148,7 +148,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Header)?
     name: ctr/average/clicks/header
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~header),
+              cta:click->count()->filter(click.dataTrackablePath~header),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Header)
@@ -156,7 +156,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Header)?
     name: ctr/percentage/header
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~header),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~header),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Header)
@@ -166,7 +166,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Top Stories)?
     name: ctr/average/percentage/top-stories
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~top-stories),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~top-stories),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Top Stories)
@@ -174,7 +174,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Top Stories)?
     name: ctr/average/clicks/top-stories
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~top-stories),
+              cta:click->count()->filter(click.dataTrackablePath~top-stories),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Top Stories)
@@ -182,7 +182,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Top Stories)?
     name: ctr/percentage/top-stories
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~top-stories),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~top-stories),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Top Stories)
@@ -192,7 +192,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from FastFT)?
     name: ctr/average/percentage/fastft
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~fastft),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~fastft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (FastFT)
@@ -200,7 +200,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from FastFT)?
     name: ctr/average/clicks/fastft
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~fastft),
+              cta:click->count()->filter(click.dataTrackablePath~fastft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (FastFT)
@@ -208,7 +208,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from FastFT)?
     name: ctr/percentage/fastft
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~fastft),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~fastft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (FastFT)
@@ -218,7 +218,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Editors' Picks)?
     name: ctr/average/percentage/editors-picks
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~editors-picks),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~editors-picks),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Editors' Picks)
@@ -226,7 +226,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Editors' Picks)?
     name: ctr/average/clicks/editors-picks
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~editors-picks),
+              cta:click->count()->filter(click.dataTrackablePath~editors-picks),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Editors' Picks)
@@ -234,7 +234,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Editors' Picks)?
     name: ctr/percentage/editors-picks
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~editors-picks),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~editors-picks),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Editors' Picks)
@@ -244,7 +244,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Opinion)?
     name: ctr/average/percentage/opinion
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~opinion),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~opinion),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Opinion)
@@ -252,7 +252,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Opinion)?
     name: ctr/average/clicks/opinion
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~opinion),
+              cta:click->count()->filter(click.dataTrackablePath~opinion),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Opinion)
@@ -260,7 +260,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Opinion)?
     name: ctr/percentage/opinion
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~opinion),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~opinion),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Opinion)
@@ -270,7 +270,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from myFT)?
     name: ctr/average/percentage/myft
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~myft),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~myft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (myFT)
@@ -278,7 +278,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from myFT)?
     name: ctr/average/clicks/myft
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~myft),
+              cta:click->count()->filter(click.dataTrackablePath~myft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (myFT)
@@ -286,7 +286,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from myFT)?
     name: ctr/percentage/myft
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~myft),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~myft),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (myFT)
@@ -296,7 +296,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Most Popular)?
     name: ctr/average/percentage/most-popular
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~most-popular),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~most-popular),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Most Popular)
@@ -304,7 +304,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Most Popular)?
     name: ctr/average/clicks/most-popular
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~most-popular),
+              cta:click->count()->filter(click.dataTrackablePath~most-popular),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Most Popular)
@@ -312,7 +312,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Most Popular)?
     name: ctr/percentage/most-popular
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~most-popular),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~most-popular),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Most Popular)
@@ -322,7 +322,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Life & Arts)?
     name: ctr/average/percentage/life-and-arts
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~life-and-arts),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Life & Arts)
@@ -330,7 +330,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Life & Arts)?
     name: ctr/average/clicks/life-and-arts
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~life-and-arts),
+              cta:click->count()->filter(click.dataTrackablePath~life-and-arts),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Life & Arts)
@@ -338,7 +338,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Life & Arts)?
     name: ctr/percentage/life-and-arts
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~life-and-arts),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~life-and-arts),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Life & Arts)
@@ -348,7 +348,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Markets)?
     name: ctr/average/percentage/markets
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~markets),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~markets),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Markets)
@@ -356,7 +356,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Markets)?
     name: ctr/average/clicks/markets
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~markets),
+              cta:click->count()->filter(click.dataTrackablePath~markets),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Markets)
@@ -364,7 +364,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Markets)?
     name: ctr/percentage/markets
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~markets),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~markets),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Markets)
@@ -374,7 +374,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Technology)?
     name: ctr/average/percentage/technology
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~technology),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~technology),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Technology)
@@ -382,7 +382,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Technology)?
     name: ctr/average/clicks/technology
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~technology),
+              cta:click->count()->filter(click.dataTrackablePath~technology),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Technology)
@@ -390,7 +390,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Technology)?
     name: ctr/percentage/technology
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~technology),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~technology),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Technology)
@@ -400,7 +400,7 @@ charts:
     question: What percentage (average) of frontpage users are clicking through to other pages (from Video)?
     name: ctr/average/percentage/video
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~video),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~video),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average percentage (Video)
@@ -408,7 +408,7 @@ charts:
     question: How many clicks (average) are users making on the frontpage (from Video)?
     name: ctr/average/clicks/video
     query: "@ratio(
-              cta:click->count()->filter(context.domPath~video),
+              cta:click->count()->filter(click.dataTrackablePath~video),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)->reduce(timeframe,avg)"
     datalabel: Average clicks per user (Video)
@@ -416,7 +416,7 @@ charts:
     question: What percentage of frontpage users are clicking through to other pages (from Video)?
     name: ctr/percentage/video
     query: "@pct(
-              cta:click->count(user.uuid)->filter(context.domPath~video),
+              cta:click->count(user.uuid)->filter(click.dataTrackablePath~video),
               page:view->count(user.uuid)
             )->filter(page.location.type=frontpage)"
     datalabel: Average percentage over period (Video)
@@ -575,14 +575,14 @@ charts:
     question: What percentage of frontpage users are using the Brexit primary component?
     name: brexit/primary/percentage
     query: '@pct(
-              cta:click->filter(context.domPath~brexit-primary),
+              cta:click->filter(click.dataTrackablePath~brexit-primary),
               page:view
             )->count(user.uuid)->filter(page.location.type=frontpage)->interval(d)'
   -
     question: What percentage of frontpage users are using the Brexit secondary component?
     name: brexit/secondary/percentage
     query: '@pct(
-              cta:click->filter(context.domPath~brexit-secondary),
+              cta:click->filter(click.dataTrackablePath~brexit-secondary),
               page:view
             )->count(user.uuid)->filter(page.location.type=frontpage)->interval(d)'
   -
@@ -591,11 +591,11 @@ charts:
     query: '@ratio(
               cta:click->count(),
               cta:click->count(user.uuid)
-            )->filter(user.uuid)->filter(context.domPath~brexit-primary)->filter(page.location.type=frontpage)->interval(d)'
+            )->filter(user.uuid)->filter(click.dataTrackablePath~brexit-primary)->filter(page.location.type=frontpage)->interval(d)'
   -
     question: What's the average number of clicks within the component per Brexit secondary component user?
     name: brexit/secondary/averageclicks
     query: '@ratio(
               cta:click->count(),
               cta:click->count(user.uuid)
-            )->filter(user.uuid)->filter(context.domPath~brexit-secondary)->filter(page.location.type=frontpage)->interval(d)'
+            )->filter(user.uuid)->filter(click.dataTrackablePath~brexit-secondary)->filter(page.location.type=frontpage)->interval(d)'
