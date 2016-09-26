@@ -17,18 +17,13 @@ charts:
     query: page:view->count()->filter(page.location.type=frontpage)
     datalabel: Total
   -
-    question: What percentage of page views are frontpage?
+    question: What percentage of total page views are of the frontpage?
     name: views/proportion
     query: "@pct(
               page:view->count()->filter(page.location.type=frontpage),
               page:view->count()
             )"
     datalabel: View share
-  -
-    question: Total of members who visited the frontpage
-    name: visitors
-    query: page:view->count(user.uuid)->filter(page.location.type=frontpage)
-    datalabel: Members
   -
     question: What percentage of members visited the frontpage?
     name: visitors/proportion
