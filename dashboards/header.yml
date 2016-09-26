@@ -10,32 +10,32 @@ charts:
     name: primary
     printer: BarChart
     query: "cta:click->count()
-      ->filter(context.domPath~group--sections)
+      ->filter(click.dataTrackablePath~group--sections)
       ->filter(device.oGridLayout?M,L,XL,XXL)
-      ->group(context.target)->reorder(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
+      ->group(click.target)->reorder(click.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
   -
     question: 'Excluding secondary nav, what is being clicked most in the header'
     name: clicks
     printer: BarChart
     query: "cta:click->count()
        ->filter(device.oGridLayout?M,L,XL,XXL)
-       ->filter(context.domPath~header)
-       ->filter(context.domPath!~article)
-       ->filter(context.domPath!~secondary-navigation)
-       ->group(context.target)
+       ->filter(click.dataTrackablePath~header)
+       ->filter(click.dataTrackablePath!~article)
+       ->filter(click.dataTrackablePath!~secondary-navigation)
+       ->group(click.target)
        ->top(10)"
     interval: false
   -
     question: Which secondary nav links are being clicked most (desktop)?
     name: secondary-most
     printer: BarChart
-    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
+    query: cta:click->count()->filter(click.dataTrackablePath~secondary-navigation)->group(click.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
     interval: false
   -
     question: Which secondary nav links are being clicked least (desktop)?
     name: secondary-least
     printer: BarChart
-    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
+    query: cta:click->count()->filter(click.dataTrackablePath~secondary-navigation)->group(click.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
     interval: false
   -
     question: Which nav links are being clicked most (mobile)?
@@ -43,9 +43,9 @@ charts:
     printer: BarChart
     query: "cta:click->count()
        ->filter(device.oGridLayout?default,XS,S)
-       ->filter(context.domPath~secondary-navigation)
-       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
-       ->group(context.target)->top(10)"
+       ->filter(click.dataTrackablePath~secondary-navigation)
+       ->filter(click.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
+       ->group(click.target)->top(10)"
     interval: false
   -
     question: Which nav links are being clicked least (mobile)?
@@ -53,9 +53,9 @@ charts:
     printer: BarChart
     query: "cta:click->count()
        ->filter(device.oGridLayout?default,XS,S)
-       ->filter(context.domPath~secondary-navigation)
-       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
-       ->group(context.target)->bottom(10)"
+       ->filter(click.dataTrackablePath~secondary-navigation)
+       ->filter(click.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
+       ->group(click.target)->bottom(10)"
     interval: false
   -
     question: What are the commonest search terms?
@@ -67,5 +67,5 @@ charts:
     question: What are the commonest typeahead clicks?
     name: typeaheads
     printer: Table
-    query: "cta:click->count()->filter(context.target=typeahead)->group(context.conceptId)->top(30)"
+    query: "cta:click->count()->filter(click.target=typeahead)->group(context.conceptId)->top(30)"
     interval: false
