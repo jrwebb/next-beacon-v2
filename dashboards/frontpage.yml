@@ -61,6 +61,12 @@ charts:
 
   # CTR (breakdown by section) --------------------------------------------------
   -
+    question: What is the CTR % for each section on the front page?
+    name: ctr/sectionbreakdown
+    query: "@concat(@pct(cta:click->count()->filter(click.dataTrackablePath~fastft),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~top-stories),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~Opinion),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~markets),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~technology),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~video),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~editors-picks),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~most-popular),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~header),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~drawer-toggle),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~myft),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~us-election-midriff),cta:click->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~regional-top-stories),cta:click->count()))->filter(page.location.type=frontpage)->relabel(_headings,fastft,top-stories,opinion,markets,technology,video,highlights,most-read,header,drawer,myft,us-election,regional)->sortDesc()"
+    printer: BarChart
+
+  -
     question: What percentage (average) of frontpage users are clicking through to other pages (breakdown by section)?
     name: ctr/average/percentage/sectionbreakdown
     query: "@concat(
