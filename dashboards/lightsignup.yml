@@ -49,3 +49,21 @@ charts:
     datalabel: "Total interactions"
     interval: false
     printer: Table
+  -
+    question: How many anon users are sent the light signup email? 
+    name: emailsent
+    query: email:delivery->filter(context.product=light-signup)->count(context.deviceId)
+  -
+    question: How many anon users open the light signup email?
+    name: emailopens
+    query: email:open->filter(context.product=light-signup)->count(context.deviceId)
+  -
+    question: How many anon users clicked on the light signup email?
+    name: emailclicks
+    query: email:click->filter(context.product=light-signup)->count(context.deviceId)
+  -
+    question: Light Sign up subscription by device   
+    name: devicetype 
+    query: light-signup:subscribed->count()->filter(context.isTestEvent=false)->group(device.primaryHardwareType)
+    printer: BarChart
+    interval: false
