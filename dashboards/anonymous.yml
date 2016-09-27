@@ -73,7 +73,7 @@ charts:
     question: Interactions on LSU firstFT (live 3rd Sep)
     name: LSU-firstFT
     query: cta:click->count(device.spoorId)->group(click.dataTrackablePath)->filter(click.dataTrackablePath~light-signup | firstft)->filter(user.geo.isFinancialTimesOffice=false)->print(Table)
--
+  -
     question: Interactions on Marketing Promo
     name: Marketing Promo
     query: cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo)->relTime(this_6_months)->interval(month)
