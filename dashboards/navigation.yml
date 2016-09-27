@@ -17,65 +17,65 @@ charts:
     question: "(Click through rate) What percent of people who clicked the menu drawer also clicked on any link inside the drawer?"
     name: drawer/ctr/anylink
     query: "@pct(
-      cta:click->filter(context.domPath~drawer |),
-      cta:click->filter(context.domPath~drawer-toggle)
+      cta:click->filter(click.dataTrackablePath~drawer |),
+      cta:click->filter(click.dataTrackablePath~drawer-toggle)
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who clicked the menu drawer also clicked on the 'home' link?"
     name: drawer/ctr/home
     query: "@pct(
-      cta:click->filter(context.domPath~drawer | primary-nav | Home),
-      cta:click->filter(context.domPath~drawer-toggle)
+      cta:click->filter(click.dataTrackablePath~drawer | primary-nav | Home),
+      cta:click->filter(click.dataTrackablePath~drawer-toggle)
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who clicked the menu drawer also clicked on the 'Lex' link?"
     name: drawer/ctr/lex
     query: "@pct(
-      cta:click->filter(context.domPath~drawer | primary-nav | Lex),
-      cta:click->filter(context.domPath~drawer-toggle)
+      cta:click->filter(click.dataTrackablePath~drawer | primary-nav | Lex),
+      cta:click->filter(click.dataTrackablePath~drawer-toggle)
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who clicked the menu drawer also clicked on the 'Alphaville' link?"
     name: drawer/ctr/alphaville
     query: "@pct(
-      cta:click->filter(context.domPath~drawer | primary-nav | Alphaville),
-      cta:click->filter(context.domPath~drawer-toggle)
+      cta:click->filter(click.dataTrackablePath~drawer | primary-nav | Alphaville),
+      cta:click->filter(click.dataTrackablePath~drawer-toggle)
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who clicked the menu drawer also clicked on the 'Lunch with the FT' link?"
     name: drawer/ctr/lunchwiththeft
     query: "@pct(
-      cta:click->filter(context.domPath~drawer | primary-nav | Lunch with the FT),
-      cta:click->filter(context.domPath~drawer-toggle)
+      cta:click->filter(click.dataTrackablePath~drawer | primary-nav | Lunch with the FT),
+      cta:click->filter(click.dataTrackablePath~drawer-toggle)
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who clicked the menu drawer also clicked on any of the section links?"
     name: drawer/ctr/sections
     query: "@pct(
-      cta:click->filter(context.domPath~drawer | primary-nav)->filter(context.domPath!~drawer | primary-nav | sub-level),
-      cta:click->filter(context.domPath~drawer-toggle)
+      cta:click->filter(click.dataTrackablePath~drawer | primary-nav)->filter(click.dataTrackablePath!~drawer | primary-nav | sub-level),
+      cta:click->filter(click.dataTrackablePath~drawer-toggle)
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who clicked the menu drawer also clicked on any of the sub-section links?"
     name: drawer/ctr/subsections
     query: "@pct(
-      cta:click->filter(context.domPath~drawer | primary-nav | sub-level |),
-      cta:click->filter(context.domPath~drawer-toggle)
+      cta:click->filter(click.dataTrackablePath~drawer | primary-nav | sub-level |),
+      cta:click->filter(click.dataTrackablePath~drawer-toggle)
     )->count(device.spoorId)"
   -
     question: "(Bounce rate) What percentage of people opened the menu drawer and *did not* click on any link inside it?"
     name: drawer/ctr/bounce
     query: "@pct(
         @sum(
-          cta:click->filter(context.domPath~drawer-toggle),
-          cta:click->filter(context.domPath~drawer |)->multiply(-1)
+          cta:click->filter(click.dataTrackablePath~drawer-toggle),
+          cta:click->filter(click.dataTrackablePath~drawer |)->multiply(-1)
         ),
-        cta:click->filter(context.domPath~drawer-toggle)
+        cta:click->filter(click.dataTrackablePath~drawer-toggle)
       )->count(device.spoorId)"
   -
     question: "(Click count) How many people clicked on the menu button?"
     name: drawer/users
-    query: "cta:click->count(device.spoorId)->filter(context.domPath~drawer |)"
+    query: "cta:click->count(device.spoorId)->filter(click.dataTrackablePath~drawer |)"
   # Navigation: first, second, third level (weekly, bars)
   -
     question: Which top level nav links were being clicked most last week (desktop)?
@@ -84,9 +84,9 @@ charts:
     timeframe: previous_1_week
     printer: BarChart
     query: "cta:click->count()
-      ->filter(context.domPath~group--sections)
+      ->filter(click.dataTrackablePath~group--sections)
       ->filter(device.oGridLayout?M,L,XL,XXL)
-      ->group(context.target)->reorder(context.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
+      ->group(click.target)->reorder(click.target,Home,World,Uk,Companies,Markets,Opinion,Life & arts,Portfolio)"
     colspan: 12 L4
   -
     question: Which secondary nav links were clicked most last week (desktop)?
@@ -94,12 +94,12 @@ charts:
     interval: false
     timeframe: previous_1_week
     printer: BarChart
-    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
+    query: cta:click->count()->filter(click.dataTrackablePath~secondary-navigation)->group(click.target)->filter(device.oGridLayout?M,L,XL,XXL)->top(10)
     colspan: 12 L4
   -
     question: Which secondary nav links were clicked least last week (desktop)?
     name: header/secondary-least
-    query: cta:click->count()->filter(context.domPath~secondary-navigation)->group(context.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
+    query: cta:click->count()->filter(click.dataTrackablePath~secondary-navigation)->group(click.target)->filter(device.oGridLayout?M,L,XL,XXL)->bottom(10)
     interval: false
     timeframe: previous_1_week
     printer: BarChart
@@ -112,18 +112,18 @@ charts:
     printer: BarChart
     query: "cta:click->count()
        ->filter(device.oGridLayout?default,XS,S)
-       ->filter(context.domPath~secondary-navigation)
-       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
-       ->group(context.target)->top(10)"
+       ->filter(click.dataTrackablePath~secondary-navigation)
+       ->filter(click.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
+       ->group(click.target)->top(10)"
     colspan: 12 L6
   -
     question: Which nav links were clicked least last week (mobile)?
     name: header/mobile-least
     query: "cta:click->count()
        ->filter(device.oGridLayout?default,XS,S)
-       ->filter(context.domPath~secondary-navigation)
-       ->filter(context.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
-       ->group(context.target)->bottom(10)"
+       ->filter(click.dataTrackablePath~secondary-navigation)
+       ->filter(click.target!?Home,World,Uk,Companies,Markets,Opinion,Life & Arts,Portfolio)
+       ->group(click.target)->bottom(10)"
     interval: false
     timeframe: previous_1_week
     printer: BarChart
@@ -150,28 +150,27 @@ charts:
     question: "(Click through rate) What percent of people who visited the site also clicked on any header link?"
     name: headernav/ctr/header
     query: "@pct(
-      cta:click->filter(context.domPath~header-nav:desktop | primary-nav)->filter(context.domPath!~meganav),
+      cta:click->filter(click.dataTrackablePath~header-nav:desktop | primary-nav)->filter(click.dataTrackablePath!~meganav),
       page:view
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who visited the site also clicked on any section link?"
     name: headernav/ctr/section
     query: "@pct(
-      cta:click->filter(context.domPath~meganav),
+      cta:click->filter(click.dataTrackablePath~meganav),
       page:view
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who visited the site also clicked on any sub section link?"
     name: headernav/ctr/subsection
     query: "@pct(
-      cta:click->filter(context.domPath~subsections)->filter(context.domPath!~page:myft-page),
+      cta:click->filter(click.dataTrackablePath~subsections)->filter(click.dataTrackablePath!~page:myft-page),
       page:view
     )->count(device.spoorId)"
   -
     question: "(Click through rate) What percent of people who visited the site also clicked on any sticky header link?"
     name: headernav/ctr/sticky/header
     query: "@pct(
-      cta:click->filter(context.domPath~header-sticky | primary-nav),
+      cta:click->filter(click.dataTrackablePath~header-sticky | primary-nav),
       page:view
-    )->count(device.spoorId)"	
-	
+    )->count(device.spoorId)"

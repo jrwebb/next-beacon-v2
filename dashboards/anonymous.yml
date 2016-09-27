@@ -49,7 +49,7 @@ charts:
     question: Are users interacting with barriers
     name: barriers/click-count
     query: "@pct(
-      cta:click->count(device.spoorId)->filter(context.domPath~barrier),
+      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier),
       barrier:view->count(device.spoorId)
     )"
     datalabel: pct of users clicking on barriers
@@ -58,9 +58,9 @@ charts:
     question: Are barriers successful at getting users to sign in or subscribe
     name: barriers/click-types
     query: "@concat(
-      cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath!~subscribe)->filter(context.domPath!~sign-in),
-      cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath~subscribe),
-      cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath~sign-in)
+      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath!~subscribe)->filter(click.dataTrackablePath!~sign-in),
+      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~subscribe),
+      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~sign-in)
     )->relabel(_headings,Other,Subscribe,Sign in)"
     colspan: 12 L4
   -
@@ -72,4 +72,4 @@ charts:
   -
     question: Interactions on LSU firstFT (live 3rd Sep)
     name: LSU-firstFT
-    query: cta:click->count(device.spoorId)->group(context.domPath)->filter(context.domPath~light-signup | firstft)->filter(user.geo.isFinancialTimesOffice=false)->print(Table)
+    query: cta:click->count(device.spoorId)->group(click.dataTrackablePath)->filter(click.dataTrackablePath~light-signup | firstft)->filter(user.geo.isFinancialTimesOffice=false)->print(Table)

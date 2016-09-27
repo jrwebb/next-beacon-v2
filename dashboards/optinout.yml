@@ -45,7 +45,7 @@ charts:
   -
     question: Which links do users click in the opt-out page?
     name: opt-out-page-links
-    query: "cta:click->count(device.spoorId)->group(context.domPath)->filter(context.domPath~looking)->sortDesc(cta:click)"
+    query: "cta:click->count(device.spoorId)->group(click.dataTrackablePath)->filter(click.dataTrackablePath~looking)->sortDesc(cta:click)"
     interval: false
     printer: Table
     colspan: 12 L4

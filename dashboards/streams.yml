@@ -5,70 +5,113 @@ title: Streams
 isPrimary: true
 charts:
   -
+    question: What percentage of Stream views are Sections?
+    name: sectionviews
+    query: "@pct(page:view->count()->group(context.pageAttributes.hasTopSection.config),page:view->count())->filter(page.location.type=stream)->tidy()->print(Table)"
+    datalabel: Percentage of Stream views by section type
+    interval: false
+  -
+    question: What are the most visited streams?
+    name: streamvisits
+    query: "page:view->count()->group(page.location.path)->filter(page.location.type=stream)->sortDesc()->print(Table)"
+    datalabel: Visits by stream
+    interval: false
+  -
     question: How many views are Stream pages getting?
     name: streamviews
     query: "page:view->count()->filter(page.location.type?stream,article,frontpage)->group(page.location.type)"
     datalabel: Visits to pages by type
+    colspan: 6
   -
     question: How many article views come from Streams?
     name: articleviews
     query: "page:view->count()->group(page.referrer.type)->filter(page.location.type=article)->filter(page.referrer.type?stream,article,frontpage)"
     datalabel: Visits to articles by referrer
-  -
-    question: How many clicks are Top Stories getting by position?
-    name: topstoriesposition
-    query: "@concat(cta:click->filter(context.domPath~top-stories-column-one),cta:click->filter(context.domPath~top-stories-column-two),cta:click->filter(context.domPath~opinion-and-analysis))->count()->filter(page.location.type=stream)->group(context.position)->tidy()->relabel(_headings,TopStoriesLeft,TopStoriesRight,Opinion)->print(ColumnChart)"
-    datalabel: Top Stories Position
-    interval: false
-  -
-    question: How many clicks is Most Read getting by position?
-    name: mostreadposition
-    query: "cta:click->filter(context.domPath~most-popular)->count()->filter(page.location.type=stream)->group(context.position)->tidy()->print(ColumnChart)"
-    datalabel: Most Read Position
-    interval: false
-  -
-    question: How many people are clicking on Most Read?
-    name: mostreadclicks
-    query: "cta:click->filter(context.domPath~most-popular)->group(page.location.type)->count()->tidy()"
-    datalabel: Most Read clicks
+    colspan: 6
   -
     question: What percentage of article views come from Streams?
     name: articleviewsperc
     query: "@concat(@pct(page:view->filter(page.referrer.type=stream),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=frontpage),page:view)->count()->filter(page.location.type=article),@pct(page:view->filter(page.referrer.type=article),page:view)->count()->filter(page.location.type=article))->relabel(_headings,Stream,Front Page,Article)"
     datalabel: Percentage of article views by referrer
+    colspan: 6
+  -
+    question: What's the CTR of the lead story on Sections?
+    name: sectionleadCTR
+    query: "@concat(@pct(cta:click->count()->filter(click.dataTrackablePath~main-link)->filter(click.dataTrackablePath~lead-story),page:view->count()),@pct(cta:click->count()->filter(click.dataTrackablePath~lead-story)->filter(click.dataTrackablePath~related),page:view->count()))->filter(page.location.type=stream)->filter(context.pageAttributes.hasTopSection.config=default)->relabel(_headings,LeadStory,RelatedLinks)"
+    datalabel: Visits to pages by type
+    colspan: 6
+  -
+    question: What's the CTR of Top Stories by position with Opinion?
+    name: topstoriesctrpositionopinion
+    query: "@concat(@pct(cta:click->filter(click.dataTrackablePath~top-stories-column-one)->group(context.position),page:view)->count(),@pct(cta:click->filter(click.dataTrackablePath~opinion-and-analysis)->group(context.position),page:view)->count())->filter(page.location.type=stream)->relabel(_headings,TopStoriesLeft,Opinion)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.pageAttributes.hasTopSection.hasOpinionAndAnalysis=true)->tidy()->print(ColumnChart)"
+    datalabel: Top Stories CTR by Position
+    colspan: 6
+  -
+    question: What's the CTR of Top Stories by position without Opinion?
+    name: topstoriesctrpositionnoopinion
+    query: "@concat(@pct(cta:click->filter(click.dataTrackablePath~top-stories-column-one)->group(context.position),page:view)->count(),@pct(cta:click->filter(click.dataTrackablePath~top-stories-column-two)->group(context.position),page:view)->count())->filter(page.location.type=stream)->relabel(_headings,TopStoriesLeft,TopStoriesRight)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.pageAttributes.hasTopSection.hasOpinionAndAnalysis!=true)->tidy()->print(ColumnChart)"
+    datalabel: Top Stories CTR by Position
+    colspan: 6
+  -
+    question: What's the CTR of Most Read by position?
+    name: mostreadposition
+    query: "@pct(cta:click->filter(click.dataTrackablePath~most-popular)->group(context.position),page:view)->count()->filter(page.location.type=stream)->tidy()->filter(page.location.type=stream)->filter(context.pageAttributes.hasMostRead=true)->print(ColumnChart)"
+    datalabel: Most Read Position
+    colspan: 6
+    interval: false
+  -
+    question: What's the CTR for Most Read?
+    name: mostreadctr
+    query: "@pct(cta:click->count()->group(page.location.type)->filter(click.dataTrackablePath~most-popular)->filter(page.location.type),page:view->count())->filter(page.location.type=stream)->filter(context.pageAttributes.hasMostRead=true)"
+    datalabel: Most Read CTR
+    colspan: 6
+  -
+    question: What's the CTR of Trending Topics?
+    name: trendingtopics
+    query: "@pct(cta:click->count()->filter(click.dataTrackablePath~trending-topics),page:view->count())->filter(page.location.type=stream)->filter(context.pageAttributes.hasTrendingTopics=true)"
+    datalabel: CTR of Trending Topics when shown
+    colspan: 6
   -
     question: What's the CTR from Streams to articles?
     name: articleCTR
-    query: "@pct(cta:click->filter(context.domPath~headline),page:view)->filter(page.location.type=stream)->count()"
+    query: "@pct(cta:click->filter(click.dataTrackablePath~headline),page:view)->filter(page.location.type=stream)->count()"
     datalabel: CTR from stream via headline
   -
     question: What's the CTR from Photo Diary on World?
     name: photoCTR
-    query: "@pct(cta:click->filter(context.domPath~photo-diary),page:view)->count()->filter(page.location.streamId?MQ==-U2VjdGlvbnM=)"
+    query: "@pct(cta:click->filter(click.dataTrackablePath~photo-diary),page:view)->count()->filter(page.location.streamId?MQ==-U2VjdGlvbnM=)"
     datalabel: CTR on Photo Diary
-  -
-    question: What's the CTR from the Video Component on Streams?
-    name: videoCTR
-    query: "@sum(cta:click->filter(context.domPath~video-highlights),cta:click->filter(context.domPath~related item))->count()->filter(page.location.type=stream)->print(LineChart)"
-    datalabel: CTR on Video
-  -
-    question: What's the CTR of related topics and in the news in Streams?
-    name: relatedCTR
-    query: "@pct(cta:click->count(device.spoorId)->filter(context.domPath~link)->group(context.domPath)->filter(context.domPath~sub-header),page:view->count()->filter(page.location.type=stream))"
-    datalabel: CTR from stream via related
   -
     question: What's the CTR to stories on Life and Arts?
     name: lifeandartsCTR
-    query: "@pct(cta:click->count()->filter(context.domPath~main-link),page:view->count())->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)"
+    query: "@pct(cta:click->count()->filter(click.dataTrackablePath~main-link),page:view->count())->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)"
     datalabel: CTR from Life and Arts
+  -
+    question: What's the scroll-depth on Section Pages with Opinion?
+    name: sectionsscrolldepthopinion
+    query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-story))->filter(page.location.type=stream)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.pageAttributes.hasTopSection.hasOpinionAndAnalysis=true)->filter(context.componentId)->sortDesc()->print(BarChart)"
+    datalabel: Scroll depth on Section Pages with Opinion
+    interval: false
+  -
+    question: What's the scroll-depth on Section Pages without Opinion?
+    name: sectionsscrolldepth
+    query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-story))->filter(page.location.type=stream)->filter(context.pageAttributes.hasTopSection.config=default)->filter(context.pageAttributes.hasTopSection.hasOpinionAndAnalysis!=true)->filter(context.componentId)->sortDesc()->print(BarChart)"
+    datalabel: Scroll depth on Section Pages without Opinion
+    interval: false
+  -
+    question: What's the scroll-depth on Life and Arts?
+    name: lifeandartsscrolldepth
+    query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-main))->filter(page.location.type=stream)->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)->filter(context.componentId)->sortDesc()->print(BarChart)"
+    datalabel: Scroll depth on Life and Arts
+    interval: false
   -
     question: How many articles are being referred from Life and Arts?
     name: lifeandartsReferral
     query: "page:view->count()->filter(page.referrer.path~life-arts)->filter(page.location.type=article)"
     datalabel: Articles read from Life and Arts
   -
-    question: What's the scroll-depth on Life and Arts?
-    name: lifeandartsscrolldepth
-    query: "@pct(page:scrolldepth->count()->group(context.componentId),page:scrolldepth->count()->filter(context.componentId=lead-main))->filter(page.location.type=stream)->filter(page.location.streamId=MTQ4-U2VjdGlvbnM=)->filter(context.componentId)->sortDesc()->print(BarChart)"
-    datalabel: Scroll depth on Life and Arts
+    question: How many views are stream pages getting by page number?
+    name: streampagedepth
+    query: "page:view->count()->group(context.pageAttributes.isPage)->filter(page.location.type=stream)->tidy()->sortDesc()->print(Table)"
+    datalabel: Views of stream pages by page number
     interval: false

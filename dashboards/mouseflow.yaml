@@ -23,7 +23,7 @@ charts:
       ->filter(page.location.host=www.ft.com)
       ->filter(user.geo.isFinancialTimesOffice=false)
       ->filter(page.referrer.host=www.ft.com)
-      ->filter(context.domPath~signup-form | submit)
+      ->filter(click.dataTrackablePath~signup-form | submit)
   -
     question: Barrier visitors
     name: barriers
@@ -42,31 +42,31 @@ charts:
     name: myft
     query: cta:click
             ->count(device.spoorId)
-            ->filter(context.domPath~header-top | my-ft)
+            ->filter(click.dataTrackablePath~header-top | my-ft)
             ->filter(user.geo.isFinancialTimesOffice=false)
   -
     question: Visitor clicks on Search
     name: search
     query: cta:click
             ->count(device.spoorId)
-            ->filter(context.domPath~header-top | search-toggle)
+            ->filter(click.dataTrackablePath~header-top | search-toggle)
             ->filter(user.geo.isFinancialTimesOffice=false)
   -
     question: Visitor clicks on Menu
     name: menu
     query: cta:click
             ->count(device.spoorId)
-            ->filter(context.domPath~header-top | drawer-toggle)
+            ->filter(click.dataTrackablePath~header-top | drawer-toggle)
             ->filter(user.geo.isFinancialTimesOffice=false)
   -
     question: Visitor clicks on a Subscribe link
     name: subscribe
     query: cta:click
             ->count(device.spoorId)
-            ->filter(context.domPath~Subscribe)
+            ->filter(click.dataTrackablePath~Subscribe)
   -
     question: Visitors interacting with the header
     name: header
     query: cta:click
             ->count(device.spoorId)
-            ->filter(context.domPath~header)
+            ->filter(click.dataTrackablePath~header)
