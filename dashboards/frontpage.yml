@@ -24,9 +24,9 @@ charts:
     datalabel: View share
 
   -
-    question: What percentage of members visited the frontpage?
+    question: What percentage of users visit the frontpage?
     name: visitors/proportion
-    query: "@pct( page:view->count(user.uuid)->filter(page.location.type=frontpage), page:view->count(user.uuid) )"
+    query: "@concat(@pct(page:view->count(device.spoorId)->filter(page.location.type=frontpage),page:view->count(device.spoorId)),@pct(page:view->count(user.uuid)->filter(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid)->filter(user.uuid)),@pct(page:view->count(device.spoorId)->filter(!user.uuid)->filter(page.location.type=frontpage),page:view->count(device.spoorId)->filter(!user.uuid)))->relabel(_headings,All,Logged In,Anonymous)->relTime(previous_14_days)->interval(d)"
     datalabel: Member share
 
   -
