@@ -11,19 +11,19 @@ charts:
     datalabel: Article views by subscriber
     colspan: 12
   -
-    question: Labelling AB Test: How many articles are Standard and Premium users reading?
+    question: Labelling AB Test - How many articles are Standard and Premium users reading?
     name: abtest/labellingccc
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.premiumContentIndicator)->relTime(this_3_days)->group(user.cohort.productNames)->tidy()->relabel(user.cohort.productNames,Registered,Premium,Standard,,,,)->print(Table)"
     datalabel: Article views by cohort
     colspan: 6
   -
-    question: Homepage A/B Test: How many articles are Standard and Premium users reading?
+    question: Homepage A/B Test - How many articles are Standard and Premium users reading?
     name: abtest/hpccc
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.frontPagePremiumSection)->relTime(this_3_days)->group(user.cohort.productNames)->tidy()->relabel(user.cohort.productNames,Registered,Premium,Standard,,,,)->print(Table)"
     datalabel: Article views by cohort
     colspan: 6
   -
-    question: Homepage A/B Test: What is the ratio of Premium content being read?
+    question: Homepage A/B Test - What is the ratio of Premium content being read?
     name: abtest/hpratio
     query: "@pct(page:view->count()->filter(page.location.type=article)->filter(content.classification=3),page:view->count()->filter(page.location.type=article))->filter(page.location.type=article)->relTime(this_3_days)->group(user.cohort.productNames)->group(user.ab.tests.frontPagePremiumSection)->tidy()->relabel(user.cohort.productNames,Registered,Premium,Standard,,,,)->print(Table)"
     datalabel: Premium to standard article ratio
