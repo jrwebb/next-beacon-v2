@@ -32,7 +32,7 @@ charts:
   -
     question: What % of users start a visit on the homepage?
     name: visitors/landing-proportion
-    query: "@pct(page:view->count()->filter(page.location.type=frontpage)->filter(page.referrer.websiteType)->filter(page.referrer.websiteType!=internal),page:view->count()->filter(page.location.type=frontpage))->relTime(previous_14_days)->interval(d)"
+    query: "@pct(page:view->count(device.spoorId)->filter(page.location.type=frontpage)->filter(page.referrer.websiteType!=internal),page:view->count(device.spoorId))->tidy()->relTime(previous_14_days)->interval(d)"
 
   -
     question:  What % of page views in a session are homepage views?
