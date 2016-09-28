@@ -7,40 +7,40 @@ charts:
 
   # PRE-PREPARED --------------------------------------------------
   -
-    question: How many views does the front page recieve?
+    question: How many views does the homepage recieve?
     name: views
     query: "@concat(page:view->count()->filter(device.spoorId)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)->filter(user.uuid)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)->filter(!user.uuid)->filter(page.location.type=frontpage))->relTime(previous_14_days)->interval(d)->relabel(_headings,All,Logged In,Anonymous)"
     datalabel: Total
     colspan: 12
   -
-    question: Are daily front page member counts increasing?
+    question: Are daily homepage member counts increasing?
     name: members/daily
     query: page:view->count(user.uuid)->filter(page.location.type=frontpage)
     datalabel: Members
   -
-    question: What percentage of total page views are of the frontpage?
+    question: What percentage of total page views are of the homepage?
     name: views/proportion
     query: "@concat(@pct(page:view->count()->filter(device.spoorId)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)),@pct(page:view->count()->filter(device.spoorId)->filter(user.uuid)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)->filter(user.uuid)),@pct(page:view->count()->filter(device.spoorId)->filter(!user.uuid)->filter(page.location.type=frontpage),page:view->count()->filter(device.spoorId)->filter(!user.uuid)))->relTime(previous_14_days)->interval(d)->relabel(_headings,All,Logged In,Anonymous)"
     datalabel: View share
 
   -
-    question: What percentage of users visit the frontpage?
+    question: What percentage of users visit the homepage?
     name: visitors/proportion
     query: "@concat(@pct(page:view->count(device.spoorId)->filter(page.location.type=frontpage),page:view->count(device.spoorId)),@pct(page:view->count(user.uuid)->filter(user.uuid)->filter(page.location.type=frontpage),page:view->count(user.uuid)->filter(user.uuid)),@pct(page:view->count(device.spoorId)->filter(!user.uuid)->filter(page.location.type=frontpage),page:view->count(device.spoorId)->filter(!user.uuid)))->relabel(_headings,All,Logged In,Anonymous)->relTime(previous_14_days)->interval(d)"
     datalabel: Member share
 
   -
-    question: What % of users start a visit on the front page?
+    question: What % of users start a visit on the homepage?
     name: visitors/landing-proportion
     query: "@pct(page:view->count()->filter(page.location.type=frontpage)->filter(page.referrer.websiteType)->filter(page.referrer.websiteType!=internal),page:view->count()->filter(page.location.type=frontpage))->relTime(previous_14_days)->interval(d)"
 
   -
-    question: How many times does a user visit the front page in one session?
+    question:  What % of page views in a session are homepage views?
     name: frontpage-views/session
     query: "@ratio(page:view->count()->filter(page.location.type=frontpage),page:view->count(spoorInfo.sessionId))->relTime(this_14_days)->interval(d)"
 
   -
-    question: What % of counted content viewed is clicked from the front page?
+    question: What % of counted content viewed is clicked from the homepage?
     name: content-views/referrer-frontpage
     query: "@pct(page:view->count()->filter(content.isCountedContent)->filter(page.referrer.type=frontpage),page:view->count()->filter(content.isCountedContent))->relTime(this_14_days)->interval(d)"
 
@@ -48,7 +48,7 @@ charts:
   -
     question: What percentage of homepage users are scrolling to each section?
     name: scrolldepth
-    query: "@pct( page:scrolldepth->count()->group(context.componentId), page:scrolldepth->count()->filter(context.componentId=headlines) )->filter(page.location.type=frontpage)->filter(context.componentId)->sortDesc()"
+    query: "@pct( page:scrolldepth->count(device.spoorId)->group(context.componentId), page:scrolldepth->count(device.spoorId)->filter(context.componentId=headlines) )->filter(page.location.type=frontpage)->filter(context.componentId)->sortDesc()"
     printer: BarChart
     datalabel: Scroll depth
 
@@ -78,7 +78,7 @@ charts:
 
   # CTR (all) --------------------------------------------------
   -
-    question: How many clicks are logged in users making on the frontpage?
+    question: How many clicks are logged in users making on the homepage?
     name: ctr/average/clicks/all
     query: "@ratio( cta:click->count()->filter(user.uuid), page:view->count(user.uuid) )->filter(page.location.type=frontpage)"
     datalabel: Average clicks per user
@@ -169,13 +169,13 @@ charts:
 
   # BROWSER USAGE --------------------------------------------------
   -
-    question: Which browsers are used for frontpage visits (percentage)?
+    question: Which browsers are used for homepage visits (percentage)?
     name: browsers/visits/percentage
     query: "@pct( page:view->count()->group(device.browserName), page:view->count() )->filter(page.location.type=frontpage)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false)->sortDesc()"
     printer: BarChart
     datalabel: Percentage of frontpage visits
   -
-    question: Which browsers are used for frontpage visits (number)?
+    question: Which browsers are used for homepage visits (number)?
     name: browsers/visits/total
     query: page:view->count()->filter(page.location.type=frontpage)->filter(user.uuid)->filter(device.browserName)->filter(device.browserName!=false)->group(device.browserName)->sortDesc()
     printer: BarChart
