@@ -18,7 +18,7 @@ charts:
   -
     question: Which platform are users joining light signup via?
     name: lighsignup-product
-    query: "light-signup:subscribed->count(device.spoorId)->group(context.product)->filter(context.isTestEvent=false)->relTime(this_14_days)->interval(d)"
+    query: "light-signup:subscribed->count(device.spoorId)->group(context.product)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.product)->interval(d)"
     printer: StackedColumnChart
   -
     question: Which topic from the LSU chooser are most popular ?
@@ -28,7 +28,7 @@ charts:
   -
     question: "How many (trackable) light signup subscribers go on to purchase a subscription?"
     name: lightsignup-conversion
-    query: "@funnel(light-signup:subscribed->count(device.spoorId)->filter(context.isTestEvent=false),signup:subscription-created->count(device.spoorId)->filter(context.isTestEvent=false))->with(device.spoorId)"
+    query: "@funnel(light-signup:subscribed->count(device.spoorId),signup:subscription-created->count(device.spoorId))->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->with(device.spoorId)->relTime(this_6_months)"
     printer: Table
     datalabel: "Conversion all-time"
   -
