@@ -47,7 +47,7 @@ charts:
   -
     question: What are the traffic sources to the homepage? (null = Direct Traffic)
     name: referrers/sources
-    query: "page:view->count(device.spoorId)->group(page.referrer.type)->filter(page.location.type=frontpage)"
+    query: "page:view->count(device.spoorId)->group(page.referrer.websiteType)->filter(page.location.type=frontpage)"
     printer: PieChart
 
   -
