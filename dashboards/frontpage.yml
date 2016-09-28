@@ -44,6 +44,18 @@ charts:
     name: content-views/referrer-frontpage
     query: "@pct(page:view->count()->filter(content.isCountedContent)->filter(page.referrer.type=frontpage),page:view->count()->filter(content.isCountedContent))->relTime(this_14_days)->interval(d)"
 
+  -
+    question: What are the traffic sources to the homepage? (null = Direct Traffic)
+    name: referrers/sources
+    query: "page:view->count(device.spoorId)->group(page.referrer.type)->filter(page.location.type=frontpage)"
+    printer: PieChart
+
+  -
+    question: What are the external referrers to the homepage?
+    name: referrers/external
+    query: "page:view->count(device.spoorId)->group(page.referrer.name)->filter(page.referrer.name!~FT)->filter(page.referrer.name)->filter(page.location.type=frontpage)->sortDesc(device.spoorId)"
+    printer: PieChart
+    
   # SCROLL DEPTH --------------------------------------------------
   -
     question: What percentage of homepage users are scrolling to each section?
