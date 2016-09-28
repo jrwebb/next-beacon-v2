@@ -32,7 +32,7 @@ charts:
   -
     question: What % of users start a visit on the front page?
     name: visitors/landing-proportion
-    query: "@pct(page:view->count()->group(page.referrer.websiteType!=internal)->filter(page.location.type=frontpage),page:view->count()->group(page.referrer.websiteType!=internal))->relTime(this_14_days)->interval(d)"
+    query: "@pct(page:view->count()->filter(page.location.type=frontpage)->filter(page.referrer.websiteType)->filter(page.referrer.websiteType!=internal),page:view->count()->filter(page.location.type=frontpage))->relTime(previous_14_days)->interval(d)"
 
   -
     question: How many times does a user visit the front page in one session?
