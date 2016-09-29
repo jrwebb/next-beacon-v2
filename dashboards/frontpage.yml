@@ -32,7 +32,7 @@ charts:
   -
     question: What % of users start a visit on the homepage?
     name: visitors/landing-proportion
-    query: "@pct(page:view->count()->filter(page.location.type=frontpage)->filter(page.referrer.websiteType)->filter(page.referrer.websiteType!=internal),page:view->count()->filter(page.location.type=frontpage))->relTime(previous_14_days)->interval(d)"
+    query: "@pct(page:view->count(device.spoorId)->filter(page.location.type=frontpage)->filter(page.referrer.websiteType!=internal),page:view->count(device.spoorId))->tidy()->relTime(previous_14_days)->interval(d)"
 
   -
     question:  What % of page views in a session are homepage views?
@@ -47,7 +47,7 @@ charts:
   -
     question: What are the traffic sources to the homepage? (null = Direct Traffic)
     name: referrers/sources
-    query: "page:view->count(device.spoorId)->group(page.referrer.type)->filter(page.location.type=frontpage)"
+    query: "page:view->count(device.spoorId)->group(page.referrer.websiteType)->filter(page.location.type=frontpage)"
     printer: PieChart
 
   -
