@@ -18,7 +18,7 @@ charts:
   -
     question: Which platform are users joining light signup via?
     name: lighsignup-product
-    query: "light-signup:subscribed->count(device.spoorId)->group(context.product)->filter(context.isTestEvent=false)->relTime(this_14_days)->interval(d)"
+    query: "light-signup:subscribed->count(device.spoorId)->group(context.product)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.product)->interval(d)"
     printer: StackedColumnChart
   -
     question: Which topic from the LSU chooser are most popular ?
@@ -28,7 +28,7 @@ charts:
   -
     question: "How many (trackable) light signup subscribers go on to purchase a subscription?"
     name: lightsignup-conversion
-    query: "@funnel(light-signup:subscribed->count(device.spoorId)->filter(context.isTestEvent=false),signup:subscription-created->count(device.spoorId)->filter(context.isTestEvent=false))->with(device.spoorId)"
+    query: "@funnel(light-signup:subscribed->count(device.spoorId),signup:subscription-created->count(device.spoorId))->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->with(device.spoorId)->relTime(this_6_months)"
     printer: Table
     datalabel: "Conversion all-time"
   -
@@ -49,3 +49,21 @@ charts:
     datalabel: "Total interactions"
     interval: false
     printer: Table
+  -
+    question: How many anon users are sent the light signup email? 
+    name: emailsent
+    query: email:delivery->filter(context.product=light-signup)->count(context.deviceId)
+  -
+    question: How many anon users open the light signup email?
+    name: emailopens
+    query: email:open->filter(context.product=light-signup)->count(context.deviceId)
+  -
+    question: How many anon users clicked on the light signup email?
+    name: emailclicks
+    query: email:click->filter(context.product=light-signup)->count(context.deviceId)
+  -
+    question: Light Sign up subscription by device   
+    name: devicetype 
+    query: light-signup:subscribed->count()->filter(context.isTestEvent=false)->group(device.primaryHardwareType)
+    printer: BarChart
+    interval: false
