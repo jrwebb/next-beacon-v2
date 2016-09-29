@@ -7,26 +7,7 @@ charts:
   -
     question: How many visitors do we get to the form every day?
     name: compare
-    query: "@concat(
-              page:view
-              ->count(device.spoorId)
-              ->filter(page.location.normalizedPath~/signup)
-              ->filter(page.location.host~ft.com)
-              ->filter(user.geo.isFinancialTimesOffice=false)
-              ->filter(page.referrer.host~ft.com)
-              ->filter(page.referrer.normalizedPath!~/signup)
-              ->interval(d),
-
-              page:view
-              ->count()
-              ->filter(page.location.normalizedPath~/signup)
-              ->filter(page.location.host~ft.com)
-              ->filter(user.geo.isFinancialTimesOffice=false)
-              ->filter(page.referrer.host~ft.com)
-              ->filter(page.referrer.normalizedPath!~/signup)
-              ->interval(d)
-            )
-          ->relabel(_headings,Unique visitors,Pageviews)"
+    query: "@concat(page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup),page:view->count()->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup),page:view->count()->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup)->filter(!user.uuid))->relabel(_headings,Unique all visitors,Pageviews all,Unique anon,Pageviews anon)->tidy()"
     colspan: 8
     datalabel: Signup success rate
   -
