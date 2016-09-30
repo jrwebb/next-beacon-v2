@@ -70,3 +70,20 @@ charts:
     name: Product Type
     query: "signup:subscription-created->count()->group(context.offer.name)->filter(context.offer.name)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_4_weeks)"
     printer: PieChart
+  -
+    question: Buy now CC Zuora performance?
+    name: Submit Credit Card 
+    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=submitCreditCard)->relTime(previous_24_hours)->interval(h)"
+  -
+    question: Buy now DD Zuora performance?
+    name: Submit Direct Debit
+    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=submitDirectDebit)->relTime(previous_24_hours)->interval(h)"
+  -
+    question: Change CC Zuora performance?
+    name: Change CC
+    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=renderCreditCard)->relTime(previous_24_hours)->interval(h)"
+  -
+    question: Change DD Zuora performance?
+    name: Change DD
+    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=renderCreditCard)->relTime(previous_24_hours)->interval(h)"
+    
