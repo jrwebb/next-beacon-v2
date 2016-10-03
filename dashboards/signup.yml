@@ -64,11 +64,17 @@ charts:
     question: Which payment methods are being used to purchse subscriptions?
     name: Payment Method
     query: "signup:subscription-created->count()->group(context.paymentMethod)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_4_weeks)"
-    printer: PieChart
   -
     question: What is the split of subscriptions per product type?
     name: Product Type
-    query: "signup:subscription-created->count()->group(context.offer.name)->filter(context.offer.name)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_4_weeks)"
+    query: "signup:subscription-created
+  ->count()
+  ->group(context.offer.isTrial,context.offer.name)
+  ->filter(context.isTestEvent=false)
+  ->filter(user.geo.isFinancialTimesOffice=false)
+  ->filter(context.offer.name)
+  ->relTime(this_4_weeks)
+  ->print(Table)"
     printer: PieChart
   -
     question: Buy now CC Zuora performance?
