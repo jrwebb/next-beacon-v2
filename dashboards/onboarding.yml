@@ -1,0 +1,73 @@
+---
+id: onboarding
+title: Onboarding
+isPrimary: true
+charts:
+  -
+    question: "How many users view the Tips (tour) via the welcome msg CTA"
+    name: dashboard/onboarding/welcometour
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(click.dataTrackablePath~welcome | tour-page)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->group(device.mobileDevice)
+              ->filter(device.mobileDevice)
+              ->reorder(device.mobileDevice,true,false)
+              ->relabel(device.mobileDevice,Mobile,Desktop)
+              "
+    colspan: 12 L6
+  -
+    question: "How many users are giving Feedback via the welcome banner"
+    name: dashboard/onboarding/feedbacktour
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(click.dataTrackablePath~welcome | nps-feedback)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->group(device.mobileDevice)
+              ->filter(device.mobileDevice)
+              ->reorder(device.mobileDevice,true,false)
+              ->relabel(device.mobileDevice,Mobile,Desktop)
+              "
+    colspan: 12 L6
+  -
+    question: "How many users are using help CTA via the welcome banner"
+    name: dashboard/onboarding/helptour
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(click.dataTrackablePath~welcome | help)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->group(device.mobileDevice)
+              ->filter(device.mobileDevice)
+              ->reorder(device.mobileDevice,true,false)
+              ->relabel(device.mobileDevice,Mobile,Desktop)
+              "
+    colspan: 12 L6
+  -
+    question: "How many times are users (avg) using help CTA via welcome banner"
+    name: dashboard/onboarding/helptouravg
+    query: "@ratio(
+              cta:click
+                ->count()
+                ->filter(user.uuid)
+                ->filter(click.dataTrackablePath~welcome | help)
+                ->filter(user.subscriptions.isStaff!=true),
+              cta:click
+                ->count(user.uuid)
+                ->filter(click.dataTrackablePath~welcome | help)
+                ->filter(user.subscriptions.isStaff!=true)
+            )
+              "
+    colspan: 12 L6
+  -
+    question: "How many users are minimising/suspending the welcome strip"
+    name: dashboard/onboarding/welcomemin
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(click.dataTrackablePath~welcome | toggled)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->group(device.mobileDevice)
+              ->filter(device.mobileDevice)
+              ->reorder(device.mobileDevice,true,false)
+              ->relabel(device.mobileDevice,Mobile,Desktop)
+              "
+    colspan: 12 L6
