@@ -5,25 +5,25 @@ title: Signup
 isPrimary: true
 charts:
   -
-    question: How many visitors do we get to the form every day?
+    question: 1. How many visitors do we get to the form every day?
     name: compare
     query: "@concat(page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup),page:view->count()->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup),page:view->count()->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup)->filter(!user.uuid))->relabel(_headings,Unique all visitors,Pageviews all,Unique anon,Pageviews anon)->tidy()"
     colspan: 8
     datalabel: Signup success rate
   -
-    question: What's our conversion rate this week? (%)
+    question: 2. What's our conversion rate this week? (%)
     name: this week's conversion rate
     query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_7_days),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup)->filter(!user.uuid)->relTime(this_7_days))"
     interval: false
     colspan: 4
     datalabel: weekly conversion rate
   -
-    question: What's our weekly conversion rate trend?
+    question: 3. What's our weekly conversion rate trend?
     name: weekly conversion rate
     query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup)->relTime(this_6_weeks))->interval(w)"
     printer: LineChart
   -
-    question: How many successful subscriptions have we had (this 4 weeks)?
+    question: 4. How many successful subscriptions have we had (this 4 weeks)?
     name: subscriptions spoor
     interval: false
     query: "signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_4_weeks)->print(ColumnChart)"
@@ -31,14 +31,14 @@ charts:
     colspan: 4
     datalabel: spoor
   -
-    question: How many Failed subscription events?
+    question: 5. How many Failed subscription events?
     name: failed
     query: "signup:subscription-creation-failed->count()->filter(!user.uuid)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->interval(w)"
     printer: ColumnChart
     colspan: 4
     datalabel: Failed
   -
-    question: What's our weekly bounce rate trend?
+    question: 6. What's our weekly bounce rate trend?
     name: bounces trend
     timeframe: this_6_weeks
     query: "@pct(signup:bounce->count(),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.referrer.normalizedPath!~/signup)->filter(page.location.host~ft.com)->filter(page.referrer.host~ft.com))->filter(user.geo.isFinancialTimesOffice=false)->filter(!user.uuid)->relTime(this_6_weeks)->interval(w)"
@@ -46,7 +46,7 @@ charts:
     colspan: 3
     printer: LineChart
   -
-    question: Existing users trying to subscribe?
+    question: 7. Existing users trying to subscribe?
     name: exists
     query: signup:notification
             ->count(device.spoorId)
@@ -61,35 +61,29 @@ charts:
     printer: ColumnChart
     colspan: 4
   -
-    question: Which payment methods are being used to purchse subscriptions?
+    question: 8. Which payment methods are being used to purchse subscriptions?
     name: Payment Method
     query: "signup:subscription-created->count()->group(context.paymentMethod)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_4_weeks)"
   -
-    question: What is the split of subscriptions per product type?
+    question: 9. What is the split of subscriptions per product type?
     name: Product Type
-    query: "signup:subscription-created
-  ->count()
-  ->group(context.offer.isTrial,context.offer.name)
-  ->filter(context.isTestEvent=false)
-  ->filter(user.geo.isFinancialTimesOffice=false)
-  ->filter(context.offer.name)
-  ->relTime(this_4_weeks)
-  ->print(Table)"
-    printer: PieChart
+    query: "signup:subscription-created->count()->group(context.offer.isTrial,context.offer.name)
+  ->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)
+  ->filter(context.offer.name)->relTime(this_4_weeks)->print(Table)"
   -
-    question: Buy now CC Zuora performance?
+    question: 10. Buy now CC Zuora performance?
     name: Submit Credit Card 
     query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=submitCreditCard)->relTime(previous_24_hours)->interval(h)"
   -
-    question: Buy now DD Zuora performance?
+    question: 11. Buy now DD Zuora performance?
     name: Submit Direct Debit
     query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=submitDirectDebit)->relTime(previous_24_hours)->interval(h)"
   -
-    question: Change CC Zuora performance?
+    question: 12. Change CC Zuora performance?
     name: Change CC
     query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=renderCreditCard)->relTime(previous_24_hours)->interval(h)"
   -
-    question: Change DD Zuora performance?
+    question: 13. Change DD Zuora performance?
     name: Change DD
     query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=renderCreditCard)->relTime(previous_24_hours)->interval(h)"
     
