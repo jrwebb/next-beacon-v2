@@ -39,18 +39,18 @@ charts:
   -
     question: 7. LSU subscription by Device
     name: lightsignup-device
-    query: "light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)"
+    query: "light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->print(PieChart)"
     printer: PieChart
     datalabel: "Device Share"
   -
     question: 8. How many anon users are sent the light signup email? 
     name: emailsent
-    query: email:delivery->filter(context.product=light-signup)->count(context.deviceId)->filter(user.geo.isFinancialTimesOffice=false)
+    query: email:delivery->count(context.deviceId)->group(context.product)->filter(context.product=light-signup)->filter(context.product)->interval(d)
   -
     question: 9. How many anon users open the light signup email?
     name: emailopens
-    query: email:open->filter(context.product=light-signup)->count(context.deviceId)->filter(user.geo.isFinancialTimesOffice=false)
+    query: email:open->count()->filter(context.product=light-signup)->filter(user.geo.isFinancialTimesOffice=false)->interval(d)
   -
     question: 10. How many anon users clicked on the light signup email?
     name: emailclicks
-    query: email:click->filter(context.product=light-signup)->count(context.deviceId)->filter(user.geo.isFinancialTimesOffice=false)
+    query: email:click->filter(context.product=light-signup)->count()->filter(user.geo.isFinancialTimesOffice=false)
