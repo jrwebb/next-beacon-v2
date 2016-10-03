@@ -45,7 +45,7 @@ charts:
   -
     question: 8. How many anon users are sent the light signup email? 
     name: emailsent
-    query: email:delivery->count()->group(context.product)->filter(context.product=light-signup)->filter(context.product)->interval(d)
+    query: email:delivery->count()->group(context.product)->filter(context.product=light-signup)->filter(context.product)->interval(d)->print(LineChart)
   -
     question: 9. How many anon users open the light signup email?
     name: emailopens
