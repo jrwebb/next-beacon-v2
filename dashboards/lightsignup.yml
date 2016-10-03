@@ -28,7 +28,7 @@ charts:
   -
     question: "5. How many (trackable) light signup subscribers go on to purchase a subscription?"
     name: lightsignup-conversion
-    query: "@funnel(light-signup:subscribed->count(device.spoorId),signup:subscription-created->count(device.spoorId))->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->with(device.spoorId)->relTime(this_6_months)"
+    query: "@funnel(light-signup:subscribed->count(device.spoorId),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup),signup:subscription-created->count(device.spoorId))>with(device.spoorId)relTime(this_6_months)->print(Table)"
     printer: Table
     datalabel: "Conversion all-time"
   -
