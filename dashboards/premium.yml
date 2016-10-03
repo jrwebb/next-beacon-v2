@@ -12,6 +12,12 @@ charts:
     colspan: 12
     interval: false
   -
+    question: Labelling AB Test - Barriers seen as a percentage of article views?
+    name: abtest/labellingbarrier
+    query: "@pct(barrier:view->filter(context.type=premium),page:view->filter(page.location.type=article))->count()->filter(user.uuid)->group(user.ab.tests.premiumContentIndicator)"
+    datalabel: Barrier views as a percentage of article views
+    colspan: 6
+-
     question: Labelling AB Test - How many articles are Standard and Premium users reading?
     name: abtest/labellingccc
     query: "@ratio(page:view->count(),page:view->count(user.uuid))->filter(page.location.type=article)->group(user.ab.tests.premiumContentIndicator)->relTime(this_3_days)->group(user.cohort.productNames)->tidy()->relabel(user.cohort.productNames,Registered,Premium,Standard,,,,)->print(Table)"
