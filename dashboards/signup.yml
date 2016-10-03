@@ -69,7 +69,7 @@ charts:
     name: Product Type
     query: "signup:subscription-created->count()->group(context.offer.isTrial,context.offer.name)
   ->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)
-  ->filter(context.offer.name)->relTime(this_4_weeks)->print(Table)"
+  ->filter(context.offer.name)->relTime(this_4_weeks)->print(BarChart)"
   -
     question: 10. Buy now CC Zuora performance?
     name: Submit Credit Card 
