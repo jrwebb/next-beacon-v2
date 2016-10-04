@@ -3,6 +3,9 @@ id: onboarding
 title: Onboarding
 isPrimary: true
 charts:
+
+#### Welcome bar stuff
+
   -
     question: "How many users view the Tips (tour) via the welcome msg CTA"
     name: dashboard/onboarding/welcometour
@@ -86,6 +89,28 @@ charts:
               ->filter(device.mobileDevice)
               ->reorder(device.mobileDevice,true,false)
               ->relabel(device.mobileDevice,Mobile,Desktop)
-              ->interval(d)
+              "
+    colspan: 12 L6
+
+#### Footer stuff
+
+  -
+    question: "How many users visit help from Footer"
+    name: dashboard/onboarding/footerhelp
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(click.dataTrackablePath~footer)
+              ->filter(click.dataTrackablePath~Help)
+              ->filter(user.subscriptions.isStaff!=true)
+              "
+    colspan: 12 L6
+  -
+    question: "How many users opt out from the Footer"
+    name: dashboard/onboarding/footeropt-outs
+    query: "cta:click
+              ->count(user.uuid)
+              ->filter(click.dataTrackablePath~footer)
+              ->filter(click.dataTrackablePath~Old FT.com)
+              ->filter(user.subscriptions.isStaff!=true)
               "
     colspan: 12 L6
