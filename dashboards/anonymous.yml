@@ -54,24 +54,16 @@ charts:
   - #TODO group by AB test
     question: 8. Are barriers successful at getting users to sign in or subscribe
     name: barriers/click-types
-    query: "@concat(
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath!~subscribe)->filter(click.dataTrackablePath!~sign-in),
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~subscribe),
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~sign-in)
-    )->relabel(_headings,Other,Subscribe,Sign in)"
+    query: "@concat(@sum(cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath!~subscribe)->filter(click.dataTrackablePath!~sign-in),cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath!~subscribe)->filter(context.domPath!~sign-in)),@sum(cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~subscribe),cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath~subscribe)),@sum(cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~sign-in),cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(context.domPath~sign-in)))->filter(user.geo.isFinancialTimesOffice=false)->relabel(_headings,Other,Subscribe,Sign in)->tidy()"
     colspan: 12 L4
   -
     question: 9. What's the distribution of propensity scores on Next?
     name: propensity
-    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(user.propensity.any.cohort)
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)->group(user.propensity.any.cohort)
     printer: PieChart
     interval: false
   -
-    question: 10. Interactions on LSU firstFT (live 3rd Sep)
-    name: LSU-firstFT
-    query: cta:click->count(device.spoorId)->group(click.dataTrackablePath)->filter(click.dataTrackablePath~light-signup | firstft)->filter(user.geo.isFinancialTimesOffice=false)->print(Table)
-  -
-    question: 11. Interactions on Marketing Promo
+    question: 10. Interactions on Marketing Promo
     name: Marketing Promo
-    query: cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo)->relTime(this_6_months)->interval(month)
+    query: @sum(cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo),cta:click->count(device.spoorId)->filter(click.dataTrackablePath~marketing-promo))->relTime(this_6_months)->interval(month)->filter(user.geo.isFinancialTimesOffice=false)
   
