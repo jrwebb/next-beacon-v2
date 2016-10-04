@@ -7,39 +7,39 @@ charts:
   -
     question: 1. Are weekly anonymous visitor counts increasing?
     name: weekly
-    query: page:view->count(device.spoorId)->filter(!user.uuid)
-    timeframe: this_14_weeks
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)
+    timeframe: this_12_weeks
     interval: w
     datalabel: Anonymous visitors per week
   -
     question: 2. Are daily anonymous visitor counts increasing?
     name: daily
-    query: page:view->count(device.spoorId)->filter(!user.uuid)
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)
     timeframe: this_4_weeks
     interval: d
     datalabel: Anonymous visitors per day
   -
     question: 3. Which sites are anons visiting from?
     name: referrers
-    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->sortDesc()
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->filter(user.geo.isFinancialTimesOffice=false)->sortDesc()
     printer: PieChart
     interval: false
   -
     question: 4. Which pages are anons viewing most?
     name: pages
-    query: "page:view->count(device.spoorId)->filter(!user.uuid)->group(page.location.path)->top(20)"
+    query: "page:view->count(device.spoorId)->filter(!user.uuid)->group(page.location.path)->filter(user.geo.isFinancialTimesOffice=false)->top(20)"
     printer: BarChart
     datalabel: "% of anons visting the page"
   -
     question: 5. What page type are anon users landing on?
     name: landing
-    query: "page:view->count(device.spoorId)->group(page.location.type)->filter(!user.uuid)->print(PieChart)"
+    query: "page:view->count(device.spoorId)->group(page.location.type)->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)->print(PieChart)"
     printer: PieChart
     datalabel: "% of traffic by page Type"
   -
     question: 6. Which barriers are anons being presented with?
     name: barriers/type
-    query: barrier:view->count()->group(context.type)
+    query: barrier:view->count()->group(context.type)->filter(user.geo.isFinancialTimesOffice=false)->filter(!user.uuid)
     colspan: 12 L4
   # -
   #   question: Where are barriers being shown?
@@ -48,10 +48,7 @@ charts:
   -
     question: 7. Are users interacting with barriers
     name: barriers/click-count
-    query: "@pct(
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier),
-      barrier:view->count(device.spoorId)
-    )"
+    query: "@pct(@sum(cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(user.geo.isFinancialTimesOffice=false),cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(user.geo.isFinancialTimesOffice=false)),barrier:view->count(device.spoorId)->filter(user.geo.isFinancialTimesOffice=false))->tidy()"
     datalabel: pct of users clicking on barriers
     colspan: 12 L4
   - #TODO group by AB test
