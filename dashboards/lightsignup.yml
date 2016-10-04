@@ -5,65 +5,52 @@ title: Light Signup
 isPrimary: true
 charts:
   -
-    question: How many subscribers does light signup get every day?
+    question: 1. How many subscribers does light signup get every day?
     name: lightsignup
     query: "light-signup:subscribed->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->interval(d)->relTime(this_6_weeks)->print(LineChart)"
     datalabel: "Subscribers p/day"
   -
-    question: Subscriber rate compared to anonymous article traffic served the LSU form?
+    question: 2. Subscriber rate compared to anonymous article traffic served the LSU form?
     name: views-to-subscriptions
     query: "@concat(page:view->count(device.spoorId)->filter(!user.uuid)->filter(page.location.type=article)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.url!~utm_term=lightsignup),light-signup:subscribed->count()->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false))"
     printer: StackedLineChart
     datalabel: "Subscribers p/day"
   -
-    question: Which platform are users joining light signup via?
+    question: 3. Which platform are users joining light signup via?
     name: lighsignup-product
     query: "light-signup:subscribed->count(device.spoorId)->group(context.product)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.product)->interval(d)"
     printer: StackedColumnChart
   -
-    question: Which topic from the LSU chooser are most popular ?
+    question: 4. Which topic from the LSU chooser are most popular ?
     name: lightsignup-topic
     query: "light-signup:subscribed->count(device.spoorId)->group(context.topics)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.topics)->relTime(this_60_days)"
     printer: PieChart
   -
-    question: "How many (trackable) light signup subscribers go on to purchase a subscription?"
+    question: "5. How many (trackable) light signup subscribers go on to purchase a subscription?"
     name: lightsignup-conversion
-    query: "@funnel(light-signup:subscribed->count(device.spoorId),signup:subscription-created->count(device.spoorId))->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->with(device.spoorId)->relTime(this_6_months)"
+    query: "@funnel(light-signup:subscribed->count(device.spoorId),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup),signup:subscription-created->count(device.spoorId))->with(device.spoorId)->relTime(this_2_months)"
     printer: Table
     datalabel: "Conversion all-time"
   -
-    question: How many visits to the subscription funnel does light signup generate?
+    question: 6. How many visits to the subscription funnel does light signup generate?
     name: lightsignup-funnel
     query: email:click->count(context.deviceId)->filter(context.product="light-signup")->filter(context.targetLinkUrl~"801043")
     datalabel: "Funnel clicks p/day"
   -
-    question: LSU subscription by Device
+    question: 7. LSU subscription by Device
     name: lightsignup-device
-    query: "light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false)"
+    query: "light-signup:subscribed->count()->group(device.primaryHardwareType)->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->print(PieChart)"
     printer: PieChart
     datalabel: "Device Share"
   -
-    question: Are Audience Dev users interacting with the sampling components?
-    name: auddev-interactions
-    query: cta:click->count(device.spoorId)->filter(!user.uuid)->group(click.dataTrackablePath)->filter(click.dataTrackablePath~sample-articles)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks)->print(Table)
-    datalabel: "Total interactions"
-    interval: false
-    printer: Table
-  -
-    question: How many anon users are sent the light signup email? 
+    question: 8. How many anon users are sent the light signup email? 
     name: emailsent
-    query: email:delivery->filter(context.product=light-signup)->count(context.deviceId)
+    query: email:delivery->count()->group(context.product)->filter(context.product=light-signup)->filter(context.product)->interval(d)->print(LineChart)
   -
-    question: How many anon users open the light signup email?
+    question: 9. How many anon users open the light signup email?
     name: emailopens
-    query: email:open->filter(context.product=light-signup)->count(context.deviceId)
+    query: email:open->count()->filter(context.product=light-signup)->filter(user.geo.isFinancialTimesOffice=false)->interval(d)
   -
-    question: How many anon users clicked on the light signup email?
+    question: 10. How many anon users clicked on the light signup email?
     name: emailclicks
-    query: email:click->filter(context.product=light-signup)->count(context.deviceId)
-  -
-    question: Light Sign up subscription by device   
-    name: devicetype 
-    query: light-signup:subscribed->count()->filter(context.isTestEvent=false)->group(device.primaryHardwareType)
-    printer: BarChart
-    interval: false
+    query: email:click->filter(context.product=light-signup)->count()->filter(user.geo.isFinancialTimesOffice=false)

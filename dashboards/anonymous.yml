@@ -5,76 +5,65 @@ title: Anonymous
 isPrimary: true
 charts:
   -
-    question: Are weekly anonymous visitor counts increasing?
+    question: 1. Are weekly anonymous visitor counts increasing?
     name: weekly
-    query: page:view->count(device.spoorId)->filter(!user.uuid)
-    timeframe: this_14_weeks
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)
+    timeframe: this_12_weeks
     interval: w
     datalabel: Anonymous visitors per week
   -
-    question: Are daily anonymous visitor counts increasing?
+    question: 2. Are daily anonymous visitor counts increasing?
     name: daily
-    query: page:view->count(device.spoorId)->filter(!user.uuid)
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)
     timeframe: this_4_weeks
     interval: d
     datalabel: Anonymous visitors per day
   -
-    question: Which sites are anons visiting from?
+    question: 3. Which sites are anons visiting from?
     name: referrers
-    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->sortDesc()
+    query: page:view->count(device.spoorId)->filter(!user.uuid)->group(page.referrer.name)->filter(page.referrer.name!~FT)->filter(user.geo.isFinancialTimesOffice=false)->sortDesc()
     printer: PieChart
     interval: false
   -
-    question: Which pages are anons viewing most?
+    question: 4. Which pages are anons viewing most?
     name: pages
-    query: "page:view->count(device.spoorId)->filter(!user.uuid)->group(page.location.path)->top(20)"
+    query: "page:view->count(device.spoorId)->filter(!user.uuid)->group(page.location.type)->filter(user.geo.isFinancialTimesOffice=false)->top(20)"
     printer: BarChart
     datalabel: "% of anons visting the page"
   -
-    question: What page type are anon users landing on?
+    question: 5. What page type are anon users landing on?
     name: landing
-    query: "page:view->count(device.spoorId)->group(page.location.type)->filter(!user.uuid)->print(PieChart)"
+    query: "page:view->count(device.spoorId)->group(page.location.type)->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)->print(PieChart)"
     printer: PieChart
     datalabel: "% of traffic by page Type"
   -
-    question: Which barriers are anons being presented with?
+    question: 6. Which barriers are anons being presented with?
     name: barriers/type
-    query: barrier:view->count()->group(context.type)
+    query: barrier:view->count()->group(context.type)->filter(user.geo.isFinancialTimesOffice=false)->filter(!user.uuid)
     colspan: 12 L4
   # -
   #   question: Where are barriers being shown?
   #   name: barriers/where
   #   query: barrier:view->count()->group(context.url)
   -
-    question: Are users interacting with barriers
+    question: 7. Are users interacting with barriers
     name: barriers/click-count
-    query: "@pct(
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier),
-      barrier:view->count(device.spoorId)
-    )"
+    query: "@pct(@sum(cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(user.geo.isFinancialTimesOffice=false),cta:click->count(device.spoorId)->filter(context.domPath~barrier)->filter(user.geo.isFinancialTimesOffice=false)),barrier:view->count(device.spoorId)->filter(user.geo.isFinancialTimesOffice=false))->tidy()"
     datalabel: pct of users clicking on barriers
     colspan: 12 L4
   - #TODO group by AB test
-    question: Are barriers successful at getting users to sign in or subscribe
+    question: 8. Are barriers successful at getting users to sign in or subscribe
     name: barriers/click-types
-    query: "@concat(
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath!~subscribe)->filter(click.dataTrackablePath!~sign-in),
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~subscribe),
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~sign-in)
-    )->relabel(_headings,Other,Subscribe,Sign in)"
+    query: "@concat(cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath!~subscribe)->filter(click.dataTrackablePath!~sign-in),cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~subscribe),cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~sign-in))->relabel(_headings,Other,Subscribe,Sign in)"
     colspan: 12 L4
   -
-    question: What's the distribution of propensity scores on Next?
+    question: 9. What's the distribution of propensity scores on Next?
     name: propensity
     query: page:view->count(device.spoorId)->filter(!user.uuid)->group(user.propensity.any.cohort)
     printer: PieChart
     interval: false
   -
-    question: Interactions on LSU firstFT (live 3rd Sep)
-    name: LSU-firstFT
-    query: cta:click->count(device.spoorId)->group(click.dataTrackablePath)->filter(click.dataTrackablePath~light-signup | firstft)->filter(user.geo.isFinancialTimesOffice=false)->print(Table)
-  -
-    question: Interactions on Marketing Promo
+    question: 10. Interactions on Marketing Promo
     name: Marketing Promo
-    query: cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo)->relTime(this_6_months)->interval(month)
+    query: cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo)->relTime(this_6_months)->filter(user.geo.isFinancialTimesOffice=false)->interval(month)
   
