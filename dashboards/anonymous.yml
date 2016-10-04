@@ -63,7 +63,7 @@ charts:
     printer: PieChart
     interval: false
   -
-    question: 11. Interactions on Marketing Promo
+    question: 10. Interactions on Marketing Promo
     name: Marketing Promo
-    query: cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo)->relTime(this_6_months)->interval(month)
+    query: cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo)->relTime(this_6_months)->filter(user.geo.isFinancialTimesOffice=false)->interval(month)
   
