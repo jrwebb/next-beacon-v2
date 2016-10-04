@@ -27,7 +27,7 @@ charts:
   -
     question: 4. Which pages are anons viewing most?
     name: pages
-    query: "page:view->count(device.spoorId)->filter(!user.uuid)->group(page.location.path)->filter(user.geo.isFinancialTimesOffice=false)->top(20)"
+    query: "page:view->count(device.spoorId)->filter(!user.uuid)->group(page.location.type)->filter(user.geo.isFinancialTimesOffice=false)->top(20)"
     printer: BarChart
     datalabel: "% of anons visting the page"
   -
@@ -54,11 +54,7 @@ charts:
   - #TODO group by AB test
     question: 8. Are barriers successful at getting users to sign in or subscribe
     name: barriers/click-types
-    query: "@concat(
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath!~subscribe)->filter(click.dataTrackablePath!~sign-in),
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~subscribe),
-      cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~sign-in)
-    )->relabel(_headings,Other,Subscribe,Sign in)"
+    query: "@concat(cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath!~subscribe)->filter(click.dataTrackablePath!~sign-in),cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~subscribe),cta:click->count(device.spoorId)->filter(click.dataTrackablePath~barrier)->filter(click.dataTrackablePath~sign-in))->relabel(_headings,Other,Subscribe,Sign in)"
     colspan: 12 L4
   -
     question: 9. What's the distribution of propensity scores on Next?
