@@ -92,7 +92,7 @@ charts:
               "
     colspan: 12 L6
 
-#### Footer stuff
+#### Help and footer opt out stuff
 
   -
     question: "How many signed-in users visit help from Footer"
