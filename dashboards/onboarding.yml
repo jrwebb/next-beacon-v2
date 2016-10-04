@@ -95,8 +95,8 @@ charts:
 #### Footer stuff
 
   -
-    question: "How many users visit help from Footer"
-    name: dashboard/onboarding/footerhelp
+    question: "How many signed-in users visit help from Footer"
+    name: dashboard/onboarding/footerhelp-signedin
     query: "cta:click
               ->count(user.uuid)
               ->filter(click.dataTrackablePath~footer)
@@ -105,7 +105,34 @@ charts:
               "
     colspan: 12 L6
   -
-    question: "How many users opt out from the Footer"
+    question: "How many anonymous users visit help from the Footer"
+    name: dashboard/onboarding/footerhelp-anon
+    query: "cta:click
+              ->count(device.spoorId)
+              ->filter(click.dataTrackablePath~footer)
+              ->filter(click.dataTrackablePath~Help)
+              ->filter(!user.uuid)
+              ->filter(user.subscriptions.isStaff!=true)
+              "
+    colspan: 12 L6
+  -
+    question: "How many times on average do signed in users visit help (from anywhere on the site)"
+    name: dashboard/onboarding/helptimesavg
+    query: "@ratio(
+              cta:click
+                ->count()
+                ->filter(user.uuid)
+                ->filter(click.dataTrackablePath~elp)
+                ->filter(user.subscriptions.isStaff!=true),
+              cta:click
+                ->count(user.uuid)
+                ->filter(click.dataTrackablePath~elp)
+                ->filter(user.subscriptions.isStaff!=true)
+            )
+              "
+    colspan: 12 L6
+  -
+    question: "How many signed-in users opt out from the Footer"
     name: dashboard/onboarding/footeropt-outs
     query: "cta:click
               ->count(user.uuid)
