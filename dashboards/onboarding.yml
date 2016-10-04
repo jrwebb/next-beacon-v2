@@ -71,3 +71,21 @@ charts:
               ->relabel(device.mobileDevice,Mobile,Desktop)
               "
     colspan: 12 L6
+  -
+    question: "How many users have interacted with the welcome strip"
+    name: dashboard/onboarding/interacted
+    query: "@pct(
+              cta:click
+                ->filter(click.dataTrackablePath~welcome |),
+              cta:click
+
+            )
+              ->count(user.uuid)
+              ->filter(user.subscriptions.isStaff!=true)
+              ->group(device.mobileDevice)
+              ->filter(device.mobileDevice)
+              ->reorder(device.mobileDevice,true,false)
+              ->relabel(device.mobileDevice,Mobile,Desktop)
+              ->interval(d)
+              "
+    colspan: 12 L6
