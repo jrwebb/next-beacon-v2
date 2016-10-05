@@ -65,5 +65,5 @@ charts:
   -
     question: 10. Interactions on Marketing Promo
     name: Marketing Promo
-    query: cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo)->relTime(this_6_months)->filter(!user.subscriptions.b2b.licenceHolders)->filter(user.geo.isFinancialTimesOffice=false)->interval(month)
+    query: @sum(cta:click->count(device.spoorId)->filter(context.domPath~marketing-promo),cta:click->count(device.spoorId)->filter(click.dataTrackablePath~marketing-promo))->filter(!user.subscriptions.b2b.licenceHolders)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_months)
     
