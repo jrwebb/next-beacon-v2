@@ -13,14 +13,14 @@ charts:
   -
     question: 2. What's our conversion rate this week? (%)
     name: this week's conversion rate
-    query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_7_days),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup)->filter(!user.uuid)->relTime(this_7_days))"
+    query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_7_days),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(!user.subscriptions.b2b.licenceHolders)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(page.referrer.normalizedPath!~/signup)->filter(!user.uuid)->relTime(this_7_days))"
     interval: false
     colspan: 4
     datalabel: weekly conversion rate
   -
     question: 3. What's our weekly conversion rate trend?
     name: weekly conversion rate
-    query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup)->relTime(this_6_weeks))->interval(w)"
+    query: "@pct(signup:subscription-created->count()->filter(context.isTestEvent=false)->filter(user.geo.isFinancialTimesOffice=false)->relTime(this_6_weeks),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(!user.subscriptions.b2b.licenceHolders)->filter(page.location.host~ft.com)->filter(user.geo.isFinancialTimesOffice=false)->filter(page.referrer.host~ft.com)->filter(!user.uuid)->filter(page.referrer.normalizedPath!~/signup)->relTime(this_6_weeks))->interval(w)"
     printer: LineChart
   -
     question: 4. How many successful subscriptions have we had (this 4 weeks)?
@@ -41,7 +41,7 @@ charts:
     question: 6. What's our weekly bounce rate trend?
     name: bounces trend
     timeframe: this_6_weeks
-    query: "@pct(signup:bounce->count(),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.referrer.normalizedPath!~/signup)->filter(page.location.host~ft.com)->filter(page.referrer.host~ft.com))->filter(user.geo.isFinancialTimesOffice=false)->filter(!user.uuid)->relTime(this_6_weeks)->interval(w)"
+    query: "@pct(signup:bounce->count(),page:view->count(device.spoorId)->filter(page.location.normalizedPath~/signup)->filter(page.referrer.normalizedPath!~/signup)->filter(page.location.host~ft.com)->filter(page.referrer.host~ft.com))->filter(!user.subscriptions.b2b.licenceHolders)->filter(user.geo.isFinancialTimesOffice=false)->filter(!user.uuid)->relTime(this_6_weeks)->interval(w)"
     datalabel: Bounces trend
     colspan: 3
     printer: LineChart
