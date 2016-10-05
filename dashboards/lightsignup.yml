@@ -12,7 +12,7 @@ charts:
   -
     question: 2. Subscriber rate compared to anonymous article traffic served the LSU form?
     name: views-to-subscriptions
-    query: "@concat(page:view->count(device.spoorId)->filter(!user.uuid)->filter(page.location.type=article)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.url!~utm_term=lightsignup),light-signup:subscribed->count()->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false))"
+    query: "@concat(page:view->count(device.spoorId)->filter(!user.uuid)->filter(page.location.type=article)->filter(user.geo.isFinancialTimesOffice=false)->filter(context.url!~utm_term=lightsignup)->filter(!user.subscriptions.b2b.licenceHolders),light-signup:subscribed->count()->filter(user.geo.isFinancialTimesOffice=false)->filter(context.isTestEvent=false))"
     printer: StackedLineChart
     datalabel: "Subscribers p/day"
   -
