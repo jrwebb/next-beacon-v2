@@ -73,17 +73,17 @@ charts:
   -
     question: 10. Buy now CC Zuora performance?
     name: Submit Credit Card 
-    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=submitCreditCard)->relTime(previous_24_hours)->interval(h)"
+    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=submitCreditCard)->relTime(previous_48_hours)->interval(h)"
   -
     question: 11. Buy now DD Zuora performance?
     name: Submit Direct Debit
-    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=submitDirectDebit)->relTime(previous_24_hours)->interval(h)"
+    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=submitDirectDebit)->relTime(previous_48_hours)->interval(h)"
   -
     question: 12. Change CC Zuora performance?
     name: Change CC
-    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=renderCreditCard)->relTime(previous_24_hours)->interval(h)"
+    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=renderCreditCard)->relTime(previous_48_hours)->interval(h)"
   -
     question: 13. Change DD Zuora performance?
     name: Change DD
-    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=renderCreditCard)->relTime(previous_24_hours)->interval(h)"
+    query: "page:perf-timing->avg(context.meta.timing)->filter(context.meta.name=renderCreditCard)->relTime(previous_48_hours)->interval(h)"
     
