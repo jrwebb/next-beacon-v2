@@ -31,7 +31,7 @@ charts:
     printer: BarChart
     datalabel: "% of anons visting the page"
   -
-    question: 5. What page type are anon users landing on?
+    question: 5. What percentage of  page type are anon users viewing?
     name: landing
     query: "page:view->count(device.spoorId)->group(page.location.type)->filter(!user.uuid)->filter(user.geo.isFinancialTimesOffice=false)->filter(!user.subscriptions.b2b.licenceHolders)->print(PieChart)"
     printer: PieChart
