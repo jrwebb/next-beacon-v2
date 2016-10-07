@@ -243,29 +243,25 @@ charts:
   ->filter(user.subscriptions.isStaff!=true)"
     interval: false
     colspan: 12 M3
+    
   -
 
 # Explore page
-
+  -
     break: true
-    question: "Explore page: How are the recommended slices performing (by follows)?"
-    name: onsite/explore/slices/follows
-    query: cta:click->count()->filter(context.domPath~page:myft-page/explore)->filter(context.domPath~recommended-slice)->filter(context.target=follow)->filter(context.domPressed=false)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
-    printer: BarChart
+    question: "Number of signed in users visiting Explore page"
+    name: onsite/explore/
+    query: page:view
+    ->count(user.uuid)
+    ->relTime(this_7_days)
+    ->filter(page.location.path~myft/explore)
     interval: false
     colspan: 12 L6
   -
     break: true
-    question: "Explore page: How are the recommended slices performing (by follows)? (new click events)"
-    name: onsite/explore/slices/follows/new
-    query: "cta:click
-			  ->count()
-			  ->filter(click.dataTrackablePath~page:myft-page/explore)
-			  ->filter(click.dataTrackablePath~recommended-slice)
-			  ->filter(click.target=follow)
-			  ->filter(click.aria-pressed~\"false\")
-			  ->group(click.dataTrackablePath)
-			  ->filter(user.subscriptions.isStaff!=true)"
+    question: "Explore page: How are the recommended slices performing (by follows)?"
+    name: onsite/explore/slices/follows
+    query: cta:click->count()->filter(context.domPath~page:myft-page/explore)->filter(context.domPath~recommended-slice)->filter(context.target=follow)->filter(context.domPressed=false)->group(context.domPath)->filter(user.subscriptions.isStaff!=true)
     printer: BarChart
     interval: false
     colspan: 12 L6
